@@ -319,30 +319,27 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w800,
+                                                                          .w700,
                                                                 ),
                                                       ),
                                                       TextSpan(
                                                         text:
                                                             '\nLegg til minst 3 bilder for å øke sjansen\nfor salg.',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize:
-                                                                      15.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Nunito',
+                                                              color: Colors
+                                                                  .grey[700],
+                                                              fontSize: 15.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                            ),
                                                       ),
                                                     ],
                                                   ),
@@ -695,7 +692,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                               113,
                                                               113,
                                                               1.0),
-                                                      fontSize: 17.0,
+                                                      fontSize: 16.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.w700,
@@ -761,18 +758,18 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                         .fromSTEB(
                                                         20.0, 30.0, 0.0, 0.0),
                                               ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 16,
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Nunito',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontSize: 16,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
                                               maxLength: 24,
                                               maxLengthEnforcement:
                                                   MaxLengthEnforcement.enforced,
@@ -900,7 +897,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                             113,
                                                                             1.0),
                                                                     fontSize:
-                                                                        17.0,
+                                                                        16.0,
                                                                     letterSpacing:
                                                                         0.0,
                                                                     fontWeight:
@@ -1006,13 +1003,12 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
+                                                          color:
+                                                              Colors.grey[700],
                                                           fontSize: 15.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.w500,
+                                                              FontWeight.w700,
                                                         ),
                                               ),
                                             ),
@@ -1054,10 +1050,10 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                               113,
                                                               113,
                                                               1.0),
-                                                      fontSize: 17.0,
+                                                      fontSize: 16.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
-                                                          FontWeight.w700,
+                                                          FontWeight.w600,
                                                     ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
@@ -1221,7 +1217,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                     113,
                                                                     113,
                                                                     1.0),
-                                                                fontSize: 17.0,
+                                                                fontSize: 16.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -1409,13 +1405,12 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
+                                                          color:
+                                                              Colors.grey[700],
                                                           fontSize: 15.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.w500,
+                                                              FontWeight.w700,
                                                         ),
                                                   ),
                                                 ),
@@ -1483,7 +1478,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                           113,
                                                                           1.0),
                                                                       fontSize:
-                                                                          17.0,
+                                                                          16.0,
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight:
@@ -2007,7 +2002,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                   ),
                                                                   TextSpan(
                                                                     text:
-                                                                        '\nKjøpere vil bare se varens\nomtrentlige posisjon', // Additional text
+                                                                        '\nKjøpere vil bare se varens\nomtrentlige posisjon',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -2017,11 +2012,11 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                           color:
                                                                               FlutterFlowTheme.of(context).secondaryText,
                                                                           fontSize:
-                                                                              13.0,
+                                                                              14.0,
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
-                                                                              FontWeight.w400,
+                                                                              FontWeight.w500,
                                                                         ),
                                                                   ),
                                                                 ],
@@ -2126,11 +2121,11 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).secondaryText,
                                                                             fontSize:
-                                                                                13.0,
+                                                                                14.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
-                                                                                FontWeight.w400,
+                                                                                FontWeight.w500,
                                                                           ),
                                                                     ),
                                                                   ],
@@ -2516,7 +2511,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                           context)
                                                                       .secondary,
                                                                   fontSize:
-                                                                      17.0,
+                                                                      16.0,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:

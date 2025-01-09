@@ -232,16 +232,16 @@ class FirebaseAuthService {
         if (!context.mounted) return false;
         Toasts.showErrorToast(
             context, 'Du er ikke logget inn med denne brukeren.');
-        return false;
+        rethrow;
       } else {
         if (!context.mounted) return false;
         Toasts.showErrorToast(context, 'En uforventet feil oppstod');
         logger.d('Error: ${e.message}');
-        return false;
+        rethrow;
       }
     } catch (e) {
       logger.d('Error during Google reauthentication: $e');
-      return false;
+      rethrow;
     }
   }
 

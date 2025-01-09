@@ -286,12 +286,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                     );
                                   } else {
                                     context.pushNamed(
-                                      GoRouterState.of(context)
-                                              .uri
-                                              .toString()
-                                              .startsWith('/home')
-                                          ? 'BrukerPageHome'
-                                          : 'BrukerPage',
+                                      'BrukerPage',
                                       queryParameters: {
                                         'uid': serializeParam(
                                           matvare.uid,
@@ -1277,7 +1272,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
-                                                                        16,
+                                                                        15,
                                                                     letterSpacing:
                                                                         0.0,
                                                                     fontWeight:
@@ -1357,7 +1352,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
-                                                                        16,
+                                                                        15,
                                                                     letterSpacing:
                                                                         0.0,
                                                                     fontWeight:
@@ -1884,12 +1879,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                       try {
                                         if (widget.fromChat != true) {
                                           context.pushNamed(
-                                            GoRouterState.of(context)
-                                                    .uri
-                                                    .toString()
-                                                    .startsWith('/home')
-                                                ? 'DetailHome'
-                                                : 'MatDetaljBondegard',
+                                            'ProductDetail',
                                             queryParameters: {
                                               'matvare': serializeParam(
                                                 nyematvarer.toJson(),

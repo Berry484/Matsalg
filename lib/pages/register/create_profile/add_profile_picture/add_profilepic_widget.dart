@@ -104,7 +104,7 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                     fontFamily: 'Nunito',
                                     color:
                                         FlutterFlowTheme.of(context).alternate,
-                                    fontSize: 17,
+                                    fontSize: 18,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -170,12 +170,10 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Nunito',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                              fontSize: 14.0,
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w700,
                                             ),
                                       ),
                                     ],
@@ -480,6 +478,11 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               try {
+                                if (_model.uploadedLocalFile.bytes == null ||
+                                    _model.uploadedLocalFile.bytes!.isEmpty) {
+                                  _isloading = false;
+                                  return;
+                                }
                                 if (_isloading) {
                                   return;
                                 }
@@ -594,7 +597,10 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                   0.0, 0.0, 0.0, 0.0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).alternate,
+                              color: _model.uploadedLocalFile.bytes == null ||
+                                      _model.uploadedLocalFile.bytes!.isEmpty
+                                  ? FlutterFlowTheme.of(context).unSelected
+                                  : FlutterFlowTheme.of(context).alternate,
                               textStyle: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(

@@ -175,22 +175,15 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               10.0, 0.0, 10.0, 0.0),
                           child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
+                            splashFactory: InkRipple.splashFactory,
+                            splashColor: Colors.grey[100],
                             onTap: () async {
                               try {
                                 if (FirebaseAuth.instance.currentUser!.uid ==
                                     brukere.uid) return;
                                 if (widget.fromChat != true) {
                                   context.pushNamed(
-                                    GoRouterState.of(context)
-                                            .uri
-                                            .toString()
-                                            .startsWith('/home')
-                                        ? 'BrukerPageHome'
-                                        : 'BrukerPage',
+                                    'BrukerPage',
                                     queryParameters: {
                                       'uid': serializeParam(
                                         brukere.uid,
@@ -240,7 +233,7 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                               child: Container(
                                 height: 80.0,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).primary,
+                                  color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(13.0),
                                   shape: BoxShape.rectangle,
                                 ),

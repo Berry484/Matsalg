@@ -106,11 +106,10 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Nunito',
-                                    fontSize: 17.0,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
+                                    color: Colors.grey[500],
+                                    fontSize: 16.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w700,
                                   ),
                             ),
                           ),
@@ -125,7 +124,7 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
                       onPressed: () async {
                         if (FFAppState().lagtUt) {
                           userInfoService.getAll(context);
-                          context.goNamed('Explore');
+                          context.goNamed('Home');
                         } else {
                           userInfoService.getAll(context);
                           context.goNamed('HowItWorksWidget');
@@ -141,12 +140,12 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
                             0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).alternate,
                         textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
+                            FlutterFlowTheme.of(context).bodyMedium.override(
                                   fontFamily: 'Nunito',
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  fontSize: 18.0,
+                                  color: Colors.white,
+                                  fontSize: 16,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w700,
                                 ),
                         elevation: 0.0,
                         borderSide: const BorderSide(

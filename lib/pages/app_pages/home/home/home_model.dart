@@ -1,13 +1,11 @@
 import 'dart:async';
-
 import 'package:mat_salg/helper_components/flutter_flow/form_field_controller.dart';
 import 'package:mat_salg/models/user_info_search.dart';
-
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
-import 'home_page.dart' show HomePage;
+import 'home_widget.dart' show HomeWidget;
 import 'package:flutter/material.dart';
 
-class HomeModel extends FlutterFlowModel<HomePage> {
+class HomeModel extends FlutterFlowModel<HomeWidget> {
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Variables used througout-------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
@@ -22,6 +20,7 @@ class HomeModel extends FlutterFlowModel<HomePage> {
   bool noWifi = false;
   bool folgermatLoading = true;
   bool profilisloading = false;
+  bool searching = false;
   Timer? debounce;
   String? dropDownValue;
   LatLng? currentUserLocationValue;

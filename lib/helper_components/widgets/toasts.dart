@@ -22,9 +22,8 @@ class Toasts {
           color: Colors.transparent,
           child: Dismissible(
             key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
+            direction: DismissDirection.up,
+            onDismissed: (_) => overlayEntry.remove(),
             child: Container(
               padding:
                   const EdgeInsets.symmetric(vertical: 14.0, horizontal: 20.0),
@@ -51,11 +50,13 @@ class Toasts {
                   Expanded(
                     child: Text(
                       message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Nunito',
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            fontSize: 17,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                       textAlign: TextAlign.start,
                     ),
                   ),
@@ -70,7 +71,7 @@ class Toasts {
 
     overlay.insert(overlayEntry);
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1, milliseconds: 500), () {
       if (overlayEntry.mounted) {
         overlayEntry.remove();
       }
@@ -123,11 +124,13 @@ class Toasts {
                   Expanded(
                     child: Text(
                       message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Nunito',
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            fontSize: 17,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w600,
+                          ),
                       textAlign: TextAlign.start,
                     ),
                   ),
@@ -142,8 +145,7 @@ class Toasts {
 
     overlay.insert(overlayEntry);
 
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 1), () {
       if (overlayEntry.mounted) {
         overlayEntry.remove();
       }

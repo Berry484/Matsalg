@@ -541,7 +541,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     userInfoService.getAll(context);
                                     sendToken();
                                     if (!context.mounted) return;
-                                    context.go('/explore');
+                                    context.go('/home');
                                     FFAppState().login = true;
                                     return;
                                   }
@@ -750,7 +750,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     userInfoService.getAll(context);
                                     sendToken();
                                     if (!context.mounted) return;
-                                    context.go('/explore');
+                                    context.go('/home');
                                     FFAppState().login = true;
                                     return;
                                   }

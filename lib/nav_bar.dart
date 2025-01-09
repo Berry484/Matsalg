@@ -22,14 +22,14 @@ class MainWrapperState extends State<MainWrapper> {
   int _getIndexForRoute(String location) {
     if (location.startsWith('/home')) {
       return 0;
-    } else if (location.startsWith('/explore')) {
+    } else if (location.startsWith('/notifications')) {
       return 1;
     } else if (location.startsWith('/chatMain')) {
       return 2;
     } else if (location.startsWith('/profil')) {
       return 3;
     }
-    return _selectedIndex; // Default to current index for unmatched routes
+    return _selectedIndex;
   }
 
   void _onItemTapped(int index) {
@@ -38,7 +38,7 @@ class MainWrapperState extends State<MainWrapper> {
       switch (GoRouterState.of(context).uri.toString()) {
         case '/home':
           return;
-        case '/explore':
+        case '/notifications':
           return;
         case '/chatMain':
           return;
@@ -47,15 +47,12 @@ class MainWrapperState extends State<MainWrapper> {
       }
 
       GoRouter.of(context).pop();
-      return; // Exit early, no need to change the selected index or navigate
+      return;
     }
-
     // Update the selected index for pages other than the special case
     setState(() {
       _selectedIndex = index;
     });
-
-    // Navigate based on the index
     switch (index) {
       case 0:
         widget.child.goBranch(index);
@@ -105,10 +102,7 @@ class MainWrapperState extends State<MainWrapper> {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
-      body: widget.child, // Main content (child widget)
-
-      // Bottom Navigation Bar
-
+      body: widget.child,
       bottomNavigationBar: Stack(
         children: [
           // Bottom Navigation Bar
@@ -187,7 +181,7 @@ class MainWrapperState extends State<MainWrapper> {
                             borderWidth: 1.0,
                             buttonSize: 50.0,
                             icon: Icon(
-                              CupertinoIcons.search,
+                              CupertinoIcons.bell,
                               color: _selectedIndex == 1
                                   ? FlutterFlowTheme.of(context).alternate
                                   : const Color(0xFF262626),

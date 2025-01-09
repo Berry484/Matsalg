@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/services/check_taken_service.dart';
@@ -69,6 +70,41 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
     _model.dispose();
 
     super.dispose();
+  }
+
+  bool buttonClickable() {
+    if (_errorMessage != null || _emailTatt != null) {
+      return false;
+    }
+
+    if (_model.brukernavnTextController.text.trim().isEmpty ||
+        _model.brukernavnTextController.text.length < 4 ||
+        !RegExp(kTextValidatorUsernameRegex)
+            .hasMatch(_model.brukernavnTextController.text)) {
+      return false;
+    }
+    if (_model.fornavnTextController.text.trim().isEmpty ||
+        !RegExp(kTextValidatorNormalnameRegex)
+            .hasMatch(_model.fornavnTextController.text)) {
+      return false;
+    }
+    if (_model.etternavnTextController.text.trim().isEmpty ||
+        !RegExp(kTextValidatorNormalnameRegex)
+            .hasMatch(_model.etternavnTextController.text)) {
+      return false;
+    }
+    if (_model.emailTextController.text.trim().isEmpty ||
+        !RegExp(kTextValidatorEmailRegex)
+            .hasMatch(_model.emailTextController.text)) {
+      return false;
+    }
+    if (widget.phone != '0') {
+      if (_model.passordTextController.text.isEmpty ||
+          _model.brukernavnTextController.text.length < 7) {
+        return false;
+      }
+    }
+    return true;
   }
 
   void errorToast(BuildContext context, String message) {
@@ -348,20 +384,18 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                     .brukernavnTextControllerValidator
                                                     .asValidator(context),
                                                 onChanged: (username) {
-                                                  // Check if username is less than 4 characters
+                                                  buttonClickable();
+
                                                   if (username.length < 4) {
-                                                    // Clear the error message and cancel any ongoing request
                                                     setState(() {
                                                       _errorMessage = null;
                                                     });
                                                     _activeRequest?.ignore();
-                                                    return; // Exit early if username is too short
+                                                    return;
                                                   }
 
-                                                  // Cancel the previous request if it exists
                                                   _activeRequest?.ignore();
 
-                                                  // Start a new request if the username is at least 4 characters
                                                   _activeRequest =
                                                       CheckTakenService
                                                               .checkUsernameTaken(
@@ -373,8 +407,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                         _errorMessage =
                                                             "Brukernavnet er allerede i bruk";
                                                       } else {
-                                                        _errorMessage =
-                                                            null; // Clear error message if username is available
+                                                        _errorMessage = null;
                                                       }
                                                     });
                                                   });
@@ -408,6 +441,12 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   TextCapitalization.sentences,
                                               textInputAction:
                                                   TextInputAction.next,
+                                              onChanged: (_) =>
+                                                  EasyDebounce.debounce(
+                                                '_model.textController',
+                                                const Duration(milliseconds: 0),
+                                                () => safeSetState(() {}),
+                                              ),
                                               enableSuggestions:
                                                   false, // Disable suggestions
                                               autocorrect:
@@ -521,12 +560,16 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                   _model.etternavnFocusNode,
                                               textCapitalization:
                                                   TextCapitalization.sentences,
+                                              onChanged: (_) =>
+                                                  EasyDebounce.debounce(
+                                                '_model.textController',
+                                                const Duration(milliseconds: 0),
+                                                () => safeSetState(() {}),
+                                              ),
                                               textInputAction:
                                                   TextInputAction.next,
-                                              enableSuggestions:
-                                                  false, // Disable suggestions
-                                              autocorrect:
-                                                  false, // Turn off autocorrect
+                                              enableSuggestions: false,
+                                              autocorrect: false,
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 labelText: 'Etternavn',
@@ -784,8 +827,14 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                     TextInputAction.done,
                                                 enableSuggestions: false,
                                                 autocorrect: false,
-                                                autofillHints:
-                                                    null, // Disable autofill for this field
+                                                onChanged: (_) =>
+                                                    EasyDebounce.debounce(
+                                                  '_model.textController',
+                                                  const Duration(
+                                                      milliseconds: 0),
+                                                  () => safeSetState(() {}),
+                                                ),
+                                                autofillHints: null,
                                                 keyboardType:
                                                     TextInputType.text,
                                                 obscureText:
@@ -962,7 +1011,6 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                   _isloading = false;
                                   return;
                                 }
-
                                 if (_errorMessage != null ||
                                     _emailTatt != null) {
                                   _isloading = false;
@@ -1207,7 +1255,9 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                 0.0, 0.0, 0.0, 0.0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).alternate,
+                            color: buttonClickable()
+                                ? FlutterFlowTheme.of(context).alternate
+                                : FlutterFlowTheme.of(context).unSelected,
                             textStyle: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(

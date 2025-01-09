@@ -250,7 +250,7 @@ class _RequestLocationWidgetState extends State<RequestLocationWidget> {
                                   return;
                                 } else {
                                   _isloading = false;
-                                  context.goNamed('Explore');
+                                  context.goNamed('Home');
                                 }
                               } on SocketException {
                                 _isloading = false;

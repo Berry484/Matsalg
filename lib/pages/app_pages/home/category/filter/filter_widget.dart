@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_widgets.dart';
-import 'package:mat_salg/pages/app_pages/explore/category/category_model.dart';
+import 'package:mat_salg/pages/app_pages/home/category/category_model.dart';
 import 'package:mat_salg/services/food_service.dart';
 import '../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -817,61 +817,47 @@ class _SorterWidgetState extends State<FilterWidget> {
                           const SizedBox(
                             height: 8,
                           ),
-                          SliderTheme(
-                            data: SliderTheme.of(context).copyWith(
-                              rangeThumbShape: RoundRangeSliderThumbShape(
-                                enabledThumbRadius: 11.5,
-                              ),
-                              rangeTrackShape:
-                                  RectangularRangeSliderTrackShape(),
-                              overlayShape: RoundSliderOverlayShape(
-                                overlayRadius: 38.0,
-                              ),
-                            ),
-                            child: RangeSlider(
-                              values: localFilterOptions.priceRange,
-                              min: 0,
-                              max: 800,
-                              activeColor:
-                                  FlutterFlowTheme.of(context).alternate,
-                              inactiveColor: Colors.black12,
-                              divisions: 100,
-                              onChanged: (RangeValues values) {
-                                double start = values.start;
-                                double end = values.end;
-                                if (start < 800) {
-                                  start = (start / 10).roundToDouble() * 10;
+                          RangeSlider(
+                            values: localFilterOptions.priceRange,
+                            min: 0,
+                            max: 800,
+                            activeColor: FlutterFlowTheme.of(context).alternate,
+                            inactiveColor: Colors.black12,
+                            divisions: 100,
+                            onChanged: (RangeValues values) {
+                              double start = values.start;
+                              double end = values.end;
+                              if (start < 800) {
+                                start = (start / 10).roundToDouble() * 10;
+                              }
+                              if (end < 800) {
+                                end = (end / 10).roundToDouble() * 10;
+                              }
+                              if (end - start >= 10) {
+                                if (start !=
+                                        localFilterOptions.priceRange.start ||
+                                    end != localFilterOptions.priceRange.end) {
+                                  HapticFeedback.selectionClick();
                                 }
-                                if (end < 800) {
-                                  end = (end / 10).roundToDouble() * 10;
+                                safeSetState(() {
+                                  localFilterOptions.priceRange =
+                                      RangeValues(start, end);
+                                });
+                                if (_debounce?.isActive ?? false) {
+                                  _debounce!.cancel();
                                 }
-                                if (end - start >= 10) {
-                                  if (start !=
-                                          localFilterOptions.priceRange.start ||
-                                      end !=
-                                          localFilterOptions.priceRange.end) {
-                                    HapticFeedback.selectionClick();
+                                _debounce =
+                                    Timer(const Duration(milliseconds: 50), () {
+                                  if (localFilterOptions.priceRange ==
+                                      RangeValues(start, end)) {
+                                    safeSetState(() {
+                                      _model.isLoading = true;
+                                    });
+                                    resultCount();
                                   }
-                                  safeSetState(() {
-                                    localFilterOptions.priceRange =
-                                        RangeValues(start, end);
-                                  });
-                                  if (_debounce?.isActive ?? false) {
-                                    _debounce!.cancel();
-                                  }
-                                  _debounce = Timer(
-                                      const Duration(milliseconds: 50), () {
-                                    if (localFilterOptions.priceRange ==
-                                        RangeValues(start, end)) {
-                                      safeSetState(() {
-                                        _model.isLoading = true;
-                                      });
-                                      resultCount();
-                                    }
-                                  });
-                                }
-                              },
-                            ),
+                                });
+                              }
+                            },
                           ),
                           Padding(
                               padding: EdgeInsets.fromLTRB(0, 0, 17, 0),

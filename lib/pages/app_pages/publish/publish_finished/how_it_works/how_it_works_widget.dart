@@ -229,7 +229,7 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                         showLoadingIndicator: false,
                         onPressed: () async {
                           if (_model.pageViewCurrentIndex == 2) {
-                            context.goNamed('Explore');
+                            context.goNamed('Home');
                           }
                           await _model.pageViewController?.nextPage(
                             duration: Duration(milliseconds: 300),

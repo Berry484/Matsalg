@@ -9,8 +9,8 @@ import 'package:mat_salg/helper_components/widgets/product_list.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/pages/app_pages/explore/category/filter/filter_widget.dart';
-import 'package:mat_salg/pages/app_pages/explore/category/sort/sort_widget.dart';
+import 'package:mat_salg/pages/app_pages/home/category/filter/filter_widget.dart';
+import 'package:mat_salg/pages/app_pages/home/category/sort/sort_widget.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:mat_salg/services/food_service.dart';
 import 'package:shimmer/shimmer.dart';
@@ -43,6 +43,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
   late FilterOptions filterOptions;
   late FilterOptions localFilterOptions;
   bool _moreIsLoading = false;
+  String? searchBy;
 
   @override
   void initState() {
@@ -431,6 +432,15 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                 if (localFilterOptions != null) {
                                   filterOptions = localFilterOptions;
                                   getCategoryFood(true, false);
+                                  if (localFilterOptions
+                                          .selectedCategories.isEmpty &&
+                                      localFilterOptions.distance == null &&
+                                      localFilterOptions.priceRange ==
+                                          RangeValues(0, 800)) {
+                                    safeSetState(() {
+                                      searchBy = 'Søk';
+                                    });
+                                  }
                                 }
                               },
                               borderRadius: const BorderRadius.only(
@@ -509,9 +519,10 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                       focusNode: _model.textFieldFocusNode,
                       autofocus: false,
                       onChanged: (value) => getCategoryFood(true, false),
-                      placeholder: widget.kategori?.toLowerCase() != 'søk'
-                          ? 'Søk innen ${widget.kategori}'
-                          : 'Søk',
+                      placeholder: widget.kategori?.toLowerCase() == 'søk' ||
+                              searchBy?.toLowerCase() == 'søk'
+                          ? 'Søk'
+                          : 'Søk innen ${widget.kategori}',
                       placeholderStyle:
                           FlutterFlowTheme.of(context).labelMedium.override(
                                 fontFamily: 'Open Sans',
@@ -726,7 +737,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                                         .requestFocus(
                                                             FocusNode());
                                                     context.pushNamed(
-                                                      'MatDetaljBondegard',
+                                                      'ProductDetail',
                                                       queryParameters: {
                                                         'matvare':
                                                             serializeParam(

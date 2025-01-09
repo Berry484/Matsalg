@@ -307,7 +307,7 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                       sendToken();
                                       _isloading = false;
                                       if (!context.mounted) return;
-                                      context.go('/explore');
+                                      context.go('/home');
                                       FFAppState().login = true;
                                       return;
                                     }
@@ -421,7 +421,7 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                     sendToken();
                                     _isloading = false;
                                     if (!context.mounted) return;
-                                    context.go('/explore');
+                                    context.go('/home');
                                     FFAppState().login = true;
                                     return;
                                   }

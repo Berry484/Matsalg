@@ -1110,7 +1110,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                       'Nunito',
                                                                   color: Colors
                                                                       .white,
-                                                                  fontSize: 16,
+                                                                  fontSize: 15,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
