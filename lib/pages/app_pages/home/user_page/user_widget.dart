@@ -330,7 +330,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                               child: const Text(
                                 'Send melding',
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 18,
                                   color: CupertinoColors.systemBlue,
                                 ),
                               ),
@@ -364,7 +364,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                               child: const Text(
                                 'Rapporter',
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 18,
                                   color: Colors
                                       .red, // Red text for 'Slett annonse'
                                 ),
@@ -379,7 +379,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                             child: const Text(
                               'Avbryt',
                               style: TextStyle(
-                                fontSize: 19,
+                                fontSize: 18,
                                 color: CupertinoColors.systemBlue,
                               ),
                             ),

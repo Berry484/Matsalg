@@ -76,12 +76,15 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               if (widget.isUnread ?? true)
-                Container(
-                  width: 10,
-                  height: 10,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF357BF7),
-                    shape: BoxShape.circle,
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                  child: Container(
+                    width: 10,
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF357BF7),
+                      shape: BoxShape.circle,
+                    ),
                   ),
                 ),
               if (widget.messageImage != null &&
@@ -124,7 +127,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 ),
               if (widget.messageImage == null || widget.messageImage!.isEmpty)
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 12, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: Container(
                     width: 53,
                     height: 53,
@@ -160,7 +163,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 8, 12, 0),
+                                8, 8, 12, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,

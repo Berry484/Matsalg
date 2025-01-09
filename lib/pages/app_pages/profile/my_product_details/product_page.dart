@@ -229,7 +229,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                     child: const Text(
                                                       'Rediger annonse',
                                                       style: TextStyle(
-                                                        fontSize: 19,
+                                                        fontSize: 18,
                                                         color: CupertinoColors
                                                             .systemBlue,
                                                       ),
@@ -340,7 +340,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                     child: const Text(
                                                       'Slett annonse',
                                                       style: TextStyle(
-                                                        fontSize: 19,
+                                                        fontSize: 18,
                                                         color: Colors
                                                             .red, // Red text for 'Slett annonse'
                                                       ),
@@ -357,7 +357,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                   child: const Text(
                                                     'Avbryt',
                                                     style: TextStyle(
-                                                      fontSize: 19,
+                                                      fontSize: 18,
                                                       color: CupertinoColors
                                                           .systemBlue,
                                                     ),
@@ -920,7 +920,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                         child: const Text(
                                                           'Rediger annonse',
                                                           style: TextStyle(
-                                                            fontSize: 19,
+                                                            fontSize: 18,
                                                             color:
                                                                 CupertinoColors
                                                                     .systemBlue,
@@ -1035,7 +1035,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                         child: const Text(
                                                           'Slett annonse',
                                                           style: TextStyle(
-                                                            fontSize: 19,
+                                                            fontSize: 18,
                                                             color: Colors
                                                                 .red, // Red text for 'Slett annonse'
                                                           ),
@@ -1052,7 +1052,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                       child: const Text(
                                                         'Avbryt',
                                                         style: TextStyle(
-                                                          fontSize: 19,
+                                                          fontSize: 18,
                                                           color: CupertinoColors
                                                               .systemBlue,
                                                         ),
@@ -1115,7 +1115,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w800,
+                                                                          .w700,
                                                                 ),
                                                           ),
                                                         ),

@@ -272,14 +272,13 @@ class _RequestLocationWidgetState extends State<RequestLocationWidget> {
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).alternate,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .titleMedium
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Nunito',
-                                    color:
-                                        FlutterFlowTheme.of(context).secondary,
-                                    fontSize: 15.0,
+                                    color: Colors.white,
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.w700,
                                   ),
                               elevation: 0.0,
                               borderSide: const BorderSide(
@@ -333,14 +332,14 @@ class _RequestLocationWidgetState extends State<RequestLocationWidget> {
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .titleMedium
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 15.0,
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.w700,
                                   ),
                               elevation: 0.0,
                               borderSide: const BorderSide(

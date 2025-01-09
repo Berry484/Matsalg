@@ -451,7 +451,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                     child: const Text(
                                                       'Send melding',
                                                       style: TextStyle(
-                                                        fontSize: 19,
+                                                        fontSize: 18,
                                                         color: CupertinoColors
                                                             .systemBlue,
                                                       ),
@@ -497,7 +497,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                     child: const Text(
                                                       'Rapporter',
                                                       style: TextStyle(
-                                                        fontSize: 19,
+                                                        fontSize: 18,
                                                         color: Colors.red,
                                                       ),
                                                     ),
@@ -512,7 +512,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                   child: const Text(
                                                     'Avbryt',
                                                     style: TextStyle(
-                                                      fontSize: 19,
+                                                      fontSize: 18,
                                                       color: CupertinoColors
                                                           .systemBlue,
                                                     ),
@@ -1270,19 +1270,19 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyMedium
+                                                                  .titleSmall
                                                                   .override(
                                                                     fontFamily:
-                                                                        'Nunito',
+                                                                        'Open Sans',
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
-                                                                        16,
+                                                                        15,
                                                                     letterSpacing:
                                                                         0.0,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w800,
+                                                                            .w600,
                                                                   ),
                                                             ),
                                                           ),
@@ -1315,7 +1315,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                 ),
                                                 child: SafeArea(
                                                   child: Container(
-                                                    width: 105,
+                                                    width: 110,
                                                     height: 40,
                                                     constraints:
                                                         const BoxConstraints(
@@ -1350,19 +1350,19 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .titleSmall
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
-                                                                        'Open Sans',
+                                                                        'Nunito',
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
-                                                                        15,
+                                                                        16,
                                                                     letterSpacing:
                                                                         0.0,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w600,
+                                                                            .w700,
                                                                   ),
                                                             ),
                                                           ),

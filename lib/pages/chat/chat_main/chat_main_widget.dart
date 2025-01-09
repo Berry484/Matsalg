@@ -157,7 +157,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                             alignment: const AlignmentDirectional(0, 0),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  13, 5, 13, 15),
+                                  13, 0, 13, 0),
                               child: Column(
                                 children: [
                                   Align(
@@ -234,7 +234,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                       children: [
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 20, 0, 0),
+                                              .fromSTEB(0, 13, 0, 0),
                                           child: RefreshIndicator.adaptive(
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -257,9 +257,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                   }).isEmpty)
                                                     Expanded(
                                                       child: ListView(
-                                                        padding: const EdgeInsets
-                                                            .fromLTRB(0, 0, 0,
-                                                            100), // Adjust padding as needed
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 0, 0, 100),
                                                         children: [
                                                           SizedBox(
                                                             width: MediaQuery
@@ -388,9 +389,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                   }).isNotEmpty)
                                                     Expanded(
                                                       child: ListView.builder(
-                                                        padding: const EdgeInsets
-                                                            .fromLTRB(0, 0, 0,
-                                                            100), // Adjust padding as needed
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 0, 0, 100),
                                                         itemCount: FFAppState()
                                                             .conversations
                                                             .where(
@@ -504,7 +506,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 20, 0, 0),
+                                              .fromSTEB(0, 13, 0, 0),
                                           child: RefreshIndicator.adaptive(
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -527,9 +529,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                   }).isEmpty)
                                                     Expanded(
                                                       child: ListView(
-                                                        padding: const EdgeInsets
-                                                            .fromLTRB(0, 0, 0,
-                                                            100), // Adjust padding as needed
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 0, 0, 100),
                                                         children: [
                                                           SizedBox(
                                                             width: MediaQuery
@@ -658,9 +661,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                   }).isNotEmpty)
                                                     Expanded(
                                                       child: ListView.builder(
-                                                        padding: const EdgeInsets
-                                                            .fromLTRB(0, 0, 0,
-                                                            100), // Adjust padding as needed
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 0, 0, 100),
                                                         itemCount: FFAppState()
                                                             .conversations
                                                             .where(
@@ -774,7 +778,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 20, 0, 0),
+                                              .fromSTEB(0, 13, 0, 0),
                                           child: RefreshIndicator.adaptive(
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -797,9 +801,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                   }).isEmpty)
                                                     Expanded(
                                                       child: ListView(
-                                                        padding: const EdgeInsets
-                                                            .fromLTRB(0, 0, 0,
-                                                            100), // Adjust padding as needed
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 0, 0, 100),
                                                         children: [
                                                           SizedBox(
                                                             width: MediaQuery
@@ -928,9 +933,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                   }).isNotEmpty)
                                                     Expanded(
                                                       child: ListView.builder(
-                                                        padding: const EdgeInsets
-                                                            .fromLTRB(0, 0, 0,
-                                                            100), // Adjust padding as needed
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 0, 0, 100),
                                                         itemCount: FFAppState()
                                                             .conversations
                                                             .where(

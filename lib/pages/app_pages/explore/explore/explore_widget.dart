@@ -34,6 +34,7 @@ class _HjemWidgetState extends State<ExploreWidget>
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ScrollController _scrollController1 = ScrollController();
   bool _isLoading = false;
+  double _width = 300;
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _HjemWidgetState extends State<ExploreWidget>
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {
+          _width = 100;
           _model.searching = true;
         }));
     FirebaseApi().initNotifications();
@@ -303,130 +305,158 @@ class _HjemWidgetState extends State<ExploreWidget>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground, // or choose the correct background color
-                                    borderRadius: BorderRadius.circular(13.0),
-                                  ),
-                                  child: CupertinoSearchTextField(
-                                    controller: _model.textController,
-                                    focusNode: _model.textFieldFocusNode,
-                                    autofocus: false,
-                                    onChanged: (text) {
-                                      setState(() {
-                                        _model.profilisloading = true;
-                                      });
-                                      if (_model.debounce?.isActive ?? false) {
-                                        _model.debounce!.cancel();
-                                      }
-                                      _model.debounce = Timer(
-                                          const Duration(milliseconds: 500),
-                                          () {
-                                        handleSearch();
-                                      });
-                                    },
-                                    backgroundColor: const Color.fromARGB(
-                                        255, 238, 238, 238),
-                                    prefixInsets:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            12, 6, 6, 6),
-                                    borderRadius: BorderRadius.circular(24.0),
-                                    onSubmitted: (value) {
-                                      if (_model
-                                          .textController.text.isNotEmpty) {
-                                        FocusScope.of(context)
-                                            .requestFocus(FocusNode());
-                                        context.pushNamed(
-                                          'BondeGardPage',
-                                          queryParameters: {
-                                            'kategori': serializeParam(
-                                                'Søk', ParamType.String),
-                                            'query': serializeParam(
-                                                _model.textController.text,
-                                                ParamType.String),
-                                          }.withoutNulls,
-                                        );
-                                      }
-                                    },
-                                    placeholder: 'Søk',
-                                    placeholderStyle:
-                                        FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily: 'Nunito',
-                                              color: Colors.black45,
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.0,
-                                            ),
-                                    prefixIcon: Icon(
-                                      CupertinoIcons.search,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText, // match text color from theme
-                                      size: 21,
+                                child: AnimatedContainer(
+                                  duration: Duration(milliseconds: 5000),
+                                  curve: Curves.easeInOut,
+                                  width: _width,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(13.0),
                                     ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                          fontFamily: 'Nunito',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText, // matching text color from theme
-                                          fontSize: 15.0,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    onTap: () {
-                                      setState(() {
-                                        _model.searching =
-                                            true; // Set searching to true when tapped
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ),
-                              if (_model.searching == true)
-                                GestureDetector(
-                                  onTap: () async {
-                                    if (View.of(context).viewInsets.bottom >
-                                        0.0) {
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
+                                    child: CupertinoSearchTextField(
+                                      controller: _model.textController,
+                                      focusNode: _model.textFieldFocusNode,
+                                      autofocus: false,
+                                      onChanged: (text) {
                                         setState(() {
-                                          _model.textController!.clear();
-                                          _model.searching = false;
-                                          _model.profiler = null;
-                                          _model.profilisloading = false;
+                                          _model.profilisloading = true;
                                         });
-                                      });
-                                    } else {
-                                      setState(() {
-                                        FocusScope.of(context)
-                                            .requestFocus(FocusNode());
-                                        _model.textController!.clear();
-                                        _model.searching = false;
-                                        _model.profiler = null;
-                                        _model.profilisloading = false;
-                                      });
-                                    }
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 10.0),
-                                    child: Text(
-                                      'Avbryt',
+                                        if (_model.debounce?.isActive ??
+                                            false) {
+                                          _model.debounce!.cancel();
+                                        }
+                                        _model.debounce = Timer(
+                                            const Duration(milliseconds: 500),
+                                            () {
+                                          handleSearch();
+                                        });
+                                      },
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 238, 238, 238),
+                                      prefixInsets:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 6, 6, 6),
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      onSubmitted: (value) {
+                                        if (_model
+                                            .textController.text.isNotEmpty) {
+                                          FocusScope.of(context)
+                                              .requestFocus(FocusNode());
+                                          context.pushNamed(
+                                            'BondeGardPage',
+                                            queryParameters: {
+                                              'kategori': serializeParam(
+                                                  'Søk', ParamType.String),
+                                              'query': serializeParam(
+                                                  _model.textController.text,
+                                                  ParamType.String),
+                                            }.withoutNulls,
+                                          );
+                                        }
+                                      },
+                                      placeholder: 'Søk',
+                                      placeholderStyle:
+                                          FlutterFlowTheme.of(context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Nunito',
+                                                color: Colors.black45,
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                      prefixIcon: Icon(
+                                        CupertinoIcons.search,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 21,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                          .bodyLarge
                                           .override(
                                             fontFamily: 'Nunito',
                                             color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            fontSize: 17,
+                                                .primaryText,
+                                            fontSize: 15.0,
                                             letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
                                           ),
+                                      onTap: () {
+                                        setState(() {
+                                          _model.searching = true;
+                                        });
+                                      },
                                     ),
                                   ),
-                                )
+                                ),
+                              ),
+                              AnimatedSwitcher(
+                                duration: Duration(milliseconds: 150),
+                                transitionBuilder: (Widget child,
+                                    Animation<double> animation) {
+                                  final slideAnimation = Tween<Offset>(
+                                    begin: Offset(1.0, 0.0),
+                                    end: Offset.zero,
+                                  ).animate(animation);
+
+                                  final fadeAnimation = Tween<double>(
+                                    begin: 0.0,
+                                    end: 1.0,
+                                  ).animate(animation);
+
+                                  return SlideTransition(
+                                    position: slideAnimation,
+                                    child: FadeTransition(
+                                      opacity: fadeAnimation,
+                                      child: child,
+                                    ),
+                                  );
+                                },
+                                child: _model.searching
+                                    ? GestureDetector(
+                                        onTap: () async {
+                                          if (View.of(context)
+                                                  .viewInsets
+                                                  .bottom >
+                                              0.0) {
+                                            FocusScope.of(context)
+                                                .requestFocus(FocusNode());
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback((_) {
+                                              setState(() {
+                                                _model.searching = false;
+                                                // Clear fields or do any other necessary updates
+                                              });
+                                            });
+                                          } else {
+                                            setState(() {
+                                              _model.searching = false;
+                                            });
+                                          }
+                                        },
+                                        child: Padding(
+                                          key: ValueKey(
+                                              'searching'), // Ensure unique key
+                                          padding:
+                                              const EdgeInsets.only(left: 10.0),
+                                          child: Text(
+                                            'Avbryt',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Nunito',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                  fontSize: 17,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox
+                                        .shrink(), // Add widget for the non-searching state here
+                              ),
                             ],
                           ),
                         ),
@@ -440,1259 +470,1258 @@ class _HjemWidgetState extends State<ExploreWidget>
             centerTitle: true,
             elevation: 0.0,
           ),
-          body: _model.searching == true
-              ? SafeArea(
-                  top: true,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: NotificationListener<ScrollNotification>(
-                          onNotification: (ScrollNotification notification) {
-                            if (notification is ScrollStartNotification) {
-                              // Dismiss the keyboard when scrolling starts
-                              FocusScope.of(context).unfocus();
-                            }
-                            return false; // Return false to allow further handling of the event
-                          },
-                          child: SingleChildScrollView(
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            primary: false,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Stack(
-                                  children: [
-                                    if (_model.searching == true)
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0.0, 0.0, 0.0, 80.0),
-                                        child: SingleChildScrollView(
-                                          primary: false,
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        20, 0, 15, 30),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    // When the search button is pressed
-                                                    FocusScope.of(context)
-                                                        .requestFocus(
-                                                            FocusNode());
-                                                    context.pushNamed(
-                                                      'BondeGardPage',
-                                                      queryParameters: {
-                                                        'kategori':
-                                                            serializeParam(
-                                                                'Søk',
-                                                                ParamType
-                                                                    .String),
-                                                        'query': serializeParam(
-                                                            _model
-                                                                .textController
-                                                                .text,
-                                                            ParamType.String),
-                                                      }.withoutNulls,
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    width: double.infinity,
-                                                    height: 62,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      color: Colors.transparent,
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Icon(
-                                                              CupertinoIcons
-                                                                  .search,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText,
-                                                              size: 28,
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      15,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Text(
-                                                                    _model
-                                                                            .textController
-                                                                            .text
-                                                                            .isNotEmpty
-                                                                        ? 'Søk etter \"${_model.textController.text}\"'
-                                                                        : 'Nye matvarer',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Nunito',
-                                                                          fontSize:
-                                                                              16,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                        ),
-                                                                  ),
-                                                                  Text(
-                                                                    'Blant hele matsalg.no',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Nunito',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).secondaryText,
-                                                                          fontSize:
-                                                                              15,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Icon(
-                                                          CupertinoIcons
-                                                              .chevron_forward,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          size: 23,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              if (_model.profiler != null)
-                                                if (_model
-                                                        .profiler!.isNotEmpty &&
-                                                    _model.profilisloading !=
-                                                        true)
-                                                  Align(
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            -1, 0),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              15, 0, 0, 10),
-                                                      child: Text(
-                                                        'Folk',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: 21,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
+          body: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 270),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+            child: _model.searching
+                ? SafeArea(
+                    key: ValueKey('searching'),
+                    top: true,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: NotificationListener<ScrollNotification>(
+                            onNotification: (ScrollNotification notification) {
+                              if (notification is ScrollStartNotification) {
+                                // Dismiss the keyboard when scrolling starts
+                                FocusScope.of(context).unfocus();
+                              }
+                              return false; // Return false to allow further handling of the event
+                            },
+                            child: SingleChildScrollView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              primary: false,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      if (_model.searching == true)
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0.0, 0.0, 0.0, 80.0),
+                                          child: SingleChildScrollView(
+                                            primary: false,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          20, 0, 15, 30),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      // When the search button is pressed
+                                                      FocusScope.of(context)
+                                                          .requestFocus(
+                                                              FocusNode());
+                                                      context.pushNamed(
+                                                        'BondeGardPage',
+                                                        queryParameters: {
+                                                          'kategori':
+                                                              serializeParam(
+                                                                  'Søk',
+                                                                  ParamType
+                                                                      .String),
+                                                          'query': serializeParam(
+                                                              _model
+                                                                  .textController
+                                                                  .text,
+                                                              ParamType.String),
+                                                        }.withoutNulls,
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      height: 62,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color:
+                                                            Colors.transparent,
                                                       ),
-                                                    ),
-                                                  ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        5.0, 0.0, 5.0, 170.0),
-                                                child: RefreshIndicator(
-                                                  onRefresh: () async {
-                                                    await handleSearch();
-                                                    setState(() {});
-                                                  },
-                                                  child: ListView.builder(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(
-                                                      0,
-                                                      0,
-                                                      0,
-                                                      0,
-                                                    ),
-                                                    primary: false,
-                                                    shrinkWrap: true,
-                                                    scrollDirection:
-                                                        Axis.vertical,
-                                                    itemCount:
-                                                        _model.profilisloading
-                                                            ? 10
-                                                            : _model.profiler
-                                                                    ?.length ??
-                                                                0,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      if (_model
-                                                          .profilisloading) {
-                                                        return Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  vertical: 8.0,
-                                                                  horizontal:
-                                                                      16.0),
-                                                          child: Row(
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
                                                             children: [
-                                                              Shimmer
-                                                                  .fromColors(
-                                                                baseColor:
-                                                                    Colors.grey[
-                                                                        300]!,
-                                                                highlightColor:
-                                                                    Colors.grey[
-                                                                        100]!,
-                                                                child:
-                                                                    Container(
-                                                                  width: 50.0,
-                                                                  height: 50.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: const Color
-                                                                        .fromARGB(
-                                                                        127,
-                                                                        255,
-                                                                        255,
-                                                                        255),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            100.0),
-                                                                  ),
-                                                                ),
+                                                              Icon(
+                                                                CupertinoIcons
+                                                                    .search,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                size: 28,
                                                               ),
-                                                              const SizedBox(
-                                                                  width: 16.0),
-                                                              Expanded(
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        15,
+                                                                        0,
+                                                                        0,
+                                                                        0),
                                                                 child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
-                                                                    Shimmer
-                                                                        .fromColors(
-                                                                      baseColor:
-                                                                          Colors
-                                                                              .grey[300]!,
-                                                                      highlightColor:
-                                                                          Colors
-                                                                              .grey[100]!,
-                                                                      child:
-                                                                          Container(
-                                                                        width:
-                                                                            75.0, // Narrower width for second line
-                                                                        height:
-                                                                            13.0,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color: const Color
-                                                                              .fromARGB(
-                                                                              127,
-                                                                              255,
-                                                                              255,
-                                                                              255),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(8.0),
-                                                                        ),
-                                                                      ),
+                                                                    Text(
+                                                                      _model.textController.text
+                                                                              .isNotEmpty
+                                                                          ? 'Søk etter \"${_model.textController.text}\"'
+                                                                          : 'Nye matvarer',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Nunito',
+                                                                            fontSize:
+                                                                                16,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
                                                                     ),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            8.0),
-                                                                    Shimmer
-                                                                        .fromColors(
-                                                                      baseColor:
-                                                                          Colors
-                                                                              .grey[300]!,
-                                                                      highlightColor:
-                                                                          Colors
-                                                                              .grey[100]!,
-                                                                      child:
-                                                                          Container(
-                                                                        width:
-                                                                            120,
-                                                                        height:
-                                                                            13.0,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color: const Color
-                                                                              .fromARGB(
-                                                                              127,
-                                                                              255,
-                                                                              255,
-                                                                              255),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(8.0),
-                                                                        ),
-                                                                      ),
+                                                                    Text(
+                                                                      'Blant hele matsalg.no',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Nunito',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryText,
+                                                                            fontSize:
+                                                                                15,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
                                                                     ),
                                                                   ],
                                                                 ),
                                                               ),
                                                             ],
                                                           ),
-                                                        );
-                                                      }
-                                                      final profil = _model
-                                                          .profiler![index];
-                                                      return Padding(
+                                                          Icon(
+                                                            CupertinoIcons
+                                                                .chevron_forward,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            size: 23,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                if (_model.profiler != null)
+                                                  if (_model.profiler!
+                                                          .isNotEmpty &&
+                                                      _model.profilisloading !=
+                                                          true)
+                                                    Align(
+                                                      alignment:
+                                                          const AlignmentDirectional(
+                                                              -1, 0),
+                                                      child: Padding(
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .fromSTEB(5.0,
-                                                                0.0, 10.0, 0.0),
-                                                        child: InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .requestFocus(
-                                                                    FocusNode());
-                                                            context.pushNamed(
-                                                              'BrukerPage',
-                                                              queryParameters: {
-                                                                'uid':
-                                                                    serializeParam(
-                                                                  profil.uid,
-                                                                  ParamType
-                                                                      .String,
+                                                                .fromSTEB(
+                                                                15, 0, 0, 10),
+                                                        child: Text(
+                                                          'Folk',
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 21,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          5.0, 0.0, 5.0, 170.0),
+                                                  child: RefreshIndicator(
+                                                    onRefresh: () async {
+                                                      await handleSearch();
+                                                      setState(() {});
+                                                    },
+                                                    child: ListView.builder(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                      ),
+                                                      primary: false,
+                                                      shrinkWrap: true,
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      itemCount: _model
+                                                              .profilisloading
+                                                          ? 10
+                                                          : _model.profiler
+                                                                  ?.length ??
+                                                              0,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        if (_model
+                                                            .profilisloading) {
+                                                          return Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    vertical:
+                                                                        8.0,
+                                                                    horizontal:
+                                                                        16.0),
+                                                            child: Row(
+                                                              children: [
+                                                                Shimmer
+                                                                    .fromColors(
+                                                                  baseColor:
+                                                                      Colors.grey[
+                                                                          300]!,
+                                                                  highlightColor:
+                                                                      Colors.grey[
+                                                                          100]!,
+                                                                  child:
+                                                                      Container(
+                                                                    width: 50.0,
+                                                                    height:
+                                                                        50.0,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: const Color
+                                                                          .fromARGB(
+                                                                          127,
+                                                                          255,
+                                                                          255,
+                                                                          255),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              100.0),
+                                                                    ),
+                                                                  ),
                                                                 ),
-                                                                'username':
-                                                                    serializeParam(
-                                                                  profil
-                                                                      .username,
-                                                                  ParamType
-                                                                      .String,
+                                                                const SizedBox(
+                                                                    width:
+                                                                        16.0),
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Shimmer
+                                                                          .fromColors(
+                                                                        baseColor:
+                                                                            Colors.grey[300]!,
+                                                                        highlightColor:
+                                                                            Colors.grey[100]!,
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              75.0, // Narrower width for second line
+                                                                          height:
+                                                                              13.0,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color: const Color.fromARGB(
+                                                                                127,
+                                                                                255,
+                                                                                255,
+                                                                                255),
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(8.0),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                          height:
+                                                                              8.0),
+                                                                      Shimmer
+                                                                          .fromColors(
+                                                                        baseColor:
+                                                                            Colors.grey[300]!,
+                                                                        highlightColor:
+                                                                            Colors.grey[100]!,
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              120,
+                                                                          height:
+                                                                              13.0,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color: const Color.fromARGB(
+                                                                                127,
+                                                                                255,
+                                                                                255,
+                                                                                255),
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(8.0),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 ),
-                                                              },
-                                                            );
-                                                          },
-                                                          child: Material(
-                                                            color: Colors
-                                                                .transparent,
-                                                            elevation: 0.0,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          13.0),
+                                                              ],
                                                             ),
-                                                            child: Container(
-                                                              height: 73.0,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
+                                                          );
+                                                        }
+                                                        final profil = _model
+                                                            .profiler![index];
+                                                        return Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  5.0,
+                                                                  0.0,
+                                                                  10.0,
+                                                                  0.0),
+                                                          child: InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () async {
+                                                              FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      FocusNode());
+                                                              context.pushNamed(
+                                                                'BrukerPage',
+                                                                queryParameters: {
+                                                                  'uid':
+                                                                      serializeParam(
+                                                                    profil.uid,
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                  'username':
+                                                                      serializeParam(
+                                                                    profil
+                                                                        .username,
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                },
+                                                              );
+                                                            },
+                                                            child: Material(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              elevation: 0.0,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
                                                                             13.0),
-                                                                shape: BoxShape
-                                                                    .rectangle,
                                                               ),
-                                                              child: Align(
-                                                                alignment:
-                                                                    const AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .end,
-                                                                    children: [
-                                                                      Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                1.0,
-                                                                                1.0,
-                                                                                1.0),
-                                                                            child:
-                                                                                ClipRRect(
-                                                                              borderRadius: BorderRadius.circular(100.0),
-                                                                              child: CachedNetworkImage(
-                                                                                imageUrl: '${ApiConstants.baseUrl}${profil.profilepic}',
-                                                                                width: 45.0,
-                                                                                height: 45.0,
-                                                                                fit: BoxFit.cover,
-                                                                                imageBuilder: (context, imageProvider) {
-                                                                                  return Container(
-                                                                                    width: 45.0,
-                                                                                    height: 45.0,
-                                                                                    decoration: BoxDecoration(
-                                                                                      image: DecorationImage(
-                                                                                        image: imageProvider,
-                                                                                        fit: BoxFit.cover,
-                                                                                      ),
-                                                                                    ),
-                                                                                  );
-                                                                                },
-                                                                                errorWidget: (context, url, error) => Image.asset(
-                                                                                  'assets/images/profile_pic.png',
+                                                              child: Container(
+                                                                height: 73.0,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              13.0),
+                                                                  shape: BoxShape
+                                                                      .rectangle,
+                                                                ),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      const AlignmentDirectional(
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding:
+                                                                        const EdgeInsets
+                                                                            .all(
+                                                                            8.0),
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .end,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 1.0, 1.0),
+                                                                              child: ClipRRect(
+                                                                                borderRadius: BorderRadius.circular(100.0),
+                                                                                child: CachedNetworkImage(
+                                                                                  imageUrl: '${ApiConstants.baseUrl}${profil.profilepic}',
                                                                                   width: 45.0,
                                                                                   height: 45.0,
                                                                                   fit: BoxFit.cover,
+                                                                                  imageBuilder: (context, imageProvider) {
+                                                                                    return Container(
+                                                                                      width: 45.0,
+                                                                                      height: 45.0,
+                                                                                      decoration: BoxDecoration(
+                                                                                        image: DecorationImage(
+                                                                                          image: imageProvider,
+                                                                                          fit: BoxFit.cover,
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  },
+                                                                                  errorWidget: (context, url, error) => Image.asset(
+                                                                                    'assets/images/profile_pic.png',
+                                                                                    width: 45.0,
+                                                                                    height: 45.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                5.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              width: 179.0,
-                                                                              height: 103.0,
-                                                                              decoration: const BoxDecoration(),
-                                                                              child: Column(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                                                children: [
-                                                                                  Align(
-                                                                                    alignment: const AlignmentDirectional(-1.0, 1.0),
-                                                                                    child: Padding(
-                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(3.0, 0.0, 0.0, 20.0),
-                                                                                      child: Text(
-                                                                                        profil.username,
-                                                                                        textAlign: TextAlign.start,
-                                                                                        style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                              fontFamily: 'Nunito',
-                                                                                              fontSize: 17.0,
-                                                                                              letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.w600,
-                                                                                            ),
+                                                                            Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
+                                                                              child: Container(
+                                                                                width: 179.0,
+                                                                                height: 103.0,
+                                                                                decoration: const BoxDecoration(),
+                                                                                child: Column(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                                                  children: [
+                                                                                    Align(
+                                                                                      alignment: const AlignmentDirectional(-1.0, 1.0),
+                                                                                      child: Padding(
+                                                                                        padding: const EdgeInsetsDirectional.fromSTEB(3.0, 0.0, 0.0, 20.0),
+                                                                                        child: Text(
+                                                                                          profil.username,
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                                fontFamily: 'Nunito',
+                                                                                                fontSize: 17.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
                                                                                       ),
                                                                                     ),
-                                                                                  ),
-                                                                                ],
+                                                                                  ],
+                                                                                ),
                                                                               ),
                                                                             ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      Align(
-                                                                        alignment:
-                                                                            Alignment.center,
-                                                                        child:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .arrow_forward_ios,
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).secondaryText,
-                                                                          size:
-                                                                              18.0,
+                                                                          ],
                                                                         ),
-                                                                      )
-                                                                    ],
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Icon(
+                                                                            Icons.arrow_forward_ios,
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryText,
+                                                                            size:
+                                                                                18.0,
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      );
-                                                    },
+                                                        );
+                                                      },
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                )
-              : SafeArea(
-                  top: true,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        child: SafeArea(
-                          child: Container(
-                            decoration: const BoxDecoration(),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 5.0, 0.0, 0.0),
-                              child: RefreshIndicator.adaptive(
-                                color: FlutterFlowTheme.of(context).alternate,
-                                onRefresh: () async {
-                                  HapticFeedback.selectionClick();
-                                  _model.page = 0;
-                                  _model.end = false;
-                                  fetchData();
-                                  getAllFoods(true);
-                                },
-                                child: SingleChildScrollView(
-                                  controller: _scrollController1,
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  primary: false,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      ListView(
-                                        padding: EdgeInsets.zero,
-                                        primary: false,
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        children: [
-                                          Align(
-                                            alignment:
-                                                const AlignmentDirectional(
-                                                    0, -1),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 0, 0),
-                                              child: SingleChildScrollView(
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              12, 3, 0, 21),
-                                                      child: Text(
-                                                        'Kategorier',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: 22,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w800,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 11, 0, 21),
-                                                      child:
-                                                          SingleChildScrollView(
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      12,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap:
-                                                                    () async {
-                                                                  context
-                                                                      .pushNamed(
-                                                                    'BondeGardPage',
-                                                                    queryParameters:
-                                                                        {
-                                                                      'kategori':
-                                                                          serializeParam(
-                                                                        'kjøtt',
-                                                                        ParamType
-                                                                            .String,
-                                                                      ),
-                                                                    }.withoutNulls,
-                                                                  );
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  width: 90,
-                                                                  height:
-                                                                      103.14,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: const Color(
-                                                                        0xFFF6F6F6),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            20),
-                                                                  ),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Icon(
-                                                                        Ionicons
-                                                                            .restaurant_outline,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                        size:
-                                                                            29,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            2,
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Kjøtt',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                color: FlutterFlowTheme.of(context).primaryText,
-                                                                                fontSize: 14,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w700,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      8,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap:
-                                                                    () async {
-                                                                  context
-                                                                      .pushNamed(
-                                                                    'BondeGardPage',
-                                                                    queryParameters:
-                                                                        {
-                                                                      'kategori':
-                                                                          serializeParam(
-                                                                        'grønt',
-                                                                        ParamType
-                                                                            .String,
-                                                                      ),
-                                                                    }.withoutNulls,
-                                                                  );
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  width: 90,
-                                                                  height:
-                                                                      103.14,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: const Color(
-                                                                        0xFFF6F6F6),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            20),
-                                                                  ),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Icon(
-                                                                        Ionicons
-                                                                            .leaf_outline,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                        size:
-                                                                            29,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            2,
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Grønt',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                color: FlutterFlowTheme.of(context).primaryText,
-                                                                                fontSize: 14,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w700,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      8,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap:
-                                                                    () async {
-                                                                  context
-                                                                      .pushNamed(
-                                                                    'BondeGardPage',
-                                                                    queryParameters:
-                                                                        {
-                                                                      'kategori':
-                                                                          serializeParam(
-                                                                        'meieri',
-                                                                        ParamType
-                                                                            .String,
-                                                                      ),
-                                                                    }.withoutNulls,
-                                                                  );
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  width: 90,
-                                                                  height:
-                                                                      103.14,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: const Color(
-                                                                        0xFFF6F6F6),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            20),
-                                                                  ),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Icon(
-                                                                        Ionicons
-                                                                            .egg_outline,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                        size:
-                                                                            29,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            2,
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            Text(
-                                                                          'meieri',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                color: FlutterFlowTheme.of(context).primaryText,
-                                                                                fontSize: 14,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w700,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      8,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap:
-                                                                    () async {
-                                                                  context
-                                                                      .pushNamed(
-                                                                    'BondeGardPage',
-                                                                    queryParameters:
-                                                                        {
-                                                                      'kategori':
-                                                                          serializeParam(
-                                                                        'bakverk',
-                                                                        ParamType
-                                                                            .String,
-                                                                      ),
-                                                                    }.withoutNulls,
-                                                                  );
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  width: 90,
-                                                                  height:
-                                                                      103.14,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: const Color(
-                                                                        0xFFF6F6F6),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            20),
-                                                                  ),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Icon(
-                                                                        Ionicons
-                                                                            .basket_outline,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                        size:
-                                                                            29,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            2,
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Bakverk',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                color: FlutterFlowTheme.of(context).primaryText,
-                                                                                fontSize: 14,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w700,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      8,
-                                                                      0,
-                                                                      8,
-                                                                      0),
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap:
-                                                                    () async {
-                                                                  context
-                                                                      .pushNamed(
-                                                                    'BondeGardPage',
-                                                                    queryParameters:
-                                                                        {
-                                                                      'kategori':
-                                                                          serializeParam(
-                                                                        'sjømat',
-                                                                        ParamType
-                                                                            .String,
-                                                                      ),
-                                                                    }.withoutNulls,
-                                                                  );
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  width: 90,
-                                                                  height:
-                                                                      103.14,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: const Color(
-                                                                        0xFFF6F6F6),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            20),
-                                                                  ),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Icon(
-                                                                        Ionicons
-                                                                            .fish_outline,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                        size:
-                                                                            29,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            0,
-                                                                            2,
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            Text(
-                                                                          'Sjømat',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                color: FlutterFlowTheme.of(context).primaryText,
-                                                                                fontSize: 14,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w700,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          const AlignmentDirectional(
-                                                              -0.76, -0.61),
-                                                      child: Container(
-                                                        width:
-                                                            MediaQuery.sizeOf(
-                                                                    context)
-                                                                .width,
-                                                        height: 50,
-                                                        decoration:
-                                                            const BoxDecoration(),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      12,
-                                                                      0,
-                                                                      0,
-                                                                      20),
-                                                              child: Text(
-                                                                'Lokalmat',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Nunito',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                      fontSize:
-                                                                          22,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w800,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      if ((_model.matvarer == null ||
-                                              _model.matvarer!.isEmpty) &&
-                                          _model.isloading == false)
-                                        SizedBox(
-                                          width:
-                                              MediaQuery.sizeOf(context).width,
-                                          height: 500,
-                                          child: Align(
-                                            alignment:
-                                                const AlignmentDirectional(
-                                                    0, -1),
-                                            child: Padding(
+                      ],
+                    ),
+                  )
+                : SafeArea(
+                    key: ValueKey('explore'),
+                    top: true,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Flexible(
+                          child: SafeArea(
+                            child: Container(
+                              decoration: const BoxDecoration(),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 5.0, 0.0, 0.0),
+                                child: RefreshIndicator.adaptive(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  onRefresh: () async {
+                                    HapticFeedback.selectionClick();
+                                    _model.page = 0;
+                                    _model.end = false;
+                                    fetchData();
+                                    getAllFoods(true);
+                                  },
+                                  child: SingleChildScrollView(
+                                    controller: _scrollController1,
+                                    physics:
+                                        const AlwaysScrollableScrollPhysics(),
+                                    primary: false,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        ListView(
+                                          padding: EdgeInsets.zero,
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          children: [
+                                            Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0, -1),
+                                              child: Padding(
                                                 padding:
                                                     const EdgeInsetsDirectional
-                                                        .fromSTEB(0, 0, 0, 110),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      child: Image.asset(
-                                                        'assets/images/no-results.png',
-                                                        width: 180,
-                                                        height: 180,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 20, 0, 0),
-                                                      child: Text(
-                                                        'Fant ingen treff',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .headlineSmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  fontSize: 22,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )),
-                                          ),
-                                        ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(5.0, 13.0, 5.0, 0.0),
-                                        child: RefreshIndicator(
-                                          onRefresh: () async {
-                                            _model.page = 0;
-                                            _model.end = false;
-                                            await getAllFoods(true);
-                                            setState(() {});
-                                          },
-                                          child: GridView.builder(
-                                            padding: const EdgeInsets.fromLTRB(
-                                              0,
-                                              0,
-                                              0,
-                                              63.0,
-                                            ),
-                                            gridDelegate:
-                                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: 0.68,
-                                            ),
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: _model.isloading
-                                                ? 1
-                                                : _model.end
-                                                    ? _model.matvarer?.length ??
-                                                        0
-                                                    : (_model.matvarer
-                                                                ?.length ??
-                                                            0) +
-                                                        1,
-                                            itemBuilder: (context, index) {
-                                              if (_model.isloading) {
-                                                return ShimmerLoadingWidget();
-                                              }
-                                              if (index <
-                                                  (_model.matvarer?.length ??
-                                                      0)) {
-                                                final matvare =
-                                                    _model.matvarer![index];
-                                                return ProductList(
-                                                  matvare: matvare,
-                                                  onTap: () async {
-                                                    FocusScope.of(context)
-                                                        .requestFocus(
-                                                            FocusNode());
-                                                    context.pushNamed(
-                                                      'MatDetaljBondegard',
-                                                      queryParameters: {
-                                                        'matvare':
-                                                            serializeParam(
-                                                          matvare.toJson(),
-                                                          ParamType.JSON,
+                                                        .fromSTEB(0, 0, 0, 0),
+                                                child: SingleChildScrollView(
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                12, 3, 0, 21),
+                                                        child: Text(
+                                                          'Kategorier',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 22,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800,
+                                                              ),
                                                         ),
-                                                      },
-                                                    );
-                                                  },
-                                                );
-                                              } else {
-                                                if (_model.matvarer == null ||
-                                                    _model.matvarer!.length <
-                                                        44) {
-                                                  return Container();
-                                                } else {
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 11, 0, 21),
+                                                        child:
+                                                            SingleChildScrollView(
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        12,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    context
+                                                                        .pushNamed(
+                                                                      'BondeGardPage',
+                                                                      queryParameters:
+                                                                          {
+                                                                        'kategori':
+                                                                            serializeParam(
+                                                                          'kjøtt',
+                                                                          ParamType
+                                                                              .String,
+                                                                        ),
+                                                                      }.withoutNulls,
+                                                                    );
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    width: 90,
+                                                                    height:
+                                                                        103.14,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: const Color(
+                                                                          0xFFF6F6F6),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
+                                                                    ),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Ionicons
+                                                                              .restaurant_outline,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          size:
+                                                                              29,
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                              0,
+                                                                              2,
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              Text(
+                                                                            'Kjøtt',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Nunito',
+                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                  fontSize: 14,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        8,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    context
+                                                                        .pushNamed(
+                                                                      'BondeGardPage',
+                                                                      queryParameters:
+                                                                          {
+                                                                        'kategori':
+                                                                            serializeParam(
+                                                                          'grønt',
+                                                                          ParamType
+                                                                              .String,
+                                                                        ),
+                                                                      }.withoutNulls,
+                                                                    );
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    width: 90,
+                                                                    height:
+                                                                        103.14,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: const Color(
+                                                                          0xFFF6F6F6),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
+                                                                    ),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Ionicons
+                                                                              .leaf_outline,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          size:
+                                                                              29,
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                              0,
+                                                                              2,
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              Text(
+                                                                            'Grønt',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Nunito',
+                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                  fontSize: 14,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        8,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    context
+                                                                        .pushNamed(
+                                                                      'BondeGardPage',
+                                                                      queryParameters:
+                                                                          {
+                                                                        'kategori':
+                                                                            serializeParam(
+                                                                          'meieri',
+                                                                          ParamType
+                                                                              .String,
+                                                                        ),
+                                                                      }.withoutNulls,
+                                                                    );
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    width: 90,
+                                                                    height:
+                                                                        103.14,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: const Color(
+                                                                          0xFFF6F6F6),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
+                                                                    ),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Ionicons
+                                                                              .egg_outline,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          size:
+                                                                              29,
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                              0,
+                                                                              2,
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              Text(
+                                                                            'meieri',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Nunito',
+                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                  fontSize: 14,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        8,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    context
+                                                                        .pushNamed(
+                                                                      'BondeGardPage',
+                                                                      queryParameters:
+                                                                          {
+                                                                        'kategori':
+                                                                            serializeParam(
+                                                                          'bakverk',
+                                                                          ParamType
+                                                                              .String,
+                                                                        ),
+                                                                      }.withoutNulls,
+                                                                    );
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    width: 90,
+                                                                    height:
+                                                                        103.14,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: const Color(
+                                                                          0xFFF6F6F6),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
+                                                                    ),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Ionicons
+                                                                              .basket_outline,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          size:
+                                                                              29,
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                              0,
+                                                                              2,
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              Text(
+                                                                            'Bakverk',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Nunito',
+                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                  fontSize: 14,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        8,
+                                                                        0,
+                                                                        8,
+                                                                        0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    context
+                                                                        .pushNamed(
+                                                                      'BondeGardPage',
+                                                                      queryParameters:
+                                                                          {
+                                                                        'kategori':
+                                                                            serializeParam(
+                                                                          'sjømat',
+                                                                          ParamType
+                                                                              .String,
+                                                                        ),
+                                                                      }.withoutNulls,
+                                                                    );
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    width: 90,
+                                                                    height:
+                                                                        103.14,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: const Color(
+                                                                          0xFFF6F6F6),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
+                                                                    ),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Ionicons
+                                                                              .fish_outline,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          size:
+                                                                              29,
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                              0,
+                                                                              2,
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              Text(
+                                                                            'Sjømat',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Nunito',
+                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                  fontSize: 14,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                -0.76, -0.61),
+                                                        child: Container(
+                                                          width:
+                                                              MediaQuery.sizeOf(
+                                                                      context)
+                                                                  .width,
+                                                          height: 50,
+                                                          decoration:
+                                                              const BoxDecoration(),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                        12,
+                                                                        0,
+                                                                        0,
+                                                                        20),
+                                                                child: Text(
+                                                                  'Lokalmat',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .start,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                        fontSize:
+                                                                            22,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w800,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        if ((_model.matvarer == null ||
+                                                _model.matvarer!.isEmpty) &&
+                                            _model.isloading == false)
+                                          SizedBox(
+                                            width: MediaQuery.sizeOf(context)
+                                                .width,
+                                            height: 500,
+                                            child: Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0, -1),
+                                              child: Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0, 0, 0, 110),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        child: Image.asset(
+                                                          'assets/images/no-results.png',
+                                                          width: 180,
+                                                          height: 180,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 20, 0, 0),
+                                                        child: Text(
+                                                          'Fant ingen treff',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .headlineSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 22,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )),
+                                            ),
+                                          ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(5.0, 13.0, 5.0, 0.0),
+                                          child: RefreshIndicator(
+                                            onRefresh: () async {
+                                              _model.page = 0;
+                                              _model.end = false;
+                                              await getAllFoods(true);
+                                              setState(() {});
+                                            },
+                                            child: GridView.builder(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                0,
+                                                0,
+                                                0,
+                                                63.0,
+                                              ),
+                                              gridDelegate:
+                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                childAspectRatio: 0.68,
+                                              ),
+                                              primary: false,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: _model.isloading
+                                                  ? 1
+                                                  : _model.end
+                                                      ? _model.matvarer
+                                                              ?.length ??
+                                                          0
+                                                      : (_model.matvarer
+                                                                  ?.length ??
+                                                              0) +
+                                                          1,
+                                              itemBuilder: (context, index) {
+                                                if (_model.isloading) {
                                                   return ShimmerLoadingWidget();
                                                 }
-                                              }
-                                            },
+                                                if (index <
+                                                    (_model.matvarer?.length ??
+                                                        0)) {
+                                                  final matvare =
+                                                      _model.matvarer![index];
+                                                  return ProductList(
+                                                    matvare: matvare,
+                                                    onTap: () async {
+                                                      FocusScope.of(context)
+                                                          .requestFocus(
+                                                              FocusNode());
+                                                      context.pushNamed(
+                                                        'MatDetaljBondegard',
+                                                        queryParameters: {
+                                                          'matvare':
+                                                              serializeParam(
+                                                            matvare.toJson(),
+                                                            ParamType.JSON,
+                                                          ),
+                                                        },
+                                                      );
+                                                    },
+                                                  );
+                                                } else {
+                                                  if (_model.matvarer == null ||
+                                                      _model.matvarer!.length <
+                                                          44) {
+                                                    return Container();
+                                                  } else {
+                                                    return ShimmerLoadingWidget();
+                                                  }
+                                                }
+                                              },
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );

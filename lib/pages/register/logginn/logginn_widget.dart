@@ -824,13 +824,13 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                   0, 0, 0, 0),
                               color: FlutterFlowTheme.of(context).alternate,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Nunito',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 17,
+                                    color: Colors.white,
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w700,
                                   ),
                               elevation: 0,
                               borderSide: const BorderSide(

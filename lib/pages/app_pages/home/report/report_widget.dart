@@ -392,14 +392,13 @@ class _RapporterWidgetState extends State<ReportWidget> {
                                         : FlutterFlowTheme.of(context)
                                             .unSelected,
                                     textStyle: FlutterFlowTheme.of(context)
-                                        .titleMedium
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Nunito',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          fontSize: 17.0,
+                                          color: Colors.white,
+                                          fontSize: 16,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w800,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                     elevation: 0.0,
                                     borderSide: const BorderSide(

@@ -2431,7 +2431,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                           fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.w800,
+                                                              FontWeight.w700,
                                                         ),
                                                     elevation: 0.0,
                                                     borderSide:
@@ -2521,7 +2521,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                       0.0,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w800,
+                                                                          .w700,
                                                                 ),
                                                         elevation: 0.0,
                                                         borderSide:

@@ -589,7 +589,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                             child: const Text(
                                               'Rapporter chat',
                                               style: TextStyle(
-                                                fontSize: 19,
+                                                fontSize: 18,
                                                 color: Colors
                                                     .red, // Red text for 'Slett annonse'
                                               ),
@@ -606,7 +606,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                           child: const Text(
                                             'Avbryt',
                                             style: TextStyle(
-                                              fontSize: 19,
+                                              fontSize: 18,
                                               color: CupertinoColors.systemBlue,
                                             ),
                                           ),

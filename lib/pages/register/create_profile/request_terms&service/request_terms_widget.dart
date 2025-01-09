@@ -329,14 +329,13 @@ class _RequestLocationWidgetState extends State<RequestTermsWidget> {
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).alternate,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .titleMedium
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Nunito',
-                                    color:
-                                        FlutterFlowTheme.of(context).secondary,
-                                    fontSize: 16.0,
+                                    color: Colors.white,
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.w700,
                                   ),
                               elevation: 0.0,
                               borderSide: const BorderSide(
