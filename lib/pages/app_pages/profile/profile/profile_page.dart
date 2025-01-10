@@ -81,6 +81,7 @@ class _ProfilWidgetState extends State<ProfilePage>
         if (mounted) {
           setState(() {
             if (_model.matvarer != null && _model.matvarer!.isEmpty) {
+              _model.isloading = false;
               return;
             } else {
               _model.isloading = false;
@@ -114,6 +115,9 @@ class _ProfilWidgetState extends State<ProfilePage>
         userInfoService.fetchData(context);
         await userInfoService.updateUserStats(context);
         _model.isloading = false;
+        if (_model.matvarer != null && _model.matvarer!.isEmpty) {
+          safeSetState(() {});
+        }
       }
     } on SocketException {
       _model.isloading = false;
@@ -523,7 +527,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                                                   try {
                                                                                     if (FFAppState().followersCount != 0) {
                                                                                       context.pushNamed(
-                                                                                        'Folgere',
+                                                                                        'FolgereProfile',
                                                                                         queryParameters: {
                                                                                           'username': serializeParam(FirebaseAuth.instance.currentUser!.uid, ParamType.String),
                                                                                           'folger': serializeParam(
@@ -591,7 +595,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                                                   try {
                                                                                     if (FFAppState().followingCount != 0) {
                                                                                       context.pushNamed(
-                                                                                        'Folgere',
+                                                                                        'FolgereProfile',
                                                                                         queryParameters: {
                                                                                           'username': serializeParam(FirebaseAuth.instance.currentUser!.uid, ParamType.String),
                                                                                           'folger': serializeParam(

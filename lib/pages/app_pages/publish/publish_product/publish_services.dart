@@ -270,7 +270,7 @@ class PublishServices {
         model.errorCategory = null;
 
         if (nonPlaceholderImages.isEmpty) {
-          model.errorImage = 'Vennligst legg til minst et bilde';
+          model.errorImage = 'Vennligst legg til minst ett bilde';
           if (model.topKey.currentContext != null) {
             Scrollable.ensureVisible(model.topKey.currentContext!,
                 duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
@@ -475,7 +475,7 @@ class PublishServices {
         model.errorCategory = null;
 
         if (nonPlaceholderImages.isEmpty) {
-          model.errorImage = 'Vennligst legg til minst et bilde';
+          model.errorImage = 'Vennligst legg til minst ett bilde';
           if (model.topKey.currentContext != null) {
             Scrollable.ensureVisible(model.topKey.currentContext!,
                 duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
@@ -652,7 +652,7 @@ class PublishServices {
                 return CupertinoAlertDialog(
                   title: Text("Bekreft handling"),
                   content: Text(
-                    "Er du sikker på at du vil markere matvaren som utsolgt? Dette vil automatisk avslå alle bud. Du kan fjerne markeringen senere ved å øke antallet igjen.",
+                    "Er du sikker på at du vil markere matvaren som utsolgt? Du kan fjerne markeringen senere ved å øke antallet igjen.",
                   ),
                   actions: [
                     CupertinoDialogAction(

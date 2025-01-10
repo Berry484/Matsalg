@@ -55,7 +55,7 @@ class Toasts {
                             color: FlutterFlowTheme.of(context).primaryText,
                             fontSize: 17,
                             letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w700,
                           ),
                       textAlign: TextAlign.start,
                     ),
@@ -71,7 +71,7 @@ class Toasts {
 
     overlay.insert(overlayEntry);
 
-    Future.delayed(const Duration(seconds: 1, milliseconds: 500), () {
+    Future.delayed(const Duration(seconds: 2), () {
       if (overlayEntry.mounted) {
         overlayEntry.remove();
       }
@@ -129,7 +129,7 @@ class Toasts {
                             color: FlutterFlowTheme.of(context).primaryText,
                             fontSize: 17,
                             letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.bold,
                           ),
                       textAlign: TextAlign.start,
                     ),
@@ -145,7 +145,7 @@ class Toasts {
 
     overlay.insert(overlayEntry);
 
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 2), () {
       if (overlayEntry.mounted) {
         overlayEntry.remove();
       }

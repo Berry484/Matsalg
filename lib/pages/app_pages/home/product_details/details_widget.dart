@@ -266,6 +266,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                         ),
                                       },
                                     );
+                                    return;
                                   }
                                   if (widget.fromChat == true) {
                                     context.pushNamed(
@@ -285,9 +286,15 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                         ),
                                       },
                                     );
+                                    return;
                                   } else {
                                     context.pushNamed(
-                                      'BrukerPage',
+                                      GoRouterState.of(context)
+                                              .uri
+                                              .toString()
+                                              .startsWith('/profil')
+                                          ? 'BrukerPage3'
+                                          : 'BrukerPage',
                                       queryParameters: {
                                         'uid': serializeParam(
                                           matvare.uid,
@@ -299,6 +306,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                         ),
                                       },
                                     );
+                                    return;
                                   }
                                 },
                                 child: Row(
@@ -545,24 +553,9 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                           if (token == null) {
                                             return;
                                           }
-                                          _model.liker =
-                                              !(_model.liker ?? true);
-
-                                          FFAppState()
-                                              .likedFoods
-                                              .remove(matvare.matId);
-                                          if (!FFAppState()
-                                              .unlikedFoods
-                                              .contains(matvare.matId)) {
-                                            FFAppState()
-                                                .unlikedFoods
-                                                .add(matvare.matId ?? 0);
-                                          }
-                                          ApiLike.deleteLike(
-                                              token, matvare.matId);
-                                          safeSetState(() {});
-                                          if (_model.liker == true) {
-                                            HapticFeedback.selectionClick();
+                                          safeSetState(() =>
+                                              _model.liker = !_model.liker!);
+                                          if (_model.liker!) {
                                             FFAppState()
                                                 .unlikedFoods
                                                 .remove(matvare.matId);
@@ -573,8 +566,22 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                   .likedFoods
                                                   .add(matvare.matId ?? 0);
                                             }
+
                                             _triggerHeartAnimation();
                                             ApiLike.sendLike(
+                                                token, matvare.matId);
+                                          } else {
+                                            FFAppState()
+                                                .likedFoods
+                                                .remove(matvare.matId);
+                                            if (!FFAppState()
+                                                .unlikedFoods
+                                                .contains(matvare.matId)) {
+                                              FFAppState()
+                                                  .unlikedFoods
+                                                  .add(matvare.matId ?? 0);
+                                            }
+                                            ApiLike.deleteLike(
                                                 token, matvare.matId);
                                           }
                                         } on SocketException {
@@ -1880,7 +1887,12 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                       try {
                                         if (widget.fromChat != true) {
                                           context.pushNamed(
-                                            'ProductDetail',
+                                            GoRouterState.of(context)
+                                                    .uri
+                                                    .toString()
+                                                    .startsWith('/profil')
+                                                ? 'MatDetaljBondegard1'
+                                                : 'ProductDetail',
                                             queryParameters: {
                                               'matvare': serializeParam(
                                                 nyematvarer.toJson(),

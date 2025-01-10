@@ -146,12 +146,12 @@ class EditServices {
         }
         if (decodedResponse['username'] == 'username_change_too_soon') {
           model.isLoading = false;
-          showToast('Du må vente før du kan endre brukernavnet igjen', false);
+          showToast('Du må vente før du kan endre brukernavnet igjen', true);
           navigate('', true);
         }
-        if (response.statusCode == 500) {
+        if (response.statusCode == 409) {
           model.isLoading = false;
-          showToast('Brukernavnet er allerede brukt av en annen bruker', false);
+          showToast('Brukernavnet er allerede brukt av en annen bruker', true);
         }
       }
       model.isLoading = false;

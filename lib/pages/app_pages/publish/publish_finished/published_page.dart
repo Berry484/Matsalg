@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/services/user_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';

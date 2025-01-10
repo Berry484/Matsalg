@@ -23,7 +23,7 @@ class ApiLike {
             Uri.parse('$baseUrl/api/likes?mat_id=$matId'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 5));
       return response;
     } on SocketException {
       throw const SocketException('');
@@ -48,7 +48,7 @@ class ApiLike {
             Uri.parse('$baseUrl/api/likes?mat_id=$matId'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 5));
       return response;
     } on SocketException {
       throw const SocketException('');

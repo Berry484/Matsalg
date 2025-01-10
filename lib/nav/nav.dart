@@ -432,6 +432,51 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                       },
                     ),
                     GoRoute(
+                      path: 'folgereProfile',
+                      name: 'FolgereProfile',
+                      builder: (context, state) {
+                        // Use FFParameters to retrieve the parameters safely
+                        final params = FFParameters(state);
+
+                        // Retrieve the 'username' and 'folger' parameters
+                        final username = params.getParam<String>(
+                            'username', ParamType.String);
+                        final folger =
+                            params.getParam<String>('folger', ParamType.String);
+
+                        // Return the FollowersWidget with the retrieved parameters
+                        return FollowersWidget(
+                            username: username, folger: folger);
+                      },
+                      pageBuilder: (context, state) {
+                        return CustomTransitionPage<void>(
+                          key: state.pageKey, // Maintain the page state
+                          child: FollowersWidget(
+                            username: FFParameters(state)
+                                .getParam<String>('username', ParamType.String),
+                            folger: FFParameters(state)
+                                .getParam<String>('folger', ParamType.String),
+                          ),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const Offset begin =
+                                Offset(1.0, 0.0); // Slide in from the right
+                            const Offset end = Offset.zero;
+                            const Curve curve = Curves.easeInOut;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    GoRoute(
                       path: 'brukerPage3',
                       name: 'BrukerPage3',
                       builder: (context, state) {
@@ -458,8 +503,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                           ),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
-                            const Offset begin =
-                                Offset(1.0, 0.0); // Slide in from right
+                            const Offset begin = Offset(1.0, 0.0);
                             const Offset end = Offset.zero;
                             const Curve curve = Curves.easeInOut;
 

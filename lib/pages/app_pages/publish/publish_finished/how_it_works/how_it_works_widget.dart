@@ -176,7 +176,7 @@ class _HowItWorksWidgetState extends State<HowItWorksWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(13, 10, 13, 0),
+                        padding: EdgeInsets.fromLTRB(25, 10, 25, 0),
                         child: Align(
                           alignment: const AlignmentDirectional(0, 0),
                           child: Text(

@@ -183,7 +183,12 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                                     brukere.uid) return;
                                 if (widget.fromChat != true) {
                                   context.pushNamed(
-                                    'BrukerPage',
+                                    GoRouterState.of(context)
+                                            .uri
+                                            .toString()
+                                            .startsWith('/profil')
+                                        ? 'BrukerPage3'
+                                        : 'BrukerPage',
                                     queryParameters: {
                                       'uid': serializeParam(
                                         brukere.uid,

@@ -517,6 +517,8 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                   if (response.statusCode == 200) {
                                     final decodedResponse =
                                         jsonDecode(response.body);
+                                    FFAppState().lagtUt = false;
+                                    FFAppState().liked = false;
                                     FFAppState().brukernavn =
                                         decodedResponse['brukernavn'] ?? '';
                                     FFAppState().firstname =
@@ -538,6 +540,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;
+                                    userInfoService.updateUserStats(context);
                                     sendToken();
                                     if (!context.mounted) return;
                                     context.go('/home');
@@ -725,6 +728,8 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                   if (response.statusCode == 200) {
                                     final decodedResponse =
                                         jsonDecode(response.body);
+                                    FFAppState().lagtUt = false;
+                                    FFAppState().liked = false;
                                     FFAppState().brukernavn =
                                         decodedResponse['brukernavn'] ?? '';
                                     FFAppState().firstname =
@@ -746,6 +751,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;
+                                    userInfoService.updateUserStats(context);
                                     sendToken();
                                     if (!context.mounted) return;
                                     context.go('/home');

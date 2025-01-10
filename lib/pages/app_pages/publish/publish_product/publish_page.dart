@@ -2473,7 +2473,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                     : path ==
                                                                             'BrukerLagtUtInfo'
                                                                         ? context
-                                                                            .pushNamed(
+                                                                            .goNamed(
                                                                             'BrukerLagtUtInfo',
                                                                             queryParameters: {
                                                                               'picture': serializeParam(

@@ -616,7 +616,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                                   if ((_model.bruker?.followersCount) != 0) {
                                                                                     if (widget.fromChat != true) {
                                                                                       context.pushNamed(
-                                                                                        'Folgere',
+                                                                                        GoRouterState.of(context).uri.toString().startsWith('/profil') ? 'FolgereProfile' : 'Folgere',
                                                                                         queryParameters: {
                                                                                           'username': serializeParam(widget.uid, ParamType.String),
                                                                                           'folger': serializeParam('Følgere', ParamType.String),
@@ -696,7 +696,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                                   if (_model.bruker!.followingCount != 0) {
                                                                                     if (widget.fromChat != true) {
                                                                                       context.pushNamed(
-                                                                                        'Folgere',
+                                                                                        GoRouterState.of(context).uri.toString().startsWith('/profil') ? 'FolgereProfile' : 'Folgere',
                                                                                         queryParameters: {
                                                                                           'username': serializeParam(widget.uid, ParamType.String),
                                                                                           'folger': serializeParam(
@@ -1450,7 +1450,14 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                           if (widget.fromChat !=
                                                               true) {
                                                             context.pushNamed(
-                                                              'ProductDetail',
+                                                              GoRouterState.of(
+                                                                          context)
+                                                                      .uri
+                                                                      .toString()
+                                                                      .startsWith(
+                                                                          '/profil')
+                                                                  ? 'MatDetaljBondegard1'
+                                                                  : 'ProductDetail',
                                                               queryParameters: {
                                                                 'matvare':
                                                                     serializeParam(
@@ -1618,7 +1625,12 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                           try {
                                             if (widget.fromChat != true) {
                                               context.pushNamed(
-                                                'ProductDetail',
+                                                GoRouterState.of(context)
+                                                        .uri
+                                                        .toString()
+                                                        .startsWith('/profil')
+                                                    ? 'MatDetaljBondegard1'
+                                                    : 'ProductDetail',
                                                 queryParameters: {
                                                   'matvare': serializeParam(
                                                     matvarer.toJson(),
