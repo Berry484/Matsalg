@@ -11,6 +11,7 @@ import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/logging.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/home/product_details/details_services.dart';
 import 'package:mat_salg/pages/app_pages/home/product_details/get_updates/get_updates_widget.dart';

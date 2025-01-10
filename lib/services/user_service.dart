@@ -7,7 +7,6 @@ import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/models/user.dart';
 import 'package:mat_salg/models/user_info_search.dart';
 import 'package:mat_salg/my_ip.dart';
-import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
@@ -330,31 +329,6 @@ class UserInfoService {
       throw const SocketException('');
     } catch (e) {
       throw Exception("An error occurred: $e");
-    }
-  }
-
-//-----------------------------------------------------------------------------------------------------------------------
-//--------------------Updates variables in the app state that stores the currents users food items and orders------------
-//-----------------------------------------------------------------------------------------------------------------------
-  Future<void> getAll(BuildContext context) async {
-    try {
-      final appState = FFAppState();
-      appState.matvarer.clear();
-      String? token = await firebaseAuthService.getToken(context);
-      if (token == null) {
-        return;
-      } else {
-        List<Matvarer>? fetchedMatvarer =
-            await ApiFoodService.getMyFoods(token, 0);
-        if (fetchedMatvarer != null && fetchedMatvarer.isNotEmpty) {
-          FFAppState().matvarer = fetchedMatvarer;
-        }
-      }
-    } on SocketException {
-      logger.e(
-          'An socketException occured while updating stats about users items');
-    } catch (e) {
-      logger.e('An error occured while updating stats about users items');
     }
   }
 

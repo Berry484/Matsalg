@@ -5,6 +5,7 @@ import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/pages/app_pages/home/product_details/details_widget.dart';
 import 'package:mat_salg/services/food_service.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:mat_salg/services/location_service.dart';

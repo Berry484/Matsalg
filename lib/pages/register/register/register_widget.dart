@@ -303,7 +303,6 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                       _webSocketService = WebSocketService();
                                       _webSocketService.connect(retrying: true);
                                       if (!context.mounted) return;
-                                      userInfoService.getAll(context);
                                       sendToken();
                                       _isloading = false;
                                       if (!context.mounted) return;
@@ -417,7 +416,6 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;
-                                    userInfoService.getAll(context);
                                     sendToken();
                                     _isloading = false;
                                     if (!context.mounted) return;

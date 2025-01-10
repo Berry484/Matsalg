@@ -123,10 +123,8 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
                     child: FFButtonWidget(
                       onPressed: () async {
                         if (FFAppState().lagtUt) {
-                          userInfoService.getAll(context);
                           context.goNamed('Home');
                         } else {
-                          userInfoService.getAll(context);
                           context.goNamed('HowItWorksWidget');
                         }
                       },

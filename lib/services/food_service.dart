@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'dart:async';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
@@ -153,7 +154,6 @@ class ApiFoodService {
         headers: headers,
         body: jsonBody,
       );
-      getMyFoods(token, 0);
       return response; // Return the response
     } on SocketException {
       throw const SocketException('');
@@ -275,26 +275,19 @@ class ApiFoodService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
-      // Make the API request and parse the response
       final response = await http
           .get(
-            Uri.parse(
-                '$baseUrl/rrh/send/matvarer/mine?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page'),
+            Uri.parse('$baseUrl/rrh/send/matvarer/mine?size=44&page=$page'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 5));
 
       // Check if the response is successful (status code 200)
       if (response.statusCode == 200) {
-        // Decode the JSON response
-
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
-        FFAppState().matvarer = Matvarer.matvarerFromSnapShot(jsonResponse);
         return Matvarer.matvarerFromSnapShot(jsonResponse);
       } else {
-        // Handle unsuccessful response
         return null;
       }
     } on SocketException {

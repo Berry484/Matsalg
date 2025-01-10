@@ -7,8 +7,10 @@ class ShimmerLoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
+      baseColor: Colors.grey[300]!, // Slightly lighter base color
+      highlightColor: Colors.grey[50]!, // Brighter highlight color
+      period:
+          const Duration(milliseconds: 1200), // Speed up the shimmer slightly
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -17,7 +19,8 @@ class ShimmerLoadingWidget extends StatelessWidget {
             width: 190.0,
             height: 230.0,
             decoration: BoxDecoration(
-              color: const Color.fromARGB(115, 255, 255, 255),
+              color: const Color.fromARGB(
+                  100, 255, 255, 255), // Adjusted opacity for lightness
               borderRadius: BorderRadius.circular(16.0), // Rounded corners
             ),
           ),
@@ -26,7 +29,8 @@ class ShimmerLoadingWidget extends StatelessWidget {
             width: 190,
             height: 15,
             decoration: BoxDecoration(
-              color: const Color.fromARGB(115, 255, 255, 255),
+              color: const Color.fromARGB(
+                  100, 255, 255, 255), // Adjusted opacity for lightness
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),

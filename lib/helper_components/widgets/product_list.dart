@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:mat_salg/helper_components/functions/calculate_distance.dart';

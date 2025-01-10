@@ -1,5 +1,5 @@
 import 'package:mat_salg/models/user.dart';
-
+import 'package:mat_salg/models/matvarer.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'user_widget.dart' show UserWidget;
 import 'package:flutter/material.dart';

@@ -127,7 +127,7 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                     color: FlutterFlowTheme.of(context).primaryText,
                     fontSize: 18,
                     letterSpacing: 0.0,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                   ),
             ),
             actions: const [],
@@ -231,7 +231,7 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                                 borderRadius: BorderRadius.circular(13.0),
                               ),
                               child: Container(
-                                height: 80.0,
+                                height: 70.0,
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(13.0),

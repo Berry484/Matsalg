@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
@@ -1761,9 +1762,11 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                         },
                                                       );
                                                     } else {
-                                                      if (_model.matvarer!
-                                                              .length <
-                                                          44) {
+                                                      if (_model.matvarer ==
+                                                              null ||
+                                                          _model.matvarer!
+                                                                  .length <
+                                                              44) {
                                                         return Container();
                                                       } else {
                                                         return ShimmerLoadingWidget();
@@ -2065,9 +2068,11 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                         },
                                                       );
                                                     } else {
-                                                      if (_model.folgerMatvarer!
-                                                              .length <
-                                                          44) {
+                                                      if (_model.folgerMatvarer ==
+                                                              null ||
+                                                          _model.folgerMatvarer!
+                                                                  .length <
+                                                              44) {
                                                         return Container();
                                                       } else {
                                                         return ShimmerLoadingWidget();

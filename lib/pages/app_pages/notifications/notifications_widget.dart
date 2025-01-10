@@ -1,5 +1,4 @@
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/services/firebase_service.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -25,7 +24,6 @@ class _HjemWidgetState extends State<NotificationsWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => NotificationsModel());
-    FirebaseApi().initNotifications();
   }
 
   @override
@@ -224,7 +222,7 @@ class _HjemWidgetState extends State<NotificationsWidget>
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      16, 0, 16, 0),
+                                      25, 0, 25, 0),
                                   child: Text(
                                     'Her vil du få beskjed når vi har nytt for deg, eller når noe du ønsker blir tilgjengelig.',
                                     textAlign: TextAlign.center,

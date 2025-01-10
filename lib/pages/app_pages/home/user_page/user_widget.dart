@@ -15,7 +15,7 @@ import 'package:mat_salg/services/follow_service.dart';
 import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/user_service.dart';
 import 'package:shimmer/shimmer.dart';
-
+import 'package:mat_salg/models/matvarer.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
@@ -1353,7 +1353,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                         _model.empty == true)
                                       Padding(
                                         padding:
-                                            EdgeInsets.fromLTRB(0, 65, 0, 0),
+                                            EdgeInsets.fromLTRB(0, 80, 0, 0),
                                         child: SizedBox(
                                           width:
                                               MediaQuery.sizeOf(context).width,
@@ -1365,13 +1365,11 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                Icon(
-                                                  CupertinoIcons
-                                                      .camera_on_rectangle,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  size: 56,
+                                                Image.asset(
+                                                  'assets/images/no-posts.png',
+                                                  width: 125,
+                                                  height: 125,
+                                                  fit: BoxFit.cover,
                                                 ),
                                                 const SizedBox(height: 16),
                                                 Row(

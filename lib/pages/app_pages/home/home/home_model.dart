@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:mat_salg/helper_components/flutter_flow/form_field_controller.dart';
 import 'package:mat_salg/models/user_info_search.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'home_widget.dart' show HomeWidget;
 import 'package:flutter/material.dart';

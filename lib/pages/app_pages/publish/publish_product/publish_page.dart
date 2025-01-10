@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +12,7 @@ import 'package:mat_salg/pages/app_pages/publish/choose_category/category_page.d
 import 'package:mat_salg/logging.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -450,15 +452,20 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                         .path
                                                                         .contains(
                                                                             '/files/')
-                                                                    ? Image
-                                                                        .network(
-                                                                        '${ApiConstants.baseUrl}${selectedImage.path}',
+                                                                    ? CachedNetworkImage(
+                                                                        fadeInDuration:
+                                                                            Duration.zero,
+                                                                        imageUrl:
+                                                                            '${ApiConstants.baseUrl}${selectedImage.path}',
                                                                         width:
                                                                             88.0,
                                                                         height:
                                                                             88.0,
                                                                         fit: BoxFit
                                                                             .cover,
+                                                                        placeholder:
+                                                                            (context, url) =>
+                                                                                const SizedBox(),
                                                                       )
                                                                     : Image
                                                                         .file(
@@ -600,12 +607,15 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                       0 &&
                                                                   _model.errorImage !=
                                                                       null
-                                                              ? Colors.red
+                                                              ? FlutterFlowTheme
+                                                                      .of(
+                                                                          context)
+                                                                  .error
                                                               : FlutterFlowTheme
                                                                       .of(context)
                                                                   .secondary,
                                                           borderRadius: 15.0,
-                                                          borderWidth: 1,
+                                                          borderWidth: 1.3,
                                                           buttonSize: 86.0,
                                                           fillColor:
                                                               FlutterFlowTheme.of(
@@ -658,7 +668,9 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                   textAlign: TextAlign.left,
                                                   _model.errorImage ?? '',
                                                   style: TextStyle(
-                                                    color: Colors.red,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .error,
                                                     fontSize: 13.0,
                                                   ),
                                                 ),
@@ -883,7 +895,9 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                             ? FlutterFlowTheme
                                                                     .of(context)
                                                                 .secondary
-                                                            : Colors.red,
+                                                            : FlutterFlowTheme
+                                                                    .of(context)
+                                                                .error,
                                                         width: 1,
                                                       ),
                                                       borderRadius:
@@ -997,7 +1011,9 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                         _model.errorCategory ??
                                                             '',
                                                         style: TextStyle(
-                                                          color: Colors.red,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
                                                           fontSize: 12.0,
                                                         ),
                                                       ),

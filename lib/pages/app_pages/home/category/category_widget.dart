@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';

@@ -1,5 +1,5 @@
 import 'package:image_picker/image_picker.dart';
-
+import 'package:mat_salg/models/matvarer.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'publish_page.dart' show PublishPage;
 import 'package:flutter/material.dart';

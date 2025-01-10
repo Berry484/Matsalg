@@ -538,7 +538,6 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;
-                                    userInfoService.getAll(context);
                                     sendToken();
                                     if (!context.mounted) return;
                                     context.go('/home');
@@ -747,7 +746,6 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;
-                                    userInfoService.getAll(context);
                                     sendToken();
                                     if (!context.mounted) return;
                                     context.go('/home');

@@ -1,4 +1,5 @@
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import 'category_widget.dart' show CategoryWidget;
 import 'package:flutter/material.dart';
 

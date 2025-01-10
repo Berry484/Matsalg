@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
@@ -54,6 +55,51 @@ class _ProfilWidgetState extends State<ProfilePage>
     _scrollController1.addListener(_scrollListener);
   }
 
+  Future<void> getMyFoods(bool refresh) async {
+    try {
+      String? token = await firebaseAuthService.getToken(context);
+      if (token == null) {
+        return;
+      } else {
+        if (refresh == true) {
+          _model.page = 0;
+          _model.end = false;
+          _model.matvarer = await ApiFoodService.getMyFoods(token, 0);
+        } else {
+          List<Matvarer>? nyeMatvarer =
+              await ApiFoodService.getMyFoods(token, _model.page);
+
+          _model.matvarer ??= [];
+
+          if (nyeMatvarer != null && nyeMatvarer.isNotEmpty) {
+            _model.matvarer?.addAll(nyeMatvarer);
+          } else {
+            _model.end = true;
+          }
+        }
+
+        if (mounted) {
+          setState(() {
+            if (_model.matvarer != null && _model.matvarer!.isEmpty) {
+              return;
+            } else {
+              _model.isloading = false;
+            }
+          });
+        }
+      }
+    } on SocketException {
+      setState(() {
+        _model.isloading = false;
+      });
+      if (!mounted) return;
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      if (!mounted) return;
+      Toasts.showErrorToast(context, 'En feil oppstod');
+    }
+  }
+
   Future<void> refreshPage() async {
     try {
       _model.isloading = true;
@@ -63,12 +109,11 @@ class _ProfilWidgetState extends State<ProfilePage>
         return;
       } else {
         if (!mounted) return;
-        ApiFoodService.getMyFoods(token, 0);
+        getMyFoods(true);
         profileServices.getAllLikes(context, token);
         userInfoService.fetchData(context);
         await userInfoService.updateUserStats(context);
         _model.isloading = false;
-        safeSetState(() {});
       }
     } on SocketException {
       _model.isloading = false;
@@ -84,10 +129,13 @@ class _ProfilWidgetState extends State<ProfilePage>
   void _scrollListener() async {
     if (_scrollController1.position.pixels >=
         _scrollController1.position.maxScrollExtent) {
-      if (_isLoading || _model.end || FFAppState().matvarer.length < 44) return;
+      if (_isLoading ||
+          _model.end ||
+          _model.matvarer!.length < 44 ||
+          _model.tabBarCurrentIndex == 1) return;
       _isLoading = true;
       _model.page += 1;
-      await profileServices.getMyFoods(context);
+      await getMyFoods(false);
       safeSetState(() {
         _isLoading = false;
       });
@@ -429,7 +477,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                                 children: [
                                                                                   Text(
-                                                                                    FFAppState().matvarer.length.toString(),
+                                                                                    _model.matvarer?.length.toString() ?? '',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
@@ -439,7 +487,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                                                         ),
                                                                                   ),
                                                                                   Text(
-                                                                                    FFAppState().matvarer.length == 1 ? 'matvare' : 'matvarer',
+                                                                                    _model.matvarer?.length == 1 ? 'matvare' : 'matvarer',
                                                                                     textAlign: TextAlign.center,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Nunito',
@@ -1055,7 +1103,11 @@ class _ProfilWidgetState extends State<ProfilePage>
                                         if (((FFAppState().lagtUt != true &&
                                                 _model.tabBarCurrentIndex ==
                                                     0)) &&
-                                            FFAppState().matvarer.isEmpty)
+                                            (_model.matvarer?.isEmpty ??
+                                                true) &&
+                                            (_model.matvarer == null
+                                                ? _model.isloading
+                                                : true))
                                           SizedBox(
                                             width: MediaQuery.sizeOf(context)
                                                 .width,
@@ -1064,8 +1116,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                 550,
                                             child: Center(
                                               child: Column(
-                                                mainAxisSize: MainAxisSize
-                                                    .min, // Use min to fit content
+                                                mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 crossAxisAlignment:
@@ -1138,9 +1189,9 @@ class _ProfilWidgetState extends State<ProfilePage>
                                             ),
                                           ),
                                       if ((FFAppState().lagtUt ||
-                                              FFAppState()
-                                                  .matvarer
-                                                  .isNotEmpty) &&
+                                              _model.matvarer != null &&
+                                                  _model
+                                                      .matvarer!.isNotEmpty) &&
                                           _model.tabBarCurrentIndex == 0)
                                         Padding(
                                           padding: const EdgeInsetsDirectional
@@ -1179,24 +1230,23 @@ class _ProfilWidgetState extends State<ProfilePage>
                                               itemCount: _model.isloading
                                                   ? 1
                                                   : _model.end
-                                                      ? FFAppState()
-                                                          .matvarer
-                                                          .length
-                                                      : (FFAppState()
-                                                              .matvarer
-                                                              .length) +
+                                                      ? _model.matvarer
+                                                              ?.length ??
+                                                          0
+                                                      : (_model.matvarer
+                                                                  ?.length ??
+                                                              0) +
                                                           1,
                                               itemBuilder: (context, index) {
                                                 if (_model.isloading) {
                                                   return ShimmerLoadingWidget();
                                                 }
+
                                                 if (index <
-                                                    (FFAppState()
-                                                        .matvarer
-                                                        .length)) {
-                                                  final matvare = FFAppState()
-                                                      .matvarer
-                                                      .toList()[index];
+                                                    (_model.matvarer?.length ??
+                                                        0)) {
+                                                  final matvare =
+                                                      _model.matvarer![index];
                                                   return ProductList(
                                                     matvare: matvare,
                                                     onTap: () async {
@@ -1223,10 +1273,9 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                     },
                                                   );
                                                 } else {
-                                                  if (FFAppState()
-                                                          .matvarer
-                                                          .length <
-                                                      44) {
+                                                  if (_model.matvarer == null ||
+                                                      _model.matvarer!.length <
+                                                          44) {
                                                     return Container();
                                                   } else {
                                                     return ShimmerLoadingWidget();

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/services/food_service.dart';
 import '../../../map/kart_pop_up_widget.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -417,6 +418,8 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                         0.0),
                                                             child:
                                                                 CachedNetworkImage(
+                                                              fadeInDuration:
+                                                                  Duration.zero,
                                                               imageUrl:
                                                                   '${ApiConstants.baseUrl}${matvare.imgUrls![0]}',
                                                               width: double
@@ -473,6 +476,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                           0.0),
                                                               child:
                                                                   CachedNetworkImage(
+                                                                fadeInDuration:
+                                                                    Duration
+                                                                        .zero,
                                                                 imageUrl:
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![1]}',
                                                                 width: double
@@ -531,6 +537,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                           0.0),
                                                               child:
                                                                   CachedNetworkImage(
+                                                                fadeInDuration:
+                                                                    Duration
+                                                                        .zero,
                                                                 imageUrl:
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![2]}',
                                                                 width: double
@@ -588,6 +597,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                           0.0),
                                                               child:
                                                                   CachedNetworkImage(
+                                                                fadeInDuration:
+                                                                    Duration
+                                                                        .zero,
                                                                 imageUrl:
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![3]}',
                                                                 width: double
@@ -646,6 +658,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                           0.0),
                                                               child:
                                                                   CachedNetworkImage(
+                                                                fadeInDuration:
+                                                                    Duration
+                                                                        .zero,
                                                                 imageUrl:
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![4]}',
                                                                 width: double

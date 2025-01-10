@@ -1,4 +1,5 @@
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
+import 'package:mat_salg/models/matvarer.dart';
 import 'details_widget.dart' show DetailsWidget;
 import 'package:flutter/material.dart';
 
