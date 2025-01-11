@@ -81,9 +81,13 @@ class DetailsServices {
             lastactive: matvare.lastactive,
             profilePic: matvare.profilepic ?? '',
             messages: [],
+            matId: matvare.matId,
+            productImage: matvare.imgUrls?.first,
+            productTitle: matvare.name,
+            productPrice: matvare.price,
           );
 
-          FFAppState().conversations.add(newConversation);
+          FFAppState().conversations.insert(0, newConversation);
           return newConversation;
         },
       );

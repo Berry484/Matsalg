@@ -197,55 +197,44 @@ class WebSocketService {
         // Find the conversation with the receiver (i.e., the user who sent the "read" status)
         var conversation = appState.conversations.firstWhere(
           (conv) => conv.user == receiver,
-          orElse: () =>
-              throw (Exception), // If no conversation exists, return null
+          orElse: () => throw (Exception),
         );
-
-        // Iterate over the messages in the conversation
         for (var message in conversation.messages) {
           // If the message is sent by 'me' (me == true), mark it as read
           if (message.me) {
-            message.read = true; // Mark message as read
+            message.read = true;
           }
         }
-        // Notify listeners to update the UI
         appState.updateUI();
         logger.d(
             'Marked all messages sent by me as read for receiver: $receiver');
       }
 
-      // Check if data is a Map (assumes the message is in JSON format)
       if (data is Map) {
-        // If the message contains only the 'status' field, ignore it
         if (data.containsKey('status')) {
           logger.d("Received status update, ignoring...");
-          return; // Ignore this message
+          return;
         }
 
-        // If this is the first message received after connection
         if ((data['conversations'] != null)) {
           try {
             final appState = FFAppState();
             appState.conversations.clear();
-            var data = jsonDecode(message); // Assuming message is JSON string.
+            var data = jsonDecode(message);
 
-            // Check if the response contains 'conversations' key
             if (data is Map && data['conversations'] != null) {
               var conversationsList = data['conversations'] as List<dynamic>;
 
-              // Parse and add new conversations to FFAppState
               for (var conversationJson in conversationsList) {
                 var conv = Conversation.fromJson(conversationJson);
                 appState.conversations.add(conv);
               }
 
-              // Determine if any latest message is unread
               bool hasUnreadMessages =
                   appState.conversations.any((conversation) {
                 return conversation.messages.isNotEmpty &&
-                    !conversation
-                        .messages.first.read && // Check the latest message
-                    !conversation.messages.first.me; // Ensure it's sent by "me"
+                    !conversation.messages.first.read &&
+                    !conversation.messages.first.me;
               });
 
               FFAppState().chatAlert.value = hasUnreadMessages;
@@ -257,35 +246,39 @@ class WebSocketService {
             logger.d('Error parsing message: $e');
           }
         } else {
-          var data = jsonDecode(message); // Assuming message is JSON string.
-          // Proceed with normal message handling if sender and content are present
-          String sender = data['sender'] ?? ''; // The sender of the message
-          String content = data['content'] ?? ''; // The content of the message
+          var data = jsonDecode(message);
+          String sender = data['sender'] ?? '';
+          String content = data['content'] ?? '';
           String username = data['username'] ?? '';
           String? lastactive = DateTime.now().toIso8601String();
-          String profilePic =
-              data['profile_picture'] ?? ''; // The sender of the message
-          String time =
-              data['time'] ?? DateTime.now().toIso8601String(); // Timestamp
-          bool me = data['me'] ??
-              false; // Flag indicating if the message was sent by the current user
+          String profilePic = data['profile_picture'] ?? '';
+          String time = data['time'] ?? DateTime.now().toIso8601String();
+          bool me = data['me'] ?? false;
+          int? matId = data['matId'] != null
+              ? int.tryParse(data['matId'].toString())
+              : null;
 
-          // Create a new Message object
+          // Create a new Message object with additional fields
           Message newMessage = Message(
             content: content,
             time: time,
-            read: false, // Assuming the message is unread initially
+            read: false,
+            matId: matId,
             me: me,
+            showDelivered: null,
+            showLest: null,
+            isMostRecent: null,
+            showTime: null,
           );
+
           FFAppState().chatAlert.value = true;
-          // Access FFAppState to update the conversations globally
+
           final appState = FFAppState();
 
           bool empty = false;
           var conversation = appState.conversations.firstWhere(
             (conv) => conv.user == sender,
             orElse: () {
-              // Set empty to true to indicate a new conversation is being created
               empty = true;
               return Conversation(
                 user: sender,
@@ -315,8 +308,8 @@ class WebSocketService {
     }
   }
 
-  void sendMessage(
-      String receiver, String content, String username, String? lastactive) {
+  void sendMessage(String receiver, String content, String username,
+      String? lastactive, int? matId) {
     if (!_isConnected) {
       logger.d('WebSocket is not connected. Cannot send message.');
       throw const SocketException('');
@@ -330,14 +323,13 @@ class WebSocketService {
 
     // Create a new message object for the sent message
     Message newMessage = Message(
-      content: escapedContent, // Use escaped content
-      time: DateTime.now()
-          .toIso8601String(), // Use current time for the sent message
-      read: false, // Mark it as read (or modify as needed)
-      me: true, // Mark this message as sent by the current user
+      content: escapedContent,
+      time: DateTime.now().toIso8601String(),
+      read: false,
+      me: true,
+      matId: matId,
     );
 
-    // Access the global app state (FFAppState)
     final appState = FFAppState();
 
     // Find the existing conversation or create a new one if not found
@@ -349,44 +341,36 @@ class WebSocketService {
         lastactive: lastactive,
         deleted: false,
         profilePic: '',
-        messages: [newMessage], // Start the conversation with the new message
+        matId: matId,
+        messages: [newMessage],
       ),
     );
 
     // Always add the new message to the conversation's messages list
-    conversation.messages
-        .insert(0, newMessage); // Insert the message at the beginning
+    conversation.messages.insert(0, newMessage);
 
-    // Send the message over WebSocket to the server (escaped)
-    _sendMessageToServer(receiver, escapedContent);
+    _sendMessageToServer(receiver, escapedContent, matId);
 
-    // Save the updated conversation list to SharedPreferences
     appState.updateUI();
   }
 
-  void _sendMessageToServer(String receiver, String content) {
+  void _sendMessageToServer(String receiver, String content, int? matId) {
     final appState = FFAppState();
     // Prepare the message object in the correct format
     Map<String, dynamic> message = {
       'receiver': receiver,
-      'content': content, // Use the escaped content
+      'content': content,
       'time': DateTime.now().toIso8601String(),
-      'me': true, // Mark message as sent by the current user
+      'me': true,
+      "matId": matId,
     };
 
-    // Send the encoded message over WebSocket
     _ioWebSocketChannel.sink.add(jsonEncode(message));
 
-    // Save the updated conversation list to SharedPreferences
     appState.updateUI();
   }
 
   void _sendMarkAsReadRequest(String sender) {
-    // if (!_isConnected) {
-    //   return;
-    // }
-
-    // Prepare the message for the server
     Map<String, String> messageData = {
       'sender': sender,
       'read': 'true',

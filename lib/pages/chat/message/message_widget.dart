@@ -527,94 +527,119 @@ class _MessageWidgetState extends State<MessageWidget> {
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 0, 8, 0),
-                              child: IconButton(
-                                icon: Icon(
-                                  CupertinoIcons.ellipsis,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 28.0,
-                                ),
-                                onPressed: () {
-                                  showCupertinoModalPopup(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return CupertinoActionSheet(
-                                        title: const Text(
-                                          'Velg en handling',
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400,
-                                            color:
-                                                CupertinoColors.secondaryLabel,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        actions: <Widget>[
-                                          CupertinoActionSheetAction(
-                                            onPressed: () async {
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                barrierColor:
-                                                    const Color.fromARGB(
-                                                        60, 17, 0, 0),
-                                                useRootNavigator: true,
-                                                context: context,
-                                                builder: (context) {
-                                                  return GestureDetector(
-                                                    onTap: () =>
-                                                        FocusScope.of(context)
-                                                            .unfocus(),
-                                                    child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
-                                                      child: ReportWidget(
-                                                        username:
-                                                            conversation.user,
-                                                        chatUsername:
-                                                            conversation
-                                                                .username,
-                                                        chat: true,
-                                                        matId: null,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              ).then(
-                                                  (value) => setState(() {}));
-                                              return;
-                                            },
-                                            child: const Text(
-                                              'Rapporter chat',
+                              child: Row(
+                                children: [
+                                  if (conversation.productImage != null)
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
+                                      child: CachedNetworkImage(
+                                        fadeInDuration: Duration.zero,
+                                        imageUrl:
+                                            '${ApiConstants.baseUrl}${conversation.productImage}',
+                                        width: 35.0,
+                                        height: 35.0,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) =>
+                                            const SizedBox(),
+                                      ),
+                                    ),
+                                  if (conversation.productImage != null)
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                  IconButton(
+                                    icon: Icon(
+                                      CupertinoIcons.ellipsis,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 28.0,
+                                    ),
+                                    onPressed: () {
+                                      showCupertinoModalPopup(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return CupertinoActionSheet(
+                                            title: const Text(
+                                              'Velg en handling',
                                               style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors
-                                                    .red, // Red text for 'Slett annonse'
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w400,
+                                                color: CupertinoColors
+                                                    .secondaryLabel,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            actions: <Widget>[
+                                              CupertinoActionSheetAction(
+                                                onPressed: () async {
+                                                  await showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    barrierColor:
+                                                        const Color.fromARGB(
+                                                            60, 17, 0, 0),
+                                                    useRootNavigator: true,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return GestureDetector(
+                                                        onTap: () =>
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child: ReportWidget(
+                                                            username:
+                                                                conversation
+                                                                    .user,
+                                                            chatUsername:
+                                                                conversation
+                                                                    .username,
+                                                            chat: true,
+                                                            matId: null,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ).then((value) =>
+                                                      setState(() {}));
+                                                  return;
+                                                },
+                                                child: const Text(
+                                                  'Rapporter chat',
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors
+                                                        .red, // Red text for 'Slett annonse'
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                            cancelButton:
+                                                CupertinoActionSheetAction(
+                                              onPressed: () {
+                                                Navigator.pop(
+                                                    context); // Close the action sheet
+                                              },
+                                              isDefaultAction: true,
+                                              child: const Text(
+                                                'Avbryt',
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: CupertinoColors
+                                                      .systemBlue,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                        cancelButton:
-                                            CupertinoActionSheetAction(
-                                          onPressed: () {
-                                            Navigator.pop(
-                                                context); // Close the action sheet
-                                          },
-                                          isDefaultAction: true,
-                                          child: const Text(
-                                            'Avbryt',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              color: CupertinoColors.systemBlue,
-                                            ),
-                                          ),
-                                        ),
+                                          );
+                                        },
                                       );
                                     },
-                                  );
-                                },
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -797,9 +822,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 4, 0),
                     child: Align(
-                      alignment:
-                          Alignment.bottomRight, // Center if only one line
-
+                      alignment: Alignment.bottomRight,
                       child: FlutterFlowIconButton(
                         borderColor: Colors.transparent,
                         borderRadius: 50.0,
@@ -812,7 +835,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                                   conversation.user,
                                   _model.textController!.text,
                                   conversation.username,
-                                  conversation.lastactive);
+                                  conversation.lastactive,
+                                  conversation.matId);
                               setState(() {
                                 _model.textController!.clear();
                               });

@@ -288,11 +288,12 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                         profilePic:
                                             _model.bruker!.profilepic ?? '',
                                         messages: [],
+                                        matId: null,
                                       );
 
                                       FFAppState()
                                           .conversations
-                                          .add(newConversation);
+                                          .insert(0, newConversation);
 
                                       // Return the new conversation
                                       return newConversation;

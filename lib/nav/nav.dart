@@ -699,14 +699,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         path: '/message',
         name: 'message',
         builder: (context, state) {
-          // Use FFParameters to retrieve the parameters safely
           final params = FFParameters(state);
-
-          // Retrieve the 'conversation' parameter using ParamType.JSON
           final conversation = params.getParam<Map<String, dynamic>>(
               'conversation', ParamType.JSON);
-
-          // Return the MessageWidget with the retrieved 'conversation' parameter
           return MessageWidget(conversation: conversation);
         },
         parentNavigatorKey: _parentKey,

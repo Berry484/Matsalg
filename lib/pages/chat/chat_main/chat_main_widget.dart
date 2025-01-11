@@ -137,6 +137,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                     ),
               ),
             ),
+            toolbarHeight: 45,
             centerTitle: true,
             elevation: 0,
             scrolledUnderElevation: 0,
@@ -477,6 +478,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                         .first
                                                                         .content // Last message content
                                                                     : 'Ingen meldinger enda',
+                                                                productImage:
+                                                                    conversation
+                                                                        .productImage,
                                                                 messageImage:
                                                                     conversation
                                                                         .profilePic,
@@ -752,6 +756,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 messageImage:
                                                                     conversation
                                                                         .profilePic,
+                                                                productImage:
+                                                                    conversation
+                                                                        .productImage,
                                                                 isUnread:
                                                                     !conversation
                                                                         .messages
@@ -1024,6 +1031,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 messageImage:
                                                                     conversation
                                                                         .profilePic,
+                                                                productImage:
+                                                                    conversation
+                                                                        .productImage,
                                                                 isUnread:
                                                                     !conversation
                                                                         .messages

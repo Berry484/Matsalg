@@ -299,6 +299,13 @@ class Conversation {
   final bool deleted;
   String? lastactive;
   final List<Message> messages;
+  int? matId;
+  bool isOwner = false;
+  String? productImage;
+  String? productTitle;
+  int? productPrice;
+  bool slettet = false;
+  bool kjopt = false;
 
   Conversation({
     required this.user,
@@ -307,18 +314,34 @@ class Conversation {
     required this.lastactive,
     required this.deleted,
     required this.messages,
+    this.matId,
+    this.isOwner = false,
+    this.productImage,
+    this.productTitle,
+    this.productPrice,
+    this.slettet = false,
+    this.kjopt = false,
   });
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
+    // Checking if matId is present, and if not, it won't be included
     return Conversation(
       user: json['user'] as String? ?? "",
-      lastactive: json['lastactive'] as String,
       username: json['username'] as String? ?? "",
+      lastactive: json['lastactive'] as String?,
       profilePic: json['profile_picture'] as String? ?? "",
       deleted: json['deleted'] as bool? ?? false,
       messages: (json['messages'] as List)
           .map((messageJson) => Message.fromJson(messageJson))
           .toList(),
+
+      matId: json['matId'], // matId is nullable
+      isOwner: json['isOwner'] ?? false,
+      productImage: json['productImage'],
+      productTitle: json['productTitle'],
+      productPrice: json['productPrice'],
+      slettet: json['slettet'] ?? false,
+      kjopt: json['kjopt'] ?? false,
     );
   }
 
@@ -330,6 +353,13 @@ class Conversation {
       'deleted': deleted,
       'profile_picture': profilePic,
       'messages': messages.map((message) => message.toJson()).toList(),
+      'matId': matId,
+      'isOwner': isOwner,
+      'productImage': productImage,
+      'productTitle': productTitle,
+      'productPrice': productPrice,
+      'slettet': slettet,
+      'kjopt': kjopt,
     };
   }
 
@@ -342,8 +372,9 @@ class Conversation {
 class Message {
   final String content;
   final String time;
-  bool read; // Changed to non-final to allow modification
+  bool read;
   final bool me;
+  final int? matId;
 
   // Flags for UI (nullable)
   bool? showDelivered;
@@ -354,20 +385,23 @@ class Message {
   Message({
     required this.content,
     required this.time,
-    this.read = false, // Default to false for unread messages
+    this.read = false,
     required this.me,
-    this.showDelivered, // Default to null
-    this.showLest, // Default to null
-    this.isMostRecent, // Default to null
+    this.showDelivered,
+    this.showLest,
+    this.isMostRecent,
     this.showTime,
+    this.matId,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
       content: json['content'] as String? ?? "",
       time: json['time'] as String? ?? "",
-      read: json['read'] as bool? ?? false, // Parse 'read' field from JSON
+      read: json['read'] as bool? ?? false,
       me: json['me'] as bool? ?? false,
+      matId:
+          json['matId'] != null ? int.tryParse(json['matId'].toString()) : null,
     );
   }
 
@@ -377,7 +411,7 @@ class Message {
       'time': time,
       'read': read,
       'me': me,
-      // You don't need to serialize the flags because they are temporary
+      'matId': matId,
     };
   }
 }

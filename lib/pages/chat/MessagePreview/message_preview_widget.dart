@@ -16,6 +16,7 @@ class MessagePreviewWidget extends StatefulWidget {
     this.messageImage,
     this.isUnread,
     required this.messageTime,
+    this.productImage,
   });
 
   final String? messageTitle;
@@ -23,6 +24,7 @@ class MessagePreviewWidget extends StatefulWidget {
   final String? messageImage;
   final bool? isUnread;
   final String messageTime;
+  final String? productImage;
 
   @override
   State<MessagePreviewWidget> createState() => _MessagePreviewWidgetState();
@@ -64,7 +66,7 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 3, 0, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(5, 3, 0, 0),
       child: Container(
         width: double.infinity,
         height: 75,
@@ -90,10 +92,10 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
               if (widget.messageImage != null &&
                   widget.messageImage!.isNotEmpty)
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: Container(
-                      width: 53,
-                      height: 53,
+                      width: 50,
+                      height: 50,
                       clipBehavior: Clip.antiAlias,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
@@ -102,13 +104,13 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                         fadeInDuration: Duration.zero,
                         imageUrl:
                             '${ApiConstants.baseUrl}${widget.messageImage}',
-                        width: 53,
-                        height: 53,
+                        width: 50,
+                        height: 50,
                         fit: BoxFit.cover,
                         imageBuilder: (context, imageProvider) {
                           return Container(
-                            width: 53,
-                            height: 53,
+                            width: 50,
+                            height: 50,
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: imageProvider,
@@ -119,8 +121,8 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                         },
                         errorWidget: (context, url, error) => Image.asset(
                           'assets/images/profile_pic.png',
-                          width: 53,
-                          height: 53,
+                          width: 50,
+                          height: 50,
                           fit: BoxFit.cover,
                         ),
                       )),
@@ -129,23 +131,23 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: Container(
-                    width: 53,
-                    height: 53,
+                    width: 50,
+                    height: 50,
                     clipBehavior: Clip.antiAlias,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.asset(
                       'assets/images/profile_pic.png',
-                      width: 53,
-                      height: 53,
+                      width: 50,
+                      height: 50,
                       fit: BoxFit.cover,
                       errorBuilder: (BuildContext context, Object error,
                           StackTrace? stackTrace) {
                         return Image.asset(
                           'assets/images/profile_pic.png',
-                          width: 53,
-                          height: 53,
+                          width: 50,
+                          height: 50,
                           fit: BoxFit.cover,
                         );
                       },
@@ -162,10 +164,14 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                8, 8, 12, 0),
+                            padding: widget.productImage == null
+                                ? const EdgeInsetsDirectional.fromSTEB(
+                                    8, 14, 5, 0)
+                                : const EdgeInsetsDirectional.fromSTEB(
+                                    8, 8, 5, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
@@ -173,85 +179,100 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Expanded(
-                                      child: Text(
-                                        widget.messageTitle!
-                                            .maybeHandleOverflow(
-                                          maxChars: 14,
-                                          replacement: '…',
-                                        ),
-                                        maxLines: 1,
+                                    RichText(
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      text: TextSpan(
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Inter',
                                               fontSize: 16,
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w500,
+                                              fontWeight: FontWeight.w600,
                                               lineHeight: 1.2,
                                             ),
+                                        children: [
+                                          TextSpan(
+                                            text: widget.messageTitle!
+                                                .maybeHandleOverflow(
+                                              maxChars: 14,
+                                              replacement: '…',
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                DateFormat("  d. MMM", "nb_NO")
+                                                    .format(time),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                  fontSize: 13,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                          TextSpan(
+                                            text: '\n${widget.messageContent!}'
+                                                .maybeHandleOverflow(
+                                              maxChars: 25,
+                                              replacement: '…',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodySmall
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 15,
+                                                  letterSpacing: 0.0,
+                                                  color: Colors.black54,
+                                                  fontWeight: FontWeight.w500,
+                                                  lineHeight: 1.3,
+                                                ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          DateFormat("HH:mm d. MMM", "nb_NO")
-                                              .format(time),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 14,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                    if (widget.productImage == null)
+                                      const Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 0),
+                                        child: Icon(
+                                          Icons.chevron_right_rounded,
+                                          color: Color(0xFF357BF7),
+                                          size: 30,
                                         ),
-                                        const Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 0),
-                                          child: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: Color(0xFF357BF7),
-                                            size: 26,
-                                          ),
+                                      ),
+                                    if (widget.productImage != null)
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: CachedNetworkImage(
+                                          fadeInDuration: Duration.zero,
+                                          imageUrl:
+                                              '${ApiConstants.baseUrl}${widget.productImage}',
+                                          width: 48.0,
+                                          height: 48.0,
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              const SizedBox(),
                                         ),
-                                      ],
-                                    ),
+                                      ),
                                   ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 22, 0),
-                                  child: Text(
-                                    widget.messageContent!,
-                                    maxLines: 2,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodySmall
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          fontSize: 14,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                          lineHeight: 1.3,
-                                        ),
-                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          height: 1,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFE8E8E8),
-                          ),
-                        ),
+                        // Container(
+                        //   width: MediaQuery.sizeOf(context).width,
+                        //   height: 1,
+                        //   decoration: const BoxDecoration(
+                        //     color: Color(0xFFE8E8E8),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ],
