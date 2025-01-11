@@ -189,119 +189,135 @@ class WebSocketService {
       message = _escapeControlCharactersInJson(message);
       var data = jsonDecode(message);
 
+      final appState = FFAppState();
+
+      // Handle "read" status updates
       if (data.containsKey('status') && data['status'] == 'read') {
         String receiver = data['receiver'] ?? ''; // Receiver from the message
+        int? matId = data['matId'] != null
+            ? int.tryParse(data['matId'].toString())
+            : null;
 
-        final appState = FFAppState();
-
-        // Find the conversation with the receiver (i.e., the user who sent the "read" status)
+        // Find the conversation with the receiver and the matId
         var conversation = appState.conversations.firstWhere(
-          (conv) => conv.user == receiver,
-          orElse: () => throw (Exception),
+          (conv) => conv.user == receiver && conv.matId == matId,
+          orElse: () => throw Exception('Conversation not found'),
         );
+
         for (var message in conversation.messages) {
-          // If the message is sent by 'me' (me == true), mark it as read
+          // If the message is sent by 'me', mark it as read
           if (message.me) {
             message.read = true;
           }
         }
+
         appState.updateUI();
         logger.d(
-            'Marked all messages sent by me as read for receiver: $receiver');
+            'Marked all messages sent by me as read for receiver: $receiver, matId: $matId');
+        return;
       }
 
-      if (data is Map) {
-        if (data.containsKey('status')) {
-          logger.d("Received status update, ignoring...");
-          return;
-        }
+      // Handle conversation list updates
+      if (data is Map && data.containsKey('conversations')) {
+        try {
+          appState.conversations.clear();
 
-        if ((data['conversations'] != null)) {
-          try {
-            final appState = FFAppState();
-            appState.conversations.clear();
-            var data = jsonDecode(message);
-
-            if (data is Map && data['conversations'] != null) {
-              var conversationsList = data['conversations'] as List<dynamic>;
-
-              for (var conversationJson in conversationsList) {
-                var conv = Conversation.fromJson(conversationJson);
-                appState.conversations.add(conv);
-              }
-
-              bool hasUnreadMessages =
-                  appState.conversations.any((conversation) {
-                return conversation.messages.isNotEmpty &&
-                    !conversation.messages.first.read &&
-                    !conversation.messages.first.me;
-              });
-
-              FFAppState().chatAlert.value = hasUnreadMessages;
-
-              appState.updateUI();
-            }
-            return;
-          } catch (e) {
-            logger.d('Error parsing message: $e');
-          }
-        } else {
-          var data = jsonDecode(message);
-          String sender = data['sender'] ?? '';
-          String content = data['content'] ?? '';
-          String username = data['username'] ?? '';
-          String? lastactive = DateTime.now().toIso8601String();
-          String profilePic = data['profile_picture'] ?? '';
-          String time = data['time'] ?? DateTime.now().toIso8601String();
-          bool me = data['me'] ?? false;
-          int? matId = data['matId'] != null
-              ? int.tryParse(data['matId'].toString())
-              : null;
-
-          // Create a new Message object with additional fields
-          Message newMessage = Message(
-            content: content,
-            time: time,
-            read: false,
-            matId: matId,
-            me: me,
-            showDelivered: null,
-            showLest: null,
-            isMostRecent: null,
-            showTime: null,
-          );
-
-          FFAppState().chatAlert.value = true;
-
-          final appState = FFAppState();
-
-          bool empty = false;
-          var conversation = appState.conversations.firstWhere(
-            (conv) => conv.user == sender,
-            orElse: () {
-              empty = true;
-              return Conversation(
-                user: sender,
-                username: username,
-                profilePic: profilePic,
-                deleted: false,
-                lastactive: lastactive,
-                messages: [newMessage],
-              );
-            },
-          );
-
-          if (empty) {
-            appState.conversations.add(conversation);
+          var conversationsList = data['conversations'] as List<dynamic>;
+          for (var conversationJson in conversationsList) {
+            var conv = Conversation.fromJson(conversationJson);
+            appState.conversations.add(conv);
           }
 
-          if (!empty) {
-            conversation.messages.insert(0, newMessage);
-          }
+          bool hasUnreadMessages = appState.conversations.any((conversation) {
+            return conversation.messages.isNotEmpty &&
+                !conversation.messages.first.read &&
+                !conversation.messages.first.me;
+          });
 
+          appState.chatAlert.value = hasUnreadMessages;
           appState.updateUI();
-          logger.d("Notified listeners to update the UI");
+          return;
+        } catch (e) {
+          logger.d('Error parsing conversation list: $e');
         }
+      }
+
+      // Handle a single message
+      if (data.containsKey('sender') && data.containsKey('content')) {
+        String sender = data['sender'] ?? '';
+        String content = data['content'] ?? '';
+        String username = data['username'] ?? '';
+        String? lastactive = DateTime.now().toIso8601String();
+        String profilePic = data['profile_picture'] ?? '';
+        String time = data['time'] ?? DateTime.now().toIso8601String();
+        bool me = data['me'] ?? false;
+        int? matId = data['matId'] != null
+            ? int.tryParse(data['matId'].toString())
+            : null;
+
+        // Create a new Message object
+        Message newMessage = Message(
+          content: content,
+          time: time,
+          read: false,
+          matId: matId,
+          me: me,
+          showDelivered: null,
+          showLest: null,
+          isMostRecent: null,
+          showTime: null,
+        );
+
+        appState.chatAlert.value = true;
+
+        // Additional fields for the Conversation
+        String? productImage = data['productImage'];
+        if (productImage == null || productImage.isEmpty) {
+          productImage = null;
+        }
+
+        // Ensure these fields are parsed correctly as bool?
+        bool? slettet = _parseBool(data['slettet']);
+        bool? kjopt = _parseBool(data['kjopt']);
+        bool isOwner = _parseBool(data['isOwner']) ?? false;
+
+        // Find or create a conversation based on the sender and matId
+        bool empty = false;
+        var conversation = appState.conversations.firstWhere(
+          (conv) => conv.user == sender && conv.matId == matId,
+          orElse: () {
+            empty = true;
+            return Conversation(
+              user: sender,
+              username: username,
+              profilePic: profilePic,
+              deleted: false,
+              lastactive: lastactive,
+              matId: matId,
+              messages: [newMessage],
+              productImage: productImage,
+              slettet: slettet,
+              kjopt: kjopt,
+              isOwner: isOwner,
+            );
+          },
+        );
+
+        // If the conversation is empty (new), insert it at the 0th index, otherwise move the existing one to the top
+        if (empty) {
+          appState.conversations.insert(
+              0, conversation); // Insert the new conversation at index 0
+        } else {
+          // If the conversation exists, move it to the top by removing and reinserting it at index 0
+          appState.conversations.remove(conversation);
+          appState.conversations.insert(0, conversation);
+          conversation.messages
+              .insert(0, newMessage); // Add the new message to the conversation
+        }
+
+        appState.updateUI();
+        logger.d(
+            "Added message to conversation with sender: $sender, matId: $matId");
       }
     } catch (e) {
       logger.d('Error parsing message: $e');
@@ -332,25 +348,40 @@ class WebSocketService {
 
     final appState = FFAppState();
 
-    // Find the existing conversation or create a new one if not found
-    var conversation = appState.conversations.firstWhere(
-      (conv) => conv.user == receiver,
-      orElse: () => Conversation(
+    // Find the existing conversation based on both `receiver` and `matId`
+    var existingIndex = appState.conversations.indexWhere((conv) =>
+        conv.user == receiver &&
+        conv.matId == matId); // Include matId in the matching logic
+
+    Conversation conversation;
+    if (existingIndex != -1) {
+      // Conversation exists, fetch it
+      conversation = appState.conversations[existingIndex];
+      // Remove the conversation from its current position
+      appState.conversations.removeAt(existingIndex);
+    } else {
+      // Create a new conversation if not found
+      conversation = Conversation(
         username: username,
         user: receiver,
         lastactive: lastactive,
         deleted: false,
         profilePic: '',
         matId: matId,
-        messages: [newMessage],
-      ),
-    );
+        messages: [],
+      );
+    }
 
     // Always add the new message to the conversation's messages list
     conversation.messages.insert(0, newMessage);
 
+    // Add the conversation to the start of the list
+    appState.conversations.insert(0, conversation);
+
+    // Send the message to the server
     _sendMessageToServer(receiver, escapedContent, matId);
 
+    // Update UI
     appState.updateUI();
   }
 
@@ -370,10 +401,12 @@ class WebSocketService {
     appState.updateUI();
   }
 
-  void _sendMarkAsReadRequest(String sender) {
-    Map<String, String> messageData = {
+  void _sendMarkAsReadRequest(String sender, int? matId) {
+    // Prepare the message data including the matId
+    Map<String, dynamic> messageData = {
       'sender': sender,
-      'read': 'true',
+      'matId': matId,
+      'read': true, // Use a boolean for better consistency with JSON standards
     };
     String jsonMessage = jsonEncode(messageData);
 
@@ -382,7 +415,7 @@ class WebSocketService {
     logger.d('Sent mark as read request: $jsonMessage');
   }
 
-  void markAllMessagesAsRead(String sender) {
+  void markAllMessagesAsRead(String sender, int? matId) {
     // Ensure sender is not empty before proceeding
     if (sender.isEmpty) {
       return;
@@ -390,14 +423,13 @@ class WebSocketService {
 
     // Access FFAppState to update the conversations globally
     final appState = FFAppState();
-    // Try to find the conversation with the sender (will not create a new one)
-    var conversation = appState.conversations.firstWhere(
-        (conv) => conv.user == sender,
-        orElse: () =>
-            throw (Exception) // This will return null, but not actually create a new conversation
-        );
+
+    // Try to find the conversation with the sender and matId
+    var conversation = appState.conversations
+        .firstWhere((conv) => conv.user == sender && conv.matId == matId);
 
     bool updated = false;
+
     // Iterate over all messages and mark those from 'me == false' as read
     for (var message in conversation.messages) {
       if (!message.me && !message.read) {
@@ -405,11 +437,24 @@ class WebSocketService {
         updated = true;
       }
     }
+
+    // Update the chat alert state if any unread messages remain
     bool hasUnreadMessages = appState.conversations.any((conversation) =>
         conversation.messages.any((message) => !message.me && !message.read));
     appState.chatAlert.value = hasUnreadMessages;
+
+    // Send a mark-as-read request to the server if messages were updated
     if (updated) {
-      _sendMarkAsReadRequest(sender);
-    } else {}
+      _sendMarkAsReadRequest(sender, matId);
+    }
+  }
+
+  bool? _parseBool(dynamic value) {
+    if (value is bool) {
+      return value;
+    } else if (value is String) {
+      return value.toLowerCase() == 'true';
+    }
+    return null;
   }
 }

@@ -72,8 +72,9 @@ class DetailsServices {
       model.messageIsLoading = true;
 
       Conversation existingConversation = FFAppState().conversations.firstWhere(
-        (conv) => conv.user == matvare.uid,
+        (conv) => conv.user == matvare.uid && conv.matId == matvare.matId,
         orElse: () {
+          // If no existing conversation, create a new one with matId
           final newConversation = Conversation(
             username: matvare.username ?? '',
             user: matvare.uid ?? '',
@@ -98,6 +99,7 @@ class DetailsServices {
       );
 
       model.messageIsLoading = false;
+
       if (serializedConversation != null) {
         context.pushNamed(
           'message',

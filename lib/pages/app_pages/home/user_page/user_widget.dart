@@ -278,19 +278,23 @@ class _BrukerPageWidgetState extends State<UserWidget>
 
                                   Conversation existingConversation =
                                       FFAppState().conversations.firstWhere(
-                                    (conv) => conv.user == widget.uid,
+                                    (conv) =>
+                                        conv.user == widget.uid &&
+                                        conv.matId == null,
                                     orElse: () {
+                                      // If no conversation is found, create a new one
                                       final newConversation = Conversation(
                                         username: widget.username ?? '',
                                         user: widget.uid ?? '',
                                         deleted: false,
                                         lastactive: _model.bruker?.lastactive,
                                         profilePic:
-                                            _model.bruker!.profilepic ?? '',
+                                            _model.bruker?.profilepic ?? '',
                                         messages: [],
                                         matId: null,
                                       );
 
+                                      // Insert the new conversation at the start of the list
                                       FFAppState()
                                           .conversations
                                           .insert(0, newConversation);
@@ -307,6 +311,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                   );
 
                                   _model.messageIsLoading = false;
+
                                   if (serializedConversation != null) {
                                     Navigator.pop(context);
                                     context.pushNamed(

@@ -236,16 +236,6 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                         ],
                                       ),
                                     ),
-                                    if (widget.productImage == null)
-                                      const Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                        child: Icon(
-                                          Icons.chevron_right_rounded,
-                                          color: Color(0xFF357BF7),
-                                          size: 30,
-                                        ),
-                                      ),
                                     if (widget.productImage != null)
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(8),

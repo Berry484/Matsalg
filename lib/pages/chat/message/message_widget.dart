@@ -59,7 +59,8 @@ class _MessageWidgetState extends State<MessageWidget> {
   }
 
   void markRead() {
-    _webSocketService.markAllMessagesAsRead(conversation.user);
+    _webSocketService.markAllMessagesAsRead(
+        conversation.user, conversation.matId);
     return;
   }
 
@@ -293,7 +294,8 @@ class _MessageWidgetState extends State<MessageWidget> {
     if (mounted) {
       setState(() {
         markRead();
-        _webSocketService.markAllMessagesAsRead(conversation.user);
+        _webSocketService.markAllMessagesAsRead(
+            conversation.user, conversation.matId);
         final updatedConversation = FFAppState().conversations.firstWhere(
               (conv) => conv.user == conversation.user,
               orElse: () => conversation,

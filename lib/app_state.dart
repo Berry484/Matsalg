@@ -304,8 +304,8 @@ class Conversation {
   String? productImage;
   String? productTitle;
   int? productPrice;
-  bool slettet = false;
-  bool kjopt = false;
+  bool? slettet = false;
+  bool? kjopt = false;
 
   Conversation({
     required this.user,
