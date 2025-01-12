@@ -1475,7 +1475,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                           .fromSTEB(
                                                           20.0, 0.0, 0.0, 0.0),
                                                   child: Text(
-                                                    'Hvor mange pakker/stykk skal være tilgjengelig for kjøperen? Antallet justeres ned automatisk når noen kjøper',
+                                                    'Hvor mange pakker/stykk er tilgjengelig?',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
