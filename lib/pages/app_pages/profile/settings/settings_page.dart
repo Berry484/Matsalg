@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:mat_salg/pages/app_pages/profile/settings/terms&service/terms_widget.dart';
 import 'package:mat_salg/services/web_socket.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
@@ -40,6 +40,16 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
     _model.dispose();
 
     super.dispose();
+  }
+
+  Future<bool> checkPosition() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever ||
+        permission == LocationPermission.unableToDetermine) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -216,128 +226,163 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                               ),
                             ),
                           ),
-                          const Divider(
-                            thickness: 1.2,
-                            indent: 15,
-                            endIndent: 15,
-                            color: Color(0xE5EAEAEA),
-                          ),
-                          InkWell(
-                            splashFactory: InkRipple.splashFactory,
-                            splashColor: Colors.grey[100],
-                            onTap: () async {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor:
-                                    const Color.fromARGB(60, 17, 0, 0),
-                                useRootNavigator: true,
-                                context: context,
-                                builder: (context) {
-                                  return GestureDetector(
-                                    onTap: () =>
-                                        FocusScope.of(context).unfocus(),
-                                    child: Padding(
-                                      padding: MediaQuery.viewInsetsOf(context),
-                                      child: const LocationPage(),
-                                    ),
-                                  );
-                                },
-                              ).then((value) => setState(() {}));
-                              return;
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(14),
-                                shape: BoxShape.rectangle,
-                                border: Border.all(
-                                  color: Colors.transparent,
-                                  width: 0,
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 20, 0, 12),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Icon(
-                                          CupertinoIcons.placemark,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 30,
-                                        ),
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(12, 0, 0, 0),
-                                              child: Text(
-                                                'Endre lokasjon',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelLarge
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 16,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                              ),
+                          FutureBuilder<bool>(
+                            future:
+                                checkPosition(), // Call your async function here
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                // While the Future is loading
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              } else if (snapshot.hasError) {
+                                // If an error occurred
+                                return Center(
+                                    child: Text('Error checking location'));
+                              } else if (snapshot.hasData &&
+                                  snapshot.data == true) {
+                                // If the location is available
+                                return Column(children: [
+                                  const Divider(
+                                    thickness: 1.2,
+                                    indent: 15,
+                                    endIndent: 15,
+                                    color: Color(0xE5EAEAEA),
+                                  ),
+                                  InkWell(
+                                    splashFactory: InkRipple.splashFactory,
+                                    splashColor: Colors.grey[100],
+                                    onTap: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        barrierColor:
+                                            const Color.fromARGB(60, 17, 0, 0),
+                                        useRootNavigator: true,
+                                        context: context,
+                                        builder: (context) {
+                                          return GestureDetector(
+                                            onTap: () => FocusScope.of(context)
+                                                .unfocus(),
+                                            child: Padding(
+                                              padding: MediaQuery.viewInsetsOf(
+                                                  context),
+                                              child: const LocationPage(),
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(12, 0, 0, 0),
-                                              child: Text(
-                                                'Sett ny lokasjon',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelLarge
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          color: const Color(
-                                                              0x9F57636C),
-                                                          fontSize: 15,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                            ),
-                                          ],
+                                          );
+                                        },
+                                      ).then((value) => setState(() {}));
+                                      return;
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius: BorderRadius.circular(14),
+                                        shape: BoxShape.rectangle,
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                          width: 0,
                                         ),
-                                        const Expanded(
-                                          child: Align(
-                                            alignment:
-                                                AlignmentDirectional(0.9, 0),
-                                            child: Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: Color(0xA0262C2D),
-                                              size: 22,
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 20, 0, 12),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Icon(
+                                                  CupertinoIcons.placemark,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: 30,
+                                                ),
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              12, 0, 0, 0),
+                                                      child: Text(
+                                                        'Endre lokasjon',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelLarge
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontSize: 16,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              12, 0, 0, 0),
+                                                      child: Text(
+                                                        'Sett ny lokasjon',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelLarge
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  color: const Color(
+                                                                      0x9F57636C),
+                                                                  fontSize: 15,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const Expanded(
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0.9, 0),
+                                                    child: Icon(
+                                                      Icons.arrow_forward_ios,
+                                                      color: Color(0xA0262C2D),
+                                                      size: 22,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                                  )
+                                ]);
+                              }
+                              return Container();
+                            },
                           ),
                           const Divider(
                             thickness: 1.2,

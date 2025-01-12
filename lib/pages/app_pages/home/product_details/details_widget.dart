@@ -59,6 +59,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
   final ScrollController _scrollController1 = ScrollController();
   bool _fetchingProductLoading = true;
   bool _isLoading = false;
+  bool _isDeleted = false;
 
   @override
   void initState() {
@@ -112,7 +113,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
             await ApiFoodService.getProductDetails(token, widget.matId);
         if (product != null) {
           matvare = product;
-          setState(() {
+          safeSetState(() {
             _fetchingProductLoading = false;
             detailsServices = DetailsServices(model: _model, matvare: matvare);
             getPoststed();
@@ -135,6 +136,9 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
     } catch (e) {
       logger.d(e);
       if (e.toString().contains('product-deleted')) {
+        safeSetState(() {
+          _isDeleted = true;
+        });
         if (!mounted) return;
         Toasts.showErrorToast(context, 'Annonsen er slettet');
       } else {
@@ -174,7 +178,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
             _model.end = true;
           }
         }
-        setState(() {
+        safeSetState(() {
           if (_model.nyematvarer != null && _model.nyematvarer!.isNotEmpty) {
             _model.isloading = false;
             return;
@@ -207,14 +211,14 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
   void _triggerHeartAnimation() {
     if (_model.isAnimating) return;
 
-    setState(() {
+    safeSetState(() {
       _model.isAnimating = true;
       _model.showHeart = true;
     });
 
     Timer(const Duration(seconds: 1, milliseconds: 500), () {
       if (mounted) {
-        setState(() {
+        safeSetState(() {
           _model.showHeart = false;
           _model.isAnimating = false;
         });
@@ -284,10 +288,18 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                   top: true,
                   bottom: false,
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [],
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if (!_isDeleted)
+                        Center(
+                          child: CupertinoActivityIndicator(
+                            radius: 12.0,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          ),
+                        ),
+                    ],
                   ),
                 )
               : SafeArea(
@@ -585,7 +597,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                 );
                                                               },
                                                             ).then((value) =>
-                                                                setState(
+                                                                safeSetState(
                                                                     () {}));
                                                             return;
                                                           },
@@ -1322,7 +1334,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                           );
                                                         },
                                                       ).then((value) =>
-                                                          setState(() {
+                                                          safeSetState(() {
                                                             if (value == true) {
                                                               safeSetState(
                                                                   () {});
@@ -1691,7 +1703,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                       2))
                                             GestureDetector(
                                               onTap: () {
-                                                setState(() {
+                                                safeSetState(() {
                                                   _model.isExpanded =
                                                       !_model.isExpanded;
                                                 });

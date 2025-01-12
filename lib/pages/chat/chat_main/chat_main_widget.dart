@@ -631,9 +631,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                               height: 8.0),
                                                                           Padding(
                                                                             padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                20,
                                                                                 0,
-                                                                                0,
-                                                                                0,
+                                                                                20,
                                                                                 0),
                                                                             child:
                                                                                 Text(
@@ -928,9 +928,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                               height: 8.0),
                                                                           Padding(
                                                                             padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                20,
                                                                                 0,
-                                                                                0,
-                                                                                0,
+                                                                                20,
                                                                                 0),
                                                                             child:
                                                                                 Text(

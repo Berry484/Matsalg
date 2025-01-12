@@ -96,8 +96,8 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: Container(
-                      width: 48,
-                      height: 48,
+                      width: 46,
+                      height: 46,
                       clipBehavior: Clip.antiAlias,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
@@ -106,13 +106,13 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                         fadeInDuration: Duration.zero,
                         imageUrl:
                             '${ApiConstants.baseUrl}${widget.messageImage}',
-                        width: 48,
-                        height: 48,
+                        width: 46,
+                        height: 46,
                         fit: BoxFit.cover,
                         imageBuilder: (context, imageProvider) {
                           return Container(
-                            width: 48,
-                            height: 48,
+                            width: 46,
+                            height: 46,
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: imageProvider,
@@ -123,8 +123,8 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                         },
                         errorWidget: (context, url, error) => Image.asset(
                           'assets/images/profile_pic.png',
-                          width: 48,
-                          height: 48,
+                          width: 46,
+                          height: 46,
                           fit: BoxFit.cover,
                         ),
                       )),
@@ -133,23 +133,23 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: Container(
-                    width: 48,
-                    height: 48,
+                    width: 46,
+                    height: 46,
                     clipBehavior: Clip.antiAlias,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.asset(
                       'assets/images/profile_pic.png',
-                      width: 48,
-                      height: 48,
+                      width: 46,
+                      height: 46,
                       fit: BoxFit.cover,
                       errorBuilder: (BuildContext context, Object error,
                           StackTrace? stackTrace) {
                         return Image.asset(
                           'assets/images/profile_pic.png',
-                          width: 48,
-                          height: 48,
+                          width: 46,
+                          height: 46,
                           fit: BoxFit.cover,
                         );
                       },
@@ -241,13 +241,13 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                     if (widget.productImage != null &&
                                         widget.slettet != true)
                                       ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(6),
                                         child: CachedNetworkImage(
                                           fadeInDuration: Duration.zero,
                                           imageUrl:
                                               '${ApiConstants.baseUrl}${widget.productImage}',
-                                          width: 46.0,
-                                          height: 46.0,
+                                          width: 47,
+                                          height: 47,
                                           fit: BoxFit.cover,
                                           placeholder: (context, url) =>
                                               const SizedBox(),
@@ -259,8 +259,8 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                         borderRadius: BorderRadius.circular(8),
                                         child: Container(
                                           color: Colors.grey[200],
-                                          width: 46.0,
-                                          height: 46.0,
+                                          width: 47,
+                                          height: 47,
                                         ),
                                       ),
                                   ],

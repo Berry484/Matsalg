@@ -40,6 +40,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
   late Matvarer matvare;
   bool _fetchingProductLoading = true;
   bool fromChat = false;
+  bool _isDeleted = false;
 
   @override
   void initState() {
@@ -82,6 +83,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
     } catch (e) {
       logger.d(e);
       if (e.toString().contains('product-deleted')) {
+        safeSetState(() {
+          _isDeleted = true;
+        });
         if (!mounted) return;
         Toasts.showErrorToast(context, 'Annonsen er slettet');
       } else {
@@ -152,10 +156,18 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                   top: true,
                   bottom: false,
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [],
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if (!_isDeleted)
+                        Center(
+                          child: CupertinoActivityIndicator(
+                            radius: 12.0,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          ),
+                        ),
+                    ],
                   ),
                 )
               : SafeArea(

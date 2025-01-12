@@ -49,6 +49,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
     'timestamp': DateTime.now().toString(),
     'uniqueId': 'from-chat',
   };
+  bool _isButtonDisabled = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -2455,6 +2456,23 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                         25.0, 40.0, 25.0, 30.0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
+                                                    if (_isButtonDisabled ||
+                                                        _model
+                                                            .oppdaterLoading) {
+                                                      return;
+                                                    }
+                                                    safeSetState(() {
+                                                      _model.oppdaterLoading =
+                                                          false;
+                                                      _isButtonDisabled = true;
+                                                    });
+
+                                                    Future.delayed(
+                                                        Duration(
+                                                            milliseconds: 300),
+                                                        () {
+                                                      _isButtonDisabled = false;
+                                                    });
                                                     await publishServices
                                                         .uploadFood(
                                                             context,
@@ -2497,7 +2515,10 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                           )
                                                                         : context
                                                                             .pushNamed(path));
-                                                    safeSetState(() {});
+                                                    safeSetState(() {
+                                                      _model.oppdaterLoading =
+                                                          false;
+                                                    });
                                                   },
                                                   text: 'Publiser',
                                                   options: FFButtonOptions(

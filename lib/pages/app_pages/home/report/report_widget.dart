@@ -398,9 +398,7 @@ class _RapporterWidgetState extends State<ReportWidget> {
                                                                     .chat ==
                                                                 true
                                                             ? 'Chat med ${widget.chatUsername}\nReason: ${_model.reason}\nBeskrivelse: ${_model.bioTextController.text}'
-                                                            : _model
-                                                                .bioTextController
-                                                                .text,
+                                                            : '\nReason: ${_model.reason}\nBeskrivelse: ${_model.bioTextController.text}',
                                                         matId: widget.matId);
                                                 if (response.statusCode ==
                                                     200) {

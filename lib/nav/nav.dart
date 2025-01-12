@@ -1,16 +1,10 @@
 import 'dart:async';
-
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/nav_bar.dart';
 import 'package:mat_salg/pages/app_pages/profile/settings/account/account_page.dart';
-import 'package:provider/provider.dart';
-
 import '/auth/custom_auth/custom_auth_user_provider.dart';
-
-import '/index.dart';
-import '../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../helper_components/flutter_flow/flutter_flow_util.dart';
-
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
 
@@ -109,36 +103,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                     path: 'prdouctDetail',
                     name: 'ProductDetail',
                     builder: (context, state) {
+                      // Retrieve parameters safely using FFParameters
                       final params = FFParameters(state);
                       final matvare = params.getParam<Map<String, dynamic>>(
                           'matvare', ParamType.JSON);
-                      return DetailsWidget(matvare: matvare);
-                    },
-                    pageBuilder: (context, state) {
-                      return CustomTransitionPage<void>(
-                        key: state.pageKey, // Maintain page state
-                        child: DetailsWidget(
-                          matvare: FFParameters(state)
-                              .getParam<Map<String, dynamic>>(
-                                  'matvare', ParamType.JSON),
-                        ),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const Offset begin =
-                              Offset(1.0, 0.0); // Slide in from right
-                          const Offset end = Offset.zero;
-                          const Curve curve = Curves.easeInOut;
+                      final fromChat =
+                          params.getParam<bool>('fromChat', ParamType.bool);
+                      final matId =
+                          params.getParam<int>('matId', ParamType.int);
 
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                      );
+                      // Directly return the widget with the retrieved parameters
+                      return DetailsWidget(
+                          matvare: matvare, fromChat: fromChat, matId: matId);
                     },
                   ),
                   GoRoute(
@@ -154,35 +130,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                           params.getParam<String>('username', ParamType.String);
                       return UserWidget(
                           bruker: bruker, uid: uid, username: username);
-                    },
-                    pageBuilder: (context, state) {
-                      return CustomTransitionPage<void>(
-                        key: state.pageKey,
-                        child: UserWidget(
-                          bruker: FFParameters(state)
-                              .getParam<String>('bruker', ParamType.String),
-                          uid: FFParameters(state)
-                              .getParam<String>('uid', ParamType.String),
-                          username: FFParameters(state)
-                              .getParam<String>('username', ParamType.String),
-                        ),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const Offset begin =
-                              Offset(1.0, 0.0); // Slide in from right
-                          const Offset end = Offset.zero;
-                          const Curve curve = Curves.easeInOut;
-
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                      );
                     },
                   ),
                   GoRoute(
@@ -202,33 +149,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                       return FollowersWidget(
                           username: username, folger: folger);
                     },
-                    pageBuilder: (context, state) {
-                      return CustomTransitionPage<void>(
-                        key: state.pageKey, // Maintain the page state
-                        child: FollowersWidget(
-                          username: FFParameters(state)
-                              .getParam<String>('username', ParamType.String),
-                          folger: FFParameters(state)
-                              .getParam<String>('folger', ParamType.String),
-                        ),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const Offset begin =
-                              Offset(1.0, 0.0); // Slide in from the right
-                          const Offset end = Offset.zero;
-                          const Curve curve = Curves.easeInOut;
-
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                      );
-                    },
                   ),
                   GoRoute(
                     path: 'bondeGardPage', // Relative path, no leading '/'
@@ -245,33 +165,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
 
                       // Return the widget with the parameters
                       return CategoryWidget(kategori: kategori, query: query);
-                    },
-                    pageBuilder: (context, state) {
-                      return CustomTransitionPage<void>(
-                        key: state.pageKey, // Maintain page state
-                        child: CategoryWidget(
-                          kategori: FFParameters(state)
-                              .getParam<String>('kategori', ParamType.String),
-                          query: FFParameters(state)
-                              .getParam<String>('query', ParamType.String),
-                        ),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const Offset begin =
-                              Offset(1.0, 0.0); // Slide in from right
-                          const Offset end = Offset.zero;
-                          const Curve curve = Curves.easeInOut;
-
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                      );
                     },
                   ),
                 ],
@@ -364,32 +257,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                         // Return the ProductPage with the retrieved parameter
                         return ProductPage(matvare: matvare);
                       },
-                      pageBuilder: (context, state) {
-                        return CustomTransitionPage<void>(
-                          key: state.pageKey, // Maintain the page state
-                          child: ProductPage(
-                            matvare: FFParameters(state)
-                                .getParam<Map<String, dynamic>>(
-                                    'matvare', ParamType.JSON),
-                          ),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const Offset begin =
-                                Offset(1.0, 0.0); // Slide in from the right
-                            const Offset end = Offset.zero;
-                            const Curve curve = Curves.easeInOut;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            var offsetAnimation = animation.drive(tween);
-
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          },
-                        );
-                      },
                     ),
                     GoRoute(
                       path: 'matDetaljBondegard1',
@@ -401,34 +268,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                         final matvare = params.getParam<Map<String, dynamic>>(
                             'matvare', ParamType.JSON);
                         return DetailsWidget(matvare: matvare, liked: liked);
-                      },
-                      pageBuilder: (context, state) {
-                        return CustomTransitionPage<void>(
-                          key: state.pageKey, // Maintain page state
-                          child: DetailsWidget(
-                            matvare: FFParameters(state)
-                                .getParam<Map<String, dynamic>>(
-                                    'matvare', ParamType.JSON),
-                            liked: FFParameters(state)
-                                .getParam<bool>('liked', ParamType.bool),
-                          ),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const Offset begin =
-                                Offset(1.0, 0.0); // Slide in from right
-                            const Offset end = Offset.zero;
-                            const Curve curve = Curves.easeInOut;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            var offsetAnimation = animation.drive(tween);
-
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          },
-                        );
                       },
                     ),
                     GoRoute(
@@ -448,33 +287,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                         return FollowersWidget(
                             username: username, folger: folger);
                       },
-                      pageBuilder: (context, state) {
-                        return CustomTransitionPage<void>(
-                          key: state.pageKey, // Maintain the page state
-                          child: FollowersWidget(
-                            username: FFParameters(state)
-                                .getParam<String>('username', ParamType.String),
-                            folger: FFParameters(state)
-                                .getParam<String>('folger', ParamType.String),
-                          ),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const Offset begin =
-                                Offset(1.0, 0.0); // Slide in from the right
-                            const Offset end = Offset.zero;
-                            const Curve curve = Curves.easeInOut;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            var offsetAnimation = animation.drive(tween);
-
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          },
-                        );
-                      },
                     ),
                     GoRoute(
                       path: 'brukerPage3',
@@ -490,34 +302,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                         return UserWidget(
                             bruker: bruker, uid: uid, username: username);
                       },
-                      pageBuilder: (context, state) {
-                        return CustomTransitionPage<void>(
-                          key: state.pageKey,
-                          child: UserWidget(
-                            bruker: FFParameters(state)
-                                .getParam<String>('bruker', ParamType.String),
-                            uid: FFParameters(state)
-                                .getParam<String>('uid', ParamType.String),
-                            username: FFParameters(state)
-                                .getParam<String>('username', ParamType.String),
-                          ),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const Offset begin = Offset(1.0, 0.0);
-                            const Offset end = Offset.zero;
-                            const Curve curve = Curves.easeInOut;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            var offsetAnimation = animation.drive(tween);
-
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          },
-                        );
-                      },
                     ),
                     GoRoute(
                       path: 'innstillinger',
@@ -526,28 +310,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                         // Return the widget for the settings page
                         return const SettingsPage();
                       },
-                      pageBuilder: (context, state) {
-                        return CustomTransitionPage<void>(
-                          key: state.pageKey, // Maintain the page state
-                          child: const SettingsPage(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const Offset begin =
-                                Offset(1.0, 0.0); // Slide in from the right
-                            const Offset end = Offset.zero;
-                            const Curve curve = Curves.easeInOut;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            var offsetAnimation = animation.drive(tween);
-
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          },
-                        );
-                      },
                     ),
                     GoRoute(
                       path: 'konto',
@@ -555,28 +317,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                       builder: (context, state) {
                         // Return the widget for the settings page
                         return const AccountPage();
-                      },
-                      pageBuilder: (context, state) {
-                        return CustomTransitionPage<void>(
-                          key: state.pageKey, // Maintain the page state
-                          child: const AccountPage(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const Offset begin =
-                                Offset(1.0, 0.0); // Slide in from the right
-                            const Offset end = Offset.zero;
-                            const Curve curve = Curves.easeInOut;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            var offsetAnimation = animation.drive(tween);
-
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          },
-                        );
                       },
                     ),
                   ]),
@@ -723,26 +463,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         parentNavigatorKey: _parentKey,
       ),
       GoRoute(
-        path: '/brukerRating',
-        name: 'BrukerRating',
-        builder: (context, state) {
-          // Use FFParameters to retrieve the parameters safely
-          final params = FFParameters(state);
-
-          // Retrieve the parameters using getParam with the appropriate ParamType
-          final username =
-              params.getParam<String>('username', ParamType.String);
-          final mine = params.getParam<bool>('mine', ParamType.bool);
-
-          // Return the RatingsWidget with the retrieved parameters
-          return RatingsWidget(
-            username: username,
-            mine: mine,
-          );
-        },
-        parentNavigatorKey: _parentKey,
-      ),
-      GoRoute(
         path: '/registrer',
         name: 'registrer',
         builder: (context, state) => const RegisterWidget(),
@@ -779,14 +499,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
       ),
     ],
   );
-}
-
-extension NavParamExtensions on Map<String, String?> {
-  Map<String, String> get withoutNulls => Map.fromEntries(
-        entries
-            .where((e) => e.value != null)
-            .map((e) => MapEntry(e.key, e.value!)),
-      );
 }
 
 extension NavigationExtensions on BuildContext {
@@ -855,9 +567,6 @@ extension _GoRouterStateExtensions on GoRouterState {
     ..addAll(pathParameters)
     ..addAll(uri.queryParameters)
     ..addAll(extraMap);
-  TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
-      ? extraMap[kTransitionInfoKey] as TransitionInfo
-      : TransitionInfo.appDefault();
 }
 
 class FFParameters {
@@ -916,86 +625,6 @@ class FFParameters {
   }
 }
 
-class FFRoute {
-  const FFRoute({
-    required this.name,
-    required this.path,
-    required this.builder,
-    this.requireAuth = false,
-    this.asyncParams = const {},
-    this.routes = const [],
-  });
-
-  final String name;
-  final String path;
-  final bool requireAuth;
-  final Map<String, Future<dynamic> Function(String)> asyncParams;
-  final Widget Function(BuildContext, FFParameters) builder;
-  final List<GoRoute> routes;
-
-  GoRoute toRoute(AppStateNotifier appStateNotifier) => GoRoute(
-        name: name,
-        path: path,
-        redirect: (context, state) {
-          if (appStateNotifier.shouldRedirect) {
-            final redirectLocation = appStateNotifier.getRedirectLocation();
-            appStateNotifier.clearRedirectLocation();
-            return redirectLocation;
-          }
-
-          if (requireAuth && !appStateNotifier.loggedIn) {
-            appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/registrer';
-          }
-          return null;
-        },
-        pageBuilder: (context, state) {
-          fixStatusBarOniOS16AndBelow(context);
-          final ffParams = FFParameters(state, asyncParams);
-          final page = ffParams.hasFutures
-              ? FutureBuilder(
-                  future: ffParams.completeFutures(),
-                  builder: (context, _) => builder(context, ffParams),
-                )
-              : builder(context, ffParams);
-
-          final child = appStateNotifier.loading
-              ? Container(
-                  color: FlutterFlowTheme.of(context).primary,
-                  child: Image.asset(
-                    'assets/images/white.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                )
-              : page;
-
-          final transitionInfo = state.transitionInfo;
-          return transitionInfo.hasTransition
-              ? CustomTransitionPage(
-                  key: state.pageKey,
-                  child: child,
-                  transitionDuration: transitionInfo.duration,
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          PageTransition(
-                    type: transitionInfo.transitionType,
-                    duration: transitionInfo.duration,
-                    reverseDuration: transitionInfo.duration,
-                    alignment: transitionInfo.alignment,
-                    child: child,
-                  ).buildTransitions(
-                    context,
-                    animation,
-                    secondaryAnimation,
-                    child,
-                  ),
-                )
-              : MaterialPage(key: state.pageKey, child: child);
-        },
-        routes: routes,
-      );
-}
-
 class TransitionInfo {
   const TransitionInfo({
     required this.hasTransition,
@@ -1012,67 +641,3 @@ class TransitionInfo {
   static TransitionInfo appDefault() =>
       const TransitionInfo(hasTransition: false);
 }
-
-class RootPageContext {
-  const RootPageContext(this.isRootPage, [this.errorRoute]);
-  final bool isRootPage;
-  final String? errorRoute;
-
-  static bool isInactiveRootPage(BuildContext context) {
-    final rootPageContext = context.read<RootPageContext?>();
-    final isRootPage = rootPageContext?.isRootPage ?? false;
-    final location = GoRouterState.of(context).uri.toString();
-    return isRootPage &&
-        location != '/' &&
-        location != rootPageContext?.errorRoute;
-  }
-
-  static Widget wrap(Widget child, {String? errorRoute}) => Provider.value(
-        value: RootPageContext(true, errorRoute),
-        child: child,
-      );
-}
-
-extension GoRouterLocationExtension on GoRouter {
-  String getCurrentLocation() {
-    final RouteMatch lastMatch = routerDelegate.currentConfiguration.last;
-    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
-        ? lastMatch.matches
-        : routerDelegate.currentConfiguration;
-    return matchList.uri.toString();
-  }
-}
-
-// GoRoute(
-//   path: 'kjopDetaljVentende',
-//   name: 'KjopDetaljVentende',
-//   builder: (context, state) {
-//     // Accessing the passed object from `state.extra`
-//     final ordre = state.extra;
-
-//     // Return the widget, passing `ordre` directly
-//     return KjopDetaljVentendeWidget(ordre: ordre);
-//   },
-//   pageBuilder: (context, state) {
-//     return CustomTransitionPage<void>(
-//       key: state.pageKey, // Maintain the page state
-//       child: KjopDetaljVentendeWidget(ordre: state.extra),
-//       transitionsBuilder:
-//           (context, animation, secondaryAnimation, child) {
-//         const Offset begin =
-//             Offset(1.0, 0.0); // Slide in from the right
-//         const Offset end = Offset.zero;
-//         const Curve curve = Curves.easeInOut;
-
-//         var tween = Tween(begin: begin, end: end)
-//             .chain(CurveTween(curve: curve));
-//         var offsetAnimation = animation.drive(tween);
-
-//         return SlideTransition(
-//           position: offsetAnimation,
-//           child: child,
-//         );
-//       },
-//     );
-//   },
-// ),

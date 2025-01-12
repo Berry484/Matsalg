@@ -510,10 +510,7 @@ class PublishServices {
             canScroll = false;
           }
         }
-
-        return;
-      }
-      if (model.oppdaterLoading) {
+        model.oppdaterLoading = false;
         return;
       }
 
@@ -542,8 +539,6 @@ class PublishServices {
       }
 
       final selectedImage = nonPlaceholderImages.first;
-
-      model.oppdaterLoading = true;
       final token = await firebaseAuthService.getToken(context);
       if (token == null) {
         return;
@@ -593,7 +588,6 @@ class PublishServices {
           );
 
           if (response.statusCode == 200) {
-            model.oppdaterLoading = false;
             navigate('BrukerLagtUtInfo', false, selectedImage.path);
           }
           if (response.statusCode == 401 ||
