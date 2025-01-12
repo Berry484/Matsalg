@@ -81,7 +81,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
               uid: '',
               firstname: '',
               lastname: '',
-              profilepic: '', // Default image
+              profilepic: '',
               email: '',
               bio: '',
               phoneNumber: '',
@@ -1468,7 +1468,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                 'matvare':
                                                                     serializeParam(
                                                                   matvarer
-                                                                      .toJson(), // Convert to JSON before passing
+                                                                      .toJson(),
                                                                   ParamType
                                                                       .JSON,
                                                                 ),
@@ -1481,7 +1481,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                 'matvare':
                                                                     serializeParam(
                                                                   matvarer
-                                                                      .toJson(), // Convert to JSON before passing
+                                                                      .toJson(),
                                                                   ParamType
                                                                       .JSON,
                                                                 ),

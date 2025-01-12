@@ -302,8 +302,6 @@ class Conversation {
   int? matId;
   bool isOwner = false;
   String? productImage;
-  String? productTitle;
-  int? productPrice;
   bool? slettet = false;
   bool? kjopt = false;
 
@@ -317,8 +315,6 @@ class Conversation {
     this.matId,
     this.isOwner = false,
     this.productImage,
-    this.productTitle,
-    this.productPrice,
     this.slettet = false,
     this.kjopt = false,
   });
@@ -338,8 +334,6 @@ class Conversation {
       matId: json['matId'], // matId is nullable
       isOwner: json['isOwner'] ?? false,
       productImage: json['productImage'],
-      productTitle: json['productTitle'],
-      productPrice: json['productPrice'],
       slettet: json['slettet'] ?? false,
       kjopt: json['kjopt'] ?? false,
     );
@@ -356,8 +350,6 @@ class Conversation {
       'matId': matId,
       'isOwner': isOwner,
       'productImage': productImage,
-      'productTitle': productTitle,
-      'productPrice': productPrice,
       'slettet': slettet,
       'kjopt': kjopt,
     };

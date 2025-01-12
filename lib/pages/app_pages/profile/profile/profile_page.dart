@@ -53,6 +53,7 @@ class _ProfilWidgetState extends State<ProfilePage>
       initialIndex: 0,
     )..addListener(() => safeSetState(() {}));
     _scrollController1.addListener(_scrollListener);
+    FFAppState().addListener(_onRouteChanged);
   }
 
   Future<void> getMyFoods(bool refresh) async {
@@ -146,10 +147,18 @@ class _ProfilWidgetState extends State<ProfilePage>
     }
   }
 
+  Future<void> _onRouteChanged() async {
+    if (!mounted) return;
+    await getMyFoods(true);
+    await refreshPage();
+    setState(() {});
+  }
+
   @override
   void dispose() {
     _model.dispose();
     super.dispose();
+    FFAppState().removeListener(_onRouteChanged);
   }
 
   @override

@@ -532,18 +532,62 @@ class _MessageWidgetState extends State<MessageWidget> {
                               child: Row(
                                 children: [
                                   if (conversation.productImage != null)
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(6),
-                                      child: CachedNetworkImage(
-                                        fadeInDuration: Duration.zero,
-                                        imageUrl:
-                                            '${ApiConstants.baseUrl}${conversation.productImage}',
-                                        width: 35.0,
-                                        height: 35.0,
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) =>
-                                            const SizedBox(),
-                                      ),
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        if (conversation.isOwner != true) {
+                                          context.pushNamed(
+                                            'MatDetaljBondegard2',
+                                            queryParameters: {
+                                              'fromChat': serializeParam(
+                                                true,
+                                                ParamType.bool,
+                                              ),
+                                              'matId': serializeParam(
+                                                conversation.matId,
+                                                ParamType.int,
+                                              ),
+                                            },
+                                          );
+                                        } else {
+                                          context.pushNamed(
+                                            'MinMatvareDetaljChat',
+                                            queryParameters: {
+                                              'matId': serializeParam(
+                                                conversation.matId,
+                                                ParamType.int,
+                                              ),
+                                            },
+                                          );
+                                        }
+                                      },
+                                      child: conversation.slettet != true
+                                          ? ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                              child: CachedNetworkImage(
+                                                fadeInDuration: Duration.zero,
+                                                imageUrl:
+                                                    '${ApiConstants.baseUrl}${conversation.productImage}',
+                                                width: 35.0,
+                                                height: 35.0,
+                                                fit: BoxFit.cover,
+                                                placeholder: (context, url) =>
+                                                    const SizedBox(),
+                                              ),
+                                            )
+                                          : ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Container(
+                                                color: Colors.grey[200],
+                                                width: 35.0,
+                                                height: 35.0,
+                                              ),
+                                            ),
                                     ),
                                   if (conversation.productImage != null)
                                     const SizedBox(

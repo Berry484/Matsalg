@@ -248,7 +248,6 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                   if (FFAppState()
                                                       .conversations
                                                       .where((conversation) {
-                                                    // Check if the conversation is empty (no valid messages)
                                                     return conversation.messages
                                                             .isNotEmpty &&
                                                         conversation.messages
@@ -481,6 +480,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 productImage:
                                                                     conversation
                                                                         .productImage,
+                                                                slettet:
+                                                                    conversation
+                                                                        .slettet,
                                                                 messageImage:
                                                                     conversation
                                                                         .profilePic,
@@ -526,6 +528,11 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                     // Check if the conversation is empty (no valid messages)
                                                     return conversation.messages
                                                             .isNotEmpty &&
+                                                        conversation.isOwner !=
+                                                            true &&
+                                                        conversation
+                                                                .productImage !=
+                                                            null &&
                                                         conversation.messages
                                                             .any((msg) => msg
                                                                 .content
@@ -630,7 +637,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              'Du har ingen samtaler ennå',
+                                                                              'Du har ingen samtaler med selgere ennå',
                                                                               textAlign: TextAlign.center,
                                                                               style: FlutterFlowTheme.of(context).headlineSmall.override(
                                                                                     fontFamily: 'Nunito',
@@ -658,6 +665,11 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                     // Check if the conversation is empty (no valid messages)
                                                     return conversation.messages
                                                             .isNotEmpty &&
+                                                        conversation.isOwner !=
+                                                            true &&
+                                                        conversation
+                                                                .productImage !=
+                                                            null &&
                                                         conversation.messages
                                                             .any((msg) => msg
                                                                 .content
@@ -678,6 +690,12 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                   .messages
                                                                   .isNotEmpty &&
                                                               conversation
+                                                                      .isOwner !=
+                                                                  true &&
+                                                              conversation
+                                                                      .productImage !=
+                                                                  null &&
+                                                              conversation
                                                                   .messages
                                                                   .any((msg) => msg
                                                                       .content
@@ -691,6 +709,12 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                   conversation
                                                                       .messages
                                                                       .isNotEmpty &&
+                                                                  conversation
+                                                                          .isOwner !=
+                                                                      true &&
+                                                                  conversation
+                                                                          .productImage !=
+                                                                      null &&
                                                                   conversation
                                                                       .messages
                                                                       .any((msg) => msg
@@ -756,6 +780,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 messageImage:
                                                                     conversation
                                                                         .profilePic,
+                                                                slettet:
+                                                                    conversation
+                                                                        .slettet,
                                                                 productImage:
                                                                     conversation
                                                                         .productImage,
@@ -801,6 +828,8 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                     // Check if the conversation is empty (no valid messages)
                                                     return conversation.messages
                                                             .isNotEmpty &&
+                                                        conversation.isOwner ==
+                                                            true &&
                                                         conversation.messages
                                                             .any((msg) => msg
                                                                 .content
@@ -905,7 +934,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              'Du har ingen samtaler ennå',
+                                                                              'Du har ingen samtaler med kjøpere ennå',
                                                                               textAlign: TextAlign.center,
                                                                               style: FlutterFlowTheme.of(context).headlineSmall.override(
                                                                                     fontFamily: 'Nunito',
@@ -933,6 +962,8 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                     // Check if the conversation is empty (no valid messages)
                                                     return conversation.messages
                                                             .isNotEmpty &&
+                                                        conversation.isOwner ==
+                                                            true &&
                                                         conversation.messages
                                                             .any((msg) => msg
                                                                 .content
@@ -953,6 +984,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                   .messages
                                                                   .isNotEmpty &&
                                                               conversation
+                                                                      .isOwner ==
+                                                                  true &&
+                                                              conversation
                                                                   .messages
                                                                   .any((msg) => msg
                                                                       .content
@@ -966,6 +1000,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                   conversation
                                                                       .messages
                                                                       .isNotEmpty &&
+                                                                  conversation
+                                                                          .isOwner ==
+                                                                      true &&
                                                                   conversation
                                                                       .messages
                                                                       .any((msg) => msg
@@ -1031,6 +1068,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 messageImage:
                                                                     conversation
                                                                         .profilePic,
+                                                                slettet:
+                                                                    conversation
+                                                                        .slettet,
                                                                 productImage:
                                                                     conversation
                                                                         .productImage,

@@ -28,10 +28,12 @@ class PublishPage extends StatefulWidget {
     super.key,
     this.matinfo,
     bool? rediger,
+    this.fromChat,
   }) : rediger = rediger ?? false;
 
   final bool rediger;
   final dynamic matinfo;
+  final dynamic fromChat;
 
   @override
   State<PublishPage> createState() => _LeggUtMatvareWidgetState();
@@ -43,6 +45,11 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
   late ScrollController _scrollController;
   late PublishModel _model;
   late PublishServices publishServices;
+  Map<String, dynamic> keyMap = {
+    'timestamp': DateTime.now().toString(),
+    'uniqueId': 'from-chat',
+  };
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -228,6 +235,10 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: GestureDetector(
                     onTap: () async {
+                      if (widget.fromChat) {
+                        final appState = FFAppState();
+                        appState.updateUI();
+                      }
                       await publishServices.saveFoodUpdates(
                           context,
                           (title, content) => DialogUtils.showSimpleDialog(
@@ -240,7 +251,9 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                               : Toasts.showAccepted(context, message),
                           (path, pop) => pop
                               ? Navigator.of(context).pop()
-                              : context.pushNamed(path));
+                              : widget.fromChat
+                                  ? context.goNamed('Profil')
+                                  : context.pushNamed(path));
                       safeSetState(() {});
                     },
                     child: Text(
@@ -2542,32 +2555,46 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                             80.0, 25.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
-                                                        await publishServices.markSoldOut(
-                                                            context,
-                                                            (title, content) =>
-                                                                DialogUtils.showSimpleDialog(
-                                                                    context:
-                                                                        context,
-                                                                    title:
-                                                                        title,
-                                                                    content:
-                                                                        content,
-                                                                    buttonText:
-                                                                        'Ok'),
-                                                            (message, error) => error
-                                                                ? Toasts
-                                                                    .showErrorToast(
-                                                                        context,
-                                                                        message)
-                                                                : Toasts.showAccepted(
-                                                                    context,
-                                                                    message),
-                                                            (path, pop) => pop
-                                                                ? Navigator.of(
-                                                                        context)
-                                                                    .pop()
-                                                                : context.pushNamed(
-                                                                    path));
+                                                        await publishServices
+                                                            .markSoldOut(
+                                                          context,
+                                                          (title, content) =>
+                                                              DialogUtils
+                                                                  .showSimpleDialog(
+                                                            context: context,
+                                                            title: title,
+                                                            content: content,
+                                                            buttonText: 'Ok',
+                                                          ),
+                                                          (message, error) => error
+                                                              ? Toasts
+                                                                  .showErrorToast(
+                                                                      context,
+                                                                      message)
+                                                              : Toasts
+                                                                  .showAccepted(
+                                                                      context,
+                                                                      message),
+                                                          (path, pop) {
+                                                            if (pop) {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            } else if (widget
+                                                                .fromChat) {
+                                                              final appState =
+                                                                  FFAppState();
+                                                              appState
+                                                                  .updateUI();
+                                                              context.goNamed(
+                                                                  'Profil');
+                                                            } else {
+                                                              context.pushNamed(
+                                                                  path);
+                                                            }
+                                                          },
+                                                        );
+
                                                         safeSetState(() {});
                                                       },
                                                       text: 'Marker utsolgt',

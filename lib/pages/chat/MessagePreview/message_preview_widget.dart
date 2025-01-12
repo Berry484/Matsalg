@@ -17,6 +17,7 @@ class MessagePreviewWidget extends StatefulWidget {
     this.isUnread,
     required this.messageTime,
     this.productImage,
+    this.slettet,
   });
 
   final String? messageTitle;
@@ -25,6 +26,7 @@ class MessagePreviewWidget extends StatefulWidget {
   final bool? isUnread;
   final String messageTime;
   final String? productImage;
+  final dynamic slettet;
 
   @override
   State<MessagePreviewWidget> createState() => _MessagePreviewWidgetState();
@@ -66,10 +68,10 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(5, 3, 0, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
       child: Container(
         width: double.infinity,
-        height: 75,
+        height: 72,
         decoration: const BoxDecoration(),
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
@@ -94,8 +96,8 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: Container(
-                      width: 50,
-                      height: 50,
+                      width: 48,
+                      height: 48,
                       clipBehavior: Clip.antiAlias,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
@@ -104,13 +106,13 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                         fadeInDuration: Duration.zero,
                         imageUrl:
                             '${ApiConstants.baseUrl}${widget.messageImage}',
-                        width: 50,
-                        height: 50,
+                        width: 48,
+                        height: 48,
                         fit: BoxFit.cover,
                         imageBuilder: (context, imageProvider) {
                           return Container(
-                            width: 50,
-                            height: 50,
+                            width: 48,
+                            height: 48,
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: imageProvider,
@@ -121,8 +123,8 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                         },
                         errorWidget: (context, url, error) => Image.asset(
                           'assets/images/profile_pic.png',
-                          width: 50,
-                          height: 50,
+                          width: 48,
+                          height: 48,
                           fit: BoxFit.cover,
                         ),
                       )),
@@ -131,23 +133,23 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: Container(
-                    width: 50,
-                    height: 50,
+                    width: 48,
+                    height: 48,
                     clipBehavior: Clip.antiAlias,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.asset(
                       'assets/images/profile_pic.png',
-                      width: 50,
-                      height: 50,
+                      width: 48,
+                      height: 48,
                       fit: BoxFit.cover,
                       errorBuilder: (BuildContext context, Object error,
                           StackTrace? stackTrace) {
                         return Image.asset(
                           'assets/images/profile_pic.png',
-                          width: 50,
-                          height: 50,
+                          width: 48,
+                          height: 48,
                           fit: BoxFit.cover,
                         );
                       },
@@ -236,18 +238,29 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                         ],
                                       ),
                                     ),
-                                    if (widget.productImage != null)
+                                    if (widget.productImage != null &&
+                                        widget.slettet != true)
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: CachedNetworkImage(
                                           fadeInDuration: Duration.zero,
                                           imageUrl:
                                               '${ApiConstants.baseUrl}${widget.productImage}',
-                                          width: 48.0,
-                                          height: 48.0,
+                                          width: 46.0,
+                                          height: 46.0,
                                           fit: BoxFit.cover,
                                           placeholder: (context, url) =>
                                               const SizedBox(),
+                                        ),
+                                      ),
+                                    if (widget.productImage != null &&
+                                        widget.slettet == true)
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Container(
+                                          color: Colors.grey[200],
+                                          width: 46.0,
+                                          height: 46.0,
                                         ),
                                       ),
                                   ],

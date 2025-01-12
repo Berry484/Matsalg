@@ -344,10 +344,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                             child: child,
                           );
                         },
-                        child: const ProfilePage(),
+                        child: ProfilePage(),
                       );
                     }
-                    return const MaterialPage<void>(child: ProfilePage());
+                    return MaterialPage<void>(child: ProfilePage());
                   },
                   routes: [
                     GoRoute(
@@ -642,9 +642,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
           final matvare =
               params.getParam<Map<String, dynamic>>('matvare', ParamType.JSON);
           final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
+          final matId = params.getParam<int>('matId', ParamType.int);
 
           // Directly return the widget with the retrieved parameters
-          return DetailsWidget(matvare: matvare, fromChat: fromChat);
+          return DetailsWidget(
+              matvare: matvare, fromChat: fromChat, matId: matId);
         },
         parentNavigatorKey: _parentKey,
       ),
@@ -674,6 +676,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
           final params = FFParameters(state);
           final rediger = params.getParam<bool>('rediger', ParamType.bool);
           final matinfo = params.getParam<dynamic>('matinfo', ParamType.JSON);
+          final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
 
           return CustomTransitionPage(
             transitionDuration: const Duration(milliseconds: 200),
@@ -690,6 +693,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
             child: PublishPage(
               rediger: rediger,
               matinfo: matinfo,
+              fromChat: fromChat,
             ),
           );
         },
@@ -703,6 +707,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
           final conversation = params.getParam<Map<String, dynamic>>(
               'conversation', ParamType.JSON);
           return MessageWidget(conversation: conversation);
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/minMatvareDetaljChat',
+        name: 'MinMatvareDetaljChat',
+        builder: (context, state) {
+          final params = FFParameters(state);
+          final matvare =
+              params.getParam<Map<String, dynamic>>('matvare', ParamType.JSON);
+          final matId = params.getParam<int>('matId', ParamType.int);
+          return ProductPage(matvare: matvare, matId: matId);
         },
         parentNavigatorKey: _parentKey,
       ),

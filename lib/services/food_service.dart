@@ -463,5 +463,44 @@ class ApiFoodService {
     }
   }
 
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Gets product details-----------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<Matvarer?> getProductDetails(String? token, int matId) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Perform the HTTP GET request
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/rrh/send/matvarer/get/$matId'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 5));
+
+      // Check response status
+      if (response.statusCode == 200) {
+        // Parse and return the Matvarer object
+        final jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
+        return Matvarer.fromJson(jsonResponse);
+      } else if (response.statusCode == 410) {
+        throw Exception('product-deleted');
+      } else if (response.statusCode == 404) {
+        throw Exception('Product not found for matId: $matId.');
+      } else {
+        throw Exception(
+            'Failed to fetch product details: ${response.statusCode}');
+      }
+    } on SocketException {
+      throw const SocketException('No Internet connection.');
+    } on TimeoutException {
+      throw TimeoutException('time-out');
+    } catch (e) {
+      rethrow;
+    }
+  }
 //
 }
