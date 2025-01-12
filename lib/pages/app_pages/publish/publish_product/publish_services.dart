@@ -102,11 +102,8 @@ class PublishServices {
             (model.matvare.description ?? '').trim();
     bool priceChanged = model.produktPrisSTKTextController.text.trim() !=
         (model.matvare.price ?? '').toString();
-
-    double enteredQuantity =
-        double.tryParse(model.antallStkTextController.text.trim()) ?? 0.0;
-    bool quantityChanged = (enteredQuantity != (model.matvare.antall ?? 0.0));
     bool imgChanged = false;
+    bool kjoptChanged = false;
     if (!rediger) {
       imgChanged = model.unselectedImages[0].path != 'ImagePlaceHolder.jpg' ||
           model.unselectedImages[1].path != 'ImagePlaceHolder.jpg' ||
@@ -114,6 +111,9 @@ class PublishServices {
           model.unselectedImages[3].path != 'ImagePlaceHolder.jpg' ||
           model.unselectedImages[4].path != 'ImagePlaceHolder.jpg';
     } else {
+      if (model.matvare.kjopt != model.kjopt) {
+        kjoptChanged = true;
+      }
       for (int i = 0;
           i < model.unselectedImages.length &&
               i < model.matvare.imgUrls!.length;
@@ -128,8 +128,8 @@ class PublishServices {
     return nameChanged ||
         descriptionChanged ||
         priceChanged ||
-        quantityChanged ||
-        imgChanged;
+        imgChanged ||
+        kjoptChanged;
   }
 
 //---------------------------------------------------------------------------------------------------------------
@@ -399,12 +399,6 @@ class PublishServices {
         String pris = model.produktPrisSTKTextController.text;
         bool kg = false;
 
-        bool? kjopt;
-        if (model.selectedValue == 0) {
-          kjopt = true;
-        } else {
-          kjopt = false;
-        }
         final response = await apiFoodService.updateFood(
           token: token,
           id: model.matvare.matId,
@@ -414,11 +408,10 @@ class PublishServices {
           price: pris,
           kategorier: model.kategori,
           posisjon: model.selectedLatLng,
-          antall: model.selectedValue,
           accuratePosition: model.accuratePosition,
           betaling: null,
           kg: kg,
-          kjopt: kjopt,
+          kjopt: model.kjopt,
         );
 
         if (response.statusCode == 200) {
@@ -581,7 +574,6 @@ class PublishServices {
             price: int.parse(pris),
             kategorier: model.kategori,
             posisjon: model.selectedLatLng,
-            antall: model.selectedValue,
             betaling: null,
             accuratePosition: model.accuratePosition,
             kg: kg,
@@ -646,7 +638,7 @@ class PublishServices {
                 return CupertinoAlertDialog(
                   title: Text("Bekreft handling"),
                   content: Text(
-                    "Er du sikker på at du vil markere matvaren som utsolgt? Du kan fjerne markeringen senere ved å øke antallet igjen.",
+                    "Er du sikker på at du vil markere matvaren som utsolgt?",
                   ),
                   actions: [
                     CupertinoDialogAction(

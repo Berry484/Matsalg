@@ -1319,11 +1319,8 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                   ],
                                                 ),
                                                 Padding(
-                                                  padding: matvare.kg == true
-                                                      ? const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0.0, 0.0, 5.0, 0.0)
-                                                      : const EdgeInsetsDirectional
+                                                  padding:
+                                                      const EdgeInsetsDirectional
                                                           .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Row(
@@ -1353,38 +1350,6 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                       .bold,
                                                             ),
                                                       ),
-                                                      if (matvare.kg == true)
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0),
-                                                          child: Text(
-                                                            '/kg',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontSize:
-                                                                      20.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                          ),
-                                                        ),
                                                     ],
                                                   ),
                                                 ),
@@ -1506,8 +1471,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                  MainAxisAlignment.start,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
@@ -1576,80 +1540,6 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                     ],
                                                   ),
                                                 ]),
-                                                Row(
-                                                  children: [
-                                                    const SizedBox(
-                                                      height: 40,
-                                                      child: VerticalDivider(
-                                                        thickness: 1,
-                                                        color: Color.fromARGB(
-                                                            48, 113, 113, 113),
-                                                      ),
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          'ANTALL',
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: 13.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                color: const Color
-                                                                    .fromARGB(
-                                                                    255,
-                                                                    113,
-                                                                    113,
-                                                                    113),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  0, 0, 0, 0),
-                                                          child: Text(
-                                                            '${matvare.antall!.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
-                                                            textAlign:
-                                                                TextAlign.start,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .titleMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize:
-                                                                      13.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: const Color
-                                                                      .fromARGB(
-                                                                      255,
-                                                                      113,
-                                                                      113,
-                                                                      113),
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
                                                 Row(
                                                   children: [
                                                     const SizedBox(

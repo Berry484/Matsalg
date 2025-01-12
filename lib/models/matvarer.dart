@@ -7,12 +7,8 @@ class Matvarer {
   final List<String>? kategorier;
   final double? lat;
   final double? lng;
-  final bool? betaling;
-  final bool? kg;
   final String? username;
   final String? uid;
-  final bool? bonde;
-  final int? antall;
   final String? profilepic;
   final bool? kjopt;
   final DateTime? updatetime;
@@ -30,12 +26,8 @@ class Matvarer {
     this.kategorier,
     this.lat,
     this.lng,
-    this.betaling,
-    this.kg,
     this.username,
     this.uid,
-    this.bonde,
-    this.antall,
     this.profilepic,
     this.kjopt,
     this.updatetime,
@@ -64,13 +56,8 @@ class Matvarer {
           : null,
       lat: json?['lat'] as double?,
       lng: json?['lng'] as double?,
-      betaling: json?['betaling'] as bool?,
-      kg: json?['kg'] as bool?,
-      // Getting the username and profilepic from the 'user' field inside 'listing'
       username: json?['username'] as String? ?? "",
       uid: json?['uid'] as String? ?? "",
-      bonde: json?['bonde'] as bool?,
-      antall: json?['antall'] as int?,
       profilepic: json?['profilepic'] as String? ?? "",
       kjopt: json?['kjopt'] as bool?,
       accuratePosition: json?['accuratePosition'] as bool? ?? false,
@@ -101,13 +88,9 @@ class Matvarer {
           : null,
       lat: json?['lat'] as double?,
       lng: json?['lng'] as double?,
-      betaling: json?['betaling'] as bool?,
-      kg: json?['kg'] as bool?,
       username: userJson['username'] as String? ?? "",
       lastactive: userJson['lastactive'] as String? ?? "",
       uid: json?['uid'] as String? ?? "",
-      bonde: userJson['bonde'] as bool?,
-      antall: json?['antall'] as int?,
       profilepic: userJson['profilepic'] as String? ?? "",
       kjopt: json?['kjopt'] as bool?,
       accuratePosition: json?['accuratePosition'] as bool? ?? false,
@@ -133,13 +116,9 @@ class Matvarer {
       'kategorier': kategorier,
       'lat': lat,
       'lng': lng,
-      'betaling': betaling,
-      'kg': kg,
       'uid': uid,
       'username': username,
       'lastactive': lastactive,
-      'bonde': bonde,
-      'antall': antall,
       'profilepic': profilepic,
       'kjopt': kjopt,
       'accuratePosition': accuratePosition,
@@ -160,13 +139,9 @@ class Matvarer {
         'kategorier: $kategorier, '
         'lat: $lat, '
         'lng: $lng, '
-        'betaling: $betaling, '
-        'kg: $kg, '
         'uid: $uid, '
         'username: $username, '
         'lastactive: $lastactive, '
-        'bonde: $bonde, '
-        'antall: $antall, '
         'profilepic: $profilepic, '
         'kjopt: $kjopt, '
         'accuratePosition: $accuratePosition, '

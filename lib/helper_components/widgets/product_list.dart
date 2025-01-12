@@ -164,23 +164,6 @@ class ProductList extends StatelessWidget {
                                                   ),
                                             ),
                                           ),
-                                          if (matvare.kg == true)
-                                            Text(
-                                              '/kg',
-                                              textAlign: TextAlign.end,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleLarge
-                                                  .override(
-                                                    fontFamily: 'Nunito',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    fontSize: 14,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                            ),
                                         ],
                                       ),
                                     ),

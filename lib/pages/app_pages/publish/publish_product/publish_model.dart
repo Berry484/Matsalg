@@ -14,10 +14,10 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Variables used througout-------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-  int selectedValue = 0;
   bool merSolgtIsLoading = false;
   bool leggUtLoading = false;
   bool oppdaterLoading = false;
+  bool? kjopt = false;
   bool isFocused = false;
   bool test = true;
   bool isDataUploading = false;
@@ -50,12 +50,10 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
   FocusNode? produktPrisSTKFocusNode;
   FocusNode? produktNavnFocusNode;
   FocusNode? produktBeskrivelseFocusNode;
-  FocusNode? antallStkFocusNode;
 
   TextEditingController? produktNavnTextController;
   TextEditingController? produktBeskrivelseTextController;
   TextEditingController? produktPrisSTKTextController;
-  TextEditingController? antallStkTextController;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Functions for the controllers etc----------------------------------------------------------
@@ -65,7 +63,6 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
       produktBeskrivelseTextControllerValidator;
   String? Function(BuildContext, String?)?
       produktPrisSTKTextControllerValidator;
-  String? Function(BuildContext, String?)? antallStkTextControllerValidator;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Logic for when to give an error when validating the text fields----------------------------
@@ -110,23 +107,6 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
     return null;
   }
 
-  String? _antallStkTextControllerValidator(BuildContext context, String? val) {
-    if (val!.toLowerCase() == 'null') {
-      return 'Felt kan ikke være null';
-    }
-    if (val.isEmpty) {
-      return 'Felt må fylles ut';
-    }
-    final number = double.tryParse(val);
-
-    if (number == null || number < 0) {
-      val = '0';
-      return 'Verdi må være større enn 0';
-    }
-
-    return null;
-  }
-
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Initstate and dispose----------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
@@ -137,7 +117,6 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
         _produktBeskrivelseTextControllerValidator;
     produktPrisSTKTextControllerValidator =
         _produktPrisSTKTextControllerValidator;
-    antallStkTextControllerValidator = _antallStkTextControllerValidator;
   }
 
   @override
@@ -150,9 +129,6 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
 
     produktPrisSTKFocusNode?.dispose();
     produktPrisSTKTextController?.dispose();
-
-    antallStkFocusNode?.dispose();
-    antallStkTextController?.dispose();
   }
 
 //

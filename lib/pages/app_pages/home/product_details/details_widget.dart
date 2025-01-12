@@ -1286,9 +1286,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                if (matvare.kjopt == true ||
-                                                    matvare.antall == null ||
-                                                    matvare.antall == 0)
+                                                if (matvare.kjopt == true)
                                                   InkWell(
                                                     splashColor:
                                                         Colors.transparent,
@@ -1412,9 +1410,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                       ),
                                                     ),
                                                   ),
-                                                if (matvare.kjopt != true &&
-                                                    matvare.antall != null &&
-                                                    matvare.antall != 0)
+                                                if (matvare.kjopt != true)
                                                   InkWell(
                                                     splashColor:
                                                         Colors.transparent,
@@ -1551,11 +1547,8 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                   ],
                                                 ),
                                                 Padding(
-                                                  padding: matvare.kg == true
-                                                      ? const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          0.0, 0.0, 5.0, 0.0)
-                                                      : const EdgeInsetsDirectional
+                                                  padding:
+                                                      const EdgeInsetsDirectional
                                                           .fromSTEB(
                                                           0.0, 0.0, 10.0, 0.0),
                                                   child: Row(
@@ -1585,38 +1578,6 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                       .bold,
                                                             ),
                                                       ),
-                                                      if (matvare.kg == true)
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0),
-                                                          child: Text(
-                                                            '/kg',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontSize:
-                                                                      20.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                          ),
-                                                        ),
                                                     ],
                                                   ),
                                                 ),
@@ -1822,80 +1783,6 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          'ANTALL',
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: 13.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                color: const Color
-                                                                    .fromARGB(
-                                                                    255,
-                                                                    113,
-                                                                    113,
-                                                                    113),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                  0, 0, 0, 0),
-                                                          child: Text(
-                                                            '${matvare.antall!.toStringAsFixed(0)} ${matvare.kg == true ? 'Kg' : 'stk'}',
-                                                            textAlign:
-                                                                TextAlign.start,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .titleMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize:
-                                                                      13.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: const Color
-                                                                      .fromARGB(
-                                                                      255,
-                                                                      113,
-                                                                      113,
-                                                                      113),
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    const SizedBox(
-                                                      height: 40,
-                                                      child: VerticalDivider(
-                                                        thickness: 1,
-                                                        color: Color.fromARGB(
-                                                            48, 113, 113, 113),
-                                                      ),
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
                                                           'AVSTAND',
                                                           textAlign:
                                                               TextAlign.start,
@@ -1942,6 +1829,84 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                         1)
                                                                     ? '<1 Km'
                                                                     : '${CalculateDistance.calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvare.lat ?? 0.0, matvare.lng ?? 0.0).toStringAsFixed(0)}Km',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .start,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          13.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      color: const Color
+                                                                          .fromARGB(
+                                                                          255,
+                                                                          113,
+                                                                          113,
+                                                                          113),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 40,
+                                                      child: VerticalDivider(
+                                                        thickness: 1,
+                                                        color:
+                                                            Colors.transparent,
+                                                      ),
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'AVSTAND',
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .titleMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                color: Colors
+                                                                    .transparent,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  5, 0, 0, 0),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              Text(
+                                                                '',
                                                                 textAlign:
                                                                     TextAlign
                                                                         .start,

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
 import 'package:mat_salg/models/user.dart';
@@ -1795,7 +1796,14 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                         0,
                                                                         0),
                                                                 child: Text(
-                                                                  'Tilgjengelig: ${matvarer.antall!.toStringAsFixed(0)} Stk',
+                                                                  (CalculateDistance.calculateDistance(
+                                                                              FFAppState().brukerLat,
+                                                                              FFAppState().brukerLng,
+                                                                              matvarer.lat ?? 0.0,
+                                                                              matvarer.lng ?? 0.0) <
+                                                                          1)
+                                                                      ? '<1 Km'
+                                                                      : '${CalculateDistance.calculateDistance(FFAppState().brukerLat, FFAppState().brukerLng, matvarer.lat ?? 0.0, matvarer.lng ?? 0.0).toStringAsFixed(0)} Km',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .headlineSmall

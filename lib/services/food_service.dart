@@ -22,7 +22,6 @@ class ApiFoodService {
     required LatLng? posisjon,
     required bool? betaling,
     required bool kg,
-    required int? antall,
     required bool accuratePosition,
   }) async {
     try {
@@ -35,7 +34,6 @@ class ApiFoodService {
         "lat": posisjon?.latitude,
         "lng": posisjon?.longitude,
         "betaling": betaling,
-        "antall": antall,
         "kjopt": false,
         "slettet": false,
         "accuratePosition": accuratePosition,
@@ -80,7 +78,6 @@ class ApiFoodService {
     bool? betaling,
     bool? kg,
     bool? accuratePosition,
-    int? antall,
     bool? kjopt,
   }) async {
     try {
@@ -93,7 +90,6 @@ class ApiFoodService {
         "lat": posisjon?.latitude,
         "lng": posisjon?.longitude,
         "betaling": betaling,
-        "antall": antall,
         "kjopt": kjopt,
         "accuratePosition": accuratePosition,
         "slettet": false,
@@ -135,7 +131,6 @@ class ApiFoodService {
     try {
       final Map<String, dynamic> requestBody = {
         "slettet": true,
-        "antall": 0,
       };
 
       // Convert the Map to JSON
@@ -171,7 +166,7 @@ class ApiFoodService {
     String? token, // Add token parameter
   }) async {
     try {
-      final Map<String, dynamic> requestBody = {"kjopt": solgt, "antall": 0};
+      final Map<String, dynamic> requestBody = {"kjopt": solgt};
 
       // Convert the Map to JSON
       final String jsonBody = jsonEncode(requestBody);
