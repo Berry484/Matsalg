@@ -16,7 +16,6 @@ import 'package:mat_salg/services/user_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'home_model.dart';
 export 'home_model.dart';
@@ -334,7 +333,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
+    //context.watch<FFAppState>();
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
