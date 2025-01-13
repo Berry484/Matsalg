@@ -121,7 +121,6 @@ class _GiveRatingWidgetState extends State<RatingPage> {
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         Navigator.pop(context);
-                        Navigator.pop(context);
                       },
                       child: Text(
                         'Lukk',
@@ -155,7 +154,8 @@ class _GiveRatingWidgetState extends State<RatingPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                'Legg igjen en vurdering',
+                                textAlign: TextAlign.center,
+                                'Legg igjen en vurdering på kjøper',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(

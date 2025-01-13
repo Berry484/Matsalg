@@ -22,17 +22,26 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
   final UserInfoService userInfoService = UserInfoService();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late PublishedModel _model;
+  bool canPress = false;
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => PublishedModel());
+    makePress();
+  }
+
+  void makePress() {
+    Future.delayed(Duration(milliseconds: 500), () {
+      if (mounted) {
+        canPress = true;
+      }
+    });
   }
 
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
@@ -121,6 +130,7 @@ class _BrukerLagtUtInfoWidgetState extends State<PublishedPage>
                         0.0, 16.0, 0.0, 10.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        if (!canPress) return;
                         if (FFAppState().lagtUt) {
                           context.goNamed('Home');
                         } else {

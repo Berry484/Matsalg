@@ -37,24 +37,18 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>FLTEnableWideGamut</key>
-	<true/>
 	<key>FlutterDeepLinkingEnabled</key>
 	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>For å ta et bilde eller en video, trenger appen tilgang til kameraet ditt.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>For å vise matvarer i nærheten, trenger appen tilgang til posisjonen din.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>For å vise matvarer i nærheten, trenger appen tilgang til posisjonen din.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>For å laste opp bilder eller videoer, trenger appen tilgang til kamerarullen din.</string>
 	<key>PermissionGroupNotification</key>
 	<string>For å holde deg oppdatert, trenger appen tilgang til å sende deg varsler.</string>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
@@ -80,5 +74,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>
