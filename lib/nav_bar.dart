@@ -73,7 +73,7 @@ class MainWrapperState extends State<MainWrapper> {
             kTransitionInfoKey: const TransitionInfo(
               hasTransition: true,
               transitionType: PageTransitionType.bottomToTop,
-              duration: Duration(milliseconds: 200),
+              duration: Duration(milliseconds: 300),
             ),
           },
         );

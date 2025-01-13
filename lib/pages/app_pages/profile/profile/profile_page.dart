@@ -1328,7 +1328,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                   ),
                                                   const SizedBox(height: 16),
                                                   Text(
-                                                    'Du kan se mat du har likt her.',
+                                                    'Du kan se varer du har likt her.',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyLarge
