@@ -63,6 +63,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
 
     _scrollController1.addListener(_scrollListener);
+    searchBy = widget.kategori;
   }
 
   Future<void> getCategoryFood(bool refresh, bool nextPage) async {
@@ -434,12 +435,17 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                   filterOptions = localFilterOptions;
                                   getCategoryFood(true, false);
                                   if (localFilterOptions
-                                          .selectedCategories.isEmpty &&
-                                      localFilterOptions.distance == null &&
-                                      localFilterOptions.priceRange ==
-                                          RangeValues(0, 800)) {
+                                          .selectedCategories.isEmpty ||
+                                      localFilterOptions
+                                              .selectedCategories.length !=
+                                          1) {
                                     safeSetState(() {
                                       searchBy = 'Søk';
+                                    });
+                                  } else {
+                                    safeSetState(() {
+                                      searchBy = localFilterOptions
+                                          .selectedCategories.first;
                                     });
                                   }
                                 }
@@ -523,7 +529,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                       placeholder: widget.kategori?.toLowerCase() == 'søk' ||
                               searchBy?.toLowerCase() == 'søk'
                           ? 'Søk'
-                          : 'Søk innen ${widget.kategori}',
+                          : 'Søk innen $searchBy',
                       placeholderStyle:
                           FlutterFlowTheme.of(context).labelMedium.override(
                                 fontFamily: 'Open Sans',
