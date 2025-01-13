@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/pages/app_pages/home/product_details/details_widget.dart';
@@ -52,10 +53,10 @@ class DetailsServices {
       }
     } on SocketException {
       if (!context.mounted) return;
-      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+      rethrow;
     } catch (e) {
       if (!context.mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      rethrow;
     }
   }
 
@@ -97,7 +98,11 @@ class DetailsServices {
       );
 
       model.messageIsLoading = false;
-
+      if (matvare.uid == FirebaseAuth.instance.currentUser?.uid) {
+        Toasts.showErrorToast(
+            context, 'Du kan ikke starte en samtale med deg selv');
+        return;
+      }
       if (serializedConversation != null) {
         context.pushNamed(
           'message',

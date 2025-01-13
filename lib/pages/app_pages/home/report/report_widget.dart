@@ -65,10 +65,10 @@ class _RapporterWidgetState extends State<ReportWidget> {
       return 'Spam';
     }
     if (num == 1) {
-      return 'Falsk';
+      return 'Upassende eller falsk';
     }
     if (num == 2) {
-      return 'Upassende eller falsk';
+      return 'Brudd på regler';
     }
     if (num == 3) {
       return 'Svindel';

@@ -149,9 +149,22 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
   }
 
   Future<void> getPoststed() async {
-    await detailsServices.getPoststed(context);
-    safeSetState(() {});
-    return;
+    try {
+      await detailsServices.getPoststed(context);
+      safeSetState(() {});
+      return;
+    } on SocketException catch (e) {
+      logger.d(e);
+      if (!mounted) return;
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } on TimeoutException {
+      if (!mounted) return;
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } catch (e) {
+      logger.e('Unexpected exception: $e');
+      if (!mounted) return;
+      Toasts.showErrorToast(context, 'En feil oppstod');
+    }
   }
 
   Future<void> getSimilarFoods(bool refresh) async {
@@ -187,11 +200,15 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
           }
         });
       }
-    } on SocketException {
+    } on SocketException catch (e) {
+      logger.d(e);
+      if (!mounted) return;
+      Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+    } on TimeoutException {
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      logger.d(e);
+      logger.e('Unexpected exception: $e');
       if (!mounted) return;
       Toasts.showErrorToast(context, 'En feil oppstod');
     }

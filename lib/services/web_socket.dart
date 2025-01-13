@@ -30,8 +30,7 @@ class WebSocketService {
 
   bool _running = false;
   static const Duration retryDelay = Duration(seconds: 3);
-  static const Duration listenerTimeout =
-      Duration(seconds: 5); // Timeout for listener response
+  static const Duration listenerTimeout = Duration(seconds: 5);
 
   Future<void> connect({bool? retrying}) async {
     try {
@@ -63,7 +62,7 @@ class WebSocketService {
       try {
         logger.d("Attempting to connect to WebSocket...");
 
-        // Close existing connection if any
+        // Close existing connection
         await _cleanupConnection();
 
         // Establish a new WebSocket connection
@@ -88,7 +87,8 @@ class WebSocketService {
         _running = false;
       }
     } catch (e) {
-      logger.d("Error when connecting$e");
+      logger
+          .d("Error when connecting will not retry as its outside the block$e");
     }
   }
 
@@ -122,8 +122,10 @@ class WebSocketService {
       onDone: () {
         try {
           logger.d("WebSocket connection closed.");
+
           completer.completeError(
               Exception("Connection closed before receiving any response"));
+          return;
         } catch (e) {
           logger.d("error$e");
         }
@@ -161,9 +163,8 @@ class WebSocketService {
   }
 
   void handleLostConnection() {
-    logger.d("Handling lost connection...");
+    logger.d("Reconnecting after delay...");
     Future.delayed(retryDelay, () async {
-      logger.d("Reconnecting after delay...");
       await connect(retrying: true);
     });
   }

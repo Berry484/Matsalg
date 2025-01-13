@@ -1374,8 +1374,8 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                               children: [
                                                 Image.asset(
                                                   'assets/images/no-posts.png',
-                                                  width: 125,
-                                                  height: 125,
+                                                  width: 110,
+                                                  height: 110,
                                                   fit: BoxFit.cover,
                                                 ),
                                                 const SizedBox(height: 16),
@@ -1395,7 +1395,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                           .override(
                                                             fontFamily:
                                                                 'Nunito',
-                                                            fontSize: 19,
+                                                            fontSize: 22,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
                                                                 FontWeight.bold,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'dart:async';
@@ -238,7 +239,6 @@ class ApiFoodService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
       // Make the API request and parse the response
       final response = await http
           .get(
@@ -246,8 +246,7 @@ class ApiFoodService {
                 '$baseUrl/rrh/send/matvarer/similar-products?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page&keyword=$keyword&matId=$matId'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
-
+          .timeout(const Duration(seconds: 15));
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
@@ -255,10 +254,11 @@ class ApiFoodService {
       } else {
         return null;
       }
-    } on SocketException {
+    } on SocketException catch (e) {
+      logger.d(e);
       throw const SocketException('');
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
