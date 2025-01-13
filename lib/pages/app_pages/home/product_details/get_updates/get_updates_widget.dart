@@ -218,7 +218,7 @@ class _FolgBrukerWidgetState extends State<GetUpdatesWidget> {
                                                       ),
                                                 ),
                                                 Text(
-                                                  'Bli varslet når matvaren blir \ntilgjengelig igjen',
+                                                  'Bli varslet når varen blir \ntilgjengelig igjen',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium

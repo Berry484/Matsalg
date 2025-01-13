@@ -638,7 +638,7 @@ class PublishServices {
                 return CupertinoAlertDialog(
                   title: Text("Bekreft handling"),
                   content: Text(
-                    "Er du sikker på at du vil markere matvaren som utsolgt?",
+                    "Er du sikker på at du vil markere varen som utsolgt?",
                   ),
                   actions: [
                     CupertinoDialogAction(

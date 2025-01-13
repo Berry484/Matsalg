@@ -1038,7 +1038,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                       .fromSTEB(
                                                       20.0, 20.0, 0.0, 5.0),
                                               child: Text(
-                                                'Beskriv matvaren',
+                                                'Beskriv varen',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -1065,7 +1065,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                       .fromSTEB(
                                                       20.0, 0.0, 20.0, 10.0),
                                               child: Text(
-                                                'Fortell litt om matvaren, hvor mye er det i hver pakke? osv.',
+                                                'Fortell litt om varen, hvor mye er det i hver pakke? osv.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
