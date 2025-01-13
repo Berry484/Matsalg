@@ -16,26 +16,27 @@ class Matvarer {
   final bool? wantPush;
   final bool? accuratePosition;
   final String? lastactive;
+  final int? likeCount;
 
-  Matvarer({
-    this.matId,
-    this.name,
-    this.imgUrls,
-    this.description,
-    this.price,
-    this.kategorier,
-    this.lat,
-    this.lng,
-    this.username,
-    this.uid,
-    this.profilepic,
-    this.kjopt,
-    this.updatetime,
-    this.liked,
-    this.wantPush,
-    this.accuratePosition,
-    this.lastactive,
-  });
+  Matvarer(
+      {this.matId,
+      this.name,
+      this.imgUrls,
+      this.description,
+      this.price,
+      this.kategorier,
+      this.lat,
+      this.lng,
+      this.username,
+      this.uid,
+      this.profilepic,
+      this.kjopt,
+      this.updatetime,
+      this.liked,
+      this.wantPush,
+      this.accuratePosition,
+      this.lastactive,
+      this.likeCount});
 
   factory Matvarer.fromJson1(Map<String, dynamic>? json) {
     DateTime? parsedTime;
@@ -65,6 +66,7 @@ class Matvarer {
       liked: json?['liked'] as bool?,
       wantPush: json?['wantPush'] as bool?,
       lastactive: json?['lastactive'] as String? ?? "",
+      likeCount: json?['likeCount'] as int?,
     );
   }
 
@@ -96,6 +98,7 @@ class Matvarer {
       accuratePosition: json?['accuratePosition'] as bool? ?? false,
       updatetime: parsedTime,
       liked: json?['liked'] as bool?,
+      likeCount: json?['likeCount'] as int?,
       wantPush: json?['wantPush'] as bool?,
     );
   }
@@ -124,6 +127,7 @@ class Matvarer {
       'accuratePosition': accuratePosition,
       'updatetime': updatetime?.toIso8601String(),
       'liked': liked,
+      'likeCount': likeCount,
       'wantPush': wantPush,
     };
   }
@@ -147,6 +151,7 @@ class Matvarer {
         'accuratePosition: $accuratePosition, '
         'updatetime: $updatetime, '
         'liked: $liked, '
+        'likeCount: $likeCount, '
         'wantPush: $wantPush'
         '}';
   }

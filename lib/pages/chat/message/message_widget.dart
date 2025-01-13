@@ -340,358 +340,366 @@ class _MessageWidgetState extends State<MessageWidget> {
                   leading: null,
                   actions: const [],
                   flexibleSpace: FlexibleSpaceBar(
-                    title: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(14, 5, 0, 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          try {
-                            if (conversation.messages.isEmpty) {
-                              final appState = FFAppState();
+                    title: Column(children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(14, 5, 0, 0),
+                        child: GestureDetector(
+                          onTap: () {
+                            try {
+                              if (conversation.messages.isEmpty) {
+                                final appState = FFAppState();
 
-                              appState.conversations.removeWhere(
-                                  (conv) => conv.user == conversation.user);
-                              //appState.updateUI();
+                                appState.conversations.removeWhere((conv) =>
+                                    conv.user == conversation.user &&
+                                    conv.matId == conversation.matId);
+                              }
+                              FFAppState().chatRoom = '';
+                              Navigator.pop(context);
+                            } on SocketException {
+                              Toasts.showErrorToast(
+                                  context, 'Ingen internettforbindelse');
+                            } catch (e) {
+                              Toasts.showErrorToast(context, 'En feil oppstod');
                             }
-                            FFAppState().chatRoom = '';
-                            Navigator.pop(context);
-                          } on SocketException {
-                            Toasts.showErrorToast(
-                                context, 'Ingen internettforbindelse');
-                          } catch (e) {
-                            Toasts.showErrorToast(context, 'En feil oppstod');
-                          }
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.arrow_back_ios,
-                                  color: Colors.black,
-                                  size: 28,
-                                ),
-                                if (conversation.deleted == false)
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            5.0, 0.0, 0.0, 0.0),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        FocusScope.of(context)
-                                            .requestFocus(FocusNode());
-                                        context.pushNamed(
-                                          'BrukerPage2',
-                                          queryParameters: {
-                                            'uid': serializeParam(
-                                              conversation.user,
-                                              ParamType.String,
-                                            ),
-                                            'username': serializeParam(
-                                              conversation.username,
-                                              ParamType.String,
-                                            ),
-                                            'fromChat': serializeParam(
-                                              true,
-                                              ParamType.bool,
-                                            ),
-                                          },
-                                        );
-                                      },
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        10.0, 0.0, 0.0, 0.0),
-                                                child: Container(
-                                                  width: 38.0,
-                                                  height: 38.0,
-                                                  clipBehavior: Clip.antiAlias,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: CachedNetworkImage(
-                                                    fadeInDuration:
-                                                        Duration.zero,
-                                                    imageUrl:
-                                                        '${ApiConstants.baseUrl}${conversation.profilePic}',
-                                                    fit: BoxFit.cover,
-                                                    imageBuilder: (context,
-                                                        imageProvider) {
-                                                      return Container(
-                                                        width: 38.0,
-                                                        height: 38.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          image:
-                                                              DecorationImage(
-                                                            image:
-                                                                imageProvider,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Image.asset(
-                                                      'assets/images/profile_pic.png',
-                                                      width: 38.0,
-                                                      height: 38.0,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            8.0, 0.0, 0.0, 0.0),
-                                                    child: Text.rich(
-                                                      TextSpan(
-                                                        children: [
-                                                          TextSpan(
-                                                            text: conversation
-                                                                .username,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize:
-                                                                      15.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                          ),
-                                                          TextSpan(
-                                                            text:
-                                                                '\n${customTimeAgo(DateTime.parse(conversation.lastactive ?? ''))}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize:
-                                                                      13.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText, // Grey color
-                                                                ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 8, 0),
-                              child: Row(
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
                                 children: [
-                                  if (conversation.productImage != null)
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        if (conversation.isOwner != true) {
+                                  Icon(
+                                    Icons.arrow_back_ios,
+                                    color: Colors.black,
+                                    size: 28,
+                                  ),
+                                  if (conversation.deleted == false)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              5.0, 0.0, 0.0, 0.0),
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          FocusScope.of(context)
+                                              .requestFocus(FocusNode());
                                           context.pushNamed(
-                                            'MatDetaljBondegard2',
+                                            'BrukerPage2',
                                             queryParameters: {
+                                              'uid': serializeParam(
+                                                conversation.user,
+                                                ParamType.String,
+                                              ),
+                                              'username': serializeParam(
+                                                conversation.username,
+                                                ParamType.String,
+                                              ),
                                               'fromChat': serializeParam(
                                                 true,
                                                 ParamType.bool,
                                               ),
-                                              'matId': serializeParam(
-                                                conversation.matId,
-                                                ParamType.int,
-                                              ),
                                             },
                                           );
-                                        } else {
-                                          context.pushNamed(
-                                            'MinMatvareDetaljChat',
-                                            queryParameters: {
-                                              'matId': serializeParam(
-                                                conversation.matId,
-                                                ParamType.int,
-                                              ),
-                                            },
-                                          );
-                                        }
-                                      },
-                                      child: conversation.slettet != true
-                                          ? ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              child: CachedNetworkImage(
-                                                fadeInDuration: Duration.zero,
-                                                imageUrl:
-                                                    '${ApiConstants.baseUrl}${conversation.productImage}',
-                                                width: 35.0,
-                                                height: 35.0,
-                                                fit: BoxFit.cover,
-                                                placeholder: (context, url) =>
-                                                    const SizedBox(),
-                                              ),
-                                            )
-                                          : ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Container(
-                                                color: Colors.grey[200],
-                                                width: 35.0,
-                                                height: 35.0,
-                                              ),
-                                            ),
-                                    ),
-                                  if (conversation.productImage != null)
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                  IconButton(
-                                    icon: Icon(
-                                      CupertinoIcons.ellipsis,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      size: 28.0,
-                                    ),
-                                    onPressed: () {
-                                      showCupertinoModalPopup(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return CupertinoActionSheet(
-                                            title: const Text(
-                                              'Velg en handling',
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w400,
-                                                color: CupertinoColors
-                                                    .secondaryLabel,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            actions: <Widget>[
-                                              CupertinoActionSheetAction(
-                                                onPressed: () async {
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    barrierColor:
-                                                        const Color.fromARGB(
-                                                            60, 17, 0, 0),
-                                                    useRootNavigator: true,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return GestureDetector(
-                                                        onTap: () =>
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .unfocus(),
-                                                        child: Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child: ReportWidget(
-                                                            username:
-                                                                conversation
-                                                                    .user,
-                                                            chatUsername:
-                                                                conversation
-                                                                    .username,
-                                                            chat: true,
-                                                            matId: null,
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          10.0, 0.0, 0.0, 0.0),
+                                                  child: Container(
+                                                    width: 38.0,
+                                                    height: 38.0,
+                                                    clipBehavior:
+                                                        Clip.antiAlias,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: CachedNetworkImage(
+                                                      fadeInDuration:
+                                                          Duration.zero,
+                                                      imageUrl:
+                                                          '${ApiConstants.baseUrl}${conversation.profilePic}',
+                                                      fit: BoxFit.cover,
+                                                      imageBuilder: (context,
+                                                          imageProvider) {
+                                                        return Container(
+                                                          width: 38.0,
+                                                          height: 38.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            image:
+                                                                DecorationImage(
+                                                              image:
+                                                                  imageProvider,
+                                                              fit: BoxFit.cover,
+                                                            ),
                                                           ),
+                                                        );
+                                                      },
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          Image.asset(
+                                                        'assets/images/profile_pic.png',
+                                                        width: 38.0,
+                                                        height: 38.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(8.0,
+                                                              0.0, 0.0, 0.0),
+                                                      child: Text.rich(
+                                                        TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                              text: conversation
+                                                                  .username,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    fontSize:
+                                                                        15.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                            ),
+                                                            TextSpan(
+                                                              text:
+                                                                  '\n${customTimeAgo(DateTime.parse(conversation.lastactive ?? ''))}',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    fontSize:
+                                                                        13.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText, // Grey color
+                                                                  ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                      );
-                                                    },
-                                                  ).then((value) =>
-                                                      setState(() {}));
-                                                  return;
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 8, 0),
+                                child: Row(
+                                  children: [
+                                    if (conversation.productImage != null)
+                                      InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          if (conversation.isOwner != true) {
+                                            context.pushNamed(
+                                              'MatDetaljBondegard2',
+                                              queryParameters: {
+                                                'fromChat': serializeParam(
+                                                  true,
+                                                  ParamType.bool,
+                                                ),
+                                                'matId': serializeParam(
+                                                  conversation.matId,
+                                                  ParamType.int,
+                                                ),
+                                              },
+                                            );
+                                          } else {
+                                            context.pushNamed(
+                                              'ProductStatsChat',
+                                              queryParameters: {
+                                                'matId': serializeParam(
+                                                  conversation.matId,
+                                                  ParamType.int,
+                                                ),
+                                                'otherUid': serializeParam(
+                                                  conversation.user,
+                                                  ParamType.String,
+                                                ),
+                                              },
+                                            );
+                                          }
+                                        },
+                                        child: conversation.slettet != true
+                                            ? ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                                child: CachedNetworkImage(
+                                                  fadeInDuration: Duration.zero,
+                                                  imageUrl:
+                                                      '${ApiConstants.baseUrl}${conversation.productImage}',
+                                                  width: 35.0,
+                                                  height: 35.0,
+                                                  fit: BoxFit.cover,
+                                                  placeholder: (context, url) =>
+                                                      const SizedBox(),
+                                                ),
+                                              )
+                                            : ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Container(
+                                                  color: Colors.grey[200],
+                                                  width: 35.0,
+                                                  height: 35.0,
+                                                ),
+                                              ),
+                                      ),
+                                    if (conversation.productImage != null)
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                    IconButton(
+                                      icon: Icon(
+                                        CupertinoIcons.ellipsis,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 28.0,
+                                      ),
+                                      onPressed: () {
+                                        showCupertinoModalPopup(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return CupertinoActionSheet(
+                                              title: const Text(
+                                                'Velg en handling',
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: CupertinoColors
+                                                      .secondaryLabel,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              actions: <Widget>[
+                                                CupertinoActionSheetAction(
+                                                  onPressed: () async {
+                                                    await showModalBottomSheet(
+                                                      isScrollControlled: true,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      barrierColor:
+                                                          const Color.fromARGB(
+                                                              60, 17, 0, 0),
+                                                      useRootNavigator: true,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return GestureDetector(
+                                                          onTap: () =>
+                                                              FocusScope.of(
+                                                                      context)
+                                                                  .unfocus(),
+                                                          child: Padding(
+                                                            padding: MediaQuery
+                                                                .viewInsetsOf(
+                                                                    context),
+                                                            child: ReportWidget(
+                                                              username:
+                                                                  conversation
+                                                                      .user,
+                                                              chatUsername:
+                                                                  conversation
+                                                                      .username,
+                                                              chat: true,
+                                                              matId: null,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ).then((value) =>
+                                                        setState(() {}));
+                                                    return;
+                                                  },
+                                                  child: const Text(
+                                                    'Rapporter chat',
+                                                    style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors
+                                                          .red, // Red text for 'Slett annonse'
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                              cancelButton:
+                                                  CupertinoActionSheetAction(
+                                                onPressed: () {
+                                                  Navigator.pop(
+                                                      context); // Close the action sheet
                                                 },
+                                                isDefaultAction: true,
                                                 child: const Text(
-                                                  'Rapporter chat',
+                                                  'Avbryt',
                                                   style: TextStyle(
                                                     fontSize: 18,
-                                                    color: Colors
-                                                        .red, // Red text for 'Slett annonse'
+                                                    color: CupertinoColors
+                                                        .systemBlue,
                                                   ),
                                                 ),
                                               ),
-                                            ],
-                                            cancelButton:
-                                                CupertinoActionSheetAction(
-                                              onPressed: () {
-                                                Navigator.pop(
-                                                    context); // Close the action sheet
-                                              },
-                                              isDefaultAction: true,
-                                              child: const Text(
-                                                'Avbryt',
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: CupertinoColors
-                                                      .systemBlue,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                    ]),
                     centerTitle: true,
                     expandedTitleScale: 1.0,
                   ),

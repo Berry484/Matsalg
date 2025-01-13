@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:mat_salg/pages/app_pages/profile/product_stats/product_stats_page.dart';
+
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/nav_bar.dart';
@@ -459,6 +461,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               params.getParam<Map<String, dynamic>>('matvare', ParamType.JSON);
           final matId = params.getParam<int>('matId', ParamType.int);
           return ProductPage(matvare: matvare, matId: matId);
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/productStatsChat',
+        name: 'ProductStatsChat',
+        builder: (context, state) {
+          final params = FFParameters(state);
+          final matId = params.getParam<int>('matId', ParamType.int);
+          final otherUid =
+              params.getParam<String>('otherUid', ParamType.String);
+          return ProductStatsPage(matId: matId, otherUid: otherUid);
         },
         parentNavigatorKey: _parentKey,
       ),

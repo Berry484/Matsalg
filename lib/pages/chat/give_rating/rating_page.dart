@@ -13,13 +13,13 @@ class RatingPage extends StatefulWidget {
   const RatingPage({
     super.key,
     this.kjop,
-    this.username,
-    this.salgInfoId,
+    this.user,
+    this.matId,
   });
 
   final dynamic kjop;
-  final dynamic username;
-  final dynamic salgInfoId;
+  final dynamic user;
+  final dynamic matId;
 
   @override
   State<RatingPage> createState() => _GiveRatingWidgetState();
@@ -200,14 +200,11 @@ class _GiveRatingWidgetState extends State<RatingPage> {
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            40, 80, 40, 45),
+                            20, 80, 20, 45),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            await ratingServices.giveRating(
-                                context,
-                                widget.kjop,
-                                widget.username,
-                                widget.salgInfoId);
+                            await ratingServices.giveRating(context,
+                                widget.kjop, widget.user, widget.matId);
                           },
                           text: 'Send',
                           options: FFButtonOptions(

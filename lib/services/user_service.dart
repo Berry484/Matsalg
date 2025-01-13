@@ -316,10 +316,6 @@ class UserInfoService {
           .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
 
       if (response.statusCode == 200) {
-        // Parse the response body
-        final String lastActiveTime =
-            response.body; // the last active time is expected as a string
-        logger.d('Last Active Time: $lastActiveTime');
         return response;
       } else {
         logger.d('Failed to fetch last active time: ${response.statusCode}');

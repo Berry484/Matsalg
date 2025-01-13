@@ -131,6 +131,7 @@ class ApiFoodService {
     try {
       final Map<String, dynamic> requestBody = {
         "slettet": true,
+        "kjopt": false,
       };
 
       // Convert the Map to JSON

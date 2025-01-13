@@ -1617,7 +1617,6 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                   );
                                 }
                                 final matvarer = _model.matvarer![index];
-
                                 return Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 10, 10, 0),

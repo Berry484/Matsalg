@@ -17,6 +17,7 @@ class RatingService {
     String? uid,
     int rating,
     bool kjoper,
+    int matId,
   ) async {
     try {
       final headers = {
@@ -28,54 +29,12 @@ class RatingService {
       final response = await http
           .post(
             Uri.parse(
-                '$baseUrl/api/ratings?receiver=$uid&value=$rating&kjoper=$kjoper'),
+                '$baseUrl/api/ratings?receiver=$uid&value=$rating&kjoper=$kjoper&matId=$matId'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+
       return response;
-    } on SocketException {
-      throw const SocketException('');
-    } catch (e) {
-      throw Exception;
-    }
-  }
-
-//---------------------------------------------------------------------------------------------------------------
-//--------------------Sends a rating from the seller to the buyer------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-  static Future<http.Response> giveRating({
-    required int id,
-    required String token,
-  }) async {
-    try {
-      // Base URL for the API
-      const String baseUrl = ApiConstants.baseUrl; // Adjust as necessary
-
-      // Create the user data as a Map
-      final Map<String, dynamic> userData = {
-        "id": id,
-        "rated": true,
-      };
-
-      // Convert the Map to JSON
-      final String jsonBody = jsonEncode(userData);
-
-      // Prepare URL with encoded parameters
-      final uri = Uri.parse('$baseUrl/ordre/updaterated');
-
-      // Prepare headers
-      final headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token', // Add Bearer token if present
-      };
-
-      // Send the POST request
-      final response = await http.post(
-        uri, // Use the updated URI with query parameters
-        headers: headers,
-        body: jsonBody,
-      );
-      return response; // Return the response
     } on SocketException {
       throw const SocketException('');
     } catch (e) {
@@ -264,5 +223,38 @@ class RatingService {
     }
   }
 
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Gets back if a user has given a rating to that user----------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<bool?> ratingBeenGiven(
+      String? token, String give, String get, int? matId) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Construct the URL with query parameters
+      final url = Uri.parse(
+          '$baseUrl/api/ratings/exists?give=$give&get=$get&matId=$matId');
+
+      final response = await http
+          .get(url, headers: headers)
+          .timeout(const Duration(seconds: 15));
+
+      if (response.statusCode == 200) {
+        // Parse the boolean response body
+        return jsonDecode(response.body) as bool;
+      } else {
+        return false;
+      }
+    } on SocketException {
+      throw const SocketException('No Internet connection');
+    } on TimeoutException {
+      throw TimeoutException('The request timed out');
+    } catch (e) {
+      throw Exception('An error occurred: $e');
+    }
+  }
 //
 }
