@@ -42,11 +42,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>For å ta et bilde eller en video, trenger appen tilgang til kameraet ditt.</string>
+	<string>MatSalg.no trenger tilgang til kameraet ditt for å ta bilder når du skal legge ut en annonse.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>For å vise varer i nærheten, trenger appen tilgang til posisjonen din.</string>
+	<string>MatSalg.no bruker posisjonen din til å vise deg annonser i nærheten av deg, og for å gjøre det lett for deg å legge ut annonsen der den er.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>MatSalg.no bruker posisjonen din til å vise deg annonser i nærheten av deg, og for å gjøre det lett for deg å legge ut annonsen der den er.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>For å laste opp bilder eller videoer, trenger appen tilgang til kamerarullen din.</string>
+	<string>MatSalg.no trenger tilgang til kamerarullen for å legge til eksisterende bilder og videoer på dine annonser.</string>
 	<key>PermissionGroupNotification</key>
 	<string>For å holde deg oppdatert, trenger appen tilgang til å sende deg varsler.</string>
 	<key>UIBackgroundModes</key>
