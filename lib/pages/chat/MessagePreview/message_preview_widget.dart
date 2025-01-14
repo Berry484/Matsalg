@@ -91,71 +91,41 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                     ),
                   ),
                 ),
-              if (widget.messageImage != null &&
-                  widget.messageImage!.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                  child: Container(
-                      width: 46,
-                      height: 46,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: CachedNetworkImage(
-                        fadeInDuration: Duration.zero,
-                        imageUrl:
-                            '${ApiConstants.baseUrl}${widget.messageImage}',
-                        width: 46,
-                        height: 46,
-                        fit: BoxFit.cover,
-                        imageBuilder: (context, imageProvider) {
-                          return Container(
-                            width: 46,
-                            height: 46,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          );
-                        },
-                        errorWidget: (context, url, error) => Image.asset(
-                          'assets/images/profile_pic.png',
-                          width: 46,
-                          height: 46,
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                ),
-              if (widget.messageImage == null || widget.messageImage!.isEmpty)
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                  child: Container(
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                child: Container(
                     width: 46,
                     height: 46,
                     clipBehavior: Clip.antiAlias,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
-                    child: Image.asset(
-                      'assets/images/profile_pic.png',
+                    child: CachedNetworkImage(
+                      fadeInDuration: Duration.zero,
+                      imageUrl: '${ApiConstants.baseUrl}${widget.messageImage}',
                       width: 46,
                       height: 46,
                       fit: BoxFit.cover,
-                      errorBuilder: (BuildContext context, Object error,
-                          StackTrace? stackTrace) {
-                        return Image.asset(
-                          'assets/images/profile_pic.png',
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
                           width: 46,
                           height: 46,
-                          fit: BoxFit.cover,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         );
                       },
-                    ),
-                  ),
-                ),
+                      errorWidget: (context, url, error) => Image.asset(
+                        'assets/images/profile_pic.png',
+                        width: 46,
+                        height: 46,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+              ),
               Expanded(
                 child: Stack(
                   children: [

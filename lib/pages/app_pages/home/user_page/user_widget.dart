@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
-import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
+import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
 import 'package:mat_salg/models/user.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
@@ -623,7 +623,11 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                                   if ((_model.bruker?.followersCount) != 0) {
                                                                                     if (widget.fromChat != true) {
                                                                                       context.pushNamed(
-                                                                                        GoRouterState.of(context).uri.toString().startsWith('/profil') ? 'FolgereProfile' : 'Folgere',
+                                                                                        GoRouterState.of(context).uri.toString().startsWith('/profil')
+                                                                                            ? 'FolgereProfile'
+                                                                                            : GoRouterState.of(context).uri.toString().startsWith('/notifications')
+                                                                                                ? 'FolgereNotification'
+                                                                                                : 'Folgere',
                                                                                         queryParameters: {
                                                                                           'username': serializeParam(widget.uid, ParamType.String),
                                                                                           'folger': serializeParam('Følgere', ParamType.String),
@@ -703,7 +707,11 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                                   if (_model.bruker!.followingCount != 0) {
                                                                                     if (widget.fromChat != true) {
                                                                                       context.pushNamed(
-                                                                                        GoRouterState.of(context).uri.toString().startsWith('/profil') ? 'FolgereProfile' : 'Folgere',
+                                                                                        GoRouterState.of(context).uri.toString().startsWith('/profil')
+                                                                                            ? 'FolgereProfile'
+                                                                                            : GoRouterState.of(context).uri.toString().startsWith('/notifications')
+                                                                                                ? 'FolgereNotification'
+                                                                                                : 'Folgere',
                                                                                         queryParameters: {
                                                                                           'username': serializeParam(widget.uid, ParamType.String),
                                                                                           'folger': serializeParam(
@@ -1443,7 +1451,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                           1,
                                               itemBuilder: (context, index) {
                                                 if (_model.matisLoading) {
-                                                  return ShimmerLoadingWidget();
+                                                  return const ShimmerLoadingWidget();
                                                 }
                                                 if (index <
                                                     (_model.matvarer?.length ??
@@ -1464,7 +1472,14 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                       .startsWith(
                                                                           '/profil')
                                                                   ? 'MatDetaljBondegard1'
-                                                                  : 'ProductDetail',
+                                                                  : GoRouterState.of(
+                                                                              context)
+                                                                          .uri
+                                                                          .toString()
+                                                                          .startsWith(
+                                                                              '/notifications')
+                                                                      ? 'ProductDetailNotification'
+                                                                      : 'ProductDetail',
                                                               queryParameters: {
                                                                 'matvare':
                                                                     serializeParam(
@@ -1509,7 +1524,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                           44) {
                                                     return Container();
                                                   } else {
-                                                    return ShimmerLoadingWidget();
+                                                    return const ShimmerLoadingWidget();
                                                   }
                                                 }
                                               },
@@ -1636,7 +1651,13 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                         .toString()
                                                         .startsWith('/profil')
                                                     ? 'MatDetaljBondegard1'
-                                                    : 'ProductDetail',
+                                                    : GoRouterState.of(context)
+                                                            .uri
+                                                            .toString()
+                                                            .startsWith(
+                                                                '/notifications')
+                                                        ? 'ProductDetailNotification'
+                                                        : 'ProductDetail',
                                                 queryParameters: {
                                                   'matvare': serializeParam(
                                                     matvarer.toJson(),

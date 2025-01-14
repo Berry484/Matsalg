@@ -36,15 +36,17 @@ class RatingServices {
         HapticFeedback.selectionClick();
         Toasts.showAccepted(context, 'Vurdering sendt');
         model.messageIsLoading = false;
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
+        Navigator.pop(context, true);
+        if (kjop) return;
+        Navigator.pop(context, true);
+        Navigator.pop(context, true);
       } catch (e) {
         if (!context.mounted) return;
         model.messageIsLoading = false;
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
+        Navigator.pop(context, true);
+        if (kjop) return;
+        Navigator.pop(context, true);
+        Navigator.pop(context, true);
       }
     } on SocketException {
       model.messageIsLoading = false;

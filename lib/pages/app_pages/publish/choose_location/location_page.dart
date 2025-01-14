@@ -7,7 +7,8 @@ import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
-import '../../../../helper_components/widgets/index.dart' as custom_widgets;
+import '../../../../helper_components/widgets/maps/index.dart'
+    as custom_widgets;
 import 'package:flutter/material.dart';
 import 'location_model.dart';
 export 'location_model.dart';

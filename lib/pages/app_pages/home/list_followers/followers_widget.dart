@@ -188,7 +188,12 @@ class _FolgereWidgetState extends State<FollowersWidget> {
                                             .toString()
                                             .startsWith('/profil')
                                         ? 'BrukerPage3'
-                                        : 'BrukerPage',
+                                        : GoRouterState.of(context)
+                                                .uri
+                                                .toString()
+                                                .startsWith('/notifications')
+                                            ? 'BrukerPageNotification'
+                                            : 'BrukerPage',
                                     queryParameters: {
                                       'uid': serializeParam(
                                         brukere.uid,

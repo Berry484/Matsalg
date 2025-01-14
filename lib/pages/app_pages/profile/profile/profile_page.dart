@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/models/matvarer.dart';
-import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
+import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
@@ -1252,7 +1252,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                           1,
                                               itemBuilder: (context, index) {
                                                 if (_model.isloading) {
-                                                  return ShimmerLoadingWidget();
+                                                  return const ShimmerLoadingWidget();
                                                 }
 
                                                 if (index <
@@ -1291,7 +1291,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                           44) {
                                                     return Container();
                                                   } else {
-                                                    return ShimmerLoadingWidget();
+                                                    return const ShimmerLoadingWidget();
                                                   }
                                                 }
                                               },

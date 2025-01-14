@@ -141,7 +141,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductStatsPage> {
             ),
             actions: const [],
             title: Text(
-              'Statistikk',
+              'Analyse',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Nunito',

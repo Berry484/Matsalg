@@ -156,6 +156,8 @@ class FFAppState extends ChangeNotifier {
 
   bool liked = false;
 
+  bool hasNotification = false;
+
   LatLng? brukersted = const LatLng(59.9138688, 10.7522454);
 
   double _brukerLat = 59.9138688;
@@ -268,7 +270,7 @@ class FFAppState extends ChangeNotifier {
   }
 
   final ValueNotifier<bool> chatAlert = ValueNotifier<bool>(false);
-  final ValueNotifier<bool> orderAlert = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> notificationAlert = ValueNotifier<bool>(false);
 
   String _chatRoom = '';
   String get chatRoom => _chatRoom;

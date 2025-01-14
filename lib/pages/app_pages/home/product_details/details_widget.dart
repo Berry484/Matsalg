@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
-import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
+import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/logging.dart';
@@ -82,7 +82,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
         }
       }
     }
-    if (widget.fromChat == true && widget.matvare == null) {
+    if (widget.matvare == null) {
       _fetchMatvare();
     }
     animationsMap.addAll({
@@ -388,7 +388,13 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                     .toString()
                                                     .startsWith('/profil')
                                                 ? 'BrukerPage3'
-                                                : 'BrukerPage',
+                                                : GoRouterState.of(context)
+                                                        .uri
+                                                        .toString()
+                                                        .startsWith(
+                                                            '/notifications')
+                                                    ? 'BrukerPageNotification'
+                                                    : 'BrukerPage',
                                             queryParameters: {
                                               'uid': serializeParam(
                                                 matvare.uid,
@@ -2056,7 +2062,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                 1,
                                     itemBuilder: (context, index) {
                                       if (_model.isloading) {
-                                        return ShimmerLoadingWidget();
+                                        return const ShimmerLoadingWidget();
                                       }
 
                                       if (index <
@@ -2074,7 +2080,14 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                           .toString()
                                                           .startsWith('/profil')
                                                       ? 'MatDetaljBondegard1'
-                                                      : 'ProductDetail',
+                                                      : GoRouterState.of(
+                                                                  context)
+                                                              .uri
+                                                              .toString()
+                                                              .startsWith(
+                                                                  '/notifications')
+                                                          ? 'ProductDetailNotification'
+                                                          : 'ProductDetail',
                                                   queryParameters: {
                                                     'matvare': serializeParam(
                                                       nyematvarer.toJson(),
@@ -2109,7 +2122,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                             _model.nyematvarer!.length < 44) {
                                           return Container();
                                         } else {
-                                          return ShimmerLoadingWidget();
+                                          return const ShimmerLoadingWidget();
                                         }
                                       }
                                     },

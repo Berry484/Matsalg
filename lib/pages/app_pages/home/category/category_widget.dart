@@ -7,7 +7,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
-import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
+import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/pages/app_pages/home/category/filter/filter_widget.dart';
@@ -730,7 +730,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                                         1,
                                             itemBuilder: (context, index) {
                                               if (_model.isloading) {
-                                                return ShimmerLoadingWidget();
+                                                return const ShimmerLoadingWidget();
                                               }
 
                                               if (index <
@@ -762,7 +762,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                                                         44) {
                                                   return Container();
                                                 } else {
-                                                  return ShimmerLoadingWidget();
+                                                  return const ShimmerLoadingWidget();
                                                 }
                                               }
                                             },

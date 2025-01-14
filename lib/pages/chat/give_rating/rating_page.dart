@@ -15,11 +15,13 @@ class RatingPage extends StatefulWidget {
     this.kjop,
     this.user,
     this.matId,
+    this.username,
   });
 
   final dynamic kjop;
   final dynamic user;
   final dynamic matId;
+  final dynamic username;
 
   @override
   State<RatingPage> createState() => _GiveRatingWidgetState();
@@ -155,7 +157,9 @@ class _GiveRatingWidgetState extends State<RatingPage> {
                             children: [
                               Text(
                                 textAlign: TextAlign.center,
-                                'Legg igjen en vurdering på kjøper',
+                                widget.kjop
+                                    ? 'Gi en vurdering til ${widget.username}'
+                                    : 'Gi en vurdering til kjøperen',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(

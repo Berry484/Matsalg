@@ -283,15 +283,17 @@ class UserInfoService {
         FFAppState().liked = jsonResponse['hasLiked'] ?? false;
         FFAppState().lagtUt = jsonResponse['hasPosted'] ?? false;
         FFAppState().termsService = jsonResponse['hasAcceptedTerms'] ?? false;
-
+        FFAppState().hasNotification = jsonResponse['hasNotification'] ?? false;
+        FFAppState().notificationAlert.value =
+            jsonResponse['hasUnreadNotification'] ?? false;
         return response;
       }
     } on SocketException {
       logger.e('Socket exception');
       throw const SocketException('');
     } catch (e) {
-      logger.e('Somethiid unexpected happend updating user stats');
-      throw Exception;
+      logger.e('Somethiid unexpected happend updating user stats: $e');
+      rethrow;
     }
   }
 

@@ -185,7 +185,53 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                 pageBuilder: (context, state) {
                   return const NoTransitionPage(child: NotificationsWidget());
                 },
-                routes: [],
+                routes: [
+                  GoRoute(
+                    path: 'prdouctDetailNotification',
+                    name: 'ProductDetailNotification',
+                    builder: (context, state) {
+                      final params = FFParameters(state);
+                      final matvare = params.getParam<Map<String, dynamic>>(
+                          'matvare', ParamType.JSON);
+                      final fromChat =
+                          params.getParam<bool>('fromChat', ParamType.bool);
+                      final matId =
+                          params.getParam<int>('matId', ParamType.int);
+
+                      return DetailsWidget(
+                          matvare: matvare, fromChat: fromChat, matId: matId);
+                    },
+                  ),
+                  GoRoute(
+                    path: 'brukerPageNotification',
+                    name: 'BrukerPageNotification',
+                    builder: (context, state) {
+                      final params = FFParameters(state);
+                      final bruker =
+                          params.getParam<String>('bruker', ParamType.String);
+                      final uid =
+                          params.getParam<String>('uid', ParamType.String);
+                      final username =
+                          params.getParam<String>('username', ParamType.String);
+                      return UserWidget(
+                          bruker: bruker, uid: uid, username: username);
+                    },
+                  ),
+                  GoRoute(
+                    path: 'folgereNotification',
+                    name: 'FolgereNotification',
+                    builder: (context, state) {
+                      final params = FFParameters(state);
+                      final username =
+                          params.getParam<String>('username', ParamType.String);
+                      final folger =
+                          params.getParam<String>('folger', ParamType.String);
+
+                      return FollowersWidget(
+                          username: username, folger: folger);
+                    },
+                  ),
+                ],
               ),
             ],
           ),

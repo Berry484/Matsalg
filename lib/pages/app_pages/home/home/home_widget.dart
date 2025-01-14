@@ -4,9 +4,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_profiles.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
-import 'package:mat_salg/helper_components/widgets/shimmer_product.dart';
+import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
@@ -816,109 +817,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                           (context, index) {
                                                         if (_model
                                                             .profilisloading) {
-                                                          return Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                                    vertical:
-                                                                        8.0,
-                                                                    horizontal:
-                                                                        16.0),
-                                                            child: Row(
-                                                              children: [
-                                                                Shimmer
-                                                                    .fromColors(
-                                                                  baseColor:
-                                                                      Colors.grey[
-                                                                          300]!,
-                                                                  highlightColor:
-                                                                      Colors.grey[
-                                                                          100]!,
-                                                                  child:
-                                                                      Container(
-                                                                    width: 50.0,
-                                                                    height:
-                                                                        50.0,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      color: const Color
-                                                                          .fromARGB(
-                                                                          127,
-                                                                          255,
-                                                                          255,
-                                                                          255),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              100.0),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                const SizedBox(
-                                                                    width:
-                                                                        16.0),
-                                                                Expanded(
-                                                                  child: Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Shimmer
-                                                                          .fromColors(
-                                                                        baseColor:
-                                                                            Colors.grey[300]!,
-                                                                        highlightColor:
-                                                                            Colors.grey[100]!,
-                                                                        child:
-                                                                            Container(
-                                                                          width:
-                                                                              75.0, // Narrower width for second line
-                                                                          height:
-                                                                              13.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color: const Color.fromARGB(
-                                                                                127,
-                                                                                255,
-                                                                                255,
-                                                                                255),
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8.0),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                          height:
-                                                                              8.0),
-                                                                      Shimmer
-                                                                          .fromColors(
-                                                                        baseColor:
-                                                                            Colors.grey[300]!,
-                                                                        highlightColor:
-                                                                            Colors.grey[100]!,
-                                                                        child:
-                                                                            Container(
-                                                                          width:
-                                                                              120,
-                                                                          height:
-                                                                              13.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color: const Color.fromARGB(
-                                                                                127,
-                                                                                255,
-                                                                                255,
-                                                                                255),
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8.0),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          );
+                                                          return const ShimmerProfiles();
                                                         }
                                                         final profil = _model
                                                             .profiler![index];
@@ -1737,7 +1636,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   itemBuilder:
                                                       (context, index) {
                                                     if (_model.isloading) {
-                                                      return ShimmerLoadingWidget();
+                                                      return const ShimmerLoadingWidget();
                                                     }
                                                     if (index <
                                                         (_model.matvarer
@@ -1772,7 +1671,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                               44) {
                                                         return Container();
                                                       } else {
-                                                        return ShimmerLoadingWidget();
+                                                        return const ShimmerLoadingWidget();
                                                       }
                                                     }
                                                   },
@@ -2078,7 +1977,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                               44) {
                                                         return Container();
                                                       } else {
-                                                        return ShimmerLoadingWidget();
+                                                        return const ShimmerLoadingWidget();
                                                       }
                                                     }
                                                   },
