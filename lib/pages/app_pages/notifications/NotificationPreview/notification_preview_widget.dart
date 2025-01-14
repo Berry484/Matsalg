@@ -174,7 +174,7 @@ class _MessagePreviewWidgetState extends State<NotificationPreviewWidget> {
                                           .bodySmall
                                           .override(
                                             fontFamily: 'Inter',
-                                            fontSize: 15,
+                                            fontSize: 14,
                                             letterSpacing: 0.0,
                                             color: Colors.black87,
                                             fontWeight: FontWeight.w500,
