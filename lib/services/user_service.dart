@@ -59,9 +59,9 @@ class UserInfoService {
 
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -87,9 +87,9 @@ class UserInfoService {
       final decodedBody = utf8.decode(response.bodyBytes);
       return http.Response(decodedBody, response.statusCode);
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -141,7 +141,7 @@ class UserInfoService {
 
       return response; // Return the response
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
       logger.e('Error updating user information');
       rethrow;
@@ -178,7 +178,7 @@ class UserInfoService {
 
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
       logger.e('Error updating user position');
       rethrow;
@@ -247,10 +247,10 @@ class UserInfoService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
       logger.e('FileData was exception');
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -290,7 +290,7 @@ class UserInfoService {
       }
     } on SocketException {
       logger.e('Socket exception');
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
       logger.e('Somethiid unexpected happend updating user stats: $e');
       rethrow;
@@ -324,7 +324,7 @@ class UserInfoService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
       throw Exception("An error occurred: $e");
     }
@@ -356,21 +356,20 @@ class UserInfoService {
 
         // If the response is not a list, wrap it in a list before passing to fromSnapshot
         if (jsonResponse is Map<String, dynamic>) {
-          return User.usersFromSnapshot(
-              [jsonResponse]); // Wrap single object in a list
+          return User.usersFromSnapshot([jsonResponse]);
         } else if (jsonResponse is List) {
-          return User.usersFromSnapshot(
-              jsonResponse); // If it's already a list, pass it directly
+          return User.usersFromSnapshot(jsonResponse);
         }
+      }
+      if (response.statusCode == 410) {
+        throw ('user-deleted');
       } else {
-        // Handle unsuccessful response
         return null;
       }
-      return null;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -410,9 +409,9 @@ class UserInfoService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
     return null;
   }

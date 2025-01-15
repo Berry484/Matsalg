@@ -26,9 +26,9 @@ class ApiLike {
           .timeout(const Duration(seconds: 5));
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -51,9 +51,9 @@ class ApiLike {
           .timeout(const Duration(seconds: 5));
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -88,9 +88,9 @@ class ApiLike {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -124,9 +124,9 @@ class ApiLike {
         return false;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 

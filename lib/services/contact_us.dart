@@ -11,7 +11,6 @@ class ContactUs {
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Makes a report about a user and sends it to me---------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-
   Future<http.Response> reportUser({
     required String? token,
     required String to,
@@ -42,16 +41,15 @@ class ContactUs {
       );
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Allows the user to contact me and gives me their email so I can contact back---------------
 //---------------------------------------------------------------------------------------------------------------
-
   Future<http.Response> contactUs({
     required String? token,
     required String description,
@@ -80,9 +78,9 @@ class ContactUs {
       );
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 }

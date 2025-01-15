@@ -1,3 +1,4 @@
+import 'package:mat_salg/models/notification_info.dart';
 import 'package:mat_salg/pages/app_pages/notifications/NotificationPreview/notification_preview_model.dart';
 
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -11,6 +12,7 @@ class NotificationsModel extends FlutterFlowModel<NotificationsWidget> {
 //--------------------Variables used througout-------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   bool isloading = true;
+  List<NotificationInfo>? notificationInfo = [];
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes, Controllers and validators-----------------------------------------------------

@@ -66,9 +66,9 @@ class ApiMultiplePics {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 

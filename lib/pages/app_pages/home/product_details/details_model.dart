@@ -9,8 +9,6 @@ class DetailsModel extends FlutterFlowModel<DetailsWidget> {
 //---------------------------------------------------------------------------------------------------------------
   String? poststed;
   List<Matvarer>? nyematvarer;
-  int page = 0;
-  bool end = false;
   bool? liker = false;
   bool folges = false;
   bool? brukerFolger = false;
@@ -19,6 +17,8 @@ class DetailsModel extends FlutterFlowModel<DetailsWidget> {
   bool isloading = true;
   bool isAnimating = false;
   bool isExpanded = false;
+  bool isDeleted = false;
+  bool fetchingProductLoading = false;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes, Controllers and validators-----------------------------------------------------

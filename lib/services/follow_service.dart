@@ -26,9 +26,9 @@ class FollowService {
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -51,9 +51,9 @@ class FollowService {
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -96,9 +96,9 @@ class FollowService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -142,9 +142,9 @@ class FollowService {
         return null; // Or throw an error
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -172,9 +172,9 @@ class FollowService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -202,9 +202,9 @@ class FollowService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -232,9 +232,9 @@ class FollowService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -262,9 +262,9 @@ class FollowService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 

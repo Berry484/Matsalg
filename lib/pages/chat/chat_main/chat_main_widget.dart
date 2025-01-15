@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mat_salg/helper_components/widgets/empty_list/no_message_widget.dart';
 import 'package:mat_salg/pages/chat/MessagePreview/message_preview_widget.dart';
 import 'package:mat_salg/pages/chat/chat_main/chat_main_model.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -34,7 +35,6 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
     setState(() {});
   }
 
-// Helper method to build each profile outline with shimmer effect
   Widget buildProfileOutline(BuildContext context, int opacity, Color baseColor,
       Color highlightColor) {
     return Padding(
@@ -255,127 +255,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 .content
                                                                 .isNotEmpty);
                                                   }).isEmpty)
-                                                    Expanded(
-                                                      child: ListView(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                0, 0, 0, 100),
-                                                        children: [
-                                                          SizedBox(
-                                                            width: MediaQuery
-                                                                    .sizeOf(
-                                                                        context)
-                                                                .width,
-                                                            height: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .height -
-                                                                350,
-                                                            child: Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0,
-                                                                        40,
-                                                                        0,
-                                                                        0),
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                          const AlignmentDirectional(
-                                                                              0,
-                                                                              1),
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.start,
-                                                                        children: [
-                                                                          // First Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            100,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(0.3), // Reduce opacity
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(0.3), // Reduce opacity
-                                                                          ),
-
-                                                                          // Second Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            80,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                          ),
-
-                                                                          // Third Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            50,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                          ),
-
-                                                                          // Fourth Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            38,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                          ),
-
-                                                                          const SizedBox(
-                                                                              height: 8.0),
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                0),
-                                                                            child:
-                                                                                Text(
-                                                                              'Du har ingen samtaler ennå',
-                                                                              textAlign: TextAlign.center,
-                                                                              style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                    fontSize: 23,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w800,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
+                                                    const NoConversationsView(
+                                                        message:
+                                                            'Du har ingen samtaler ennå'),
                                                   if (FFAppState()
                                                       .conversations
                                                       .where((conversation) {
@@ -392,12 +274,11 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                         padding:
                                                             const EdgeInsets
                                                                 .fromLTRB(
-                                                                0, 0, 0, 100),
+                                                                0, 0, 0, 20),
                                                         itemCount: FFAppState()
                                                             .conversations
                                                             .where(
                                                                 (conversation) {
-                                                          // Check if the conversation is empty (no valid messages)
                                                           return conversation
                                                                   .messages
                                                                   .isNotEmpty &&
@@ -538,131 +419,12 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 .content
                                                                 .isNotEmpty);
                                                   }).isEmpty)
-                                                    Expanded(
-                                                      child: ListView(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                0, 0, 0, 100),
-                                                        children: [
-                                                          SizedBox(
-                                                            width: MediaQuery
-                                                                    .sizeOf(
-                                                                        context)
-                                                                .width,
-                                                            height: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .height -
-                                                                350,
-                                                            child: Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0,
-                                                                        40,
-                                                                        0,
-                                                                        0),
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                          const AlignmentDirectional(
-                                                                              0,
-                                                                              1),
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.start,
-                                                                        children: [
-                                                                          // First Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            100,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(0.3), // Reduce opacity
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(0.3), // Reduce opacity
-                                                                          ),
-
-                                                                          // Second Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            80,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                          ),
-
-                                                                          // Third Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            50,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                          ),
-
-                                                                          // Fourth Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            38,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                          ),
-
-                                                                          const SizedBox(
-                                                                              height: 8.0),
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                20,
-                                                                                0,
-                                                                                20,
-                                                                                0),
-                                                                            child:
-                                                                                Text(
-                                                                              'Du har ingen samtaler med selgere ennå',
-                                                                              textAlign: TextAlign.center,
-                                                                              style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                    fontSize: 23,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w800,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
+                                                    const NoConversationsView(
+                                                        message:
+                                                            'Du har ingen samtaler med selgere ennå'),
                                                   if (FFAppState()
                                                       .conversations
                                                       .where((conversation) {
-                                                    // Check if the conversation is empty (no valid messages)
                                                     return conversation.messages
                                                             .isNotEmpty &&
                                                         conversation.isOwner !=
@@ -680,7 +442,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                         padding:
                                                             const EdgeInsets
                                                                 .fromLTRB(
-                                                                0, 0, 0, 100),
+                                                                0, 0, 0, 20),
                                                         itemCount: FFAppState()
                                                             .conversations
                                                             .where(
@@ -835,127 +597,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 .content
                                                                 .isNotEmpty);
                                                   }).isEmpty)
-                                                    Expanded(
-                                                      child: ListView(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                0, 0, 0, 100),
-                                                        children: [
-                                                          SizedBox(
-                                                            width: MediaQuery
-                                                                    .sizeOf(
-                                                                        context)
-                                                                .width,
-                                                            height: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .height -
-                                                                350,
-                                                            child: Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0,
-                                                                        40,
-                                                                        0,
-                                                                        0),
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                          const AlignmentDirectional(
-                                                                              0,
-                                                                              1),
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.start,
-                                                                        children: [
-                                                                          // First Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            100,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(0.3), // Reduce opacity
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(0.3), // Reduce opacity
-                                                                          ),
-
-                                                                          // Second Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            80,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                          ),
-
-                                                                          // Third Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            50,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                          ),
-
-                                                                          // Fourth Profile Outline
-                                                                          buildProfileOutline(
-                                                                            context,
-                                                                            38,
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                            Colors.grey[300]?.withOpacity(1) ??
-                                                                                Colors.grey.withOpacity(1),
-                                                                          ),
-
-                                                                          const SizedBox(
-                                                                              height: 8.0),
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                20,
-                                                                                0,
-                                                                                20,
-                                                                                0),
-                                                                            child:
-                                                                                Text(
-                                                                              'Du har ingen samtaler med kjøpere ennå',
-                                                                              textAlign: TextAlign.center,
-                                                                              style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                    fontFamily: 'Nunito',
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                    fontSize: 23,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w800,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
+                                                    const NoConversationsView(
+                                                        message:
+                                                            'Du har ingen samtaler med kjøpere ennå'),
                                                   if (FFAppState()
                                                       .conversations
                                                       .where((conversation) {
@@ -974,7 +618,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                         padding:
                                                             const EdgeInsets
                                                                 .fromLTRB(
-                                                                0, 0, 0, 100),
+                                                                0, 0, 0, 20),
                                                         itemCount: FFAppState()
                                                             .conversations
                                                             .where(

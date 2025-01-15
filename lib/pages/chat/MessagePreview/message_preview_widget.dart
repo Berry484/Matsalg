@@ -210,27 +210,39 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                     ),
                                     if (widget.productImage != null &&
                                         widget.slettet != true)
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(6),
-                                        child: CachedNetworkImage(
-                                          fadeInDuration: Duration.zero,
-                                          imageUrl:
-                                              '${ApiConstants.baseUrl}${widget.productImage}',
-                                          width: 47,
-                                          height: 47,
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              const SizedBox(),
-                                        ),
+                                      CachedNetworkImage(
+                                        fadeInDuration: Duration.zero,
+                                        imageUrl:
+                                            '${ApiConstants.baseUrl}${widget.productImage}',
+                                        width: 47,
+                                        height: 47,
+                                        fit: BoxFit.cover,
+                                        imageBuilder: (context, imageProvider) {
+                                          return Container(
+                                            width: 47,
+                                            height: 47,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                            ),
+                                          );
+                                        },
+                                        placeholder: (context, url) =>
+                                            const SizedBox(),
                                       ),
                                     if (widget.productImage != null &&
                                         widget.slettet == true)
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Container(
+                                      Container(
+                                        width: 47,
+                                        height: 47,
+                                        decoration: BoxDecoration(
                                           color: Colors.grey[200],
-                                          width: 47,
-                                          height: 47,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                       ),
                                   ],
@@ -239,13 +251,6 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                             ),
                           ),
                         ),
-                        // Container(
-                        //   width: MediaQuery.sizeOf(context).width,
-                        //   height: 1,
-                        //   decoration: const BoxDecoration(
-                        //     color: Color(0xFFE8E8E8),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ],

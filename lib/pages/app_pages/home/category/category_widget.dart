@@ -4,9 +4,10 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:lottie/lottie.dart';
+import 'package:mat_salg/helper_components/widgets/loading_indicators/category_list_loading_dart';
+import 'package:mat_salg/helper_components/widgets/empty_list/no_results_widget.dart';
 import 'package:mat_salg/models/matvarer.dart';
-import 'package:mat_salg/helper_components/widgets/product_list.dart';
+import 'package:mat_salg/helper_components/widgets/product_grid.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
@@ -263,7 +264,10 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
   void _scrollListener() async {
     if (_scrollController1.position.pixels >=
         _scrollController1.position.maxScrollExtent) {
-      if (_moreIsLoading || _model.end || _model.matvarer!.length < 44) return;
+      if (_moreIsLoading ||
+          _model.end ||
+          _model.matvarer == null ||
+          _model.matvarer!.length < 44) return;
       _moreIsLoading = true;
       _model.page += 1;
       await getCategoryFood(false, true);
@@ -594,188 +598,68 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                       controller: _scrollController1,
                       physics: AlwaysScrollableScrollPhysics(),
                       primary: false,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Stack(
-                            alignment: const AlignmentDirectional(0, -1),
-                            children: [
-                              if ((_model.matvarer == null ||
-                                      _model.matvarer!.isEmpty) &&
-                                  _model.isloading == false)
-                                SizedBox(
-                                  width: MediaQuery.sizeOf(context).width,
-                                  height:
-                                      MediaQuery.sizeOf(context).height - 150,
-                                  child: Align(
-                                    alignment:
-                                        const AlignmentDirectional(0, -1),
-                                    child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 0, 110),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Image.asset(
-                                                'assets/images/no-results.png',
-                                                width: 180,
-                                                height: 180,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 20, 0, 0),
-                                              child: Text(
-                                                'Ingen treff',
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineSmall
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontSize: 22,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                        ),
-                                              ),
-                                            ),
-                                          ],
-                                        )),
+                      child: ((_model.matvarer == null ||
+                                  _model.matvarer!.isEmpty) &&
+                              _model.isloading == false)
+                          ? const NoResultsWidget()
+                          : (_model.isloading)
+                              ? const LoadingAnimationWidget()
+                              : GridView.builder(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    5,
+                                    20,
+                                    5,
+                                    63,
                                   ),
-                                ),
-                              if (_model.isloading)
-                                SizedBox(
-                                  width: MediaQuery.sizeOf(context).width,
-                                  height:
-                                      MediaQuery.sizeOf(context).height - 150,
-                                  child: Align(
-                                    alignment:
-                                        const AlignmentDirectional(0, -1),
-                                    child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 0, 110),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Align(
-                                              alignment:
-                                                  const AlignmentDirectional(
-                                                      0.0, 0.0),
-                                              child: Lottie.asset(
-                                                'assets/lottie_animations/loading.json',
-                                                width: 200.0,
-                                                height: 180.0,
-                                                fit: BoxFit.cover,
-                                                repeat: true,
-                                                animate: true,
-                                              ),
-                                            ),
-                                          ],
-                                        )),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 0.68,
                                   ),
-                                ),
-                              if (_model.empty != true &&
-                                  _model.isloading == false)
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 20, 0, 0),
-                                  child: Stack(
-                                    alignment:
-                                        const AlignmentDirectional(0, 0.9),
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(5, 0, 5, 0),
-                                        child: RefreshIndicator(
-                                          onRefresh: () async {
-                                            await getCategoryFood(true, false);
-                                          },
-                                          child: GridView.builder(
-                                            padding: const EdgeInsets.fromLTRB(
-                                              0,
-                                              0,
-                                              0,
-                                              0,
-                                            ),
-                                            gridDelegate:
-                                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: 0.68,
-                                            ),
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: _model.isloading
-                                                ? 1
-                                                : _model.end
-                                                    ? _model.matvarer?.length ??
-                                                        0
-                                                    : (_model.matvarer
-                                                                ?.length ??
-                                                            0) +
-                                                        1,
-                                            itemBuilder: (context, index) {
-                                              if (_model.isloading) {
-                                                return const ShimmerLoadingWidget();
-                                              }
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: _model.isloading
+                                      ? 1
+                                      : _model.end ||
+                                              (_model.matvarer == null ||
+                                                  _model.matvarer!.length < 44)
+                                          ? _model.matvarer?.length ?? 0
+                                          : (_model.matvarer?.length ?? 0) + 1,
+                                  itemBuilder: (context, index) {
+                                    if (_model.isloading) {
+                                      return const ShimmerLoadingWidget();
+                                    }
 
-                                              if (index <
-                                                  (_model.matvarer?.length ??
-                                                      0)) {
-                                                final matvare =
-                                                    _model.matvarer![index];
-                                                return ProductList(
-                                                  matvare: matvare,
-                                                  onTap: () async {
-                                                    FocusScope.of(context)
-                                                        .requestFocus(
-                                                            FocusNode());
-                                                    context.pushNamed(
-                                                      'ProductDetail',
-                                                      queryParameters: {
-                                                        'matvare':
-                                                            serializeParam(
-                                                          matvare.toJson(),
-                                                          ParamType.JSON,
-                                                        ),
-                                                      },
-                                                    );
-                                                  },
-                                                );
-                                              } else {
-                                                if (_model.matvarer == null ||
-                                                    _model.matvarer!.length <
-                                                        44) {
-                                                  return Container();
-                                                } else {
-                                                  return const ShimmerLoadingWidget();
-                                                }
-                                              }
+                                    if (index <
+                                        (_model.matvarer?.length ?? 0)) {
+                                      final matvare = _model.matvarer![index];
+                                      return ProductList(
+                                        matvare: matvare,
+                                        onTap: () async {
+                                          FocusScope.of(context)
+                                              .requestFocus(FocusNode());
+                                          context.pushNamed(
+                                            'ProductDetail',
+                                            queryParameters: {
+                                              'matvare': serializeParam(
+                                                matvare.toJson(),
+                                                ParamType.JSON,
+                                              ),
                                             },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                          );
+                                        },
+                                      );
+                                    } else {
+                                      if (_model.matvarer == null ||
+                                          _model.matvarer!.length < 44) {
+                                        return Container();
+                                      } else {
+                                        return const ShimmerLoadingWidget();
+                                      }
+                                    }
+                                  },
                                 ),
-                            ],
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ),

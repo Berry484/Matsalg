@@ -22,8 +22,10 @@ class _MessagePreviewWidgetState extends State<NotificationPreviewWidget> {
 
   @override
   void setState(VoidCallback callback) {
-    super.setState(callback);
-    _model.onUpdate();
+    if (mounted) {
+      super.setState(callback);
+      _model.onUpdate();
+    }
   }
 
   @override
@@ -110,6 +112,8 @@ class _MessagePreviewWidgetState extends State<NotificationPreviewWidget> {
                     shape: BoxShape.circle,
                   ),
                   child: CachedNetworkImage(
+                    cacheManager:
+                        CachedNetworkImageProvider.defaultCacheManager,
                     fadeInDuration: Duration.zero,
                     imageUrl:
                         '${ApiConstants.baseUrl}${widget.notificationInfo.profilepic}',
@@ -192,7 +196,7 @@ class _MessagePreviewWidgetState extends State<NotificationPreviewWidget> {
                                                 .secondaryText,
                                             fontSize: 14,
                                             letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                     ),
                                   ],
@@ -201,17 +205,27 @@ class _MessagePreviewWidgetState extends State<NotificationPreviewWidget> {
                             ),
                           ),
                           if (widget.notificationInfo.productImage != null)
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(6),
-                              child: CachedNetworkImage(
-                                fadeInDuration: Duration.zero,
-                                imageUrl:
-                                    '${ApiConstants.baseUrl}${widget.notificationInfo.productImage}',
-                                width: 44,
-                                height: 44,
-                                fit: BoxFit.cover,
-                                placeholder: (context, url) => const SizedBox(),
-                              ),
+                            CachedNetworkImage(
+                              fadeInDuration: Duration.zero,
+                              imageUrl:
+                                  '${ApiConstants.baseUrl}${widget.notificationInfo.productImage}',
+                              width: 44,
+                              height: 44,
+                              fit: BoxFit.cover,
+                              imageBuilder: (context, imageProvider) {
+                                return Container(
+                                  width: 44,
+                                  height: 44,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                );
+                              },
+                              placeholder: (context, url) => const SizedBox(),
                             ),
                         ],
                       ),

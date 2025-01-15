@@ -572,27 +572,39 @@ class _MessageWidgetState extends State<MessageWidget> {
                                           }
                                         },
                                         child: conversation.slettet != true
-                                            ? ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
-                                                child: CachedNetworkImage(
-                                                  fadeInDuration: Duration.zero,
-                                                  imageUrl:
-                                                      '${ApiConstants.baseUrl}${conversation.productImage}',
-                                                  width: 35.0,
-                                                  height: 35.0,
-                                                  fit: BoxFit.cover,
-                                                  placeholder: (context, url) =>
-                                                      const SizedBox(),
-                                                ),
+                                            ? CachedNetworkImage(
+                                                fadeInDuration: Duration.zero,
+                                                imageUrl:
+                                                    '${ApiConstants.baseUrl}${conversation.productImage}',
+                                                width: 35.0,
+                                                height: 35.0,
+                                                fit: BoxFit.cover,
+                                                imageBuilder:
+                                                    (context, imageProvider) {
+                                                  return Container(
+                                                    width: 35.0,
+                                                    height: 35.0,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              6),
+                                                      image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                placeholder: (context, url) =>
+                                                    const SizedBox(),
                                               )
-                                            : ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: Container(
+                                            : Container(
+                                                width: 35.0,
+                                                height: 35.0,
+                                                decoration: BoxDecoration(
                                                   color: Colors.grey[200],
-                                                  width: 35.0,
-                                                  height: 35.0,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
                                                 ),
                                               ),
                                       ),
@@ -750,122 +762,108 @@ class _MessageWidgetState extends State<MessageWidget> {
                                 showLest: message.showLest ?? false,
                                 messageTime: message.showTime ?? false
                                     ? message.time
-                                    : null, // Only show time if showTime is true
+                                    : null,
                               ),
                             );
                           },
                         ),
                       ),
                     ),
-
-                    // This will push the input field to the bottom of the screen
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(0),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(
-                            sigmaX: 10,
-                            sigmaY: 10,
-                          ),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: const BoxDecoration(
-                              color: Color(0xB3FFFFFF),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16, 5, 16, 0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment
-                                    .end, // Align items to bottom
-                                children: [
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _model.textController,
-                                      focusNode: _model.textFieldFocusNode,
-                                      onChanged: (_) => EasyDebounce.debounce(
-                                        '_model.textController',
-                                        const Duration(milliseconds: 0),
-                                        () => safeSetState(() {}),
-                                      ),
-                                      autofocus: false,
-                                      textCapitalization:
-                                          TextCapitalization.sentences,
-                                      obscureText: false,
-                                      maxLines: 8,
-                                      minLines: 1, // Start with 1 line
-                                      maxLength: 200,
-                                      textAlign: TextAlign.start,
-                                      decoration: InputDecoration(
-                                        isDense: true,
-                                        hintText: 'Melding',
-                                        hintStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 14.0,
-                                              color: Colors.black26,
-                                              fontWeight: FontWeight.w600,
-                                              letterSpacing: 0.0,
-                                              lineHeight: 1,
-                                            ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.black12,
-                                            width: 1.2,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(24),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.black12,
-                                            width: 1.2,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(24),
-                                        ),
-                                        filled: true,
-                                        fillColor: const Color(0x7FFFFFFF),
-                                        counterText: '',
-                                        contentPadding:
-                                            const EdgeInsetsDirectional
-                                                .fromSTEB(14, 16, 45, 16),
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 0.0,
-                                            lineHeight: 1,
-                                          ),
-                                      validator: _model.textControllerValidator
-                                          .asValidator(context),
-                                      inputFormatters: [
-                                        // Custom input formatter to limit lines in the text field
-                                        LengthLimitingTextInputFormatter(400),
-                                        // Add a formatter to restrict entering more lines
-                                        TextInputFormatter.withFunction(
-                                            (oldValue, newValue) {
-                                          final lineCount = '\n'
-                                                  .allMatches(newValue.text)
-                                                  .length +
-                                              1;
-                                          if (lineCount > 10) {
-                                            return oldValue;
-                                          }
-                                          return newValue;
-                                        }),
-                                      ],
-                                    ),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: const BoxDecoration(
+                          color: Color(0xB3FFFFFF),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              16, 5, 16, 0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _model.textController,
+                                  focusNode: _model.textFieldFocusNode,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    '_model.textController',
+                                    const Duration(milliseconds: 0),
+                                    () => safeSetState(() {}),
                                   ),
-                                ],
+                                  autofocus: false,
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  obscureText: false,
+                                  maxLines: 8,
+                                  minLines: 1, // Start with 1 line
+                                  maxLength: 200,
+                                  textAlign: TextAlign.start,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: 'Melding',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          fontSize: 14.0,
+                                          color: Colors.black26,
+                                          fontWeight: FontWeight.w600,
+                                          letterSpacing: 0.0,
+                                          lineHeight: 1,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black12,
+                                        width: 1.2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black12,
+                                        width: 1.2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    filled: true,
+                                    fillColor: const Color(0x7FFFFFFF),
+                                    counterText: '',
+                                    contentPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            14, 16, 45, 16),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 0.0,
+                                        lineHeight: 1,
+                                      ),
+                                  validator: _model.textControllerValidator
+                                      .asValidator(context),
+                                  inputFormatters: [
+                                    // Custom input formatter to limit lines in the text field
+                                    LengthLimitingTextInputFormatter(400),
+                                    // Add a formatter to restrict entering more lines
+                                    TextInputFormatter.withFunction(
+                                        (oldValue, newValue) {
+                                      final lineCount = '\n'
+                                              .allMatches(newValue.text)
+                                              .length +
+                                          1;
+                                      if (lineCount > 10) {
+                                        return oldValue;
+                                      }
+                                      return newValue;
+                                    }),
+                                  ],
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ),

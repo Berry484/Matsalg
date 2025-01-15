@@ -58,9 +58,9 @@ class ApiFoodService {
       );
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -116,9 +116,9 @@ class ApiFoodService {
 
       return response; // Return the response
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -153,9 +153,9 @@ class ApiFoodService {
       );
       return response; // Return the response
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -189,9 +189,9 @@ class ApiFoodService {
 
       return response; // Return the response
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -223,9 +223,9 @@ class ApiFoodService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -233,7 +233,7 @@ class ApiFoodService {
 //--------------------Gets all food listings from the backend----------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   static Future<List<Matvarer>?> getSimilarFoods(
-      String? token, int page, String keyword, int matId) async {
+      String? token, String keyword, int matId) async {
     try {
       final headers = {
         'Content-Type': 'application/json',
@@ -243,7 +243,7 @@ class ApiFoodService {
       final response = await http
           .get(
             Uri.parse(
-                '$baseUrl/rrh/send/matvarer/similar-products?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page&keyword=$keyword&matId=$matId'),
+                '$baseUrl/rrh/send/matvarer/similar-products?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=18&page=0&keyword=$keyword&matId=$matId'),
             headers: headers,
           )
           .timeout(const Duration(seconds: 15));
@@ -256,7 +256,7 @@ class ApiFoodService {
       }
     } on SocketException catch (e) {
       logger.d(e);
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
       rethrow;
     }
@@ -287,9 +287,9 @@ class ApiFoodService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -323,9 +323,9 @@ class ApiFoodService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -378,9 +378,9 @@ class ApiFoodService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -423,9 +423,9 @@ class ApiFoodService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -453,9 +453,9 @@ class ApiFoodService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 

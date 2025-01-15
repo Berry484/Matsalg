@@ -100,7 +100,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
     }
     if (widget.phone != '0') {
       if (_model.passordTextController.text.isEmpty ||
-          _model.brukernavnTextController.text.length < 7) {
+          _model.passordTextController.text.length < 7) {
         return false;
       }
     }

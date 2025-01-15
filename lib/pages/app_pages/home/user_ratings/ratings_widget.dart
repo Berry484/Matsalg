@@ -71,14 +71,12 @@ class _BrukerRatingWidgetState extends State<RatingsWidget>
             username: '',
             firstname: '',
             lastname: '',
-            profilepic: '', // Default image
+            profilepic: '',
             email: '',
             bio: '',
             phoneNumber: '',
             lat: null,
             lng: null,
-            bonde: null,
-            gardsnavn: '',
           );
         }
 

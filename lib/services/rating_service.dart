@@ -36,9 +36,9 @@ class RatingService {
 
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -96,9 +96,9 @@ class RatingService {
         return null; // Or throw an error
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -146,9 +146,9 @@ class RatingService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -181,9 +181,9 @@ class RatingService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -217,9 +217,9 @@ class RatingService {
         return null;
       }
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -249,11 +249,11 @@ class RatingService {
         return false;
       }
     } on SocketException {
-      throw const SocketException('No Internet connection');
+      rethrow;
     } on TimeoutException {
-      throw TimeoutException('The request timed out');
+      rethrow;
     } catch (e) {
-      throw Exception('An error occurred: $e');
+      rethrow;
     }
   }
 //

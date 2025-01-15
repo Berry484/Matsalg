@@ -5,7 +5,6 @@ import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_profiles.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/logging.dart';
-import 'package:mat_salg/models/notification_info.dart';
 import 'package:mat_salg/pages/app_pages/notifications/NotificationPreview/notification_preview_widget.dart';
 import 'package:mat_salg/pages/chat/give_rating/rating_page.dart';
 import 'package:mat_salg/services/notifications_service.dart';
@@ -29,7 +28,6 @@ class _HjemWidgetState extends State<NotificationsWidget>
   late NotificationsModel _model;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  List<NotificationInfo>? notificationInfo = [];
 
   @override
   void initState() {
@@ -70,10 +68,13 @@ class _HjemWidgetState extends State<NotificationsWidget>
       if (token == null) {
         return;
       } else {
-        notificationInfo =
+        _model.notificationInfo =
             await NotificationsService.getAllNotifications(token);
         setState(() {
-          _model.isloading = false;
+          if (_model.notificationInfo!.isEmpty) {
+          } else {
+            _model.isloading = false;
+          }
         });
         markRead();
       }
@@ -89,13 +90,13 @@ class _HjemWidgetState extends State<NotificationsWidget>
 
   String getTimeCategory(DateTime notificationTime) {
     final now = DateTime.now();
-    final difference = now.difference(notificationTime);
+    final difference = now.difference(notificationTime).inDays;
 
-    if (difference.inDays == 0) {
+    if (difference == 0) {
       return 'I dag';
-    } else if (difference.inDays <= 7) {
+    } else if (difference <= 7) {
       return 'Siste 7 dager';
-    } else if (difference.inDays <= 30) {
+    } else if (difference <= 30) {
       return 'Siste 30 dager';
     } else {
       return 'Eldre';
@@ -103,30 +104,24 @@ class _HjemWidgetState extends State<NotificationsWidget>
   }
 
   List<int> getDisplayIndexes() {
-    List<int> displayIndexes = [];
+    final displayIndexes = <int>[];
+    final displayedCategories =
+        <String>{}; // Track which categories are already shown
 
-    bool showToday = false;
-    bool showSevenDays = false;
-    bool showThirtyDays = false;
-    bool showEldre = false; // Track if "Eldre" has already been displayed
-
-    // Iterate through the notifications to determine where to show titles
-    for (int i = 0; i < notificationInfo!.length; i++) {
-      final notification = notificationInfo![i];
+    // Iterate through notifications
+    for (int i = 0; i < _model.notificationInfo!.length; i++) {
+      final notification = _model.notificationInfo![i];
       final timeCategory = getTimeCategory(notification.time);
 
-      if (timeCategory == 'I dag' && !showToday) {
+      // If category has not been displayed, add its index
+      if (!displayedCategories.contains(timeCategory)) {
         displayIndexes.add(i);
-        showToday = true; // Only show "I dag" once
-      } else if (timeCategory == 'Siste 7 dager' && !showSevenDays) {
-        displayIndexes.add(i);
-        showSevenDays = true; // Only show "Siste 7 dager" once
-      } else if (timeCategory == 'Siste 30 dager' && !showThirtyDays) {
-        displayIndexes.add(i);
-        showThirtyDays = true; // Only show "Siste 30 dager" once
-      } else if (timeCategory == 'Eldre' && !showEldre) {
-        displayIndexes.add(i);
-        showEldre = true; // Only show "Eldre" once
+        displayedCategories.add(timeCategory);
+
+        // Break early if all categories are displayed
+        if (displayedCategories.length == 4) {
+          break;
+        }
       }
     }
 
@@ -262,15 +257,18 @@ class _HjemWidgetState extends State<NotificationsWidget>
                             scrollDirection: Axis.vertical,
                             itemCount: _model.isloading
                                 ? 1
-                                : notificationInfo?.length ?? 0,
+                                : _model.notificationInfo?.length ?? 0,
                             itemBuilder: (context, index) {
                               if (_model.isloading) {
-                                if ((((notificationInfo == null ||
-                                                notificationInfo!.isEmpty) &&
-                                            _model.isloading == false) ||
-                                        FFAppState().hasNotification ==
-                                            false) &&
-                                    notificationInfo!.isEmpty) {
+                                if (((((_model.notificationInfo == null ||
+                                                    _model.notificationInfo!
+                                                        .isEmpty) &&
+                                                _model.isloading == false) ||
+                                            FFAppState().hasNotification ==
+                                                false) &&
+                                        _model.notificationInfo!.isEmpty) ||
+                                    (_model.notificationInfo!.isEmpty &&
+                                        _model.isloading == false)) {
                                   return SizedBox(
                                     width: MediaQuery.sizeOf(context).width,
                                     height:
@@ -414,7 +412,8 @@ class _HjemWidgetState extends State<NotificationsWidget>
                                     ? const SizedBox()
                                     : const ShimmerProfiles();
                               }
-                              final notification = notificationInfo![index];
+                              final notification =
+                                  _model.notificationInfo![index];
                               return Column(
                                 children: [
                                   if (getDisplayIndexes().contains(index))
@@ -512,7 +511,7 @@ class _HjemWidgetState extends State<NotificationsWidget>
                                           },
                                         ).then((value) => setState(() {
                                               if (value == true) {
-                                                notificationInfo!
+                                                _model.notificationInfo!
                                                     .removeAt(index);
                                               }
                                             }));

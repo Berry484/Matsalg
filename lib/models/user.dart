@@ -12,8 +12,6 @@ class User {
   final String? phoneNumber;
   final double? lat;
   final double? lng;
-  final bool? bonde;
-  final String? gardsnavn;
   final DateTime? time;
   final String? lastactive;
 
@@ -37,8 +35,6 @@ class User {
     this.phoneNumber,
     this.lat,
     this.lng,
-    this.bonde,
-    this.gardsnavn,
     this.time,
     this.lastactive,
 
@@ -77,8 +73,6 @@ class User {
       phoneNumber: userInfo['phoneNumber'] as String?,
       lat: userInfo['lat'] as double?,
       lng: userInfo['lng'] as double?,
-      bonde: userInfo['bonde'] as bool?,
-      gardsnavn: userInfo['gardsnavn'] as String?,
       lastactive: userInfo['lastactive'] as String?,
       time: parsedTime,
 
@@ -114,8 +108,6 @@ class User {
       'phoneNumber': phoneNumber,
       'lat': lat,
       'lng': lng,
-      'bonde': bonde,
-      'gardsnavn': gardsnavn,
       'lastactive': lastactive,
       'time': time?.toIso8601String(),
 
@@ -142,8 +134,6 @@ class User {
         'phoneNumber: $phoneNumber, '
         'lat: $lat, '
         'lng: $lng, '
-        'bonde: $bonde, '
-        'gardsnavn: $gardsnavn, '
         'lastactive: $lastactive, '
         'time: $time, '
         'getPush: $getPush, '

@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
+
+class LoadingAnimationWidget extends StatelessWidget {
+  const LoadingAnimationWidget({
+    Key? key,
+    
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width,
+      height: MediaQuery.sizeOf(context).height - 150,
+      child: Align(
+        alignment: const AlignmentDirectional(0, -1),
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 110),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Align(
+                alignment: const AlignmentDirectional(0.0, 0.0),
+                child: Lottie.asset(
+                  'assets/lottie_animations/loading.json',
+                  width: 200.0,
+                  height: 180.0,
+                  fit: BoxFit.cover,
+                  repeat: true,
+                  animate: true,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

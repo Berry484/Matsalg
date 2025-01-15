@@ -15,9 +15,9 @@ class CheckTakenService {
           await http.get(Uri.parse('$baseUrl/rrh/epostledig?email=$email'));
       return response; // Return the response
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -30,9 +30,9 @@ class CheckTakenService {
           .get(Uri.parse('$baseUrl/rrh/usernameledig?username=$username'));
       return response; // Return the response
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -45,9 +45,9 @@ class CheckTakenService {
           await http.get(Uri.parse('$baseUrl/rrh/phoneLedig?phone=$phone'));
       return response; // Return the response
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 

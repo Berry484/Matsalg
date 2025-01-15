@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/helper_components/widgets/loading_indicator.dart';
+import 'package:mat_salg/helper_components/widgets/loading_indicators/loading_indicator.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/services/food_service.dart';

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/helper_components/widgets/loading_indicator.dart';
+import 'package:mat_salg/helper_components/widgets/loading_indicators/loading_indicator.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/pages/app_pages/profile/settings/account/re_authenticate/re_authenticate_widget.dart';

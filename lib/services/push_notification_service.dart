@@ -25,9 +25,9 @@ class PushNotificationService {
           .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -56,9 +56,9 @@ class PushNotificationService {
               .timeout(const Duration(seconds: 5));
       return response;
     } on SocketException {
-      throw const SocketException('');
+      rethrow;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 

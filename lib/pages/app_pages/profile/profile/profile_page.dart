@@ -7,13 +7,12 @@ import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/helper_components/widgets/product_list.dart';
+import 'package:mat_salg/helper_components/widgets/product_grid.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/home/user_ratings/ratings_widget.dart';
 import 'package:mat_salg/pages/app_pages/profile/profile/profile_services.dart';
 import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/user_service.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -136,6 +135,7 @@ class _ProfilWidgetState extends State<ProfilePage>
         _scrollController1.position.maxScrollExtent) {
       if (_isLoading ||
           _model.end ||
+          _model.matvarer == null ||
           _model.matvarer!.length < 44 ||
           _model.tabBarCurrentIndex == 1) return;
       _isLoading = true;
@@ -159,6 +159,8 @@ class _ProfilWidgetState extends State<ProfilePage>
     _model.dispose();
     super.dispose();
     FFAppState().removeListener(_onRouteChanged);
+    _scrollController1.removeListener(_scrollListener);
+    _scrollController1.dispose();
   }
 
   @override
@@ -1206,97 +1208,78 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                   _model
                                                       .matvarer!.isNotEmpty) &&
                                           _model.tabBarCurrentIndex == 0)
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5, 15, 5, 0),
-                                          child: RefreshIndicator(
-                                            onRefresh: () async {
-                                              try {
-                                                refreshPage();
-                                                safeSetState(() {});
-                                              } on SocketException {
-                                                if (!context.mounted) return;
-                                                Toasts.showErrorToast(context,
-                                                    'Ingen internettforbindelse');
-                                              } catch (e) {
-                                                if (!context.mounted) return;
-                                                Toasts.showErrorToast(
-                                                    context, 'En feil oppstod');
-                                              }
-                                            },
-                                            child: GridView.builder(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                0,
-                                                0,
-                                                0,
-                                                70,
-                                              ),
-                                              gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                childAspectRatio: 0.68,
-                                              ),
-                                              primary: false,
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.vertical,
-                                              itemCount: _model.isloading
-                                                  ? 1
-                                                  : _model.end
-                                                      ? _model.matvarer
-                                                              ?.length ??
-                                                          0
-                                                      : (_model.matvarer
-                                                                  ?.length ??
-                                                              0) +
-                                                          1,
-                                              itemBuilder: (context, index) {
-                                                if (_model.isloading) {
-                                                  return const ShimmerLoadingWidget();
-                                                }
-
-                                                if (index <
-                                                    (_model.matvarer?.length ??
-                                                        0)) {
-                                                  final matvare =
-                                                      _model.matvarer![index];
-                                                  return ProductList(
-                                                    matvare: matvare,
-                                                    onTap: () async {
-                                                      try {
-                                                        context.pushNamed(
-                                                          'MinMatvareDetalj',
-                                                          queryParameters: {
-                                                            'matvare':
-                                                                serializeParam(
-                                                              matvare.toJson(),
-                                                              ParamType.JSON,
-                                                            ),
-                                                          },
-                                                        );
-                                                      } on SocketException {
-                                                        Toasts.showErrorToast(
-                                                            context,
-                                                            'Ingen internettforbindelse');
-                                                      } catch (e) {
-                                                        Toasts.showErrorToast(
-                                                            context,
-                                                            'En feil oppstod');
-                                                      }
-                                                    },
-                                                  );
-                                                } else {
-                                                  if (_model.matvarer == null ||
-                                                      _model.matvarer!.length <
-                                                          44) {
-                                                    return Container();
-                                                  } else {
-                                                    return const ShimmerLoadingWidget();
-                                                  }
-                                                }
-                                              },
-                                            ),
+                                        GridView.builder(
+                                          padding: const EdgeInsets.fromLTRB(
+                                            5,
+                                            15,
+                                            5,
+                                            10,
                                           ),
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 0.68,
+                                          ),
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: _model.isloading
+                                              ? 1
+                                              : _model.end ||
+                                                      (_model.matvarer ==
+                                                              null ||
+                                                          _model.matvarer!
+                                                                  .length <
+                                                              44)
+                                                  ? _model.matvarer?.length ?? 0
+                                                  : (_model.matvarer?.length ??
+                                                          0) +
+                                                      1,
+                                          itemBuilder: (context, index) {
+                                            if (_model.isloading) {
+                                              return const ShimmerLoadingWidget();
+                                            }
+
+                                            if (index <
+                                                (_model.matvarer?.length ??
+                                                    0)) {
+                                              final matvare =
+                                                  _model.matvarer![index];
+                                              return ProductList(
+                                                matvare: matvare,
+                                                onTap: () async {
+                                                  try {
+                                                    context.pushNamed(
+                                                      'MinMatvareDetalj',
+                                                      queryParameters: {
+                                                        'matvare':
+                                                            serializeParam(
+                                                          matvare.toJson(),
+                                                          ParamType.JSON,
+                                                        ),
+                                                      },
+                                                    );
+                                                  } on SocketException {
+                                                    Toasts.showErrorToast(
+                                                        context,
+                                                        'Ingen internettforbindelse');
+                                                  } catch (e) {
+                                                    Toasts.showErrorToast(
+                                                        context,
+                                                        'En feil oppstod');
+                                                  }
+                                                },
+                                              );
+                                            } else {
+                                              if (_model.matvarer == null ||
+                                                  _model.matvarer!.length <
+                                                      44) {
+                                                return Container();
+                                              } else {
+                                                return const ShimmerLoadingWidget();
+                                              }
+                                            }
+                                          },
                                         ),
                                       if (_model.tabBarCurrentIndex == 1)
                                         if ((FFAppState().liked != true &&
@@ -1351,136 +1334,63 @@ class _ProfilWidgetState extends State<ProfilePage>
                                             (_model.likesisloading == false &&
                                                 _model
                                                     .likesmatvarer!.isNotEmpty))
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(5, 15, 5, 0),
-                                            child: RefreshIndicator(
-                                              onRefresh: () async {
-                                                try {
-                                                  refreshPage();
-                                                  safeSetState(() {});
-                                                } on SocketException {
-                                                  Toasts.showErrorToast(context,
-                                                      'Ingen internettforbindelse');
-                                                } catch (e) {
-                                                  Toasts.showErrorToast(context,
-                                                      'En feil oppstod');
-                                                }
-                                              },
-                                              child: GridView.builder(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  70,
-                                                ),
-                                                gridDelegate:
-                                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  childAspectRatio: 0.68,
-                                                ),
-                                                primary: false,
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount: _model.likesisloading
-                                                    ? 1
-                                                    : _model.likesmatvarer
-                                                            ?.length ??
-                                                        1,
-                                                itemBuilder: (context, index) {
-                                                  if (_model.likesisloading) {
-                                                    return Shimmer.fromColors(
-                                                      baseColor:
-                                                          Colors.grey[300]!,
-                                                      highlightColor:
-                                                          Colors.grey[100]!,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Container(
-                                                            margin:
-                                                                const EdgeInsets
-                                                                    .all(5.0),
-                                                            width: 200.0,
-                                                            height: 230.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  127,
-                                                                  255,
-                                                                  255,
-                                                                  255),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16.0), // Rounded corners
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 8.0),
-                                                          Container(
-                                                            width: 200,
-                                                            height: 15,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  127,
-                                                                  255,
-                                                                  255,
-                                                                  255),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10.0),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  }
-
-                                                  final likesmatvare = _model
-                                                      .likesmatvarer![index];
-
-                                                  return ProductList(
-                                                    matvare: likesmatvare,
-                                                    onTap: () async {
-                                                      try {
-                                                        context.pushNamed(
-                                                          'MatDetaljBondegard1',
-                                                          queryParameters: {
-                                                            'matvare':
-                                                                serializeParam(
-                                                              likesmatvare
-                                                                  .toJson(),
-                                                              ParamType.JSON,
-                                                            ),
-                                                            'liked':
-                                                                serializeParam(
-                                                              true,
-                                                              ParamType.bool,
-                                                            ),
-                                                          },
-                                                        );
-                                                      } on SocketException {
-                                                        Toasts.showErrorToast(
-                                                            context,
-                                                            'Ingen internettforbindelse');
-                                                      } catch (e) {
-                                                        Toasts.showErrorToast(
-                                                            context,
-                                                            'En feil oppstod');
-                                                      }
-                                                    },
-                                                  );
-                                                },
-                                              ),
+                                          GridView.builder(
+                                            padding: const EdgeInsets.fromLTRB(
+                                              5,
+                                              15,
+                                              5,
+                                              10,
                                             ),
+                                            gridDelegate:
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              childAspectRatio: 0.68,
+                                            ),
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: _model.likesisloading
+                                                ? 1
+                                                : _model.likesmatvarer
+                                                        ?.length ??
+                                                    1,
+                                            itemBuilder: (context, index) {
+                                              if (_model.likesisloading) {
+                                                return const ShimmerLoadingWidget();
+                                              }
+                                              final likesmatvare =
+                                                  _model.likesmatvarer![index];
+
+                                              return ProductList(
+                                                matvare: likesmatvare,
+                                                onTap: () async {
+                                                  try {
+                                                    context.pushNamed(
+                                                      'MatDetaljBondegard1',
+                                                      queryParameters: {
+                                                        'matvare':
+                                                            serializeParam(
+                                                          likesmatvare.toJson(),
+                                                          ParamType.JSON,
+                                                        ),
+                                                        'liked': serializeParam(
+                                                          true,
+                                                          ParamType.bool,
+                                                        ),
+                                                      },
+                                                    );
+                                                  } on SocketException {
+                                                    Toasts.showErrorToast(
+                                                        context,
+                                                        'Ingen internettforbindelse');
+                                                  } catch (e) {
+                                                    Toasts.showErrorToast(
+                                                        context,
+                                                        'En feil oppstod');
+                                                  }
+                                                },
+                                              );
+                                            },
                                           ),
                                     ],
                                   ),
