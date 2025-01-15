@@ -14,7 +14,6 @@ import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_icon_button.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
-import 'dart:ui';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 
@@ -737,36 +736,38 @@ class _MessageWidgetState extends State<MessageWidget> {
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
-                        child: AnimatedList(
-                          key: _listKey,
-                          reverse: true,
-                          initialItemCount: _messageListWithFlags
-                              .length, // Use precomputed list
-                          itemBuilder: (context, index, animation) {
-                            final message = _messageListWithFlags[
-                                index]; // Precomputed message list
+                        child: _messageListWithFlags.isEmpty
+                            ? EmptyChatWidget()
+                            : AnimatedList(
+                                key: _listKey,
+                                reverse: true,
+                                initialItemCount: _messageListWithFlags.length,
+                                itemBuilder: (context, index, animation) {
+                                  final message = _messageListWithFlags[index];
 
-                            return SlideTransition(
-                              position: animation.drive(
-                                Tween<Offset>(
-                                  begin: const Offset(0.0, 2.0),
-                                  end: Offset.zero,
-                                ).chain(CurveTween(curve: Curves.easeInOut)),
+                                  return SlideTransition(
+                                    position: animation.drive(
+                                      Tween<Offset>(
+                                        begin: const Offset(0.0, 2.0),
+                                        end: Offset.zero,
+                                      ).chain(
+                                          CurveTween(curve: Curves.easeInOut)),
+                                    ),
+                                    child: MessageBubblesWidget(
+                                      key: ValueKey(message.time),
+                                      mesageText: message.content,
+                                      blueBubble: message.me,
+                                      showDelivered:
+                                          message.showDelivered ?? false,
+                                      showTail: true,
+                                      showLest: message.showLest ?? false,
+                                      messageTime: message.showTime ?? false
+                                          ? message.time
+                                          : null,
+                                    ),
+                                  );
+                                },
                               ),
-                              child: MessageBubblesWidget(
-                                key: ValueKey(message.time),
-                                mesageText: message.content,
-                                blueBubble: message.me,
-                                showDelivered: message.showDelivered ?? false,
-                                showTail: true,
-                                showLest: message.showLest ?? false,
-                                messageTime: message.showTime ?? false
-                                    ? message.time
-                                    : null,
-                              ),
-                            );
-                          },
-                        ),
                       ),
                     ),
                     Padding(
@@ -802,7 +803,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                   textAlign: TextAlign.start,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    hintText: 'Melding',
+                                    hintText: 'Skriv melding ...',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -911,6 +912,55 @@ class _MessageWidgetState extends State<MessageWidget> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class EmptyChatWidget extends StatelessWidget {
+  const EmptyChatWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 40, 16, 0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // More modern chat icon
+            Image.asset(
+              'assets/images/empty_chat.png',
+              height: 60,
+              width: 60,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(height: 24),
+
+            // Message indicating no messages
+            Text(
+              'Ingen meldinger ennå',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Send den første meldingen for å komme igang!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black45,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );

@@ -2091,64 +2091,66 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                             .oppdaterLoading) {
                                                       return;
                                                     }
-                                                    safeSetState(() {
-                                                      _model.oppdaterLoading =
-                                                          false;
-                                                      _isButtonDisabled = true;
-                                                    });
+                                                    _isButtonDisabled = true;
+                                                    _model.oppdaterLoading =
+                                                        true;
 
-                                                    Future.delayed(
-                                                        Duration(
-                                                            milliseconds: 300),
-                                                        () {
-                                                      _isButtonDisabled = false;
-                                                    });
-                                                    await publishServices
-                                                        .uploadFood(
-                                                            context,
-                                                            (title, content) => DialogUtils
+                                                    try {
+                                                      await publishServices
+                                                          .uploadFood(
+                                                        context,
+                                                        (title, content) =>
+                                                            DialogUtils
                                                                 .showSimpleDialog(
-                                                                    context:
-                                                                        context,
-                                                                    title:
-                                                                        title,
-                                                                    content:
-                                                                        content,
-                                                                    buttonText:
-                                                                        'Ok'),
-                                                            (message, error) => error
-                                                                ? Toasts
-                                                                    .showErrorToast(
-                                                                        context,
-                                                                        message)
-                                                                : Toasts
-                                                                    .showAccepted(
-                                                                        context,
-                                                                        message),
-                                                            (path, pop,
-                                                                    imgPath) =>
-                                                                pop
-                                                                    ? Navigator.of(
-                                                                            context)
-                                                                        .pop()
-                                                                    : path ==
-                                                                            'BrukerLagtUtInfo'
-                                                                        ? context
-                                                                            .goNamed(
-                                                                            'BrukerLagtUtInfo',
-                                                                            queryParameters: {
-                                                                              'picture': serializeParam(
-                                                                                imgPath,
-                                                                                ParamType.String,
-                                                                              ),
-                                                                            },
-                                                                          )
-                                                                        : context
-                                                                            .pushNamed(path));
-                                                    safeSetState(() {
+                                                          context: context,
+                                                          title: title,
+                                                          content: content,
+                                                          buttonText: 'Ok',
+                                                        ),
+                                                        (message, error) {
+                                                          if (error) {
+                                                            Toasts
+                                                                .showErrorToast(
+                                                                    context,
+                                                                    message);
+                                                          } else {
+                                                            Toasts.showAccepted(
+                                                                context,
+                                                                message);
+                                                          }
+                                                        },
+                                                        (path, pop, imgPath) {
+                                                          if (pop) {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          } else if (path ==
+                                                              'BrukerLagtUtInfo') {
+                                                            context.goNamed(
+                                                              'BrukerLagtUtInfo',
+                                                              queryParameters: {
+                                                                'picture':
+                                                                    serializeParam(
+                                                                        imgPath,
+                                                                        ParamType
+                                                                            .String),
+                                                              },
+                                                            );
+                                                            return;
+                                                          } else {
+                                                            context.pushNamed(
+                                                                path);
+                                                          }
+                                                        },
+                                                      );
+                                                    } catch (error) {
+                                                      logger.d(
+                                                          'Error occurred: $error');
+                                                    } finally {
+                                                      _isButtonDisabled = false;
                                                       _model.oppdaterLoading =
                                                           false;
-                                                    });
+                                                    }
                                                   },
                                                   text: 'Publiser',
                                                   options: FFButtonOptions(
