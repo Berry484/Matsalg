@@ -50,6 +50,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
     'uniqueId': 'from-chat',
   };
   bool _isButtonDisabled = false;
+  bool _navigate = false;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -2086,7 +2087,8 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                         25.0, 40.0, 25.0, 30.0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
-                                                    if (_isButtonDisabled ||
+                                                    if (_navigate ||
+                                                        _isButtonDisabled ||
                                                         _model
                                                             .oppdaterLoading) {
                                                       return;
@@ -2126,6 +2128,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                 .pop();
                                                           } else if (path ==
                                                               'BrukerLagtUtInfo') {
+                                                            _navigate = true;
                                                             context.goNamed(
                                                               'BrukerLagtUtInfo',
                                                               queryParameters: {
@@ -2144,12 +2147,18 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                         },
                                                       );
                                                     } catch (error) {
+                                                      _navigate = false;
+                                                      _isButtonDisabled = false;
+                                                      _model.oppdaterLoading =
+                                                          false;
+                                                      safeSetState(() {});
                                                       logger.d(
                                                           'Error occurred: $error');
                                                     } finally {
                                                       _isButtonDisabled = false;
                                                       _model.oppdaterLoading =
                                                           false;
+                                                      safeSetState(() {});
                                                     }
                                                   },
                                                   text: 'Publiser',

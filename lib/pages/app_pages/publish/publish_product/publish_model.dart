@@ -43,6 +43,7 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
 
   bool beskrivelseValid = false;
   bool priceValid = false;
+  bool titleValid = false;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes, Controllers and validators for the text fields---------------------------------
@@ -70,12 +71,15 @@ class PublishModel extends FlutterFlowModel<PublishPage> {
   String? _produktNavnTextControllerValidator(
       BuildContext context, String? val) {
     if (val!.toLowerCase() == 'null') {
+      titleValid = false;
       return 'Felt kan ikke være null';
     }
     if (val.isEmpty) {
+      titleValid = false;
       return 'Felt må fylles ut';
     }
 
+    titleValid = true;
     return null;
   }
 

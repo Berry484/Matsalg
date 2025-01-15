@@ -259,51 +259,14 @@ class PublishServices {
     Function(String path, bool pop) navigate,
   ) async {
     try {
-      final nonPlaceholderImages = model.unselectedImages
-          .where((image) => image.path != 'ImagePlaceHolder.jpg')
-          .toList();
-
       if (model.formKey.currentState == null ||
           !model.formKey.currentState!.validate()) {
-        bool canScroll = true;
         model.errorLocation = null;
         model.errorCategory = null;
 
-        if (nonPlaceholderImages.isEmpty) {
-          model.errorImage = 'Vennligst legg til minst ett bilde';
-          if (model.topKey.currentContext != null) {
-            Scrollable.ensureVisible(model.topKey.currentContext!,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-            canScroll = false;
-          }
-        }
-
-        if (model.kategori == null) {
-          model.errorCategory = 'Felt må fylles ut';
-          if (model.imageKey.currentContext != null && canScroll) {
-            Scrollable.ensureVisible(model.imageKey.currentContext!,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-            canScroll = false;
-          }
-        }
-        if (model.selectedLatLng == null) {
-          model.errorLocation = 'Vennligst velg en posisjon';
-        }
-
-        if (model.beskrivelseValid != true && canScroll) {
-          if (model.titleKey.currentContext != null) {
-            Scrollable.ensureVisible(model.titleKey.currentContext!,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-            canScroll = false;
-          }
-        }
-
-        if (model.priceValid != true && canScroll) {
-          if (model.titleKey.currentContext != null) {
-            Scrollable.ensureVisible(model.titleKey.currentContext!,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-            canScroll = false;
-          }
+        if (!validateModel()) {
+          model.oppdaterLoading = false;
+          return;
         }
 
         return;
@@ -315,23 +278,7 @@ class PublishServices {
       model.errorLocation = null;
       model.errorCategory = null;
 
-      if (model.kategori == null) {
-        model.errorCategory = 'Felt må fylles ut';
-        if (model.imageKey.currentContext != null) {
-          Scrollable.ensureVisible(model.imageKey.currentContext!,
-              duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-        }
-        if (model.selectedLatLng == null) {
-          model.errorLocation = 'Vennligst velg en posisjon';
-          model.oppdaterLoading = false;
-          return;
-        }
-        model.oppdaterLoading = false;
-        return;
-      }
-
-      if (model.selectedLatLng == null) {
-        model.errorLocation = 'Vennligst velg en posisjon';
+      if (!validateModel()) {
         model.oppdaterLoading = false;
         return;
       }
@@ -463,70 +410,17 @@ class PublishServices {
 
       if (model.formKey.currentState == null ||
           !model.formKey.currentState!.validate()) {
-        bool canScroll = true;
-        model.errorLocation = null;
-        model.errorCategory = null;
-
-        if (nonPlaceholderImages.isEmpty) {
-          model.errorImage = 'Vennligst legg til minst ett bilde';
-          if (model.topKey.currentContext != null) {
-            Scrollable.ensureVisible(model.topKey.currentContext!,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-            canScroll = false;
-          }
+        if (!validateModel()) {
+          model.oppdaterLoading = false;
+          return;
         }
-
-        if (model.kategori == null) {
-          model.errorCategory = 'Felt må fylles ut';
-          if (model.imageKey.currentContext != null && canScroll) {
-            Scrollable.ensureVisible(model.imageKey.currentContext!,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-            canScroll = false;
-          }
-        }
-        if (model.selectedLatLng == null) {
-          model.errorLocation = 'Vennligst velg en posisjon';
-        }
-
-        if (model.beskrivelseValid != true && canScroll) {
-          if (model.titleKey.currentContext != null) {
-            Scrollable.ensureVisible(model.titleKey.currentContext!,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-            canScroll = false;
-          }
-        }
-
-        if (model.priceValid != true && canScroll) {
-          if (model.titleKey.currentContext != null) {
-            Scrollable.ensureVisible(model.titleKey.currentContext!,
-                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-            canScroll = false;
-          }
-        }
-        model.oppdaterLoading = false;
         return;
       }
 
       model.errorLocation = null;
       model.errorCategory = null;
 
-      if (model.kategori == null) {
-        model.errorCategory = 'Felt må fylles ut';
-        if (model.imageKey.currentContext != null) {
-          Scrollable.ensureVisible(model.imageKey.currentContext!,
-              duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-        }
-        if (model.selectedLatLng == null) {
-          model.errorLocation = 'Vennligst velg en posisjon';
-          model.oppdaterLoading = false;
-          return;
-        }
-        model.oppdaterLoading = false;
-        return;
-      }
-
-      if (model.selectedLatLng == null) {
-        model.errorLocation = 'Vennligst velg en posisjon';
+      if (!validateModel()) {
         model.oppdaterLoading = false;
         return;
       }
@@ -604,12 +498,84 @@ class PublishServices {
       model.oppdaterLoading = false;
       showToast('Ingen internettforbindelse', true);
     } catch (e) {
-      if (model.oppdaterLoading) {
-        navigate('', true, null);
-      }
       model.oppdaterLoading = false;
       showToast('En feil oppstod', true);
     }
+  }
+
+  bool validateModel() {
+    final nonPlaceholderImages = model.unselectedImages
+        .where((image) => image.path != 'ImagePlaceHolder.jpg')
+        .toList();
+    bool canScroll = true;
+
+    // Reset all error messages
+    model.errorLocation = null;
+    model.errorCategory = null;
+    model.errorImage = null;
+
+    // Validate images
+    if (nonPlaceholderImages.isEmpty) {
+      model.errorImage = 'Vennligst legg til minst ett bilde';
+      if (model.topKey.currentContext != null) {
+        Scrollable.ensureVisible(model.topKey.currentContext!,
+            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+        canScroll = false;
+      }
+    }
+
+    if (model.titleValid != true && canScroll) {
+      if (model.topKey.currentContext != null) {
+        Scrollable.ensureVisible(model.topKey.currentContext!,
+            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+        canScroll = false;
+      }
+    }
+
+    // Validate category
+    if (model.kategori == null) {
+      model.errorCategory = 'Felt må fylles ut';
+      if (model.imageKey.currentContext != null && canScroll) {
+        Scrollable.ensureVisible(model.imageKey.currentContext!,
+            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+        canScroll = false;
+      }
+    }
+
+    // Validate location
+    if (model.selectedLatLng == null) {
+      model.errorLocation = 'Vennligst velg en posisjon';
+    }
+
+    // Validate description
+    if (model.beskrivelseValid != true && canScroll) {
+      if (model.titleKey.currentContext != null) {
+        Scrollable.ensureVisible(model.titleKey.currentContext!,
+            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+        canScroll = false;
+      }
+    }
+
+    // Validate price
+    if (model.priceValid != true && canScroll) {
+      if (model.titleKey.currentContext != null) {
+        Scrollable.ensureVisible(model.titleKey.currentContext!,
+            duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+        canScroll = false;
+      }
+    }
+
+    // If any validation failed, set loading to false and return false
+    if (!canScroll ||
+        model.errorLocation != null ||
+        model.errorCategory != null ||
+        model.errorImage != null) {
+      model.oppdaterLoading = false;
+      return false;
+    }
+
+    // Validation passed
+    return true;
   }
 
 //---------------------------------------------------------------------------------------------------------------
