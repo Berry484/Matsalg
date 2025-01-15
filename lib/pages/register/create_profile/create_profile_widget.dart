@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/services/check_taken_service.dart';
 import 'package:mat_salg/services/user_service.dart';

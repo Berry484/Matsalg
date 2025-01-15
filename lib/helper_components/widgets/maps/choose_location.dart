@@ -71,19 +71,16 @@ class _ChooselocationState extends State<Chooselocation> {
               minZoom: 5,
               maxZoom: 18,
               onPositionChanged: (position, hasGesture) {
-                if (position.center != null) {
-                  // Update currentCenter on map position change
-                  setState(() {
-                    currentCenter = position.center;
-                  });
+                // Update currentCenter on map position change
+                setState(() {
+                  currentCenter = position.center;
+                });
 
-                  // Call the callback function to notify the parent widget
-                  if (widget.onLocationChanged != null &&
-                      currentCenter != null) {
-                    widget.onLocationChanged!(
-                      LatLng(currentCenter!.latitude, currentCenter!.longitude),
-                    );
-                  }
+                // Call the callback function to notify the parent widget
+                if (widget.onLocationChanged != null && currentCenter != null) {
+                  widget.onLocationChanged!(
+                    LatLng(currentCenter!.latitude, currentCenter!.longitude),
+                  );
                 }
               },
             ),
