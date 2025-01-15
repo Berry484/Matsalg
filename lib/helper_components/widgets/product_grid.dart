@@ -185,11 +185,15 @@ class ProductImage extends StatelessWidget {
           ),
         );
       },
-      fadeInDuration: const Duration(milliseconds: 200),
-      placeholder: (context, url) => Container(
+      fadeInDuration: const Duration(milliseconds: 40),
+      placeholder: (context, url) => const SizedBox(
         width: 200,
         height: 229,
-        color: Colors.grey[50],
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Color(0xFFFAFAFA),
+          ),
+        ),
       ),
       errorWidget: (context, url, error) => Container(
         width: 200,
