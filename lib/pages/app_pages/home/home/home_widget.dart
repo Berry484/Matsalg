@@ -12,7 +12,6 @@ import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_produ
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/my_ip.dart';
-import 'package:mat_salg/services/firebase_service.dart';
 import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/user_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -56,7 +55,6 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
             getFolgerFoods(true);
           }
         }));
-    FirebaseApi().initNotifications();
     fetchData();
     getAllFoods(true);
     getFolgerFoods(true);

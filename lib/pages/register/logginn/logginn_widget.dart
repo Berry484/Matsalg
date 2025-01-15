@@ -686,13 +686,12 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               if (_model.isloading) {
-                                return; // Prevent multiple presses while loading
+                                return;
                               }
 
-                              // Validate the form
                               if (_model.formKey.currentState == null ||
                                   !_model.formKey.currentState!.validate()) {
-                                return; // If the form is invalid, return early
+                                return;
                               }
 
                               _model.isloading = true;
@@ -816,9 +815,7 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                 );
                               }
                             },
-                            text: _model.isloading
-                                ? '' // Change button text to "Loading..." when loading
-                                : 'Logg inn', // Normal text when not loading
+                            text: _model.isloading ? '' : 'Logg inn',
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 50,

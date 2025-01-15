@@ -446,7 +446,6 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                         });
                                         return;
                                       }
-
                                       final response = await CheckTakenService
                                           .checkPhoneTaken(_model
                                               .telefonnummerTextController
@@ -481,7 +480,6 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                         }
                                         return;
                                       }
-
                                       bool canRequest =
                                           await FFAppState().canRequestCode();
                                       if (canRequest) {

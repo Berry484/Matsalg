@@ -204,7 +204,6 @@ class _RequestLocationWidgetState extends State<RequestLocationWidget> {
                                   _isloading = false;
                                   return;
                                 }
-
                                 location = await getCurrentUserLocation(
                                     defaultLocation: const LatLng(0.0, 0.0));
 

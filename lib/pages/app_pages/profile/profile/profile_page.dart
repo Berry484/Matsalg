@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/models/matvarer.dart';
@@ -11,6 +12,7 @@ import 'package:mat_salg/helper_components/widgets/product_grid.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/home/user_ratings/ratings_widget.dart';
 import 'package:mat_salg/pages/app_pages/profile/profile/profile_services.dart';
+import 'package:mat_salg/services/firebase_service.dart';
 import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/user_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -34,6 +36,7 @@ class _ProfilWidgetState extends State<ProfilePage>
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final UserInfoService userInfoService = UserInfoService();
   final ScrollController _scrollController1 = ScrollController();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late ProfileModel _model;
   late ProfileServices profileServices;
@@ -53,6 +56,23 @@ class _ProfilWidgetState extends State<ProfilePage>
     )..addListener(() => safeSetState(() {}));
     _scrollController1.addListener(_scrollListener);
     FFAppState().addListener(_onRouteChanged);
+    checkPushPermission();
+  }
+
+  Future<void> checkPushPermission() async {
+    final settings = await _firebaseMessaging.getNotificationSettings();
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      await Future.delayed(Duration(seconds: 1));
+      FirebaseApi().initNotifications();
+    } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
+      return;
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.notDetermined) {
+      await Future.delayed(Duration(seconds: 1));
+      if (!mounted) return;
+      context.pushNamed('RequestPush');
+    }
   }
 
   Future<void> getMyFoods(bool refresh) async {

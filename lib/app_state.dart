@@ -158,6 +158,8 @@ class FFAppState extends ChangeNotifier {
 
   bool hasNotification = false;
 
+  bool pushSent = false;
+
   LatLng? brukersted = const LatLng(59.9138688, 10.7522454);
 
   double _brukerLat = 59.9138688;

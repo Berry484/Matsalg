@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_profiles.dart';
@@ -7,6 +8,7 @@ import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/pages/app_pages/notifications/NotificationPreview/notification_preview_widget.dart';
 import 'package:mat_salg/pages/chat/give_rating/rating_page.dart';
+import 'package:mat_salg/services/firebase_service.dart';
 import 'package:mat_salg/services/notifications_service.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -27,6 +29,7 @@ class _HjemWidgetState extends State<NotificationsWidget>
     with TickerProviderStateMixin {
   late NotificationsModel _model;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
 
   @override
@@ -35,12 +38,29 @@ class _HjemWidgetState extends State<NotificationsWidget>
     _model = createModel(context, () => NotificationsModel());
     markRead();
     getNotifications();
+    checkPushPermission();
   }
 
   @override
   void dispose() {
     _model.dispose();
     super.dispose();
+  }
+
+  Future<void> checkPushPermission() async {
+    final settings = await _firebaseMessaging.getNotificationSettings();
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      await Future.delayed(Duration(seconds: 1));
+      FirebaseApi().initNotifications();
+    } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
+      return;
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.notDetermined) {
+      await Future.delayed(Duration(seconds: 1));
+      if (!mounted) return;
+      context.pushNamed('RequestPush');
+    }
   }
 
   Future<void> markRead() async {

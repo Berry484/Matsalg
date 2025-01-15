@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +6,7 @@ import 'package:mat_salg/helper_components/widgets/empty_list/no_message_widget.
 import 'package:mat_salg/pages/chat/MessagePreview/message_preview_widget.dart';
 import 'package:mat_salg/pages/chat/chat_main/chat_main_model.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
+import 'package:mat_salg/services/firebase_service.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 export 'chat_main_model.dart';
 
@@ -20,6 +22,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
   late ChatMainModel _model;
   late Conversation conversation;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   @override
   void initState() {
@@ -32,6 +35,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
       initialIndex: 0,
     )..addListener(() => safeSetState(() {}));
     setState(() {});
+    checkPushPermission();
   }
 
   @override
@@ -44,6 +48,22 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
   void _onAppStateChanged() {
     if (mounted) {
       setState(() {});
+    }
+  }
+
+  Future<void> checkPushPermission() async {
+    final settings = await _firebaseMessaging.getNotificationSettings();
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      await Future.delayed(Duration(seconds: 1));
+      FirebaseApi().initNotifications();
+    } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
+      return;
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.notDetermined) {
+      await Future.delayed(Duration(seconds: 1));
+      if (!mounted) return;
+      context.pushNamed('RequestPush');
     }
   }
 

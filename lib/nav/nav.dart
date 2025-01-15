@@ -552,6 +552,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         parentNavigatorKey: _parentKey,
       ),
       GoRoute(
+        path: '/requestPush',
+        name: 'RequestPush',
+        builder: (context, state) => const RequestPushWidget(),
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
         path: '/requestTerms',
         name: 'RequestTerms',
         builder: (context, state) => const RequestTermsWidget(),

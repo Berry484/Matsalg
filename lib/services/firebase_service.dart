@@ -91,6 +91,9 @@ class FirebaseApi {
   }
 
   Future<void> initNotifications() async {
+    if (FFAppState().pushSent) {
+      return;
+    }
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
     await _firebaseMessaging.getAPNSToken();
@@ -153,6 +156,8 @@ class FirebaseApi {
           headers: headers,
           body: jsonBody,
         );
+
+        FFAppState().pushSent = true;
 
         logger.d('Response: ${response.statusCode} ${response.body}');
         return response;

@@ -8,6 +8,8 @@ export 'pages/register/create_profile/add_profile_picture/add_profilepic_widget.
     show AddProfilePicWidget;
 export 'pages/register/create_profile/request_location/request_location_widget.dart'
     show RequestLocationWidget;
+export 'pages/app_pages/request_push_notification/request_push_widget.dart'
+    show RequestPushWidget;
 export 'pages/register/create_profile/request_terms&service/request_terms_widget.dart'
     show RequestTermsWidget;
 export 'pages/app_pages/publish/publish_product/publish_page.dart'
