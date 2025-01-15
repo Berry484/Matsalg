@@ -594,73 +594,72 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                       HapticFeedback.selectionClick();
                       getCategoryFood(true, false);
                     },
-                    child: SingleChildScrollView(
-                      controller: _scrollController1,
-                      physics: AlwaysScrollableScrollPhysics(),
-                      primary: false,
-                      child: ((_model.matvarer == null ||
-                                  _model.matvarer!.isEmpty) &&
-                              _model.isloading == false)
-                          ? const NoResultsWidget()
-                          : (_model.isloading)
-                              ? const LoadingAnimationWidget()
-                              : GridView.builder(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    5,
-                                    20,
-                                    5,
-                                    63,
-                                  ),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    childAspectRatio: 0.68,
-                                  ),
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: _model.isloading
-                                      ? 1
-                                      : _model.end ||
-                                              (_model.matvarer == null ||
-                                                  _model.matvarer!.length < 44)
-                                          ? _model.matvarer?.length ?? 0
-                                          : (_model.matvarer?.length ?? 0) + 1,
-                                  itemBuilder: (context, index) {
-                                    if (_model.isloading) {
+                    child: ((_model.matvarer == null ||
+                                _model.matvarer!.isEmpty) &&
+                            _model.isloading == false)
+                        ? SingleChildScrollView(
+                            controller: _scrollController1,
+                            physics: AlwaysScrollableScrollPhysics(),
+                            primary: false,
+                            child: const NoResultsWidget())
+                        : (_model.isloading)
+                            ? const LoadingAnimationWidget()
+                            : GridView.builder(
+                                controller: _scrollController1,
+                                padding: const EdgeInsets.fromLTRB(
+                                  5,
+                                  20,
+                                  5,
+                                  63,
+                                ),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.68,
+                                ),
+                                primary: false,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: _model.isloading
+                                    ? 1
+                                    : _model.end ||
+                                            (_model.matvarer == null ||
+                                                _model.matvarer!.length < 44)
+                                        ? _model.matvarer?.length ?? 0
+                                        : (_model.matvarer?.length ?? 0) + 1,
+                                itemBuilder: (context, index) {
+                                  if (_model.isloading) {
+                                    return const ShimmerLoadingWidget();
+                                  }
+
+                                  if (index < (_model.matvarer?.length ?? 0)) {
+                                    final matvare = _model.matvarer![index];
+                                    return ProductList(
+                                      matvare: matvare,
+                                      onTap: () async {
+                                        FocusScope.of(context)
+                                            .requestFocus(FocusNode());
+                                        context.pushNamed(
+                                          'ProductDetail',
+                                          queryParameters: {
+                                            'matvare': serializeParam(
+                                              matvare.toJson(),
+                                              ParamType.JSON,
+                                            ),
+                                          },
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    if (_model.matvarer == null ||
+                                        _model.matvarer!.length < 44) {
+                                      return Container();
+                                    } else {
                                       return const ShimmerLoadingWidget();
                                     }
-
-                                    if (index <
-                                        (_model.matvarer?.length ?? 0)) {
-                                      final matvare = _model.matvarer![index];
-                                      return ProductList(
-                                        matvare: matvare,
-                                        onTap: () async {
-                                          FocusScope.of(context)
-                                              .requestFocus(FocusNode());
-                                          context.pushNamed(
-                                            'ProductDetail',
-                                            queryParameters: {
-                                              'matvare': serializeParam(
-                                                matvare.toJson(),
-                                                ParamType.JSON,
-                                              ),
-                                            },
-                                          );
-                                        },
-                                      );
-                                    } else {
-                                      if (_model.matvarer == null ||
-                                          _model.matvarer!.length < 44) {
-                                        return Container();
-                                      } else {
-                                        return const ShimmerLoadingWidget();
-                                      }
-                                    }
-                                  },
-                                ),
-                    ),
+                                  }
+                                },
+                              ),
                   ),
                 ),
                 Align(

@@ -39,24 +39,18 @@ class _MessagePreviewWidgetState extends State<NotificationPreviewWidget> {
     final difference = now.difference(dateTime);
 
     if (difference.inDays >= 365) {
-      // If it's over a year ago
       int years = difference.inDays ~/ 365;
       return '  $years år';
     } else if (difference.inDays >= 7) {
-      // If it's over a week ago (7+ days)
       int weeks = difference.inDays ~/ 7;
       return '  $weeks u';
     } else if (difference.inDays >= 1) {
-      // If it's over 24 hours ago
       return '  ${difference.inDays} d';
     } else if (difference.inHours >= 1) {
-      // If it's less than 24 hours but more than 1 hour ago
       return '  ${difference.inHours} t';
     } else if (difference.inMinutes >= 1) {
-      // If it's less than 1 hour but more than 1 minute ago
       return '  ${difference.inMinutes} m';
     } else {
-      // If it's less than 1 minute ago
       return '  nå';
     }
   }
@@ -157,7 +151,7 @@ class _MessagePreviewWidgetState extends State<NotificationPreviewWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                               child: RichText(
-                                softWrap: true, // Allow the text to wrap
+                                softWrap: true,
                                 text: TextSpan(
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium

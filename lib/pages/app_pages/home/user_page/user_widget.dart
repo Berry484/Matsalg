@@ -420,458 +420,421 @@ class _BrukerPageWidgetState extends State<UserWidget>
                       _checkUser();
                       getUserFood(true);
                     },
-                    child: SingleChildScrollView(
-                      controller: _scrollController1,
+                    child: CustomScrollView(
                       physics: AlwaysScrollableScrollPhysics(),
-                      primary: false,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: widget.fromChat != true
-                                ? const EdgeInsetsDirectional.fromSTEB(
-                                    0, 10, 0, 10)
-                                : const EdgeInsetsDirectional.fromSTEB(
-                                    0, 0, 0, 0),
-                          ),
-                          if (_model.isLoading != true)
-                            ListView(
-                              padding: EdgeInsets.zero,
-                              primary: false,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 30),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Align(
-                                        alignment:
-                                            const AlignmentDirectional(0, 0),
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(24, 0, 0, 5),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                width: 90,
-                                                height: 90,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: CachedNetworkImage(
-                                                  fadeInDuration: Duration.zero,
-                                                  fadeOutDuration:
-                                                      const Duration(
-                                                          milliseconds: 0),
-                                                  imageUrl: _model.isLoading
-                                                      ? ''
-                                                      : '${ApiConstants.baseUrl}${_model.bruker?.profilepic}',
-                                                  fit: BoxFit.cover,
-                                                  errorWidget: (context, error,
-                                                          stackTrace) =>
-                                                      Image.asset(
-                                                    'assets/images/profile_pic.png',
-                                                    fit: BoxFit.cover,
+                      controller: _scrollController1,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: widget.fromChat != true
+                                    ? const EdgeInsetsDirectional.fromSTEB(
+                                        0, 10, 0, 10)
+                                    : const EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 0),
+                              ),
+                              if (_model.isLoading != true)
+                                ListView(
+                                  padding: EdgeInsets.zero,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 30),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                const AlignmentDirectional(
+                                                    0, 0),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(24, 0, 0, 5),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    width: 90,
+                                                    height: 90,
+                                                    clipBehavior:
+                                                        Clip.antiAlias,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: CachedNetworkImage(
+                                                      fadeInDuration:
+                                                          Duration.zero,
+                                                      fadeOutDuration:
+                                                          const Duration(
+                                                              milliseconds: 0),
+                                                      imageUrl: _model.isLoading
+                                                          ? ''
+                                                          : '${ApiConstants.baseUrl}${_model.bruker?.profilepic}',
+                                                      fit: BoxFit.cover,
+                                                      errorWidget: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Image.asset(
+                                                        'assets/images/profile_pic.png',
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(7, 0, 0, 0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              10, 0, 0, 0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Row(
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            7, 0, 0, 0),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  10, 0, 0, 0),
+                                                          child: Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
                                                             children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                                child:
-                                                                    Container(
-                                                                  width: 70,
-                                                                  height: 50,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                  ),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Text(
-                                                                        _model.matvarer?.length.toString() ??
-                                                                            '',
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: 'Nunito',
-                                                                              fontSize: 16,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
-                                                                      ),
-                                                                      Text(
-                                                                        _model.matvarer?.length ==
-                                                                                1
-                                                                            ? 'matvare'
-                                                                            : 'matvarer',
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: 'Nunito',
-                                                                              color: FlutterFlowTheme.of(context).secondaryText,
-                                                                              fontSize: 13,
-                                                                              letterSpacing: 0.0,
-                                                                            ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                                child:
-                                                                    Container(
-                                                                  width: 70,
-                                                                  height: 50,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                  ),
-                                                                  child:
-                                                                      InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    focusColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    hoverColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    highlightColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    onTap:
-                                                                        () async {
-                                                                      try {
-                                                                        if ((_model.bruker?.followersCount) !=
-                                                                            0) {
-                                                                          if (widget.fromChat !=
-                                                                              true) {
-                                                                            context.pushNamed(
-                                                                              GoRouterState.of(context).uri.toString().startsWith('/profil')
-                                                                                  ? 'FolgereProfile'
-                                                                                  : GoRouterState.of(context).uri.toString().startsWith('/notifications')
-                                                                                      ? 'FolgereNotification'
-                                                                                      : 'Folgere',
-                                                                              queryParameters: {
-                                                                                'username': serializeParam(widget.uid, ParamType.String),
-                                                                                'folger': serializeParam('Følgere', ParamType.String),
-                                                                              }.withoutNulls,
-                                                                            );
-                                                                          } else {
-                                                                            context.pushNamed(
-                                                                              'Folgere1',
-                                                                              queryParameters: {
-                                                                                'username': serializeParam(widget.uid, ParamType.String),
-                                                                                'folger': serializeParam('Følgere', ParamType.String),
-                                                                                'fromChat': serializeParam(true, ParamType.bool),
-                                                                              }.withoutNulls,
-                                                                            );
-                                                                          }
-                                                                        }
-                                                                      } catch (e) {
-                                                                        Toasts.showErrorToast(
-                                                                            context,
-                                                                            'En uforventet feil oppstod');
-                                                                        logger.d(
-                                                                            'Error navigating page');
-                                                                      }
-                                                                    },
+                                                              Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            5,
+                                                                            0,
+                                                                            0,
+                                                                            0),
                                                                     child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Text(
-                                                                          _model
-                                                                              .bruker!
-                                                                              .followersCount
-                                                                              .toString(),
-                                                                          textAlign:
-                                                                              TextAlign.center,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                fontSize: 16,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w600,
-                                                                              ),
-                                                                        ),
-                                                                        Text(
-                                                                          'følgere',
-                                                                          textAlign:
-                                                                              TextAlign.center,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                fontSize: 13,
-                                                                                letterSpacing: 0.0,
-                                                                              ),
-                                                                        ),
-                                                                      ],
+                                                                        Container(
+                                                                      width: 70,
+                                                                      height:
+                                                                          50,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10),
+                                                                      ),
+                                                                      child:
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
+                                                                        children: [
+                                                                          Text(
+                                                                            _model.matvarer?.length.toString() ??
+                                                                                '',
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Nunito',
+                                                                                  fontSize: 16,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                ),
+                                                                          ),
+                                                                          Text(
+                                                                            _model.matvarer?.length == 1
+                                                                                ? 'matvare'
+                                                                                : 'matvarer',
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Nunito',
+                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                  fontSize: 13,
+                                                                                  letterSpacing: 0.0,
+                                                                                ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        5,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                                child:
-                                                                    Container(
-                                                                  width: 70,
-                                                                  height: 50,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                  ),
-                                                                  child:
-                                                                      InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    focusColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    hoverColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    highlightColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    onTap:
-                                                                        () async {
-                                                                      try {
-                                                                        if (_model.bruker!.followingCount !=
-                                                                            0) {
-                                                                          if (widget.fromChat !=
-                                                                              true) {
-                                                                            context.pushNamed(
-                                                                              GoRouterState.of(context).uri.toString().startsWith('/profil')
-                                                                                  ? 'FolgereProfile'
-                                                                                  : GoRouterState.of(context).uri.toString().startsWith('/notifications')
-                                                                                      ? 'FolgereNotification'
-                                                                                      : 'Folgere',
-                                                                              queryParameters: {
-                                                                                'username': serializeParam(widget.uid, ParamType.String),
-                                                                                'folger': serializeParam(
-                                                                                  'Følger',
-                                                                                  ParamType.String,
-                                                                                ),
-                                                                              }.withoutNulls,
-                                                                            );
-                                                                          } else {
-                                                                            context.pushNamed(
-                                                                              'Folgere1',
-                                                                              queryParameters: {
-                                                                                'username': serializeParam(widget.uid, ParamType.String),
-                                                                                'folger': serializeParam(
-                                                                                  'Følger',
-                                                                                  ParamType.String,
-                                                                                ),
-                                                                                'fromChat': serializeParam(true, ParamType.bool),
-                                                                              }.withoutNulls,
-                                                                            );
-                                                                          }
-                                                                        }
-                                                                      } catch (e) {
-                                                                        Toasts.showErrorToast(
-                                                                            context,
-                                                                            'En uforventet feil oppstod');
-                                                                        logger.d(
-                                                                            'Error navigating page');
-                                                                      }
-                                                                    },
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            5,
+                                                                            0,
+                                                                            0,
+                                                                            0),
                                                                     child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Text(
-                                                                          _model
-                                                                              .bruker!
-                                                                              .followingCount
-                                                                              .toString(),
-                                                                          textAlign:
-                                                                              TextAlign.center,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                fontSize: 16,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w600,
-                                                                              ),
+                                                                        Container(
+                                                                      width: 70,
+                                                                      height:
+                                                                          50,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10),
+                                                                      ),
+                                                                      child:
+                                                                          InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          try {
+                                                                            if ((_model.bruker?.followersCount) !=
+                                                                                0) {
+                                                                              if (widget.fromChat != true) {
+                                                                                context.pushNamed(
+                                                                                  GoRouterState.of(context).uri.toString().startsWith('/profil')
+                                                                                      ? 'FolgereProfile'
+                                                                                      : GoRouterState.of(context).uri.toString().startsWith('/notifications')
+                                                                                          ? 'FolgereNotification'
+                                                                                          : 'Folgere',
+                                                                                  queryParameters: {
+                                                                                    'username': serializeParam(widget.uid, ParamType.String),
+                                                                                    'folger': serializeParam('Følgere', ParamType.String),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              } else {
+                                                                                context.pushNamed(
+                                                                                  'Folgere1',
+                                                                                  queryParameters: {
+                                                                                    'username': serializeParam(widget.uid, ParamType.String),
+                                                                                    'folger': serializeParam('Følgere', ParamType.String),
+                                                                                    'fromChat': serializeParam(true, ParamType.bool),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              }
+                                                                            }
+                                                                          } catch (e) {
+                                                                            Toasts.showErrorToast(context,
+                                                                                'En uforventet feil oppstod');
+                                                                            logger.d('Error navigating page');
+                                                                          }
+                                                                        },
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.center,
+                                                                          children: [
+                                                                            Text(
+                                                                              _model.bruker!.followersCount.toString(),
+                                                                              textAlign: TextAlign.center,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Nunito',
+                                                                                    fontSize: 16,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                            Text(
+                                                                              'følgere',
+                                                                              textAlign: TextAlign.center,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Nunito',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    fontSize: 13,
+                                                                                    letterSpacing: 0.0,
+                                                                                  ),
+                                                                            ),
+                                                                          ],
                                                                         ),
-                                                                        Text(
-                                                                          'følger',
-                                                                          textAlign:
-                                                                              TextAlign.center,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                fontSize: 13,
-                                                                                letterSpacing: 0.0,
-                                                                              ),
-                                                                        ),
-                                                                      ],
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            5,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child:
+                                                                        Container(
+                                                                      width: 70,
+                                                                      height:
+                                                                          50,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10),
+                                                                      ),
+                                                                      child:
+                                                                          InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          try {
+                                                                            if (_model.bruker!.followingCount !=
+                                                                                0) {
+                                                                              if (widget.fromChat != true) {
+                                                                                context.pushNamed(
+                                                                                  GoRouterState.of(context).uri.toString().startsWith('/profil')
+                                                                                      ? 'FolgereProfile'
+                                                                                      : GoRouterState.of(context).uri.toString().startsWith('/notifications')
+                                                                                          ? 'FolgereNotification'
+                                                                                          : 'Folgere',
+                                                                                  queryParameters: {
+                                                                                    'username': serializeParam(widget.uid, ParamType.String),
+                                                                                    'folger': serializeParam(
+                                                                                      'Følger',
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              } else {
+                                                                                context.pushNamed(
+                                                                                  'Folgere1',
+                                                                                  queryParameters: {
+                                                                                    'username': serializeParam(widget.uid, ParamType.String),
+                                                                                    'folger': serializeParam(
+                                                                                      'Følger',
+                                                                                      ParamType.String,
+                                                                                    ),
+                                                                                    'fromChat': serializeParam(true, ParamType.bool),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              }
+                                                                            }
+                                                                          } catch (e) {
+                                                                            Toasts.showErrorToast(context,
+                                                                                'En uforventet feil oppstod');
+                                                                            logger.d('Error navigating page');
+                                                                          }
+                                                                        },
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.center,
+                                                                          children: [
+                                                                            Text(
+                                                                              _model.bruker!.followingCount.toString(),
+                                                                              textAlign: TextAlign.center,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Nunito',
+                                                                                    fontSize: 16,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                            Text(
+                                                                              'følger',
+                                                                              textAlign: TextAlign.center,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Nunito',
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    fontSize: 13,
+                                                                                    letterSpacing: 0.0,
+                                                                                  ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ],
                                                           ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 10, 0, 0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          if (_model.folger ==
-                                                              true)
-                                                            GestureDetector(
-                                                              onTap: () async {
-                                                                if (_model
-                                                                    .folgerLoading) {
-                                                                  return;
-                                                                }
-                                                                _model.folgerLoading =
-                                                                    true;
-                                                                await showModalBottomSheet(
-                                                                  isScrollControlled:
-                                                                      true,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  barrierColor:
-                                                                      const Color
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                  0, 10, 0, 0),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              if (_model
+                                                                      .folger ==
+                                                                  true)
+                                                                GestureDetector(
+                                                                  onTap:
+                                                                      () async {
+                                                                    if (_model
+                                                                        .folgerLoading) {
+                                                                      return;
+                                                                    }
+                                                                    _model.folgerLoading =
+                                                                        true;
+                                                                    await showModalBottomSheet(
+                                                                      isScrollControlled:
+                                                                          true,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      barrierColor: const Color
                                                                           .fromARGB(
                                                                           60,
                                                                           17,
                                                                           0,
                                                                           0),
-                                                                  useRootNavigator:
-                                                                      true,
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return GestureDetector(
-                                                                      onTap: () =>
-                                                                          FocusScope.of(context)
-                                                                              .unfocus(),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            MediaQuery.viewInsetsOf(context),
-                                                                        child:
-                                                                            FollowUserWidget(
-                                                                          username:
-                                                                              widget.username,
-                                                                          uid: widget
-                                                                              .uid,
-                                                                          pushEnabled:
-                                                                              _model.bruker?.getPush ?? false,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ).then(
-                                                                    (value) =>
+                                                                      useRootNavigator:
+                                                                          true,
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (context) {
+                                                                        return GestureDetector(
+                                                                          onTap: () =>
+                                                                              FocusScope.of(context).unfocus(),
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                MediaQuery.viewInsetsOf(context),
+                                                                            child:
+                                                                                FollowUserWidget(
+                                                                              username: widget.username,
+                                                                              uid: widget.uid,
+                                                                              pushEnabled: _model.bruker?.getPush ?? false,
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                    ).then((value) =>
                                                                         setState(
                                                                             () {
                                                                           if (value ==
@@ -886,137 +849,129 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                           _model.folgerLoading =
                                                                               false;
                                                                         }));
-                                                                return;
-                                                              },
-                                                              child: Container(
-                                                                width: ((_model.bruker!.ratingTotalCount ??
-                                                                            0) !=
-                                                                        0)
-                                                                    ? 130
-                                                                    : 215,
-                                                                height: 35,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              9),
-                                                                  border: Border
-                                                                      .all(
-                                                                    color: const Color
-                                                                        .fromARGB(
-                                                                        32,
-                                                                        87,
-                                                                        99,
-                                                                        108),
-                                                                    width: 1.3,
-                                                                  ),
-                                                                ),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Text(
-                                                                      'Følger',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleSmall
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Nunito',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryText,
-                                                                            fontSize:
-                                                                                14,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          ),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      width: 5,
-                                                                    ),
-                                                                    Icon(
-                                                                      CupertinoIcons
-                                                                          .chevron_down,
+                                                                    return;
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    width: ((_model.bruker!.ratingTotalCount ??
+                                                                                0) !=
+                                                                            0)
+                                                                        ? 130
+                                                                        : 215,
+                                                                    height: 35,
+                                                                    decoration:
+                                                                        BoxDecoration(
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .primaryText,
-                                                                      size: 17,
+                                                                          .primary,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              9),
+                                                                      border:
+                                                                          Border
+                                                                              .all(
+                                                                        color: const Color
+                                                                            .fromARGB(
+                                                                            32,
+                                                                            87,
+                                                                            99,
+                                                                            108),
+                                                                        width:
+                                                                            1.3,
+                                                                      ),
                                                                     ),
-                                                                  ],
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Text(
+                                                                          'Følger',
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .titleSmall
+                                                                              .override(
+                                                                                fontFamily: 'Nunito',
+                                                                                color: FlutterFlowTheme.of(context).primaryText,
+                                                                                fontSize: 14,
+                                                                                letterSpacing: 0.0,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                        ),
+                                                                        const SizedBox(
+                                                                          width:
+                                                                              5,
+                                                                        ),
+                                                                        Icon(
+                                                                          CupertinoIcons
+                                                                              .chevron_down,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          size:
+                                                                              17,
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ),
-                                                          if (_model.folger !=
-                                                              true)
-                                                            FFButtonWidget(
-                                                              onPressed:
-                                                                  () async {
-                                                                if (_model
-                                                                    .folgerLoading) {
-                                                                  return;
-                                                                }
-                                                                _model.folgerLoading =
-                                                                    true;
-                                                                HapticFeedback
-                                                                    .selectionClick();
-                                                                _model.folger =
-                                                                    true;
-                                                                safeSetState(
-                                                                    () {});
-                                                                folgBruker();
-                                                                _model.folgerLoading =
-                                                                    false;
-                                                                await showModalBottomSheet(
-                                                                  isScrollControlled:
-                                                                      true,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  barrierColor:
-                                                                      const Color
+                                                              if (_model
+                                                                      .folger !=
+                                                                  true)
+                                                                FFButtonWidget(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    if (_model
+                                                                        .folgerLoading) {
+                                                                      return;
+                                                                    }
+                                                                    _model.folgerLoading =
+                                                                        true;
+                                                                    HapticFeedback
+                                                                        .selectionClick();
+                                                                    _model.folger =
+                                                                        true;
+                                                                    safeSetState(
+                                                                        () {});
+                                                                    folgBruker();
+                                                                    _model.folgerLoading =
+                                                                        false;
+                                                                    await showModalBottomSheet(
+                                                                      isScrollControlled:
+                                                                          true,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      barrierColor: const Color
                                                                           .fromARGB(
                                                                           153,
                                                                           0,
                                                                           0,
                                                                           0),
-                                                                  useRootNavigator:
-                                                                      true,
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return GestureDetector(
-                                                                      onTap: () =>
-                                                                          FocusScope.of(context)
-                                                                              .unfocus(),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            MediaQuery.viewInsetsOf(context),
-                                                                        child:
-                                                                            FollowUserWidget(
-                                                                          username:
-                                                                              widget.username,
-                                                                          uid: widget
-                                                                              .uid,
-                                                                          pushEnabled:
-                                                                              _model.bruker?.getPush ?? false,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ).then(
-                                                                    (value) =>
+                                                                      useRootNavigator:
+                                                                          true,
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (context) {
+                                                                        return GestureDetector(
+                                                                          onTap: () =>
+                                                                              FocusScope.of(context).unfocus(),
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                MediaQuery.viewInsetsOf(context),
+                                                                            child:
+                                                                                FollowUserWidget(
+                                                                              username: widget.username,
+                                                                              uid: widget.uid,
+                                                                              pushEnabled: _model.bruker?.getPush ?? false,
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                    ).then((value) =>
                                                                         setState(
                                                                             () {
                                                                           if (value ==
@@ -1031,548 +986,547 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                           _model.folgerLoading =
                                                                               false;
                                                                         }));
-                                                                return;
-                                                              },
-                                                              text: 'Følg',
-                                                              options:
-                                                                  FFButtonOptions(
-                                                                width: ((_model.bruker!.ratingTotalCount ??
-                                                                            0) !=
-                                                                        0)
-                                                                    ? 130
-                                                                    : 215,
-                                                                height: 35,
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        16,
+                                                                    return;
+                                                                  },
+                                                                  text: 'Følg',
+                                                                  options:
+                                                                      FFButtonOptions(
+                                                                    width: ((_model.bruker!.ratingTotalCount ??
+                                                                                0) !=
+                                                                            0)
+                                                                        ? 130
+                                                                        : 215,
+                                                                    height: 35,
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            16,
+                                                                            0,
+                                                                            16,
+                                                                            0),
+                                                                    iconPadding:
+                                                                        const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                            0,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .alternate,
+                                                                    textStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .titleSmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Nunito',
+                                                                          color:
+                                                                              Colors.white,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontSize:
+                                                                              15,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        ),
+                                                                    elevation:
                                                                         0,
-                                                                        16,
-                                                                        0),
-                                                                iconPadding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                                textStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleSmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Nunito',
-                                                                      color: Colors
-                                                                          .white,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                    ),
-                                                                elevation: 0,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            9),
-                                                              ),
-                                                            ),
-                                                          if (((_model.bruker!
-                                                                      .ratingTotalCount ??
-                                                                  0) !=
-                                                              0))
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      9,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child: InkWell(
-                                                                splashColor: Colors
-                                                                    .transparent,
-                                                                focusColor: Colors
-                                                                    .transparent,
-                                                                hoverColor: Colors
-                                                                    .transparent,
-                                                                highlightColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                onTap:
-                                                                    () async {
-                                                                  await showModalBottomSheet(
-                                                                    isScrollControlled:
-                                                                        true,
-                                                                    backgroundColor:
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(9),
+                                                                  ),
+                                                                ),
+                                                              if (((_model.bruker!
+                                                                          .ratingTotalCount ??
+                                                                      0) !=
+                                                                  0))
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          9,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                                  child:
+                                                                      InkWell(
+                                                                    splashColor:
                                                                         Colors
                                                                             .transparent,
-                                                                    barrierColor:
-                                                                        const Color
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    hoverColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    highlightColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    onTap:
+                                                                        () async {
+                                                                      await showModalBottomSheet(
+                                                                        isScrollControlled:
+                                                                            true,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        barrierColor: const Color
                                                                             .fromARGB(
                                                                             60,
                                                                             17,
                                                                             0,
                                                                             0),
-                                                                    useRootNavigator:
-                                                                        true,
-                                                                    context:
-                                                                        context,
-                                                                    builder:
-                                                                        (context) {
-                                                                      return GestureDetector(
-                                                                        onTap: () =>
-                                                                            FocusScope.of(context).unfocus(),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              RatingsWidget(
-                                                                            uid:
-                                                                                widget.uid,
-                                                                            username:
-                                                                                widget.username,
-                                                                            mine:
-                                                                                false,
-                                                                          ),
-                                                                        ),
-                                                                      );
+                                                                        useRootNavigator:
+                                                                            true,
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return GestureDetector(
+                                                                            onTap: () =>
+                                                                                FocusScope.of(context).unfocus(),
+                                                                            child:
+                                                                                Padding(
+                                                                              padding: MediaQuery.viewInsetsOf(context),
+                                                                              child: RatingsWidget(
+                                                                                uid: widget.uid,
+                                                                                username: widget.username,
+                                                                                mine: false,
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      ).then((value) =>
+                                                                          setState(
+                                                                              () {}));
+                                                                      return;
                                                                     },
-                                                                  ).then((value) =>
-                                                                      setState(
-                                                                          () {}));
-                                                                  return;
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  width: 105,
-                                                                  height: 36,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(8),
-                                                                    border:
-                                                                        Border
-                                                                            .all(
-                                                                      color: const Color
-                                                                          .fromARGB(
-                                                                          32,
-                                                                          87,
-                                                                          99,
-                                                                          108),
+                                                                    child:
+                                                                        Container(
                                                                       width:
-                                                                          1.3,
+                                                                          105,
+                                                                      height:
+                                                                          36,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                        border:
+                                                                            Border.all(
+                                                                          color: const Color
+                                                                              .fromARGB(
+                                                                              32,
+                                                                              87,
+                                                                              99,
+                                                                              108),
+                                                                          width:
+                                                                              1.3,
+                                                                        ),
+                                                                      ),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          FaIcon(
+                                                                            FontAwesomeIcons.solidStar,
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryText,
+                                                                            size:
+                                                                                16,
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                1,
+                                                                                0,
+                                                                                0,
+                                                                                0),
+                                                                            child:
+                                                                                Text(
+                                                                              _model.bruker!.ratingAverageValue.toString(),
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Nunito',
+                                                                                    fontSize: 14,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                1,
+                                                                                0,
+                                                                                0,
+                                                                                0),
+                                                                            child:
+                                                                                Text(
+                                                                              ' (${_model.bruker!.ratingTotalCount.toString()})',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Nunito',
+                                                                                    color: const Color(0xB0262C2D),
+                                                                                    fontSize: 14,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w500,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                  child: Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      FaIcon(
-                                                                        FontAwesomeIcons
-                                                                            .solidStar,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
-                                                                        size:
-                                                                            16,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            1,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            Text(
-                                                                          _model
-                                                                              .bruker!
-                                                                              .ratingAverageValue
-                                                                              .toString(),
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                fontSize: 14,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w600,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                            1,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                        child:
-                                                                            Text(
-                                                                          ' (${_model.bruker!.ratingTotalCount.toString()})',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Nunito',
-                                                                                color: const Color(0xB0262C2D),
-                                                                                fontSize: 14,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w500,
-                                                                              ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ),
-                                                        ],
-                                                      ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(24, 5, 0, 0),
-                                        child: Text(
-                                          _model.isLoading
-                                              ? ''
-                                              : '${_model.bruker?.firstname} ${_model.bruker?.lastname}',
-                                          style: FlutterFlowTheme.of(context)
-                                              .headlineLarge
-                                              .override(
-                                                fontFamily: 'Nunito',
-                                                fontSize: 17,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                      ),
-                                      if ((_model.bruker?.bio ?? '').isNotEmpty)
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(24, 4, 40, 0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                ),
-                                                child: Text(
-                                                  _model.isLoading
-                                                      ? ''
-                                                      : _model.bruker?.bio ??
-                                                          '',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelMedium
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(24, 5, 0, 0),
+                                            child: Text(
+                                              _model.isLoading
+                                                  ? ''
+                                                  : '${_model.bruker?.firstname} ${_model.bruker?.lastname}',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineLarge
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        fontSize: 14,
+                                                        fontSize: 17,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
-                                                            FontWeight.w600,
+                                                            FontWeight.bold,
                                                       ),
-                                                  maxLines: _model.isExpanded
-                                                      ? null
-                                                      : 2, // Show limited lines if not expanded
-                                                  overflow: _model.isExpanded
-                                                      ? TextOverflow.visible
-                                                      : TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              if (FFAppState().bio.length >
-                                                      50 ||
-                                                  '\n'
-                                                          .allMatches(
-                                                              FFAppState().bio)
-                                                          .length >=
-                                                      2)
-                                                const SizedBox(height: 2),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _model.isExpanded = !_model
-                                                        .isExpanded; // Toggle the expanded state
-                                                  });
-                                                },
-                                                child: Text(
-                                                  _model.isExpanded
-                                                      ? 'Se mindre'
-                                                      : 'Se mer',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodySmall
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        fontSize: 13,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: const Color
-                                                            .fromRGBO(
-                                                            113, 113, 113, 1.0),
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: double.infinity,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                  ),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 20, 0, 0),
-                                    child: Column(
-                                      children: [
-                                        Align(
-                                          alignment: const Alignment(0, 0),
-                                          child: TabBar(
-                                            labelColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryText,
-                                            unselectedLabelColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryText,
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleMedium
-                                                    .override(
-                                                      fontFamily: 'Nunito',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            unselectedLabelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleMedium
-                                                    .override(
-                                                      fontFamily: 'Nunito',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            indicatorColor:
-                                                const Color(0x00F6F6F6),
-                                            dividerColor: const Color.fromARGB(
-                                                10, 0, 0, 0),
-                                            indicatorWeight: 1,
-                                            tabs: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                          if ((_model.bruker?.bio ?? '')
+                                              .isNotEmpty)
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(24, 4, 40, 0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Icon(
-                                                    CupertinoIcons
-                                                        .square_grid_2x2,
-                                                    color:
-                                                        _model.tabBarCurrentIndex ==
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                    ),
+                                                    child: Text(
+                                                      _model.isLoading
+                                                          ? ''
+                                                          : _model.bruker
+                                                                  ?.bio ??
+                                                              '',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: 14,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                      maxLines: _model
+                                                              .isExpanded
+                                                          ? null
+                                                          : 2, // Show limited lines if not expanded
+                                                      overflow: _model
+                                                              .isExpanded
+                                                          ? TextOverflow.visible
+                                                          : TextOverflow
+                                                              .ellipsis,
+                                                    ),
+                                                  ),
+                                                  if (FFAppState().bio.length >
+                                                          50 ||
+                                                      '\n'
+                                                              .allMatches(
+                                                                  FFAppState()
+                                                                      .bio)
+                                                              .length >=
+                                                          2)
+                                                    const SizedBox(height: 2),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        _model.isExpanded = !_model
+                                                            .isExpanded; // Toggle the expanded state
+                                                      });
+                                                    },
+                                                    child: Text(
+                                                      _model.isExpanded
+                                                          ? 'Se mindre'
+                                                          : 'Se mer',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodySmall
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: 13,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: const Color
+                                                                .fromRGBO(113,
+                                                                113, 113, 1.0),
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 20, 0, 0),
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: const Alignment(0, 0),
+                                              child: TabBar(
+                                                labelColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                unselectedLabelColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                labelStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                unselectedLabelStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                indicatorColor:
+                                                    const Color(0x00F6F6F6),
+                                                dividerColor:
+                                                    const Color.fromARGB(
+                                                        10, 0, 0, 0),
+                                                indicatorWeight: 1,
+                                                tabs: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Icon(
+                                                        CupertinoIcons
+                                                            .square_grid_2x2,
+                                                        color: _model
+                                                                    .tabBarCurrentIndex ==
                                                                 0
                                                             ? FlutterFlowTheme
                                                                     .of(context)
                                                                 .primaryText
                                                             : Colors.grey,
-                                                    size: 32,
+                                                        size: 32,
+                                                      ),
+                                                      const Tab(
+                                                        text: '',
+                                                      ),
+                                                    ],
                                                   ),
-                                                  const Tab(
-                                                    text: '',
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  FaIcon(
-                                                    FontAwesomeIcons.bars,
-                                                    color:
-                                                        _model.tabBarCurrentIndex ==
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      FaIcon(
+                                                        FontAwesomeIcons.bars,
+                                                        color: _model
+                                                                    .tabBarCurrentIndex ==
                                                                 1
                                                             ? FlutterFlowTheme
                                                                     .of(context)
                                                                 .primaryText
                                                             : Colors.grey,
-                                                    size: 27,
-                                                  ),
-                                                  const Tab(
-                                                    text: '',
+                                                        size: 27,
+                                                      ),
+                                                      const Tab(
+                                                        text: '',
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
+                                                controller:
+                                                    _model.tabBarController,
+                                                onTap: (i) async {
+                                                  [
+                                                    () async {},
+                                                    () async {}
+                                                  ][i]();
+                                                },
                                               ),
-                                            ],
-                                            controller: _model.tabBarController,
-                                            onTap: (i) async {
-                                              [() async {}, () async {}][i]();
-                                            },
-                                          ),
+                                            ),
+                                            Expanded(
+                                              child: TabBarView(
+                                                controller:
+                                                    _model.tabBarController,
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                children: [
+                                                  Container(),
+                                                  Container(),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Expanded(
-                                          child: TabBarView(
-                                            controller: _model.tabBarController,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            children: [
-                                              Container(),
-                                              Container(),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          if (_model.matisLoading != true &&
-                              _model.empty == true &&
-                              _model.isDeleted == false)
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
-                              child: SizedBox(
-                                width: MediaQuery.sizeOf(context).width,
-                                child: Center(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/no-posts.png',
-                                        width: 110,
-                                        height: 110,
-                                        fit: BoxFit.cover,
                                       ),
-                                      const SizedBox(height: 16),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
+                                    ),
+                                  ],
+                                ),
+                              if (_model.matisLoading != true &&
+                                  _model.empty == true &&
+                                  _model.isDeleted == false)
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
+                                  child: SizedBox(
+                                    width: MediaQuery.sizeOf(context).width,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            'Ingen annonser ennå',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  fontSize: 22,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                          Image.asset(
+                                            'assets/images/no-posts.png',
+                                            width: 110,
+                                            height: 110,
+                                            fit: BoxFit.cover,
                                           ),
+                                          const SizedBox(height: 16),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Ingen annonser ennå',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 22,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                              ),
+                                            ],
+                                          )
                                         ],
-                                      )
-                                    ],
+                                      ),
+                                    ),
                                   ),
                                 ),
+                            ],
+                          ),
+                        ),
+                        if (_model.isLoading != true &&
+                            _model.tabBarCurrentIndex == 0)
+                          SliverPadding(
+                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 10),
+                            sliver: SliverGrid(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 0.68,
                               ),
-                            ),
-                          if (_model.isLoading != true)
-                            if (_model.tabBarCurrentIndex == 0)
-                              GridView.builder(
-                                padding: const EdgeInsets.fromLTRB(
-                                  5,
-                                  0,
-                                  5,
-                                  10,
-                                ),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.68,
-                                ),
-                                primary: false,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: _model.matisLoading
-                                    ? 1
-                                    : _model.end ||
-                                            (_model.matvarer == null ||
-                                                _model.matvarer!.length < 44)
-                                        ? _model.matvarer?.length ?? 0
-                                        : (_model.matvarer?.length ?? 0) + 1,
-                                itemBuilder: (context, index) {
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) {
                                   if (_model.matisLoading) {
                                     return const ShimmerLoadingWidget();
                                   }
+
                                   if (index < (_model.matvarer?.length ?? 0)) {
                                     final matvarer = _model.matvarer![index];
+
                                     return ProductList(
-                                        matvare: matvarer,
-                                        onTap: () async {
-                                          try {
-                                            if (widget.fromChat != true) {
-                                              context.pushNamed(
-                                                GoRouterState.of(context)
-                                                        .uri
-                                                        .toString()
-                                                        .startsWith('/profil')
-                                                    ? 'MatDetaljBondegard1'
-                                                    : GoRouterState.of(context)
-                                                            .uri
-                                                            .toString()
-                                                            .startsWith(
-                                                                '/notifications')
-                                                        ? 'ProductDetailNotification'
-                                                        : 'ProductDetail',
-                                                queryParameters: {
-                                                  'matvare': serializeParam(
-                                                    matvarer.toJson(),
-                                                    ParamType.JSON,
-                                                  ),
-                                                },
-                                              );
-                                            } else {
-                                              context.pushNamed(
-                                                'MatDetaljBondegard2',
-                                                queryParameters: {
-                                                  'matvare': serializeParam(
-                                                    matvarer.toJson(),
-                                                    ParamType.JSON,
-                                                  ),
-                                                  'fromChat': serializeParam(
-                                                    true,
-                                                    ParamType.bool,
-                                                  ),
-                                                },
-                                              );
-                                            }
-                                          } catch (e) {
-                                            Toasts.showErrorToast(context,
-                                                'En uforventet feil oppstod');
-                                            logger.d('Error navigating page');
+                                      matvare: matvarer,
+                                      onTap: () async {
+                                        try {
+                                          if (widget.fromChat != true) {
+                                            context.pushNamed(
+                                              GoRouterState.of(context)
+                                                      .uri
+                                                      .toString()
+                                                      .startsWith('/profil')
+                                                  ? 'MatDetaljBondegard1'
+                                                  : GoRouterState.of(context)
+                                                          .uri
+                                                          .toString()
+                                                          .startsWith(
+                                                              '/notifications')
+                                                      ? 'ProductDetailNotification'
+                                                      : 'ProductDetail',
+                                              queryParameters: {
+                                                'matvare': serializeParam(
+                                                  matvarer.toJson(),
+                                                  ParamType.JSON,
+                                                ),
+                                              },
+                                            );
+                                          } else {
+                                            context.pushNamed(
+                                              'MatDetaljBondegard2',
+                                              queryParameters: {
+                                                'matvare': serializeParam(
+                                                  matvarer.toJson(),
+                                                  ParamType.JSON,
+                                                ),
+                                                'fromChat': serializeParam(
+                                                  true,
+                                                  ParamType.bool,
+                                                ),
+                                              },
+                                            );
                                           }
-                                        });
+                                        } catch (e) {
+                                          Toasts.showErrorToast(context,
+                                              'En uforventet feil oppstod');
+                                          logger.d('Error navigating page');
+                                        }
+                                      },
+                                    );
                                   } else {
                                     if (_model.matvarer == null ||
                                         _model.matvarer!.length < 44) {
@@ -1582,111 +1536,125 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                     }
                                   }
                                 },
+                                childCount: _model.matisLoading
+                                    ? 1
+                                    : _model.end ||
+                                            (_model.matvarer == null ||
+                                                _model.matvarer!.length < 44)
+                                        ? _model.matvarer?.length ?? 0
+                                        : (_model.matvarer?.length ?? 0) + 1,
                               ),
-                          if (_model.tabBarCurrentIndex == 1)
-                            ListView.builder(
-                              padding: const EdgeInsets.fromLTRB(
-                                0,
-                                0,
-                                0,
-                                10,
-                              ),
-                              primary: false,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: _model.matisLoading
-                                  ? 1
-                                  : _model.matvarer?.length ?? 1,
-                              itemBuilder: (context, index) {
-                                if (_model.matisLoading || _model.empty) {
-                                  return const ShimmerProfile();
-                                }
-                                final matvarer = _model.matvarer![index];
-                                return Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 10, 10, 0),
-                                  child: Stack(
-                                    children: [
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          try {
-                                            if (widget.fromChat != true) {
-                                              context.pushNamed(
-                                                GoRouterState.of(context)
-                                                        .uri
-                                                        .toString()
-                                                        .startsWith('/profil')
-                                                    ? 'MatDetaljBondegard1'
-                                                    : GoRouterState.of(context)
-                                                            .uri
-                                                            .toString()
-                                                            .startsWith(
-                                                                '/notifications')
-                                                        ? 'ProductDetailNotification'
-                                                        : 'ProductDetail',
-                                                queryParameters: {
-                                                  'matvare': serializeParam(
-                                                    matvarer.toJson(),
-                                                    ParamType.JSON,
-                                                  ),
-                                                },
-                                              );
-                                            } else {
-                                              context.pushNamed(
-                                                'MatDetaljBondegard2',
-                                                queryParameters: {
-                                                  'matvare': serializeParam(
-                                                    matvarer.toJson(),
-                                                    ParamType.JSON,
-                                                  ),
-                                                  'fromChat': serializeParam(
-                                                    true,
-                                                    ParamType.bool,
-                                                  ),
-                                                },
-                                              );
+                            ),
+                          ),
+                        if (_model.tabBarCurrentIndex == 1)
+                          SliverPadding(
+                            padding: const EdgeInsets.fromLTRB(
+                              0,
+                              0,
+                              0,
+                              10,
+                            ),
+                            sliver: SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) {
+                                  if (_model.matisLoading || _model.empty) {
+                                    return const ShimmerProfile();
+                                  }
+
+                                  final matvarer = _model.matvarer![index];
+
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            10, 10, 10, 0),
+                                    child: Stack(
+                                      children: [
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            try {
+                                              if (widget.fromChat != true) {
+                                                context.pushNamed(
+                                                  GoRouterState.of(context)
+                                                          .uri
+                                                          .toString()
+                                                          .startsWith('/profil')
+                                                      ? 'MatDetaljBondegard1'
+                                                      : GoRouterState.of(
+                                                                  context)
+                                                              .uri
+                                                              .toString()
+                                                              .startsWith(
+                                                                  '/notifications')
+                                                          ? 'ProductDetailNotification'
+                                                          : 'ProductDetail',
+                                                  queryParameters: {
+                                                    'matvare': serializeParam(
+                                                      matvarer.toJson(),
+                                                      ParamType.JSON,
+                                                    ),
+                                                  },
+                                                );
+                                              } else {
+                                                context.pushNamed(
+                                                  'MatDetaljBondegard2',
+                                                  queryParameters: {
+                                                    'matvare': serializeParam(
+                                                      matvarer.toJson(),
+                                                      ParamType.JSON,
+                                                    ),
+                                                    'fromChat': serializeParam(
+                                                      true,
+                                                      ParamType.bool,
+                                                    ),
+                                                  },
+                                                );
+                                              }
+                                            } catch (e) {
+                                              Toasts.showErrorToast(context,
+                                                  'En uforventet feil oppstod');
+                                              logger.d('Error navigating page');
                                             }
-                                          } catch (e) {
-                                            Toasts.showErrorToast(context,
-                                                'En uforventet feil oppstod');
-                                            logger.d('Error navigating page');
-                                          }
-                                        },
-                                        child: MatvarerCard(matvarer: matvarer),
-                                      ),
-                                      if (matvarer.kjopt == true)
-                                        Positioned(
-                                          top: 15,
-                                          left: -40,
-                                          child: Transform.rotate(
-                                            angle: -0.6,
-                                            child: Container(
-                                              width: 140,
-                                              height: 20,
-                                              color: Colors.redAccent,
-                                              alignment: Alignment.center,
-                                              child: const Text(
-                                                'Utsolgt',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 13,
+                                          },
+                                          child:
+                                              MatvarerCard(matvarer: matvarer),
+                                        ),
+                                        if (matvarer.kjopt == true)
+                                          Positioned(
+                                            top: 15,
+                                            left: -40,
+                                            child: Transform.rotate(
+                                              angle: -0.6,
+                                              child: Container(
+                                                width: 140,
+                                                height: 20,
+                                                color: Colors.redAccent,
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  'Utsolgt',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                    ],
-                                  ),
-                                );
-                              },
+                                      ],
+                                    ),
+                                  );
+                                },
+                                childCount: _model.matisLoading
+                                    ? 1
+                                    : _model.matvarer?.length ?? 1,
+                              ),
                             ),
-                        ],
-                      ),
+                          ),
+                      ],
                     ),
                   ),
                 ),

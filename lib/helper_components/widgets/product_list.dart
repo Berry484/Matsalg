@@ -72,7 +72,7 @@ class MatvarerCard extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 4, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

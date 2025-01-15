@@ -309,10 +309,8 @@ class _MessageWidgetState extends State<MessageWidget> {
           _messageListWithFlags = _computeMessageFlags(conversation.messages);
           _lastMessageCount = conversation.messages.length;
 
-          // Insert the new messages one by one
           for (int i = 0; i < newMessagesCount; i++) {
-            _listKey.currentState
-                ?.insertItem(0); // Animate the addition of each new message
+            _listKey.currentState?.insertItem(0);
           }
         }
         _messageListWithFlags = _computeMessageFlags(conversation.messages);
@@ -736,38 +734,34 @@ class _MessageWidgetState extends State<MessageWidget> {
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
-                        child: _messageListWithFlags.isEmpty
-                            ? EmptyChatWidget()
-                            : AnimatedList(
-                                key: _listKey,
-                                reverse: true,
-                                initialItemCount: _messageListWithFlags.length,
-                                itemBuilder: (context, index, animation) {
-                                  final message = _messageListWithFlags[index];
+                        child: AnimatedList(
+                          key: _listKey,
+                          reverse: true,
+                          initialItemCount: _messageListWithFlags.length,
+                          itemBuilder: (context, index, animation) {
+                            final message = _messageListWithFlags[index];
 
-                                  return SlideTransition(
-                                    position: animation.drive(
-                                      Tween<Offset>(
-                                        begin: const Offset(0.0, 2.0),
-                                        end: Offset.zero,
-                                      ).chain(
-                                          CurveTween(curve: Curves.easeInOut)),
-                                    ),
-                                    child: MessageBubblesWidget(
-                                      key: ValueKey(message.time),
-                                      mesageText: message.content,
-                                      blueBubble: message.me,
-                                      showDelivered:
-                                          message.showDelivered ?? false,
-                                      showTail: true,
-                                      showLest: message.showLest ?? false,
-                                      messageTime: message.showTime ?? false
-                                          ? message.time
-                                          : null,
-                                    ),
-                                  );
-                                },
+                            return SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(0.0, 2.0),
+                                  end: Offset.zero,
+                                ).chain(CurveTween(curve: Curves.easeInOut)),
                               ),
+                              child: MessageBubblesWidget(
+                                key: ValueKey(message.time),
+                                mesageText: message.content,
+                                blueBubble: message.me,
+                                showDelivered: message.showDelivered ?? false,
+                                showTail: true,
+                                showLest: message.showLest ?? false,
+                                messageTime: message.showTime ?? false
+                                    ? message.time
+                                    : null,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                     Padding(
@@ -847,9 +841,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                   validator: _model.textControllerValidator
                                       .asValidator(context),
                                   inputFormatters: [
-                                    // Custom input formatter to limit lines in the text field
                                     LengthLimitingTextInputFormatter(400),
-                                    // Add a formatter to restrict entering more lines
                                     TextInputFormatter.withFunction(
                                         (oldValue, newValue) {
                                       final lineCount = '\n'
@@ -912,55 +904,6 @@ class _MessageWidgetState extends State<MessageWidget> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class EmptyChatWidget extends StatelessWidget {
-  const EmptyChatWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 40, 16, 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // More modern chat icon
-            Image.asset(
-              'assets/images/empty_chat.png',
-              height: 60,
-              width: 60,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 24),
-
-            // Message indicating no messages
-            Text(
-              'Ingen meldinger ennå',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.black87,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Send den første meldingen for å komme igang!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black45,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            const SizedBox(height: 20),
-          ],
         ),
       ),
     );

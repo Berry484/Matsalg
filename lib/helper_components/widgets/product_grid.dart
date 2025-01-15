@@ -185,7 +185,7 @@ class ProductImage extends StatelessWidget {
           ),
         );
       },
-      fadeInDuration: const Duration(milliseconds: 300),
+      fadeInDuration: const Duration(milliseconds: 200),
       placeholder: (context, url) => Container(
         width: 200,
         height: 229,
