@@ -5,7 +5,6 @@ import 'package:mat_salg/helper_components/widgets/empty_list/no_message_widget.
 import 'package:mat_salg/pages/chat/MessagePreview/message_preview_widget.dart';
 import 'package:mat_salg/pages/chat/chat_main/chat_main_model.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 export 'chat_main_model.dart';
 
@@ -33,62 +32,6 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
       initialIndex: 0,
     )..addListener(() => safeSetState(() {}));
     setState(() {});
-  }
-
-  Widget buildProfileOutline(BuildContext context, int opacity, Color baseColor,
-      Color highlightColor) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: Row(
-        children: [
-          Shimmer.fromColors(
-            baseColor: baseColor,
-            highlightColor: highlightColor,
-            child: Container(
-              width: 65.0,
-              height: 65.0,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(opacity, 255, 255, 255),
-                borderRadius: BorderRadius.circular(100.0),
-              ),
-            ),
-          ),
-          const SizedBox(width: 16.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Shimmer.fromColors(
-                  baseColor: baseColor,
-                  highlightColor: highlightColor,
-                  child: Container(
-                    width: 75.0,
-                    height: 13.0,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(opacity, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Shimmer.fromColors(
-                  baseColor: baseColor,
-                  highlightColor: highlightColor,
-                  child: Container(
-                    width: 200,
-                    height: 13.0,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(opacity, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -261,7 +204,6 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                   if (FFAppState()
                                                       .conversations
                                                       .where((conversation) {
-                                                    // Check if the conversation is empty (no valid messages)
                                                     return conversation.messages
                                                             .isNotEmpty &&
                                                         conversation.messages
