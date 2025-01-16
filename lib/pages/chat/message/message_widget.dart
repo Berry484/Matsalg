@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/user_service.dart';
 import 'package:mat_salg/services/web_socket.dart';
@@ -722,187 +723,301 @@ class _MessageWidgetState extends State<MessageWidget> {
           ),
         ),
         body: SafeArea(
-          child: SizedBox(
-            width: MediaQuery.sizeOf(context).width,
-            height: MediaQuery.sizeOf(context).height * 1,
-            child: Stack(
-              alignment: const AlignmentDirectional(0, 1),
-              children: [
-                Column(
-                  children: [
-                    Expanded(
+          child: Stack(
+            alignment: const AlignmentDirectional(0, 1),
+            children: [
+              Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      child: _messageListWithFlags.isEmpty
+                          ? SingleChildScrollView(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    16, 12, 16, 12),
+                                child: Container(
+                                  height: 140,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    borderRadius: BorderRadius.circular(24),
+                                    border: Border.all(
+                                      color:
+                                          const Color.fromARGB(32, 87, 99, 108),
+                                      width: 1.3,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            16, 12, 16, 0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                                width: 35,
+                                                height: 35,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Image.asset(
+                                                  'assets/images/MatSalg_logo.png',
+                                                  fit: BoxFit.fitHeight,
+                                                )),
+                                            SizedBox(width: 8),
+                                            Expanded(
+                                              // Added Expanded to make the Text wrap properly
+                                              child: Text(
+                                                'Er du klar for å handle? Send en melding til selgeren!', // Title text for the empty state
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .copyWith(
+                                                          fontFamily: 'Nunito',
+                                                          color: Colors.black87,
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                softWrap:
+                                                    true, // Ensures wrapping happens automatically
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 12),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            var url = Uri.https(
+                                                'matsalg.no', '/how-it-works');
+                                            if (await canLaunchUrl(url)) {
+                                              await launchUrl(url);
+                                            }
+                                          },
+                                          child: Container(
+                                            height: 37,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                              border: Border.all(
+                                                color: const Color.fromARGB(
+                                                    32, 87, 99, 108),
+                                                width: 1.3,
+                                              ),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Les mer',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleSmall
+                                                      .copyWith(
+                                                        fontFamily: 'Nunito',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : AnimatedList(
+                              key: _listKey,
+                              reverse: true,
+                              initialItemCount: _messageListWithFlags.isEmpty
+                                  ? 1
+                                  : _messageListWithFlags.length,
+                              itemBuilder: (context, index, animation) {
+                                final message = _messageListWithFlags[index];
+                                return SlideTransition(
+                                  position: animation.drive(
+                                    Tween<Offset>(
+                                      begin: const Offset(0.0, 2.0),
+                                      end: Offset.zero,
+                                    ).chain(
+                                        CurveTween(curve: Curves.easeInOut)),
+                                  ),
+                                  child: MessageBubblesWidget(
+                                    key: ValueKey(message.time),
+                                    mesageText: message.content,
+                                    blueBubble: message.me,
+                                    showDelivered:
+                                        message.showDelivered ?? false,
+                                    showTail: true,
+                                    showLest: message.showLest ?? false,
+                                    messageTime: message.showTime ?? false
+                                        ? message.time
+                                        : null,
+                                  ),
+                                );
+                              },
+                            ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Color(0xB3FFFFFF),
+                      ),
                       child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
-                        child: AnimatedList(
-                          key: _listKey,
-                          reverse: true,
-                          initialItemCount: _messageListWithFlags.length,
-                          itemBuilder: (context, index, animation) {
-                            final message = _messageListWithFlags[index];
-
-                            return SlideTransition(
-                              position: animation.drive(
-                                Tween<Offset>(
-                                  begin: const Offset(0.0, 2.0),
-                                  end: Offset.zero,
-                                ).chain(CurveTween(curve: Curves.easeInOut)),
-                              ),
-                              child: MessageBubblesWidget(
-                                key: ValueKey(message.time),
-                                mesageText: message.content,
-                                blueBubble: message.me,
-                                showDelivered: message.showDelivered ?? false,
-                                showTail: true,
-                                showLest: message.showLest ?? false,
-                                messageTime: message.showTime ?? false
-                                    ? message.time
-                                    : null,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                          color: Color(0xB3FFFFFF),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16, 5, 16, 0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _model.textController,
-                                  focusNode: _model.textFieldFocusNode,
-                                  onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.textController',
-                                    const Duration(milliseconds: 0),
-                                    () => safeSetState(() {}),
-                                  ),
-                                  autofocus: false,
-                                  textCapitalization:
-                                      TextCapitalization.sentences,
-                                  obscureText: false,
-                                  maxLines: 8,
-                                  minLines: 1, // Start with 1 line
-                                  maxLength: 200,
-                                  textAlign: TextAlign.start,
-                                  decoration: InputDecoration(
-                                    isDense: true,
-                                    hintText: 'Skriv melding ...',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          fontSize: 14.0,
-                                          color: Colors.black26,
-                                          fontWeight: FontWeight.w600,
-                                          letterSpacing: 0.0,
-                                          lineHeight: 1,
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.black12,
-                                        width: 1.2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(24),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.black12,
-                                        width: 1.2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(24),
-                                    ),
-                                    filled: true,
-                                    fillColor: const Color(0x7FFFFFFF),
-                                    counterText: '',
-                                    contentPadding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            14, 16, 45, 16),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
+                            const EdgeInsetsDirectional.fromSTEB(16, 5, 16, 0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: _model.textController,
+                                focusNode: _model.textFieldFocusNode,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  '_model.textController',
+                                  const Duration(milliseconds: 0),
+                                  () => safeSetState(() {}),
+                                ),
+                                autofocus: false,
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                                obscureText: false,
+                                maxLines: 8,
+                                minLines: 1, // Start with 1 line
+                                maxLength: 200,
+                                textAlign: TextAlign.start,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  hintText: 'Skriv melding ...',
+                                  hintStyle: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
                                         fontFamily: 'Inter',
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                        color: Colors.black26,
+                                        fontWeight: FontWeight.w600,
                                         letterSpacing: 0.0,
                                         lineHeight: 1,
                                       ),
-                                  validator: _model.textControllerValidator
-                                      .asValidator(context),
-                                  inputFormatters: [
-                                    LengthLimitingTextInputFormatter(400),
-                                    TextInputFormatter.withFunction(
-                                        (oldValue, newValue) {
-                                      final lineCount = '\n'
-                                              .allMatches(newValue.text)
-                                              .length +
-                                          1;
-                                      if (lineCount > 10) {
-                                        return oldValue;
-                                      }
-                                      return newValue;
-                                    }),
-                                  ],
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.black12,
+                                      width: 1.2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.black12,
+                                      width: 1.2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  filled: true,
+                                  fillColor: const Color(0x7FFFFFFF),
+                                  counterText: '',
+                                  contentPadding:
+                                      const EdgeInsetsDirectional.fromSTEB(
+                                          14, 16, 45, 16),
                                 ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: 0.0,
+                                      lineHeight: 1,
+                                    ),
+                                validator: _model.textControllerValidator
+                                    .asValidator(context),
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(400),
+                                  TextInputFormatter.withFunction(
+                                      (oldValue, newValue) {
+                                    final lineCount =
+                                        '\n'.allMatches(newValue.text).length +
+                                            1;
+                                    if (lineCount > 10) {
+                                      return oldValue;
+                                    }
+                                    return newValue;
+                                  }),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                if (_model.textController.text.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 4, 0),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: FlutterFlowIconButton(
-                        borderColor: Colors.transparent,
-                        borderRadius: 50.0,
-                        borderWidth: 1.0,
-                        buttonSize: 68.0,
-                        onPressed: () {
-                          try {
-                            if (_model.textController!.text.trim().isNotEmpty) {
-                              _webSocketService.sendMessage(
-                                  conversation.user,
-                                  _model.textController!.text,
-                                  conversation.username,
-                                  conversation.lastactive,
-                                  conversation.matId);
-                              setState(() {
-                                _model.textController!.clear();
-                              });
-                            }
-                          } on SocketException {
-                            Toasts.showErrorToast(
-                                context, 'Ingen internettforbindelse');
-                          } catch (e) {
-                            Toasts.showErrorToast(context, 'En feil oppstod');
-                          }
-                        },
-                        icon: const FaIcon(
-                          FontAwesomeIcons.circleArrowUp,
-                          color: Color(0xFF357BF7),
-                          size: 28,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-              ],
-            ),
+                ],
+              ),
+              if (_model.textController.text.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 4, 0),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 50.0,
+                      borderWidth: 1.0,
+                      buttonSize: 68.0,
+                      onPressed: () {
+                        try {
+                          if (_model.textController!.text.trim().isNotEmpty) {
+                            _webSocketService.sendMessage(
+                                conversation.user,
+                                _model.textController!.text,
+                                conversation.username,
+                                conversation.lastactive,
+                                conversation.matId);
+                            setState(() {
+                              _model.textController!.clear();
+                            });
+                          }
+                        } on SocketException {
+                          Toasts.showErrorToast(
+                              context, 'Ingen internettforbindelse');
+                        } catch (e) {
+                          Toasts.showErrorToast(context, 'En feil oppstod');
+                        }
+                      },
+                      icon: const FaIcon(
+                        FontAwesomeIcons.circleArrowUp,
+                        color: Color(0xFF357BF7),
+                        size: 28,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           ),
         ),
       ),
