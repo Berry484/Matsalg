@@ -184,6 +184,10 @@ class _ProfilWidgetState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final crossAxisCount = 2;
+    final itemHeight = 290.0;
+    final childAspectRatio = (screenWidth / crossAxisCount) / itemHeight;
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -1314,9 +1318,9 @@ class _ProfilWidgetState extends State<ProfilePage>
                               ),
                               sliver: SliverGrid(
                                 gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                    SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  childAspectRatio: 0.68,
+                                  childAspectRatio: childAspectRatio,
                                 ),
                                 delegate: SliverChildBuilderDelegate(
                                   (context, index) {
@@ -1382,9 +1386,9 @@ class _ProfilWidgetState extends State<ProfilePage>
                                 ),
                                 sliver: SliverGrid(
                                   gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                      SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
-                                    childAspectRatio: 0.68,
+                                    childAspectRatio: childAspectRatio,
                                   ),
                                   delegate: SliverChildBuilderDelegate(
                                     (context, index) {

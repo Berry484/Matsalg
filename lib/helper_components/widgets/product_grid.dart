@@ -56,7 +56,7 @@ class ProductList extends StatelessWidget {
                 children: [
                   ProductImage(imageUrl: imageUrl),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [

@@ -220,6 +220,10 @@ class _BrukerPageWidgetState extends State<UserWidget>
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final crossAxisCount = 2;
+    final itemHeight = 290.0;
+    final childAspectRatio = (screenWidth / crossAxisCount) / itemHeight;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: PopScope(
@@ -1467,9 +1471,9 @@ class _BrukerPageWidgetState extends State<UserWidget>
                             padding: const EdgeInsets.fromLTRB(5, 0, 5, 10),
                             sliver: SliverGrid(
                               gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                  SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                childAspectRatio: 0.68,
+                                childAspectRatio: childAspectRatio,
                               ),
                               delegate: SliverChildBuilderDelegate(
                                 (context, index) {

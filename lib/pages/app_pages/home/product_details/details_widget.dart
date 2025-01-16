@@ -221,6 +221,10 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final crossAxisCount = 2;
+    final itemHeight = 290.0;
+    final childAspectRatio = (screenWidth / crossAxisCount) / itemHeight;
     return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: PopScope(
@@ -1529,9 +1533,9 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                         ),
                         SliverGrid(
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 0.68,
+                            childAspectRatio: childAspectRatio,
                           ),
                           delegate: SliverChildBuilderDelegate(
                             (context, index) {
