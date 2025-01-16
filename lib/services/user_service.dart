@@ -82,7 +82,7 @@ class UserInfoService {
             Uri.parse('$baseUrl/rrh/brukere/brukerinfo'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
+          .timeout(const Duration(seconds: 21)); // Set timeout to 5 seconds
 
       final decodedBody = utf8.decode(response.bodyBytes);
       return http.Response(decodedBody, response.statusCode);
@@ -257,7 +257,8 @@ class UserInfoService {
 //-----------------------------------------------------------------------------------------------------------------------
 //--------------------Updates variables about a user wether he has liked any foods etc so I can display empty widgets----
 //-----------------------------------------------------------------------------------------------------------------------
-  Future<http.Response?> updateUserStats(BuildContext context) async {
+  Future<http.Response?> updateUserStats(
+      BuildContext context, bool? updateFromListener) async {
     try {
       String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
@@ -276,16 +277,19 @@ class UserInfoService {
               Uri.parse('$baseUrl/rrh/brukere/seBrukerInfo'),
               headers: headers,
             )
-            .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
+            .timeout(const Duration(seconds: 21)); // Set timeout to 5 seconds
 
         final jsonResponse = json.decode(response.body);
 
         FFAppState().liked = jsonResponse['hasLiked'] ?? false;
         FFAppState().lagtUt = jsonResponse['hasPosted'] ?? false;
         FFAppState().termsService = jsonResponse['hasAcceptedTerms'] ?? false;
-        FFAppState().hasNotification = jsonResponse['hasNotification'] ?? false;
-        FFAppState().notificationAlert.value =
-            jsonResponse['hasUnreadNotification'] ?? false;
+        if (updateFromListener != true) {
+          FFAppState().hasNotification =
+              jsonResponse['hasNotification'] ?? false;
+          FFAppState().notificationAlert.value =
+              jsonResponse['hasUnreadNotification'] ?? false;
+        }
         return response;
       }
     } on SocketException {
@@ -315,7 +319,7 @@ class UserInfoService {
                 '$baseUrl/rrh/brukere/seLastActiveTime?username=$uid'), // Update the URL to use the correct endpoint
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Set timeout to 5 seconds
+          .timeout(const Duration(seconds: 21)); // Set timeout to 5 seconds
 
       if (response.statusCode == 200) {
         return response;
@@ -346,7 +350,7 @@ class UserInfoService {
             Uri.parse('$baseUrl/rrh/brukere/brukerinfo?username=$uid'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
 
       // Check if the response is successful (status code 200)
       if (response.statusCode == 200) {
@@ -385,13 +389,12 @@ class UserInfoService {
       };
 
       if (query != null && query.isNotEmpty) {
-        // Make the API request with a timeout of 5 seconds
         final response = await http
             .get(
               Uri.parse('$baseUrl/rrh/brukere/search?query=$query'),
               headers: headers,
             )
-            .timeout(const Duration(seconds: 5));
+            .timeout(const Duration(seconds: 21));
         if (response.statusCode == 200) {
           List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
           List<UserInfoSearch> profiler = data.map((userData) {
@@ -452,7 +455,8 @@ class UserInfoService {
           FFAppState().ratingAverageValue =
               decodedResponse['ratingAverageValue'] ?? 5.0;
           if (!context.mounted) return;
-          updateUserStats(context);
+
+          updateUserStats(context, true);
         }
         if (response.statusCode == 401) {
           FFAppState().login = false;
@@ -488,7 +492,7 @@ class UserInfoService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-      ).timeout(const Duration(seconds: 5));
+      ).timeout(const Duration(seconds: 21));
 
       return response;
     } on SocketException {

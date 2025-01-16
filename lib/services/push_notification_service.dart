@@ -22,7 +22,7 @@ class PushNotificationService {
             Uri.parse('$baseUrl/api/varsling?bruker=$uid&varsling=$varsling'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
       return response;
     } on SocketException {
       rethrow;
@@ -53,7 +53,7 @@ class PushNotificationService {
                 Uri.parse('$baseUrl/api/updates?matId=$matId'),
                 headers: headers,
               )
-              .timeout(const Duration(seconds: 5));
+              .timeout(const Duration(seconds: 21));
       return response;
     } on SocketException {
       rethrow;

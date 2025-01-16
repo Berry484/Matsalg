@@ -23,7 +23,7 @@ class ApiLike {
             Uri.parse('$baseUrl/api/likes?mat_id=$matId'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
       return response;
     } on SocketException {
       rethrow;
@@ -48,7 +48,7 @@ class ApiLike {
             Uri.parse('$baseUrl/api/likes?mat_id=$matId'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
       return response;
     } on SocketException {
       rethrow;
@@ -73,7 +73,7 @@ class ApiLike {
             Uri.parse('$baseUrl/api/likes/mine'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
 
       // Check if the response is successful (status code 200)
       if (response.statusCode == 200) {
@@ -110,7 +110,7 @@ class ApiLike {
             Uri.parse('$baseUrl/api/likes/check?matId=$matId'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
 
       if (response.statusCode == 200) {
         // Parse the response body to a boolean value

@@ -424,6 +424,7 @@ class PublishServices {
         model.oppdaterLoading = false;
         return;
       }
+      showLoadingDialog(context);
 
       final selectedImage = nonPlaceholderImages.first;
       final token = await firebaseAuthService.getToken(context);

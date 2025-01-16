@@ -23,7 +23,7 @@ class FollowService {
             Uri.parse('$baseUrl/api/follow?bruker=$uid'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
       return response;
     } on SocketException {
       rethrow;
@@ -48,7 +48,7 @@ class FollowService {
             Uri.parse('$baseUrl/api/unfollow?bruker=$uid'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
       return response;
     } on SocketException {
       rethrow;
@@ -73,7 +73,7 @@ class FollowService {
             Uri.parse('$baseUrl/api/folger/bruker?bruker=$uid'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
 
       if (response.statusCode == 200) {
         // Parse the response body
@@ -118,7 +118,7 @@ class FollowService {
             Uri.parse('$baseUrl/api/folgere/folger?folger=$uid'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
 
       if (response.statusCode == 200) {
         // Parse the response body
@@ -164,7 +164,7 @@ class FollowService {
             Uri.parse('$baseUrl/api/followers/folger?folger=$uid'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
       if (response.statusCode == 200) {
         String? folger = response.body;
         return folger;
@@ -194,7 +194,7 @@ class FollowService {
             Uri.parse('$baseUrl/api/followers/bruker?bruker=$uid'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
       if (response.statusCode == 200) {
         String? folgere = response.body;
         return folgere;
@@ -224,7 +224,7 @@ class FollowService {
             Uri.parse('$baseUrl/api/followers/mine/folger'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
       if (response.statusCode == 200) {
         String? folger = response.body;
         return folger;
@@ -254,7 +254,7 @@ class FollowService {
             Uri.parse('$baseUrl/api/followers/mine/bruker'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
       if (response.statusCode == 200) {
         String? folgere = response.body;
         return folgere;

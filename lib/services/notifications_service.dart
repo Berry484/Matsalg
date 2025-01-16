@@ -23,7 +23,7 @@ class NotificationsService {
             Uri.parse('$baseUrl/notifications'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 8));
+          .timeout(const Duration(seconds: 21));
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
 
@@ -79,7 +79,7 @@ class NotificationsService {
             Uri.parse('$baseUrl/notifications/mark-read'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 8));
+          .timeout(const Duration(seconds: 21));
 
       return response;
     } on SocketException {

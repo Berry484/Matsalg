@@ -96,7 +96,6 @@ class _HjemWidgetState extends State<NotificationsWidget>
             _model.isloading = false;
           }
         });
-        markRead();
       }
     } on SocketException {
       if (!mounted) return;

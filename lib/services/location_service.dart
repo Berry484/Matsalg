@@ -26,7 +26,7 @@ class LocationService {
                 'https://ws.geonorge.no/adresser/v1/punktsok?lat=$brukerLat&lon=$brukerLng&radius=9999999999999&treffPerSide=1&side=1'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 10)); // Set timeout to 5 seconds
+          .timeout(const Duration(seconds: 21));
 
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);

@@ -30,7 +30,7 @@ class WebSocketService {
 
   bool _running = false;
   static const Duration retryDelay = Duration(seconds: 3);
-  static const Duration listenerTimeout = Duration(seconds: 5);
+  static const Duration listenerTimeout = Duration(seconds: 21);
 
   Future<void> connect({bool? retrying}) async {
     try {
@@ -87,6 +87,7 @@ class WebSocketService {
         _running = false;
       }
     } catch (e) {
+      _running = false;
       logger
           .d("Error when connecting will not retry as its outside the block$e");
     }
@@ -113,8 +114,9 @@ class WebSocketService {
       onError: (error) {
         try {
           logger.d("WebSocket error: $error");
-          completer.completeError(
-              error); // Mark as error if there was a connection issue
+
+          completer.completeError(Exception(
+              error)); // Mark as error if there was a connection issue
         } catch (e) {
           logger.d("error$e");
         }

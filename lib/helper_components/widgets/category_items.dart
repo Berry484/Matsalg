@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 //-----------------------------------------------------------------------------------------------------------------------
@@ -16,36 +15,35 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<IconData> icons = [
-      Ionicons.restaurant_outline,
-      Ionicons.leaf_outline,
-      Ionicons.egg_outline,
-      Ionicons.basket_outline,
-      Ionicons.fish_outline,
-    ];
-
     final List<String> texts = [
       'Kjøtt',
       'Grønt',
       'Meieri',
-      'Bakverk',
       'Sjømat',
+      'Produkter',
     ];
 
     final List<String> kategorier = [
       'kjøtt',
       'grønt',
       'meieri',
-      'bakverk',
       'sjømat',
+      'produkter',
     ];
 
-    final icon = icons[index];
+    final List<String> images = [
+      'meat',
+      'green',
+      'dairy',
+      'seafood',
+      'selfmade',
+    ];
+
     final text = texts[index];
     final kategori = kategorier[index];
 
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0, 0, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
       child: GestureDetector(
         onTap: () async {
           context.pushNamed(
@@ -65,10 +63,10 @@ class CategoryItem extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 29,
+              Image.asset(
+                'assets/images/${images[index]}.png',
+                height: 33,
+                width: 37,
               ),
               const SizedBox(height: 2),
               Text(
@@ -77,7 +75,7 @@ class CategoryItem extends StatelessWidget {
                       fontFamily: 'Nunito',
                       color: FlutterFlowTheme.of(context).primaryText,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
               ),
             ],

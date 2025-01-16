@@ -176,8 +176,7 @@ class MainWrapperState extends State<MainWrapper> {
                             onPressed: () => _onItemTapped(0),
                           ),
                           Stack(
-                            clipBehavior:
-                                Clip.none, // Ensures the red dot isn't clipped
+                            clipBehavior: Clip.none,
                             children: [
                               FlutterFlowIconButton(
                                 borderColor: Colors.transparent,

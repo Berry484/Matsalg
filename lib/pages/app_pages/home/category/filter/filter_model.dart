@@ -16,8 +16,8 @@ class FilterModel extends FlutterFlowModel<FilterWidget> {
     'Kjøtt',
     'Grønt',
     'Meieri',
-    'Bakverk',
     'Sjømat',
+    'Produkter',
   ];
 
 //---------------------------------------------------------------------------------------------------------------

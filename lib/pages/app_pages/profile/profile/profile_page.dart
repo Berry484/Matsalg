@@ -132,8 +132,9 @@ class _ProfilWidgetState extends State<ProfilePage>
         if (!mounted) return;
         getMyFoods(true);
         profileServices.getAllLikes(context, token);
+
         userInfoService.fetchData(context);
-        await userInfoService.updateUserStats(context);
+        await userInfoService.updateUserStats(context, true);
         _model.isloading = false;
         if (_model.matvarer != null && _model.matvarer!.isEmpty) {
           safeSetState(() {});

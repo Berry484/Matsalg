@@ -1066,7 +1066,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                       .fromSTEB(
                                                       20.0, 0.0, 20.0, 10.0),
                                               child: Text(
-                                                'Fortell litt om varen, hvor mye er det i hver pakke? osv.',
+                                                'Fortell litt om varen, hvor mye er det i hver pakke? Hvor mange har du tilgjenlig? Osv.',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -2146,7 +2146,15 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                           }
                                                         },
                                                       );
+                                                      if (!context.mounted) {
+                                                        return;
+                                                      }
+                                                      Navigator.of(context).pop;
                                                     } catch (error) {
+                                                      if (!context.mounted) {
+                                                        return;
+                                                      }
+                                                      Navigator.of(context).pop;
                                                       _navigate = false;
                                                       _isButtonDisabled = false;
                                                       _model.oppdaterLoading =
@@ -2155,6 +2163,10 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                       logger.d(
                                                           'Error occurred: $error');
                                                     } finally {
+                                                      if (context.mounted) {
+                                                        Navigator.of(context)
+                                                            .pop;
+                                                      }
                                                       _isButtonDisabled = false;
                                                       _model.oppdaterLoading =
                                                           false;

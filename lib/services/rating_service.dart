@@ -32,7 +32,7 @@ class RatingService {
                 '$baseUrl/api/ratings?receiver=$uid&value=$rating&kjoper=$kjoper&matId=$matId'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
 
       return response;
     } on SocketException {
@@ -64,7 +64,7 @@ class RatingService {
             Uri.parse('$baseUrl/api/ratings/$uid'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
 
       if (response.statusCode == 200) {
         // Parse the response body
@@ -117,7 +117,7 @@ class RatingService {
             Uri.parse('$baseUrl/api/ratings/mine'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
 
@@ -169,7 +169,7 @@ class RatingService {
             Uri.parse('$baseUrl/api/ratings/summary/$uid'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
       if (response.statusCode == 200) {
         Map<String, dynamic> userData =
             jsonDecode(utf8.decode(response.bodyBytes));
@@ -203,7 +203,7 @@ class RatingService {
             Uri.parse('$baseUrl/api/ratings/summary/mine'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
 
       if (response.statusCode == 200) {
         Map<String, dynamic> userData =

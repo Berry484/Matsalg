@@ -212,7 +212,7 @@ class ApiFoodService {
                 '$baseUrl/rrh/send/matvarer?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
 
       // Check if the response is successful (status code 200)
       if (response.statusCode == 200) {
@@ -276,7 +276,7 @@ class ApiFoodService {
             Uri.parse('$baseUrl/rrh/send/matvarer/mine?size=44&page=$page'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
 
       // Check if the response is successful (status code 200)
       if (response.statusCode == 200) {
@@ -311,7 +311,7 @@ class ApiFoodService {
                 '$baseUrl/rrh/send/matvarer/mine?uid=$username&size=44&page=$page'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5)); // Timeout after 5 seconds
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
 
       // Check if the response is successful (status code 200)
       if (response.statusCode == 200) {
@@ -351,7 +351,7 @@ class ApiFoodService {
 
       // Default categories if empty
       if (categories.isEmpty) {
-        categories = ['kjøtt', 'grønt', 'meieri', 'bakverk', 'sjømat'];
+        categories = ['kjøtt', 'grønt', 'meieri', 'sjømat', 'produkter'];
       }
 
       // Handle maxPrice default
@@ -368,7 +368,7 @@ class ApiFoodService {
                 '$baseUrl/rrh/send/matvarer/filter?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&size=44&page=$page&sortByPriceAsc=$sortByPriceAsc&sortByPriceDesc=$sortByPriceDesc&sortByDistance=$sortByDistance&minPrice=$minPrice&maxPrice=$maxPrice&maxDistance=$maxDistance&categories=$categoriesParam&searchQuery=$searchQuery'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse =
@@ -397,9 +397,8 @@ class ApiFoodService {
 
       // Default categories if empty
       if (categories.isEmpty) {
-        categories = ['kjøtt', 'grønt', 'meieri', 'bakverk', 'sjømat'];
+        categories = ['kjøtt', 'grønt', 'meieri', 'sjømat', 'produkter'];
       }
-
       // Handle maxPrice default
       if (maxPrice == 800) {
         maxPrice = 100000;
@@ -414,7 +413,7 @@ class ApiFoodService {
                 '$baseUrl/rrh/send/matvarer/filter_count?userLat=${FFAppState().brukerLat}&userLng=${FFAppState().brukerLng}&minPrice=$minPrice&maxPrice=$maxPrice&maxDistance=$maxDistance&categories=$categoriesParam'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
 
       if (response.statusCode == 200) {
         String? count = response.body;
@@ -444,7 +443,7 @@ class ApiFoodService {
                 '$baseUrl/rrh/send/matvarer/following-foods?size=44&page=$page'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse =
             jsonDecode(utf8.decode(response.bodyBytes));
@@ -475,7 +474,7 @@ class ApiFoodService {
             Uri.parse('$baseUrl/rrh/send/matvarer/get/$matId'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 5));
+          .timeout(const Duration(seconds: 21));
 
       // Check response status
       if (response.statusCode == 200) {

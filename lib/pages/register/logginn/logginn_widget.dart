@@ -1,10 +1,7 @@
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
-import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/register/logginn/forgot_password/forgot_password_widget.dart';
 import 'package:mat_salg/services/user_service.dart';
 import 'package:mat_salg/services/web_socket.dart';
@@ -12,10 +9,7 @@ import 'package:mat_salg/logging.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_widgets.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
 import 'logginn_model.dart';
 export 'logginn_model.dart';
 
@@ -35,10 +29,8 @@ class _LogginnWidgetState extends State<LogginnWidget> {
   late LogginnModel _model;
   late WebSocketService _webSocketService;
   final UserInfoService userInfoService = UserInfoService();
-  final _firebaseMessaging = FirebaseMessaging.instance;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  static const String baseUrl = ApiConstants.baseUrl;
 
   @override
   void setState(VoidCallback callback) {
@@ -135,58 +127,6 @@ class _LogginnWidgetState extends State<LogginnWidget> {
         overlayEntry.remove();
       }
     });
-  }
-
-  Future<http.Response?> sendToken() async {
-    try {
-      String? token = await firebaseAuthService.getToken(context);
-      if (token == null) {
-        return null;
-      } else {
-        await _firebaseMessaging.requestPermission();
-        final fCMToken = await _firebaseMessaging.getToken();
-        DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-        AndroidDeviceInfo? androidInfo;
-        IosDeviceInfo? iosInfo;
-
-        // Fetch device information for Android or iOS
-        if (Platform.isAndroid) {
-          androidInfo = await deviceInfo.androidInfo;
-        } else if (Platform.isIOS) {
-          iosInfo = await deviceInfo.iosInfo;
-        }
-        // Handle the case where deviceInfo may be null
-        if ((Platform.isAndroid && androidInfo == null) ||
-            (Platform.isIOS && iosInfo == null)) {
-          logger.d('Failed to fetch device information');
-          return null;
-        }
-        final Map<String, dynamic> userData = {
-          "token": fCMToken,
-          "device": Platform.isAndroid
-              ? androidInfo!.model
-              : iosInfo!.utsname.machine,
-        };
-        // Convert the Map to JSON
-        final String jsonBody = jsonEncode(userData);
-        final uri = Uri.parse('$baseUrl/push');
-        final headers = {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token', // Add Bearer token if present
-        };
-
-        final response = await http.post(
-          uri,
-          headers: headers,
-          body: jsonBody,
-        );
-        return response; // Return the response
-      }
-    } on SocketException {
-      throw const SocketException('');
-    } catch (e) {
-      throw Exception;
-    }
   }
 
   @override
@@ -540,8 +480,8 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;
-                                    userInfoService.updateUserStats(context);
-                                    sendToken();
+                                    userInfoService.updateUserStats(
+                                        context, false);
                                     if (!context.mounted) return;
                                     context.go('/home');
                                     FFAppState().login = true;
@@ -750,8 +690,8 @@ class _LogginnWidgetState extends State<LogginnWidget> {
                                     _webSocketService = WebSocketService();
                                     _webSocketService.connect(retrying: true);
                                     if (!context.mounted) return;
-                                    userInfoService.updateUserStats(context);
-                                    sendToken();
+                                    userInfoService.updateUserStats(
+                                        context, false);
                                     if (!context.mounted) return;
                                     context.go('/home');
                                     FFAppState().login = true;

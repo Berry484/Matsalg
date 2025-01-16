@@ -1,6 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:ionicons/ionicons.dart';
-
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -210,13 +208,13 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                 },
                                                 child: Container(
                                                   width: 133.3,
-                                                  height: 90,
+                                                  height: 95,
                                                   decoration: BoxDecoration(
                                                     color: widget.kategori ==
                                                             'kjøtt'
                                                         ? FlutterFlowTheme.of(
                                                                 context)
-                                                            .alternate
+                                                            .unSelected
                                                         : const Color(
                                                             0xFFF6F6F6),
                                                     borderRadius:
@@ -230,16 +228,10 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Icon(
-                                                        Ionicons
-                                                            .restaurant_outline,
-                                                        color:
-                                                            widget.kategori ==
-                                                                    'kjøtt'
-                                                                ? Colors.white
-                                                                : const Color(
-                                                                    0xFF838383),
-                                                        size: 28,
+                                                      Image.asset(
+                                                        'assets/images/meat.png',
+                                                        height: 33,
+                                                        width: 37,
                                                       ),
                                                       Padding(
                                                         padding:
@@ -261,7 +253,7 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                                         .white
                                                                     : const Color(
                                                                         0xFF838383),
-                                                                fontSize: 15,
+                                                                fontSize: 14,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -295,13 +287,13 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                 },
                                                 child: Container(
                                                   width: 133.3,
-                                                  height: 90,
+                                                  height: 95,
                                                   decoration: BoxDecoration(
                                                     color: widget.kategori ==
                                                             'grønt'
                                                         ? FlutterFlowTheme.of(
                                                                 context)
-                                                            .alternate
+                                                            .unSelected
                                                         : const Color(
                                                             0xFFF6F6F6),
                                                     borderRadius:
@@ -315,15 +307,10 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Icon(
-                                                        Ionicons.leaf_outline,
-                                                        color:
-                                                            widget.kategori ==
-                                                                    'grønt'
-                                                                ? Colors.white
-                                                                : const Color(
-                                                                    0xFF838383),
-                                                        size: 28,
+                                                      Image.asset(
+                                                        'assets/images/green.png',
+                                                        height: 33,
+                                                        width: 37,
                                                       ),
                                                       Padding(
                                                         padding:
@@ -345,7 +332,7 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                                         .white
                                                                     : const Color(
                                                                         0xFF838383),
-                                                                fontSize: 15,
+                                                                fontSize: 14,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -379,13 +366,13 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                 },
                                                 child: Container(
                                                   width: 133.3,
-                                                  height: 90,
+                                                  height: 95,
                                                   decoration: BoxDecoration(
                                                     color: widget.kategori ==
                                                             'meieri'
                                                         ? FlutterFlowTheme.of(
                                                                 context)
-                                                            .alternate
+                                                            .unSelected
                                                         : const Color(
                                                             0xFFF6F6F6),
                                                     borderRadius:
@@ -399,15 +386,10 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Icon(
-                                                        Ionicons.egg_outline,
-                                                        color:
-                                                            widget.kategori ==
-                                                                    'meieri'
-                                                                ? Colors.white
-                                                                : const Color(
-                                                                    0xFF838383),
-                                                        size: 28,
+                                                      Image.asset(
+                                                        'assets/images/dairy.png',
+                                                        height: 33,
+                                                        width: 37,
                                                       ),
                                                       Padding(
                                                         padding:
@@ -415,7 +397,7 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                                 .fromSTEB(
                                                                 0, 2, 0, 0),
                                                         child: Text(
-                                                          'meieri',
+                                                          'Egg &\nMeieri',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -429,7 +411,7 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                                         .white
                                                                     : const Color(
                                                                         0xFF838383),
-                                                                fontSize: 15,
+                                                                fontSize: 14,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -472,17 +454,17 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                               onTap: () async {
                                                 HapticFeedback.selectionClick();
                                                 Navigator.pop(
-                                                    context, 'bakverk');
+                                                    context, 'sjømat');
                                               },
                                               child: Container(
                                                 width: 133.3,
-                                                height: 90,
+                                                height: 95,
                                                 decoration: BoxDecoration(
                                                   color: widget.kategori ==
-                                                          'bakverk'
+                                                          'sjømat'
                                                       ? FlutterFlowTheme.of(
                                                               context)
-                                                          .alternate
+                                                          .unSelected
                                                       : const Color(0xFFF6F6F6),
                                                   borderRadius:
                                                       BorderRadius.circular(20),
@@ -493,14 +475,10 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Icon(
-                                                      Ionicons.basket_outline,
-                                                      color: widget.kategori ==
-                                                              'bakverk'
-                                                          ? Colors.white
-                                                          : const Color(
-                                                              0xFF838383),
-                                                      size: 28,
+                                                    Image.asset(
+                                                      'assets/images/seafood.png',
+                                                      height: 33,
+                                                      width: 37,
                                                     ),
                                                     Padding(
                                                       padding:
@@ -508,7 +486,7 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                               .fromSTEB(
                                                               0, 2, 0, 0),
                                                       child: Text(
-                                                        'Bakverk',
+                                                        'Sjømat',
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .bodyMedium
@@ -517,11 +495,11 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                                   'Nunito',
                                                               color: widget
                                                                           .kategori ==
-                                                                      'bakverk'
+                                                                      'sjømat'
                                                                   ? Colors.white
                                                                   : const Color(
                                                                       0xFF838383),
-                                                              fontSize: 15,
+                                                              fontSize: 14,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -549,17 +527,17 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                               onTap: () async {
                                                 HapticFeedback.selectionClick();
                                                 Navigator.pop(
-                                                    context, 'sjømat');
+                                                    context, 'produkter');
                                               },
                                               child: Container(
                                                 width: 133.3,
-                                                height: 90,
+                                                height: 95,
                                                 decoration: BoxDecoration(
                                                   color: widget.kategori ==
-                                                          'sjømat'
+                                                          'produkter'
                                                       ? FlutterFlowTheme.of(
                                                               context)
-                                                          .alternate
+                                                          .unSelected
                                                       : const Color(0xFFF6F6F6),
                                                   borderRadius:
                                                       BorderRadius.circular(20),
@@ -570,14 +548,10 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Icon(
-                                                      Ionicons.fish_outline,
-                                                      color: widget.kategori ==
-                                                              'sjømat'
-                                                          ? Colors.white
-                                                          : const Color(
-                                                              0xFF838383),
-                                                      size: 28,
+                                                    Image.asset(
+                                                      'assets/images/selfmade.png',
+                                                      height: 33,
+                                                      width: 37,
                                                     ),
                                                     Padding(
                                                       padding:
@@ -585,7 +559,7 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                               .fromSTEB(
                                                               0, 2, 0, 0),
                                                       child: Text(
-                                                        'Sjømat',
+                                                        'Produkter',
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .bodyMedium
@@ -594,11 +568,11 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                                   'Nunito',
                                                               color: widget
                                                                           .kategori ==
-                                                                      'sjømat'
+                                                                      'produkter'
                                                                   ? Colors.white
                                                                   : const Color(
                                                                       0xFF838383),
-                                                              fontSize: 15,
+                                                              fontSize: 14,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -623,20 +597,12 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                               hoverColor: Colors.transparent,
                                               highlightColor:
                                                   Colors.transparent,
-                                              onTap: () async {
-                                                HapticFeedback.selectionClick();
-                                                Navigator.pop(context, 'annet');
-                                              },
+                                              onTap: () async {},
                                               child: Container(
                                                 width: 133.3,
-                                                height: 90,
+                                                height: 95,
                                                 decoration: BoxDecoration(
-                                                  color: widget.kategori ==
-                                                          'annet'
-                                                      ? FlutterFlowTheme.of(
-                                                              context)
-                                                          .alternate
-                                                      : const Color(0xFFF6F6F6),
+                                                  color: Colors.transparent,
                                                   borderRadius:
                                                       BorderRadius.circular(20),
                                                 ),
@@ -646,16 +612,6 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Icon(
-                                                      Ionicons
-                                                          .help_circle_outline,
-                                                      color: widget.kategori ==
-                                                              'annet'
-                                                          ? Colors.white
-                                                          : const Color(
-                                                              0xFF838383),
-                                                      size: 28,
-                                                    ),
                                                     Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
@@ -663,25 +619,22 @@ class _VelgKategoriWidgetState extends State<CategoryPage> {
                                                               0, 2, 0, 0),
                                                       child: Text(
                                                         'Annet',
-                                                        style: FlutterFlowTheme
-                                                                .of(context)
-                                                            .bodyMedium
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Nunito',
-                                                              color: widget
-                                                                          .kategori ==
-                                                                      'annet'
-                                                                  ? Colors.white
-                                                                  : const Color(
-                                                                      0xFF838383),
-                                                              fontSize: 15,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                            ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  fontSize: 14,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                ),
                                                       ),
                                                     ),
                                                   ],
