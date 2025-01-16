@@ -55,13 +55,11 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
     final settings = await _firebaseMessaging.getNotificationSettings();
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      await Future.delayed(Duration(seconds: 1));
       FirebaseApi().initNotifications();
     } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
       return;
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.notDetermined) {
-      await Future.delayed(Duration(seconds: 1));
       if (!mounted) return;
       context.pushNamed('RequestPush');
     }

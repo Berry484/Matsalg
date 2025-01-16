@@ -127,23 +127,19 @@ class _RegistrerWidgetState extends State<RegisterWidget>
           body: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        'assets/images/MatSalgLogo.png',
-                        width: double.infinity,
-                        height: 366,
-                        fit: BoxFit.contain,
-                      ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/images/MatSalgLogo.png',
+                      width: 160,
+                      height: 160,
+                      fit: BoxFit.contain,
                     ),
                   ),
-                ],
+                ),
               ),
               Expanded(
                 child: Align(
@@ -244,8 +240,8 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                       _webSocketService.connect(retrying: true);
                                       _isloading = false;
                                       if (!context.mounted) return;
-                                      context.go('/home');
                                       FFAppState().login = true;
+                                      context.go('/home');
                                       return;
                                     }
                                     if (response.statusCode == 404) {
@@ -355,8 +351,8 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                     _webSocketService.connect(retrying: true);
                                     _isloading = false;
                                     if (!context.mounted) return;
-                                    context.go('/home');
                                     FFAppState().login = true;
+                                    context.go('/home');
                                     return;
                                   }
                                   if (response.statusCode == 404) {

@@ -72,9 +72,7 @@ final _mineKjopNavigatorKey =
 
 GoRouter createRouter(AppStateNotifier appStateNotifier) {
   return GoRouter(
-    initialLocation: FFAppState().login && FFAppState().termsService != true
-        ? '/requestTerms'
-        : (FFAppState().login ? '/home' : '/registrer'),
+    initialLocation: FFAppState().login ? '/home' : '/registrer',
     navigatorKey: _parentKey,
     debugLogDiagnostics: true,
     refreshListenable: appStateNotifier,

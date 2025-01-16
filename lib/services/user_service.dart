@@ -277,13 +277,12 @@ class UserInfoService {
               Uri.parse('$baseUrl/rrh/brukere/seBrukerInfo'),
               headers: headers,
             )
-            .timeout(const Duration(seconds: 21)); // Set timeout to 5 seconds
+            .timeout(const Duration(seconds: 21));
 
         final jsonResponse = json.decode(response.body);
 
         FFAppState().liked = jsonResponse['hasLiked'] ?? false;
         FFAppState().lagtUt = jsonResponse['hasPosted'] ?? false;
-        FFAppState().termsService = jsonResponse['hasAcceptedTerms'] ?? false;
         if (updateFromListener != true) {
           FFAppState().hasNotification =
               jsonResponse['hasNotification'] ?? false;

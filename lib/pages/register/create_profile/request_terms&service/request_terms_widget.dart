@@ -280,9 +280,6 @@ class _RequestLocationWidgetState extends State<RequestTermsWidget> {
                                         decodedResponse['bio'] ?? '';
                                     FFAppState().profilepic =
                                         decodedResponse['profilepic'] ?? '';
-                                    FFAppState().termsService =
-                                        decodedResponse['termsService'] ??
-                                            false;
 
                                     _isloading = false;
                                     setState(() {});

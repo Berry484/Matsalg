@@ -45,9 +45,6 @@ class FFAppState extends ChangeNotifier {
       _login = prefs.getBool('ff_login') ?? _login;
     });
     _safeInit(() {
-      _termsService = prefs.getBool('ff_termsService') ?? _termsService;
-    });
-    _safeInit(() {
       _brukernavn = prefs.getString('ff_brukernavn') ?? _brukernavn;
     });
     _safeInit(() {
@@ -262,13 +259,6 @@ class FFAppState extends ChangeNotifier {
   set profilepic(String value) {
     _profilepic = value;
     prefs.setString('ff_profilepic', value);
-  }
-
-  bool _termsService = true;
-  bool get termsService => _termsService;
-  set termsService(bool value) {
-    _termsService = value;
-    prefs.setBool('ff_termsService', value);
   }
 
   final ValueNotifier<bool> chatAlert = ValueNotifier<bool>(false);
