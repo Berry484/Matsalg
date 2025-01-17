@@ -30,8 +30,8 @@ class CustomPageIndicatorState extends State<CustomPageIndicator> {
         } else {
           return Container(
             margin: EdgeInsets.symmetric(horizontal: 4),
-            width: 9,
-            height: 9,
+            width: 8,
+            height: 8,
             decoration: BoxDecoration(
               color: widget.currentIndex == index
                   ? FlutterFlowTheme.of(context).alternate
