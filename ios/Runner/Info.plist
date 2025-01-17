@@ -45,8 +45,6 @@
 	<string>MatSalg.no trenger tilgang til kameraet ditt for å ta bilder når du skal legge ut en annonse.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>MatSalg.no bruker posisjonen din til å vise deg annonser i nærheten av deg, og for å gjøre det lett for deg å legge ut annonsen der den er.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>MatSalg.no bruker posisjonen din til å vise deg annonser i nærheten av deg, og for å gjøre det lett for deg å legge ut annonsen der den er.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>MatSalg.no trenger tilgang til kamerarullen for å legge til eksisterende bilder og videoer på dine annonser.</string>
 	<key>PermissionGroupNotification</key>
@@ -65,14 +63,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>

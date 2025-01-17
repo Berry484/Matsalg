@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mat_salg/helper_components/flutter_flow/lat_lng.dart';
+import '../../helper_components/widgets/maps/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 
 class ImageCard extends StatelessWidget {
@@ -17,18 +19,15 @@ class ImageCard extends StatelessWidget {
       children: [
         SizedBox(
           width: double.infinity,
-          height: 485,
           child: CachedNetworkImage(
             fadeInDuration: Duration.zero,
             imageUrl: imageUrl,
             width: double.infinity,
-            height: 485,
             fit: BoxFit.cover,
             alignment: const Alignment(0.0, 0.0),
             imageBuilder: (context, imageProvider) {
               return Container(
                 width: double.infinity,
-                height: 485,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: imageProvider,
@@ -39,7 +38,6 @@ class ImageCard extends StatelessWidget {
             },
             errorWidget: (context, url, error) => Container(
               width: double.infinity,
-              height: 485,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
                 image: const DecorationImage(
@@ -74,6 +72,41 @@ class ImageCard extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+class MapWithButton extends StatelessWidget {
+  final double? latitude;
+  final double? longitude;
+  final bool? accuratePosition;
+  final Function onTapCallback;
+
+  const MapWithButton({
+    super.key,
+    this.latitude,
+    this.longitude,
+    this.accuratePosition,
+    required this.onTapCallback,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Stack(
+        children: [
+          custom_widgets.MyOsmKart(
+            center: LatLng(latitude ?? 0, longitude ?? 0),
+            accuratePosition: accuratePosition ?? false,
+          ),
+          Positioned.fill(
+            child: Container(
+              color: Colors.transparent,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

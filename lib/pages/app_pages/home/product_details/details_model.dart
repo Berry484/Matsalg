@@ -32,7 +32,7 @@ class DetailsModel extends FlutterFlowModel<DetailsWidget> {
           pageViewController!.hasClients &&
           pageViewController!.page != null
       ? pageViewController!.page!.round()
-      : 0;
+      : 1;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Initstate and dispose----------------------------------------------------------------------

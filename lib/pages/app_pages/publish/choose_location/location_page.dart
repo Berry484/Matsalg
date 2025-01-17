@@ -42,8 +42,8 @@ class _VelgPosWidgetState extends State<LocationPage> {
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => safeSetState(() {}));
-    _model.selectedLocation =
-        widget.currentLocation ?? LatLng(59.913868, 10.752245);
+    _model.selectedLocation = widget.currentLocation ??
+        LatLng(FFAppState().brukerLat, FFAppState().brukerLng);
   }
 
   @override
@@ -189,11 +189,11 @@ class _VelgPosWidgetState extends State<LocationPage> {
                                   width: 500.0,
                                   height: double.infinity,
                                   center: widget.currentLocation ??
-                                      LatLng(59.12681775541445,
-                                          11.386219119466823),
+                                      LatLng(FFAppState().brukerLat,
+                                          FFAppState().brukerLng),
                                   matsted: widget.currentLocation ??
-                                      LatLng(59.12681775541445,
-                                          11.386219119466823),
+                                      LatLng(FFAppState().brukerLat,
+                                          FFAppState().brukerLng),
                                   onLocationChanged: (newLocation) {
                                     setState(() {
                                       _model.selectedLocation = newLocation;

@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mat_salg/helper_components/widgets/loading_indicators/category_list_loading_dart';
+import 'package:mat_salg/helper_components/widgets/loading_indicators/category_list_loading.dart';
 import 'package:mat_salg/helper_components/widgets/empty_list/no_results_widget.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/product_grid.dart';

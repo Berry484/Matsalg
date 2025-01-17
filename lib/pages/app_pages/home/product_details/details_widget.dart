@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
+import 'package:mat_salg/helper_components/widgets/custom_page_indicator.dart';
 import 'package:mat_salg/helper_components/widgets/pageview_images.dart';
 import 'package:mat_salg/helper_components/widgets/product_grid.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
@@ -24,8 +25,6 @@ import 'package:mat_salg/services/like_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_toggle_icon.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart'
-    as smooth_page_indicator;
 import 'package:flutter/material.dart';
 import 'details_model.dart';
 export 'details_model.dart';
@@ -658,46 +657,111 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                         },
                                         child: SizedBox(
                                           width: double.infinity,
-                                          height: 485,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.59,
                                           child: Stack(
                                             children: [
                                               SizedBox(
                                                 width: double.infinity,
-                                                height: 485,
                                                 child: Stack(
                                                   children: [
                                                     Padding(
-                                                        padding: matvare
-                                                                    .kjopt ==
-                                                                true
-                                                            ? const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                0.0, 0.0, 40.0)
-                                                            : const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                0.0, 0.0, 40.0),
-                                                        child: PageView(
-                                                          controller: _model
-                                                                  .pageViewController ??=
-                                                              PageController(
-                                                                  initialPage:
-                                                                      0),
-                                                          scrollDirection:
-                                                              Axis.horizontal,
-                                                          children:
-                                                              List.generate(
-                                                            matvare.imgUrls!
-                                                                .length,
-                                                            (index) =>
-                                                                ImageCard(
-                                                              imageUrl:
-                                                                  '${ApiConstants.baseUrl}${matvare.imgUrls![index]}',
-                                                              isSoldOut: matvare
-                                                                      .kjopt ==
-                                                                  true,
-                                                            ),
-                                                          ),
-                                                        )),
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(0.0,
+                                                              0.0, 0.0, 40.0),
+                                                      child: PageView(
+                                                        controller: _model
+                                                                .pageViewController ??=
+                                                            PageController(
+                                                                initialPage: 1),
+                                                        onPageChanged:
+                                                            (value) =>
+                                                                safeSetState(
+                                                                    () {}),
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        children: List.generate(
+                                                          matvare.imgUrls!
+                                                                  .length +
+                                                              1,
+                                                          (index) {
+                                                            if (index == 0) {
+                                                              return MapWithButton(
+                                                                latitude: matvare
+                                                                        .lat ??
+                                                                    59.9138688,
+                                                                longitude: matvare
+                                                                        .lng ??
+                                                                    10.7522454,
+                                                                accuratePosition:
+                                                                    matvare
+                                                                        .accuratePosition,
+                                                                onTapCallback:
+                                                                    () {
+                                                                  double
+                                                                      startLat =
+                                                                      matvare.lat ??
+                                                                          59.9138688;
+                                                                  double
+                                                                      startLng =
+                                                                      matvare.lng ??
+                                                                          10.7522454;
+                                                                  showModalBottomSheet(
+                                                                    isScrollControlled:
+                                                                        true,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    useRootNavigator:
+                                                                        true,
+                                                                    enableDrag:
+                                                                        true,
+                                                                    context:
+                                                                        context,
+                                                                    isDismissible:
+                                                                        true,
+                                                                    builder:
+                                                                        (context) {
+                                                                      return GestureDetector(
+                                                                        onTap: () =>
+                                                                            FocusScope.of(context).unfocus(),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              MediaQuery.viewInsetsOf(context),
+                                                                          child:
+                                                                              KartPopUpWidget(
+                                                                            startLat:
+                                                                                startLat,
+                                                                            startLng:
+                                                                                startLng,
+                                                                            accuratePosition:
+                                                                                matvare.accuratePosition,
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ).then((value) =>
+                                                                      safeSetState(
+                                                                          () {}));
+                                                                },
+                                                              );
+                                                            } else {
+                                                              return ImageCard(
+                                                                imageUrl:
+                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![index - 1]}',
+                                                                isSoldOut: matvare
+                                                                        .kjopt ==
+                                                                    true,
+                                                              );
+                                                            }
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ),
                                                     Align(
                                                       alignment:
                                                           const AlignmentDirectional(
@@ -707,52 +771,13 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                             const EdgeInsetsDirectional
                                                                 .fromSTEB(16.0,
                                                                 0.0, 0.0, 16.0),
-                                                        child: smooth_page_indicator
-                                                            .SmoothPageIndicator(
-                                                          controller: _model
-                                                                  .pageViewController ??=
-                                                              PageController(
-                                                                  initialPage:
-                                                                      0),
-                                                          count: matvare
-                                                              .imgUrls!.length,
-                                                          axisDirection:
-                                                              Axis.horizontal,
-                                                          onDotClicked:
-                                                              (i) async {
-                                                            await _model
-                                                                .pageViewController!
-                                                                .animateToPage(
-                                                              i,
-                                                              duration:
-                                                                  const Duration(
-                                                                      milliseconds:
-                                                                          500),
-                                                              curve:
-                                                                  Curves.ease,
-                                                            );
-                                                            safeSetState(() {});
-                                                          },
-                                                          effect: smooth_page_indicator
-                                                              .ExpandingDotsEffect(
-                                                            expansionFactor:
-                                                                1.1,
-                                                            spacing: 8.0,
-                                                            radius: 16.0,
-                                                            dotWidth: 7,
-                                                            dotHeight: 7,
-                                                            dotColor:
-                                                                const Color(
-                                                                    0xFFE6E6E6),
-                                                            activeDotColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                            paintStyle:
-                                                                PaintingStyle
-                                                                    .fill,
-                                                          ),
-                                                        ),
+                                                        child: CustomPageIndicator(
+                                                            itemCount: matvare
+                                                                    .imgUrls!
+                                                                    .length +
+                                                                1,
+                                                            currentIndex: _model
+                                                                .pageViewCurrentIndex),
                                                       ),
                                                     ),
                                                   ],
@@ -760,8 +785,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                               ),
                                               if (_model.showHeart)
                                                 Align(
-                                                  alignment: Alignment
-                                                      .center, // Center the heart icon
+                                                  alignment: Alignment.center,
                                                   child: Icon(
                                                     CupertinoIcons.heart_fill,
                                                     color: FlutterFlowTheme.of(
