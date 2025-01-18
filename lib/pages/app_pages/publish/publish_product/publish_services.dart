@@ -493,14 +493,9 @@ class PublishServices {
       }
       model.leggUtLoading = false;
     } on SocketException {
-      if (model.leggUtLoading) {
-        navigate('', true, null);
-      }
-      model.oppdaterLoading = false;
-      showToast('Ingen internettforbindelse', true);
+      rethrow;
     } catch (e) {
-      model.oppdaterLoading = false;
-      showToast('En feil oppstod', true);
+      rethrow;
     }
   }
 

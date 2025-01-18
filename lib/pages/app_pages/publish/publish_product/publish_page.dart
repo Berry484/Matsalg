@@ -2154,12 +2154,14 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                       if (!context.mounted) {
                                                         return;
                                                       }
-                                                      Navigator.of(context).pop;
-                                                      _navigate = false;
-                                                      _isButtonDisabled = false;
-                                                      _model.oppdaterLoading =
-                                                          false;
-                                                      safeSetState(() {});
+                                                      context.pop();
+                                                      safeSetState(() {
+                                                        _model.oppdaterLoading =
+                                                            false;
+                                                        _isButtonDisabled =
+                                                            false;
+                                                        _navigate = false;
+                                                      });
                                                       logger.d(
                                                           'Error occurred: $error');
                                                     } finally {

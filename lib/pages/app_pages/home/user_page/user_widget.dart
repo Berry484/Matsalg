@@ -566,15 +566,22 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                         .fromSTEB(8, 5, 8, 5),
                                                 child: Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                      MainAxisAlignment.center,
                                                   children: [
                                                     Text(
                                                       'Du har blokkert denne profilen',
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 16,
-                                                      ),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .titleSmall
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            color: Colors.black,
+                                                            letterSpacing: 0.0,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
                                                     ),
                                                     GestureDetector(
                                                       onTap: () async {
@@ -598,13 +605,13 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                         }
                                                       },
                                                       child: Text(
-                                                        'Fjern blokkering',
+                                                        '  Fjern blokkering',
                                                         style: TextStyle(
                                                           color: Colors
                                                               .blue, // Blue color for "Fjern blokkering"
-                                                          fontSize: 16,
+                                                          fontSize: 15,
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                              FontWeight.w600,
                                                         ),
                                                       ),
                                                     ),
