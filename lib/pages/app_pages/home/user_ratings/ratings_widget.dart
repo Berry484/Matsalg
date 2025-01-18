@@ -77,6 +77,7 @@ class _BrukerRatingWidgetState extends State<RatingsWidget>
             phoneNumber: '',
             lat: null,
             lng: null,
+            blocked: false,
           );
         }
 

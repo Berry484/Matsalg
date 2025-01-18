@@ -504,5 +504,30 @@ class UserInfoService {
     return null;
   }
 
+//---------------------------------------------------------------------------------------------------------------
+//--------------------blocks or unblocks a user------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<http.Response?> blockUpdate(
+      String? token, String? get, bool delete) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      // Make the API request and parse the response
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/block/user?get=$get&delete=$delete'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 21));
+      return response;
+    } on SocketException {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 //
 }

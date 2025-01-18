@@ -22,6 +22,7 @@ class User {
   final int? followingCount;
   final int? ratingTotalCount;
   final double? ratingAverageValue;
+  final bool blocked;
 
   User({
     // Fields for userInfo
@@ -45,6 +46,7 @@ class User {
     this.followingCount,
     this.ratingTotalCount,
     this.ratingAverageValue,
+    required this.blocked,
   });
 
   factory User.fromJson(Map<String, dynamic>? json) {
@@ -83,6 +85,7 @@ class User {
       followingCount: json['followingCount'] as int? ?? 0,
       ratingTotalCount: json['ratingTotalCount'] as int? ?? 0,
       ratingAverageValue: json['ratingAverageValue'] as double? ?? 5,
+      blocked: json['blocked'] as bool? ?? false,
     );
   }
 
@@ -118,6 +121,7 @@ class User {
       'followingCount': followingCount,
       'ratingTotalCount': ratingTotalCount,
       'ratingAverageValue': ratingAverageValue,
+      'blocked': blocked,
     };
   }
 
@@ -141,6 +145,7 @@ class User {
         'followersCount: $followersCount, '
         'followingCount: $followingCount, '
         'ratingTotalCount: $ratingTotalCount, '
+        'blocked: $blocked, '
         'ratingAverageValue: $ratingAverageValue'
         '}';
   }

@@ -185,14 +185,13 @@ class ProductImage extends StatelessWidget {
           ),
         );
       },
-      fadeInDuration: const Duration(milliseconds: 40),
+      fadeInDuration: Duration(milliseconds: 100),
+      fadeOutDuration: Duration.zero,
       placeholder: (context, url) => const SizedBox(
         width: 200,
         height: 229,
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: Color(0xFFFAFAFA),
-          ),
+          decoration: BoxDecoration(color: Color(0xFFF4F4F4)),
         ),
       ),
       errorWidget: (context, url, error) => Container(

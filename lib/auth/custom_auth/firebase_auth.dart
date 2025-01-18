@@ -36,7 +36,10 @@ class FirebaseAuthService {
     try {
       // 1. Request Apple credentials
       final appleCredential = await SignInWithApple.getAppleIDCredential(
-        scopes: [AppleIDAuthorizationScopes.email],
+        scopes: [
+          AppleIDAuthorizationScopes.fullName,
+          AppleIDAuthorizationScopes.email
+        ],
       );
 
       // 2. Create Firebase OAuth credential
@@ -48,6 +51,10 @@ class FirebaseAuthService {
       // 3. Sign in with Firebase using the OAuth credential
       final userCredential =
           await _firebaseAuth.signInWithCredential(oauthCredential);
+      if (_firebaseAuth.currentUser?.displayName == null) {
+        await _auth.currentUser?.updateDisplayName(
+            'firstname:${appleCredential.givenName}, lastname:${appleCredential.familyName}');
+      }
       return userCredential;
     } catch (e) {
       logger.d('Apple sign-in error: ${e.toString()}');

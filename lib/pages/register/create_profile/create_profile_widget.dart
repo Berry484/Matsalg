@@ -63,6 +63,18 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
     if (_auth.currentUser!.providerData[0].providerId == 'google.com') {
       _model.emailTextController.text = _auth.currentUser?.email ?? '';
     }
+
+    if (_auth.currentUser!.providerData[0].providerId == 'apple.com') {
+      String displayName = _auth.currentUser?.displayName ?? '';
+      List<String> nameParts = displayName.split(',');
+      _model.firstName = nameParts[0].replaceAll('firstname:', '').trim();
+      _model.lastName = nameParts[1].replaceAll('lastname:', '').trim();
+      if (_model.firstName != 'null' && _model.lastName != 'null') {
+        _model.fornavnTextController.text = _model.firstName ?? '';
+        _model.etternavnTextController.text = _model.lastName ?? '';
+      }
+      _model.emailTextController.text = _auth.currentUser?.email ?? '';
+    }
   }
 
   @override
@@ -83,25 +95,28 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
             .hasMatch(_model.brukernavnTextController.text)) {
       return false;
     }
-    if (_model.fornavnTextController.text.trim().isEmpty ||
-        !RegExp(kTextValidatorNormalnameRegex)
-            .hasMatch(_model.fornavnTextController.text)) {
-      return false;
-    }
-    if (_model.etternavnTextController.text.trim().isEmpty ||
-        !RegExp(kTextValidatorNormalnameRegex)
-            .hasMatch(_model.etternavnTextController.text)) {
-      return false;
-    }
-    if (_model.emailTextController.text.trim().isEmpty ||
-        !RegExp(kTextValidatorEmailRegex)
-            .hasMatch(_model.emailTextController.text)) {
-      return false;
-    }
-    if (widget.phone != '0') {
-      if (_model.passordTextController.text.isEmpty ||
-          _model.passordTextController.text.length < 7) {
+    if (_auth.currentUser!.providerData[0].providerId != 'apple.com' ||
+        (_model.firstName == 'null' && _model.lastName == 'null')) {
+      if (_model.fornavnTextController.text.trim().isEmpty ||
+          !RegExp(kTextValidatorNormalnameRegex)
+              .hasMatch(_model.fornavnTextController.text)) {
         return false;
+      }
+      if (_model.etternavnTextController.text.trim().isEmpty ||
+          !RegExp(kTextValidatorNormalnameRegex)
+              .hasMatch(_model.etternavnTextController.text)) {
+        return false;
+      }
+      if (_model.emailTextController.text.trim().isEmpty ||
+          !RegExp(kTextValidatorEmailRegex)
+              .hasMatch(_model.emailTextController.text)) {
+        return false;
+      }
+      if (widget.phone != '0') {
+        if (_model.passordTextController.text.isEmpty ||
+            _model.passordTextController.text.length < 7) {
+          return false;
+        }
       }
     }
     return true;
@@ -357,389 +372,427 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                         ],
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 16, 10, 0),
-                                            child: TextFormField(
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
-                                              controller:
-                                                  _model.fornavnTextController,
-                                              focusNode:
-                                                  _model.fornavnFocusNode,
-                                              textCapitalization:
-                                                  TextCapitalization.sentences,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              onChanged: (_) =>
-                                                  EasyDebounce.debounce(
-                                                '_model.textController',
-                                                const Duration(milliseconds: 0),
-                                                () => safeSetState(() {}),
-                                              ),
-                                              enableSuggestions:
-                                                  false, // Disable suggestions
-                                              autocorrect:
-                                                  false, // Turn off autocorrect
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                labelText: 'Fornavn',
-                                                labelStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Nunito',
-                                                      color:
-                                                          const Color.fromRGBO(
-                                                              113,
-                                                              113,
-                                                              113,
-                                                              1.0),
-                                                      fontSize: 16.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
+                                    if (_auth.currentUser!.providerData[0]
+                                                .providerId !=
+                                            'apple.com' ||
+                                        (_model.firstName == 'null' &&
+                                            _model.lastName == 'null'))
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 16, 10, 0),
+                                              child: TextFormField(
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                controller: _model
+                                                    .fornavnTextController,
+                                                focusNode:
+                                                    _model.fornavnFocusNode,
+                                                textCapitalization:
+                                                    TextCapitalization
+                                                        .sentences,
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                onChanged: (_) =>
+                                                    EasyDebounce.debounce(
+                                                  '_model.textController',
+                                                  const Duration(
+                                                      milliseconds: 0),
+                                                  () => safeSetState(() {}),
                                                 ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondary,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
+                                                enableSuggestions:
+                                                    false, // Disable suggestions
+                                                autocorrect:
+                                                    false, // Turn off autocorrect
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Fornavn',
+                                                  labelStyle: FlutterFlowTheme
+                                                          .of(context)
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 15,
+                                                        color: const Color
+                                                            .fromRGBO(
+                                                            113, 113, 113, 1.0),
+                                                        fontSize: 16.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                  hintStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
                                                         letterSpacing: 0.0,
                                                       ),
-                                              textAlign: TextAlign.start,
-                                              validator: _model
-                                                  .fornavnTextControllerValidator
-                                                  .asValidator(context),
-                                              onFieldSubmitted: (_) {
-                                                FocusScope.of(context)
-                                                    .requestFocus(_model
-                                                        .etternavnFocusNode);
-                                              },
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Colors.transparent,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondary,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 15,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                textAlign: TextAlign.start,
+                                                validator: _model
+                                                    .fornavnTextControllerValidator
+                                                    .asValidator(context),
+                                                onFieldSubmitted: (_) {
+                                                  FocusScope.of(context)
+                                                      .requestFocus(_model
+                                                          .etternavnFocusNode);
+                                                },
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(10, 16, 0, 0),
-                                            child: TextFormField(
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
-                                              controller: _model
-                                                  .etternavnTextController,
-                                              focusNode:
-                                                  _model.etternavnFocusNode,
-                                              textCapitalization:
-                                                  TextCapitalization.sentences,
-                                              onChanged: (_) =>
-                                                  EasyDebounce.debounce(
-                                                '_model.textController',
-                                                const Duration(milliseconds: 0),
-                                                () => safeSetState(() {}),
-                                              ),
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              enableSuggestions: false,
-                                              autocorrect: false,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                labelText: 'Etternavn',
-                                                labelStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Nunito',
-                                                      color:
-                                                          const Color.fromRGBO(
-                                                              113,
-                                                              113,
-                                                              113,
-                                                              1.0),
-                                                      fontSize: 16.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(10, 16, 0, 0),
+                                              child: TextFormField(
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                controller: _model
+                                                    .etternavnTextController,
+                                                focusNode:
+                                                    _model.etternavnFocusNode,
+                                                textCapitalization:
+                                                    TextCapitalization
+                                                        .sentences,
+                                                onChanged: (_) =>
+                                                    EasyDebounce.debounce(
+                                                  '_model.textController',
+                                                  const Duration(
+                                                      milliseconds: 0),
+                                                  () => safeSetState(() {}),
                                                 ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondary,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                enableSuggestions: false,
+                                                autocorrect: false,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Etternavn',
+                                                  labelStyle: FlutterFlowTheme
+                                                          .of(context)
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 15,
+                                                        color: const Color
+                                                            .fromRGBO(
+                                                            113, 113, 113, 1.0),
+                                                        fontSize: 16.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                  hintStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
                                                         letterSpacing: 0.0,
                                                       ),
-                                              textAlign: TextAlign.start,
-                                              validator: _model
-                                                  .etternavnTextControllerValidator
-                                                  .asValidator(context),
-                                              onFieldSubmitted: (_) {
-                                                FocusScope.of(context)
-                                                    .requestFocus(
-                                                        _model.emailFocusNode);
-                                              },
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Colors.transparent,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondary,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 15,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                textAlign: TextAlign.start,
+                                                validator: _model
+                                                    .etternavnTextControllerValidator
+                                                    .asValidator(context),
+                                                onFieldSubmitted: (_) {
+                                                  FocusScope.of(context)
+                                                      .requestFocus(_model
+                                                          .emailFocusNode);
+                                                },
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 16, 0, 0),
-                                            child: TextFormField(
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
-                                              controller:
-                                                  _model.emailTextController,
-                                              focusNode: _model.emailFocusNode,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              enableSuggestions: false,
-                                              autocorrect: false,
-                                              obscureText: false,
-                                              keyboardType:
-                                                  TextInputType.emailAddress,
-                                              decoration: InputDecoration(
-                                                labelText: 'E-post',
-                                                labelStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily: 'Nunito',
-                                                      color:
-                                                          const Color.fromRGBO(
-                                                              113,
-                                                              113,
-                                                              113,
-                                                              1.0),
-                                                      fontSize: 16.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondary,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                                errorText: _emailTatt,
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
+                                        ],
+                                      ),
+                                    if (_auth.currentUser!.providerData[0]
+                                            .providerId !=
+                                        'apple.com')
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 16, 0, 0),
+                                              child: TextFormField(
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                controller:
+                                                    _model.emailTextController,
+                                                focusNode:
+                                                    _model.emailFocusNode,
+                                                textInputAction:
+                                                    TextInputAction.next,
+                                                enableSuggestions: false,
+                                                autocorrect: false,
+                                                obscureText: false,
+                                                keyboardType:
+                                                    TextInputType.emailAddress,
+                                                decoration: InputDecoration(
+                                                  labelText: 'E-post',
+                                                  labelStyle: FlutterFlowTheme
+                                                          .of(context)
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 15,
+                                                        color: const Color
+                                                            .fromRGBO(
+                                                            113, 113, 113, 1.0),
+                                                        fontSize: 16.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                  hintStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
                                                         letterSpacing: 0.0,
                                                       ),
-                                              textAlign: TextAlign.start,
-                                              validator: _model
-                                                  .emailTextControllerValidator
-                                                  .asValidator(context),
-                                              onChanged: (email) {
-                                                if (email.length < 4) {
-                                                  setState(() {
-                                                    _emailTatt = null;
-                                                  });
-                                                  _activeEmailRequest?.ignore();
-                                                  return;
-                                                }
-                                                _activeEmailRequest?.ignore();
-                                                _activeEmailRequest =
-                                                    CheckTakenService
-                                                            .checkEmailTaken(
-                                                                email)
-                                                        .then((response) {
-                                                  setState(() {
-                                                    if (response.statusCode !=
-                                                        200) {
-                                                      _emailTatt =
-                                                          "E-posten er allerede i bruk";
-                                                    } else {
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Colors.transparent,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondary,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                  errorText: _emailTatt,
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 15,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                textAlign: TextAlign.start,
+                                                validator: _model
+                                                    .emailTextControllerValidator
+                                                    .asValidator(context),
+                                                onChanged: (email) {
+                                                  if (email.length < 4) {
+                                                    setState(() {
                                                       _emailTatt = null;
-                                                    }
+                                                    });
+                                                    _activeEmailRequest
+                                                        ?.ignore();
+                                                    return;
+                                                  }
+                                                  _activeEmailRequest?.ignore();
+                                                  _activeEmailRequest =
+                                                      CheckTakenService
+                                                              .checkEmailTaken(
+                                                                  email)
+                                                          .then((response) {
+                                                    setState(() {
+                                                      if (response.statusCode !=
+                                                          200) {
+                                                        _emailTatt =
+                                                            "E-posten er allerede i bruk";
+                                                      } else {
+                                                        _emailTatt = null;
+                                                      }
+                                                    });
                                                   });
-                                                });
-                                              },
+                                                },
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
+                                        ],
+                                      ),
                                     if (widget.phone != '0')
                                       Row(
                                         mainAxisSize: MainAxisSize.max,

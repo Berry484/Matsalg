@@ -36,3 +36,4 @@ export 'pages/register/create_profile/create_profile_widget.dart'
 export 'pages/app_pages/profile/settings/settings_page.dart' show SettingsPage;
 
 export 'pages/chat/message/message_widget.dart' show MessageWidget;
+export 'pages/map/kart_pop_up_widget.dart' show KartPopUpWidget;

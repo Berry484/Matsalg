@@ -11,6 +11,8 @@ class OpprettProfilModel extends FlutterFlowModel<OpprettProfilWidget> {
   late bool passordVisibility;
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
+  String? firstName;
+  String? lastName;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes, Controllers and validators-----------------------------------------------------

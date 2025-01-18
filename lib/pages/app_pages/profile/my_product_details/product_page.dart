@@ -11,7 +11,6 @@ import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/services/food_service.dart';
-import '../../../map/kart_pop_up_widget.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -515,54 +514,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                     matvare
                                                                         .accuratePosition,
                                                                 onTapCallback:
-                                                                    () {
-                                                                  double
-                                                                      startLat =
-                                                                      matvare.lat ??
-                                                                          59.9138688;
-                                                                  double
-                                                                      startLng =
-                                                                      matvare.lng ??
-                                                                          10.7522454;
-                                                                  showModalBottomSheet(
-                                                                    isScrollControlled:
-                                                                        true,
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    useRootNavigator:
-                                                                        true,
-                                                                    enableDrag:
-                                                                        true,
-                                                                    context:
-                                                                        context,
-                                                                    isDismissible:
-                                                                        true,
-                                                                    builder:
-                                                                        (context) {
-                                                                      return GestureDetector(
-                                                                        onTap: () =>
-                                                                            FocusScope.of(context).unfocus(),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              KartPopUpWidget(
-                                                                            startLat:
-                                                                                startLat,
-                                                                            startLng:
-                                                                                startLng,
-                                                                            accuratePosition:
-                                                                                matvare.accuratePosition,
-                                                                          ),
-                                                                        ),
-                                                                      );
-                                                                    },
-                                                                  ).then((value) =>
-                                                                      safeSetState(
-                                                                          () {}));
-                                                                },
+                                                                    () {},
                                                               );
                                                             } else {
                                                               return ImageCard(
@@ -671,41 +623,20 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                     double startLng =
                                                         matvare.lng ??
                                                             10.7522454;
-                                                    await showModalBottomSheet(
-                                                      isScrollControlled: true,
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      barrierColor:
-                                                          const Color.fromARGB(
-                                                              60, 17, 0, 0),
-                                                      useRootNavigator: true,
-                                                      enableDrag: true,
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return GestureDetector(
-                                                          onTap: () =>
-                                                              FocusScope.of(
-                                                                      context)
-                                                                  .unfocus(),
-                                                          child: Padding(
-                                                            padding: MediaQuery
-                                                                .viewInsetsOf(
-                                                                    context),
-                                                            child:
-                                                                KartPopUpWidget(
-                                                              startLat:
-                                                                  startLat,
-                                                              startLng:
-                                                                  startLng,
-                                                              accuratePosition:
-                                                                  matvare
-                                                                      .accuratePosition,
-                                                            ),
-                                                          ),
-                                                        );
+
+                                                    context.pushNamed(
+                                                      'Kart',
+                                                      queryParameters: {
+                                                        'startLat':
+                                                            startLat.toString(),
+                                                        'startLng':
+                                                            startLng.toString(),
+                                                        'accuratePosition':
+                                                            matvare
+                                                                .accuratePosition
+                                                                .toString(),
                                                       },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
+                                                    );
                                                   },
                                                   child: Icon(
                                                     CupertinoIcons.map,

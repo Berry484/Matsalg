@@ -405,8 +405,8 @@ class _RapporterWidgetState extends State<ReportWidget> {
                                                   if (!context.mounted) return;
                                                   Navigator.pop(context);
                                                   Navigator.pop(context);
-                                                  Toasts.showAccepted(
-                                                      context, 'Rapport sendt');
+                                                  Toasts.showAccepted(context,
+                                                      'Sendt, vi vil behandle saken innen 24 timer');
                                                 } else {
                                                   _loading = false;
                                                   throw Exception();

@@ -13,6 +13,7 @@ class UserModel extends FlutterFlowModel<UserWidget> {
   bool folger = false;
   bool isDeleted = false;
   bool isLoading = true;
+  bool blocked = false;
   bool empty = false;
   bool matisLoading = true;
   bool? brukerFolger = false;

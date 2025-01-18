@@ -670,7 +670,9 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
                             ),
                           ),
                           if (_auth.currentUser!.providerData[0].providerId ==
-                              'phone')
+                                  'phone' ||
+                              _auth.currentUser!.providerData[0].providerId ==
+                                  'password')
                             const Divider(
                               thickness: 1.2,
                               indent: 0,
@@ -678,7 +680,9 @@ class _SettingsKontoWidgetState extends State<AccountPage> {
                               color: Color(0xE5EAEAEA),
                             ),
                           if (_auth.currentUser!.providerData[0].providerId ==
-                              'phone')
+                                  'phone' ||
+                              _auth.currentUser!.providerData[0].providerId ==
+                                  'password')
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 8, 0, 8),

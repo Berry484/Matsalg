@@ -88,6 +88,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
               phoneNumber: '',
               lat: null,
               lng: null,
+              blocked: false,
             );
           }
         } else {
@@ -96,6 +97,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
         }
         setState(() {
           _model.isLoading = false;
+          _model.blocked = _model.bruker?.blocked ?? false;
           _model.folger = _model.bruker!.isFollowing ?? false;
         });
       }
@@ -265,148 +267,245 @@ class _BrukerPageWidgetState extends State<UserWidget>
                   ),
             ),
             actions: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 2, 0),
-                child: IconButton(
-                  icon: Icon(
-                    CupertinoIcons.ellipsis,
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    size: 28.0,
-                  ),
-                  onPressed: () {
-                    if (_model.isDeleted) return;
-                    showCupertinoModalPopup(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CupertinoActionSheet(
-                          actions: <Widget>[
-                            CupertinoActionSheetAction(
-                              onPressed: () async {
-                                try {
-                                  // Prevent multiple submissions while loading
-                                  if (_model.messageIsLoading) return;
-                                  _model.messageIsLoading = true;
+              if (_model.isLoading != true)
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 2, 0),
+                  child: IconButton(
+                    icon: Icon(
+                      CupertinoIcons.ellipsis,
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      size: 28.0,
+                    ),
+                    onPressed: () {
+                      if (_model.isDeleted) return;
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CupertinoActionSheet(
+                            actions: <Widget>[
+                              CupertinoActionSheetAction(
+                                onPressed: () async {
+                                  try {
+                                    Navigator.of(context).pop();
+                                    if (_model.blocked == true) {
+                                      String? token = await firebaseAuthService
+                                          .getToken(context);
+                                      if (token == null) {
+                                        return;
+                                      } else {
+                                        UserInfoService.blockUpdate(
+                                            token, _model.bruker?.uid, true);
+                                        setState(() {
+                                          _model.blocked = false;
+                                        });
+                                      }
+                                    } else {
+                                      showCupertinoDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return CupertinoAlertDialog(
+                                              title: const Text(
+                                                  'Bekreft handling'),
+                                              content: const Text(
+                                                  'Er du sikker på at du vil blokkere denne brukeren?'),
+                                              actions: [
+                                                CupertinoDialogAction(
+                                                  isDefaultAction: true,
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop(); // Close the dialog
+                                                  },
+                                                  child: const Text(
+                                                    'Avbryt',
+                                                    style: TextStyle(
+                                                        color: CupertinoColors
+                                                            .systemBlue),
+                                                  ),
+                                                ),
+                                                CupertinoDialogAction(
+                                                  isDestructiveAction: true,
+                                                  onPressed: () async {
+                                                    Navigator.of(context).pop();
+                                                    String? token =
+                                                        await firebaseAuthService
+                                                            .getToken(context);
+                                                    if (token == null) {
+                                                      return;
+                                                    } else {
+                                                      UserInfoService
+                                                          .blockUpdate(
+                                                              token,
+                                                              _model
+                                                                  .bruker?.uid,
+                                                              _model.blocked);
+                                                      final newBlockedStatus =
+                                                          !(_model.blocked);
+                                                      setState(() {
+                                                        _model.folger = false;
+                                                        safeSetState(() {});
+                                                        unFolg();
+                                                        _model.blocked =
+                                                            newBlockedStatus;
+                                                      });
+                                                    }
+                                                  },
+                                                  child: const Text('Blokker'),
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    }
+                                  } on SocketException {
+                                    _model.messageIsLoading = false;
 
-                                  Conversation existingConversation =
-                                      FFAppState().conversations.firstWhere(
-                                    (conv) =>
-                                        conv.user == widget.uid &&
-                                        conv.matId == null,
-                                    orElse: () {
-                                      // If no conversation is found, create a new one
-                                      final newConversation = Conversation(
-                                        username: widget.username ?? '',
-                                        user: widget.uid ?? '',
-                                        deleted: false,
-                                        lastactive: _model.bruker?.lastactive,
-                                        profilePic:
-                                            _model.bruker?.profilepic ?? '',
-                                        messages: [],
-                                        matId: null,
-                                      );
+                                    Toasts.showErrorToast(
+                                        context, 'Ingen internettforbindelse');
+                                  } catch (e) {
+                                    _model.messageIsLoading = false;
 
-                                      // Insert the new conversation at the start of the list
-                                      FFAppState()
-                                          .conversations
-                                          .insert(0, newConversation);
+                                    Toasts.showErrorToast(
+                                        context, 'En feil oppstod');
+                                  }
+                                },
+                                child: Text(
+                                  _model.blocked
+                                      ? 'Fjern blokkering'
+                                      : 'Blokker ${widget.username}',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: CupertinoColors.systemBlue,
+                                  ),
+                                ),
+                              ),
+                              CupertinoActionSheetAction(
+                                onPressed: () async {
+                                  try {
+                                    // Prevent multiple submissions while loading
+                                    if (_model.messageIsLoading) return;
+                                    _model.messageIsLoading = true;
 
-                                      // Return the new conversation
-                                      return newConversation;
-                                    },
-                                  );
+                                    Conversation existingConversation =
+                                        FFAppState().conversations.firstWhere(
+                                      (conv) =>
+                                          conv.user == widget.uid &&
+                                          conv.matId == null,
+                                      orElse: () {
+                                        // If no conversation is found, create a new one
+                                        final newConversation = Conversation(
+                                          username: widget.username ?? '',
+                                          user: widget.uid ?? '',
+                                          deleted: false,
+                                          lastactive: _model.bruker?.lastactive,
+                                          profilePic:
+                                              _model.bruker?.profilepic ?? '',
+                                          messages: [],
+                                          matId: null,
+                                        );
 
-                                  String? serializedConversation =
-                                      serializeParam(
-                                    existingConversation.toJson(),
-                                    ParamType.JSON,
-                                  );
+                                        // Insert the new conversation at the start of the list
+                                        FFAppState()
+                                            .conversations
+                                            .insert(0, newConversation);
 
-                                  _model.messageIsLoading = false;
-
-                                  if (serializedConversation != null) {
-                                    Navigator.pop(context);
-                                    context.pushNamed(
-                                      'message',
-                                      queryParameters: {
-                                        'conversation': serializedConversation,
+                                        // Return the new conversation
+                                        return newConversation;
                                       },
                                     );
+
+                                    String? serializedConversation =
+                                        serializeParam(
+                                      existingConversation.toJson(),
+                                      ParamType.JSON,
+                                    );
+
+                                    _model.messageIsLoading = false;
+
+                                    if (serializedConversation != null) {
+                                      Navigator.pop(context);
+                                      context.pushNamed(
+                                        'message',
+                                        queryParameters: {
+                                          'conversation':
+                                              serializedConversation,
+                                        },
+                                      );
+                                    }
+                                  } on SocketException {
+                                    _model.messageIsLoading = false;
+
+                                    Toasts.showErrorToast(
+                                        context, 'Ingen internettforbindelse');
+                                  } catch (e) {
+                                    _model.messageIsLoading = false;
+
+                                    Toasts.showErrorToast(
+                                        context, 'En feil oppstod');
                                   }
-                                } on SocketException {
-                                  _model.messageIsLoading = false;
-
-                                  Toasts.showErrorToast(
-                                      context, 'Ingen internettforbindelse');
-                                } catch (e) {
-                                  _model.messageIsLoading = false;
-
-                                  Toasts.showErrorToast(
-                                      context, 'En feil oppstod');
-                                }
+                                },
+                                child: const Text(
+                                  'Send melding',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: CupertinoColors.systemBlue,
+                                  ),
+                                ),
+                              ),
+                              CupertinoActionSheetAction(
+                                onPressed: () async {
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    barrierColor:
+                                        const Color.fromARGB(60, 17, 0, 0),
+                                    useRootNavigator: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return GestureDetector(
+                                        onTap: () =>
+                                            FocusScope.of(context).unfocus(),
+                                        child: Padding(
+                                          padding:
+                                              MediaQuery.viewInsetsOf(context),
+                                          child: ReportWidget(
+                                            username: widget.uid,
+                                            matId: null,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ).then((value) => setState(() {}));
+                                  return;
+                                },
+                                child: const Text(
+                                  'Rapporter',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors
+                                        .red, // Red text for 'Slett annonse'
+                                  ),
+                                ),
+                              ),
+                            ],
+                            cancelButton: CupertinoActionSheetAction(
+                              onPressed: () {
+                                Navigator.pop(
+                                    context); // Close the action sheet
                               },
+                              isDefaultAction: true,
                               child: const Text(
-                                'Send melding',
+                                'Avbryt',
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: CupertinoColors.systemBlue,
                                 ),
                               ),
                             ),
-                            CupertinoActionSheetAction(
-                              onPressed: () async {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  barrierColor:
-                                      const Color.fromARGB(60, 17, 0, 0),
-                                  useRootNavigator: true,
-                                  context: context,
-                                  builder: (context) {
-                                    return GestureDetector(
-                                      onTap: () =>
-                                          FocusScope.of(context).unfocus(),
-                                      child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
-                                        child: ReportWidget(
-                                          username: widget.uid,
-                                          matId: null,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ).then((value) => setState(() {}));
-                                return;
-                              },
-                              child: const Text(
-                                'Rapporter',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors
-                                      .red, // Red text for 'Slett annonse'
-                                ),
-                              ),
-                            ),
-                          ],
-                          cancelButton: CupertinoActionSheetAction(
-                            onPressed: () {
-                              Navigator.pop(context); // Close the action sheet
-                            },
-                            isDefaultAction: true,
-                            child: const Text(
-                              'Avbryt',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: CupertinoColors.systemBlue,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
             ],
           ),
           body: SafeArea(
@@ -455,6 +554,64 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          if (_model.blocked == true)
+                                            Container(
+                                              width: double.infinity,
+                                              color: Colors.grey[300],
+                                              padding: EdgeInsets.all(
+                                                  16.0), // Padding for the content
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(8, 5, 8, 5),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'Du har blokkert denne profilen',
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        String? token =
+                                                            await firebaseAuthService
+                                                                .getToken(
+                                                                    context);
+                                                        if (token == null) {
+                                                          return;
+                                                        } else {
+                                                          UserInfoService
+                                                              .blockUpdate(
+                                                                  token,
+                                                                  _model.bruker
+                                                                      ?.uid,
+                                                                  true);
+                                                          setState(() {
+                                                            _model.blocked =
+                                                                false; // Update state to unblock
+                                                          });
+                                                        }
+                                                      },
+                                                      child: Text(
+                                                        'Fjern blokkering',
+                                                        style: TextStyle(
+                                                          color: Colors
+                                                              .blue, // Blue color for "Fjern blokkering"
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                           Align(
                                             alignment:
                                                 const AlignmentDirectional(
@@ -927,6 +1084,10 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                   onPressed:
                                                                       () async {
                                                                     if (_model
+                                                                        .blocked) {
+                                                                      return;
+                                                                    }
+                                                                    if (_model
                                                                         .folgerLoading) {
                                                                       return;
                                                                     }
@@ -1015,9 +1176,12 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                             0,
                                                                             0,
                                                                             0),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
+                                                                    color: _model
+                                                                            .blocked
+                                                                        ? Colors.grey[
+                                                                            600]
+                                                                        : FlutterFlowTheme.of(context)
+                                                                            .alternate,
                                                                     textStyle: FlutterFlowTheme.of(
                                                                             context)
                                                                         .titleSmall
@@ -1413,9 +1577,10 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                     ),
                                   ],
                                 ),
-                              if (_model.matisLoading != true &&
-                                  _model.empty == true &&
-                                  _model.isDeleted == false)
+                              if ((_model.matisLoading != true &&
+                                      _model.empty == true &&
+                                      _model.isDeleted == false) ||
+                                  _model.blocked)
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
                                   child: SizedBox(
@@ -1428,12 +1593,13 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Image.asset(
-                                            'assets/images/no-posts.png',
-                                            width: 110,
-                                            height: 110,
-                                            fit: BoxFit.cover,
-                                          ),
+                                          if (_model.blocked == false)
+                                            Image.asset(
+                                              'assets/images/no-posts.png',
+                                              width: 110,
+                                              height: 110,
+                                              fit: BoxFit.cover,
+                                            ),
                                           const SizedBox(height: 16),
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
@@ -1443,13 +1609,18 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                 CrossAxisAlignment.center,
                                             children: [
                                               Text(
-                                                'Ingen annonser ennå',
+                                                _model.blocked
+                                                    ? 'Du har blokkert\ndenne brukeren'
+                                                    : 'Ingen annonser ennå',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyLarge
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          fontSize: 22,
+                                                          fontSize:
+                                                              _model.blocked
+                                                                  ? 28
+                                                                  : 22,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -1466,7 +1637,8 @@ class _BrukerPageWidgetState extends State<UserWidget>
                           ),
                         ),
                         if (_model.isLoading != true &&
-                            _model.tabBarCurrentIndex == 0)
+                            _model.tabBarCurrentIndex == 0 &&
+                            _model.blocked == false)
                           SliverPadding(
                             padding: const EdgeInsets.fromLTRB(5, 0, 5, 10),
                             sliver: SliverGrid(
@@ -1550,7 +1722,8 @@ class _BrukerPageWidgetState extends State<UserWidget>
                               ),
                             ),
                           ),
-                        if (_model.tabBarCurrentIndex == 1)
+                        if (_model.tabBarCurrentIndex == 1 &&
+                            _model.blocked == false)
                           SliverPadding(
                             padding: const EdgeInsets.fromLTRB(
                               0,

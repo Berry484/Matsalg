@@ -18,7 +18,6 @@ import 'package:mat_salg/pages/app_pages/home/product_details/details_services.d
 import 'package:mat_salg/pages/app_pages/home/product_details/get_updates/get_updates_widget.dart';
 import 'package:mat_salg/pages/app_pages/home/report/report_widget.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_animations.dart';
-import 'package:mat_salg/pages/map/kart_pop_up_widget.dart';
 import 'package:mat_salg/services/food_service.dart';
 import 'package:mat_salg/services/location_service.dart';
 import 'package:mat_salg/services/like_service.dart';
@@ -700,54 +699,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                     matvare
                                                                         .accuratePosition,
                                                                 onTapCallback:
-                                                                    () {
-                                                                  double
-                                                                      startLat =
-                                                                      matvare.lat ??
-                                                                          59.9138688;
-                                                                  double
-                                                                      startLng =
-                                                                      matvare.lng ??
-                                                                          10.7522454;
-                                                                  showModalBottomSheet(
-                                                                    isScrollControlled:
-                                                                        true,
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    useRootNavigator:
-                                                                        true,
-                                                                    enableDrag:
-                                                                        true,
-                                                                    context:
-                                                                        context,
-                                                                    isDismissible:
-                                                                        true,
-                                                                    builder:
-                                                                        (context) {
-                                                                      return GestureDetector(
-                                                                        onTap: () =>
-                                                                            FocusScope.of(context).unfocus(),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              KartPopUpWidget(
-                                                                            startLat:
-                                                                                startLat,
-                                                                            startLng:
-                                                                                startLng,
-                                                                            accuratePosition:
-                                                                                matvare.accuratePosition,
-                                                                          ),
-                                                                        ),
-                                                                      );
-                                                                    },
-                                                                  ).then((value) =>
-                                                                      safeSetState(
-                                                                          () {}));
-                                                                },
+                                                                    () {},
                                                               );
                                                             } else {
                                                               return ImageCard(
@@ -878,52 +830,43 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                 size: 32,
                                               ),
                                             ),
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                double startLat =
-                                                    matvare.lat ?? 59.9138688;
-                                                double startLng =
-                                                    matvare.lng ?? 10.7522454;
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  useRootNavigator: true,
-                                                  enableDrag: true,
-                                                  context: context,
-                                                  isDismissible: true,
-                                                  builder: (context) {
-                                                    return GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(context)
-                                                              .unfocus(),
-                                                      child: Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child: KartPopUpWidget(
-                                                          startLat: startLat,
-                                                          startLng: startLng,
-                                                          accuratePosition: matvare
-                                                              .accuratePosition,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) =>
-                                                    safeSetState(() {}));
-                                              },
-                                              child: Icon(
-                                                CupertinoIcons.map,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                size: 30,
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(2, 0, 0, 0),
+                                              child: InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  double startLat =
+                                                      matvare.lat ?? 59.9138688;
+                                                  double startLng =
+                                                      matvare.lng ?? 10.7522454;
+
+                                                  context.pushNamed(
+                                                    'Kart',
+                                                    queryParameters: {
+                                                      'startLat':
+                                                          startLat.toString(),
+                                                      'startLng':
+                                                          startLng.toString(),
+                                                      'accuratePosition':
+                                                          matvare
+                                                              .accuratePosition
+                                                              .toString(),
+                                                    },
+                                                  );
+                                                },
+                                                child: Icon(
+                                                  CupertinoIcons.map,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: 30,
+                                                ),
                                               ),
                                             ),
                                           ],

@@ -401,6 +401,28 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         parentNavigatorKey: _parentKey,
       ),
       GoRoute(
+        path: '/kart',
+        name: 'Kart',
+        builder: (context, state) {
+          final params = FFParameters(state);
+
+          // Retrieve parameters and handle nulls/defaults
+          final double? startLat =
+              params.getParam<double>('startLat', ParamType.double);
+          final double? startLng =
+              params.getParam<double>('startLng', ParamType.double);
+          final bool? accuratePosition =
+              params.getParam<bool>('accuratePosition', ParamType.bool);
+
+          return KartPopUpWidget(
+            startLat: startLat,
+            startLng: startLng,
+            accuratePosition: accuratePosition,
+          );
+        },
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
         path: '/brukerPage2',
         name: 'BrukerPage2',
         builder: (context, state) {
@@ -429,8 +451,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               params.getParam<Map<String, dynamic>>('matvare', ParamType.JSON);
           final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
           final matId = params.getParam<int>('matId', ParamType.int);
-
-          // Directly return the widget with the retrieved parameters
           return DetailsWidget(
               matvare: matvare, fromChat: fromChat, matId: matId);
         },

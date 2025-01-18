@@ -1,4 +1,3 @@
-import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import '../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../helper_components/flutter_flow/flutter_flow_util.dart';
 import '../../helper_components/widgets/maps/index.dart' as custom_widgets;
@@ -14,8 +13,8 @@ class KartPopUpWidget extends StatefulWidget {
     this.accuratePosition,
   });
 
-  final dynamic startLat;
-  final dynamic startLng;
+  final double? startLat;
+  final double? startLng;
   final bool? accuratePosition;
 
   @override
@@ -46,148 +45,79 @@ class _KartPopUpWidgetState extends State<KartPopUpWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 0.0),
-      child: Container(
-        width: 500,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).primary,
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(0.0),
-            bottomRight: Radius.circular(0.0),
-            topLeft: Radius.circular(14),
-            topRight: Radius.circular(14),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) {
+            return;
+          }
+        },
+        child: Scaffold(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          appBar: AppBar(
+            backgroundColor: FlutterFlowTheme.of(context).primary,
+            elevation: 0,
+            scrolledUnderElevation: 0.0,
+            leading: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+              child: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  size: 28.0,
+                ),
+                onPressed: () {
+                  context.safePop();
+                },
+              ),
+            ),
+            centerTitle: true,
+            title: Text(
+              'Kart',
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Nunito',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 18,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            actions: [],
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Divider(
-                      height: 22,
-                      thickness: 4,
-                      indent: MediaQuery.of(context).size.width * 0.4,
-                      endIndent: MediaQuery.of(context).size.width * 0.4,
-                      color: Colors.black12,
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Align(
-                            alignment: const AlignmentDirectional(0, 0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 0),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    7, 0, 0, 0),
-                                child: Text(
-                                  'Lukk',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Nunito',
-                                        fontSize: 17,
-                                        color: Colors.transparent,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, 0),
-                            child: Text(
-                              'Kart',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 18,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(0, 0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 0),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  try {
-                                    Navigator.pop(context);
-                                  } catch (e) {
-                                    Toasts.showErrorToast(
-                                        context, 'En feil oppstod');
-                                  }
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 7, 0),
-                                  child: Text(
-                                    'Lukk',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Nunito',
-                                          fontSize: 17,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+          body: SafeArea(
+            top: true,
+            bottom: false,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: Container(
+                      width: 500.0,
+                      height: MediaQuery.sizeOf(context).height,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                      ),
+                      child: SizedBox(
+                        width: 500.0,
+                        height: 450.0,
+                        child: custom_widgets.MyOsmKart(
+                          width: 500.0,
+                          height: 450.0,
+                          center: LatLng(
+                              widget.startLat ?? 0, widget.startLng ?? 0),
+                          accuratePosition: widget.accuratePosition ?? false,
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  )
+                ],
               ),
-              Flexible(
-                child: Container(
-                  width: 500.0,
-                  height: MediaQuery.sizeOf(context).height,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: SizedBox(
-                    width: 500.0,
-                    height: 450.0,
-                    child: custom_widgets.MyOsmKart(
-                      width: 500.0,
-                      height: 450.0,
-                      center: LatLng(widget.startLat, widget.startLng),
-                      accuratePosition: widget.accuratePosition ?? false,
-                    ),
-                  ),
-                ),
-              )
-            ],
+            ),
           ),
         ),
       ),
