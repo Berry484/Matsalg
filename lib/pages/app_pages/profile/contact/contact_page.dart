@@ -206,14 +206,14 @@ class _KontaktWidgetState extends State<ContactPage> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      20, 13, 20, 0),
+                                      20, 25, 20, 0),
                                   child: Column(children: [
                                     TextFormField(
                                       controller: _model.emailTextController,
                                       focusNode: _model.emailFocusNode,
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: 'E-post',
+                                        labelText: 'Min e-post',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(

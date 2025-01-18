@@ -203,6 +203,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
       if (_isLoading ||
           _model.end ||
           _model.empty ||
+          _model.blocked ||
           _model.matvarer == null ||
           _model.matvarer!.length < 44) return;
       _isLoading = true;
@@ -557,7 +558,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                           if (_model.blocked == true)
                                             Container(
                                               width: double.infinity,
-                                              color: Colors.grey[300],
+                                              color: Colors.grey[200],
                                               padding: EdgeInsets.all(
                                                   16.0), // Padding for the content
                                               child: Padding(
@@ -607,8 +608,9 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                       child: Text(
                                                         '  Fjern blokkering',
                                                         style: TextStyle(
-                                                          color: Colors
-                                                              .blue, // Blue color for "Fjern blokkering"
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
                                                           fontSize: 15,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -1624,10 +1626,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                         .bodyLarge
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          fontSize:
-                                                              _model.blocked
-                                                                  ? 28
-                                                                  : 22,
+                                                          fontSize: 22,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
