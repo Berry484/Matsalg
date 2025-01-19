@@ -643,8 +643,11 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                         ],
                                       ),
                                     if (_auth.currentUser!.providerData[0]
-                                            .providerId !=
-                                        'apple.com')
+                                                .providerId !=
+                                            'apple.com' &&
+                                        _auth.currentUser!.providerData[0]
+                                                .providerId !=
+                                            'google.com')
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [

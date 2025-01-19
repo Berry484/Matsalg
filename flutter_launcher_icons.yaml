@@ -1,0 +1,14 @@
+# flutter pub run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: "assets/logo.png"
+
+  android: "launcher_icon"
+  android_icon_size: 128  # Adjust size of the icon
+  adaptive_icon_background: "#ffffff"  # Set the background color for adaptive icons
+  adaptive_icon_foreground: "assets/logo.png"  # Use the foreground image as the icon
+  # adaptive_icon_foreground: "assets/icon/foreground.png"
+  # adaptive_icon_monochrome: "assets/icon/monochrome.png"
+
+  ios: true
+  image_path_ios: "assets/logo.png"
+  remove_alpha_channel_ios: true

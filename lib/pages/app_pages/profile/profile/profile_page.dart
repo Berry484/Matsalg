@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
@@ -226,36 +227,28 @@ class _ProfilWidgetState extends State<ProfilePage>
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                10, 0, 8, 0),
+                                10, 0, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Align(
-                                  alignment: const AlignmentDirectional(1, 0),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        try {
-                                          context.pushNamed('innstillinger');
-                                        } on SocketException {
-                                          Toasts.showErrorToast(context,
-                                              'Ingen internettforbindelse');
-                                        } catch (e) {
-                                          Toasts.showErrorToast(
-                                              context, 'En feil oppstod');
-                                        }
-                                      },
-                                      child: Icon(
-                                        CupertinoIcons.gear,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 29,
-                                      ),
-                                    ),
+                                FlutterFlowIconButton(
+                                  onPressed: () async {
+                                    try {
+                                      context.pushNamed('innstillinger');
+                                    } on SocketException {
+                                      Toasts.showErrorToast(context,
+                                          'Ingen internettforbindelse');
+                                    } catch (e) {
+                                      Toasts.showErrorToast(
+                                          context, 'En feil oppstod');
+                                    }
+                                  },
+                                  icon: Icon(
+                                    CupertinoIcons.gear,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 29,
                                   ),
                                 ),
                               ],

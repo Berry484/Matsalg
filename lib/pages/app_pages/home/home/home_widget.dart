@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:mat_salg/helper_components/widgets/category_items.dart';
 import 'package:mat_salg/helper_components/widgets/empty_list/empty_home_page.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_profiles.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/product_grid.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
@@ -155,7 +156,11 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
       } else {
         if (FFAppState().brukerLat == 59.9138688 ||
             FFAppState().brukerLng == 10.7522454) {
-          await fetchData();
+          try {
+            await fetchData();
+          } catch (e) {
+            logger.d(e);
+          }
         }
         if (refresh == true) {
           _model.followerEnd = false;
