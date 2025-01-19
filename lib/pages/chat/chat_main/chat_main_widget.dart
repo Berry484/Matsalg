@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart'
+    hide Message;
 import 'package:mat_salg/helper_components/widgets/empty_list/no_message_widget.dart';
 import 'package:mat_salg/pages/chat/MessagePreview/message_preview_widget.dart';
 import 'package:mat_salg/pages/chat/chat_main/chat_main_model.dart';
@@ -23,6 +27,8 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
   late Conversation conversation;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
@@ -52,6 +58,13 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
   }
 
   Future<void> checkPushPermission() async {
+    if (Platform.isAndroid) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+    }
+
     final settings = await _firebaseMessaging.getNotificationSettings();
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
@@ -60,8 +73,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
       return;
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.notDetermined) {
-      if (!mounted) return;
-      context.pushNamed('RequestPush');
+      if (Platform.isIOS) {
+        if (!mounted) return;
+        context.pushNamed('RequestPush');
+      }
     }
   }
 

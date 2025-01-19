@@ -99,7 +99,6 @@ class FirebaseApi {
     await _firebaseMessaging.getAPNSToken();
     logger.d('Token: $fCMToken');
     await sendToken(fCMToken);
-
     initPushNotifications();
     initLocalNotifications();
   }

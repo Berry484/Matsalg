@@ -42,7 +42,7 @@ class ProductList extends StatelessWidget {
             width: 235,
             height: 290,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
               border: Border.all(
                 color: Colors.transparent,
               ),
@@ -177,7 +177,7 @@ class ProductImage extends StatelessWidget {
           width: 200,
           height: 229,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(17),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             image: DecorationImage(
               image: imageProvider,
               fit: BoxFit.cover,
@@ -185,13 +185,16 @@ class ProductImage extends StatelessWidget {
           ),
         );
       },
-      fadeInDuration: Duration(milliseconds: 100),
+      fadeInDuration: const Duration(milliseconds: 100),
       fadeOutDuration: Duration.zero,
       placeholder: (context, url) => const SizedBox(
         width: 200,
         height: 229,
         child: DecoratedBox(
-          decoration: BoxDecoration(color: Color(0xFFF4F4F4)),
+          decoration: BoxDecoration(
+            color: Color(0xFFF4F4F4),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+          ),
         ),
       ),
       errorWidget: (context, url, error) => Container(

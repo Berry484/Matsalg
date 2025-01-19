@@ -15,6 +15,7 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
   List<UserInfoSearch>? profiler;
   int page = 0;
   int followerPage = 0;
+  int retryCount = 0;
   bool end = false;
   bool followerEnd = false;
   bool isloading = true;

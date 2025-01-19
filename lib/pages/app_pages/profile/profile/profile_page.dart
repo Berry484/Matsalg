@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
@@ -11,6 +12,8 @@ import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/product_grid.dart';
 import 'package:mat_salg/my_ip.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart'
+    hide Message;
 import 'package:mat_salg/pages/app_pages/home/user_ratings/ratings_widget.dart';
 import 'package:mat_salg/pages/app_pages/profile/profile/profile_services.dart';
 import 'package:mat_salg/services/firebase_service.dart';
@@ -41,6 +44,8 @@ class _ProfilWidgetState extends State<ProfilePage>
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late ProfileModel _model;
   late ProfileServices profileServices;
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   bool _isLoading = false;
 
   @override
@@ -61,6 +66,13 @@ class _ProfilWidgetState extends State<ProfilePage>
   }
 
   Future<void> checkPushPermission() async {
+    if (Platform.isAndroid) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+    }
+
     final settings = await _firebaseMessaging.getNotificationSettings();
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
@@ -69,8 +81,10 @@ class _ProfilWidgetState extends State<ProfilePage>
       return;
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.notDetermined) {
-      if (!mounted) return;
-      context.pushNamed('RequestPush');
+      if (Platform.isIOS) {
+        if (!mounted) return;
+        context.pushNamed('RequestPush');
+      }
     }
   }
 

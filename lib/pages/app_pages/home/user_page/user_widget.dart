@@ -608,9 +608,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                       child: Text(
                                                         '  Fjern blokkering',
                                                         style: TextStyle(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .alternate,
+                                                          color: Colors.blue,
                                                           fontSize: 15,
                                                           fontWeight:
                                                               FontWeight.w600,

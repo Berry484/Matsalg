@@ -56,8 +56,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
             getFolgerFoods(true);
           }
         }));
-    fetchData();
-    getAllFoods(true);
+    initialize();
     getFolgerFoods(true);
     _scrollController1.addListener(_scrollListener1);
     _scrollController.addListener(_scrollListener);
@@ -148,20 +147,23 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
     }
   }
 
+  Future<void> initialize() async {
+    LatLng? location =
+        await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
+    if (location != const LatLng(0.0, 0.0)) {
+      FFAppState().brukerLat = location.latitude;
+      FFAppState().brukerLng = location.longitude;
+    }
+    fetchData();
+    getAllFoods(true);
+  }
+
   Future<void> getAllFoods(bool refresh) async {
     try {
       String? token = await firebaseAuthService.getToken(context);
       if (token == null) {
         return;
       } else {
-        if (FFAppState().brukerLat == 59.9138688 ||
-            FFAppState().brukerLng == 10.7522454) {
-          try {
-            await fetchData();
-          } catch (e) {
-            logger.d(e);
-          }
-        }
         if (refresh == true) {
           _model.followerEnd = false;
           _model.followerPage = 0;
@@ -189,6 +191,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           });
         }
       }
+      _model.retryCount++;
     } on SocketException {
       setState(() {
         _model.noWifi = true;
@@ -197,6 +200,12 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
+      logger.d(e);
+      if (_model.retryCount < 3) {
+        logger.d("Retrying getting food items");
+        _model.retryCount += 1;
+        getAllFoods(true);
+      }
       if (!mounted) return;
       Toasts.showErrorToast(context, 'En feil oppstod');
     }
@@ -258,15 +267,6 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
         if (response.statusCode == 200) {
           final decodedResponse = jsonDecode(response.body);
           final userInfo = decodedResponse['userInfo'] ?? {};
-          LatLng? location = await getCurrentUserLocation(
-              defaultLocation: const LatLng(0.0, 0.0));
-          if (location != const LatLng(0.0, 0.0)) {
-            FFAppState().brukerLat = location.latitude;
-            FFAppState().brukerLng = location.longitude;
-          } else {
-            FFAppState().brukerLat = userInfo['lat'] ?? 59.9138688;
-            FFAppState().brukerLng = userInfo['lng'] ?? 10.7522454;
-          }
 
           FFAppState().brukernavn = userInfo['username'] ?? '';
           FFAppState().email = userInfo['email'] ?? '';
@@ -274,6 +274,8 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
           FFAppState().lastname = userInfo['lastname'] ?? '';
           FFAppState().bio = userInfo['bio'] ?? '';
           FFAppState().profilepic = userInfo['profilepic'] ?? '';
+          FFAppState().brukerLat = userInfo['lat'] ?? 59.9138688;
+          FFAppState().brukerLng = userInfo['lng'] ?? 10.7522454;
           FFAppState().followersCount = decodedResponse['followersCount'] ?? 0;
           FFAppState().followingCount = decodedResponse['followingCount'] ?? 0;
           FFAppState().ratingTotalCount =

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_profiles.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
@@ -31,6 +32,8 @@ class _HjemWidgetState extends State<NotificationsWidget>
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
@@ -48,6 +51,13 @@ class _HjemWidgetState extends State<NotificationsWidget>
   }
 
   Future<void> checkPushPermission() async {
+    if (Platform.isAndroid) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+    }
+
     final settings = await _firebaseMessaging.getNotificationSettings();
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
@@ -56,8 +66,10 @@ class _HjemWidgetState extends State<NotificationsWidget>
       return;
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.notDetermined) {
-      if (!mounted) return;
-      context.pushNamed('RequestPush');
+      if (Platform.isIOS) {
+        if (!mounted) return;
+        context.pushNamed('RequestPush');
+      }
     }
   }
 
