@@ -282,6 +282,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                             )
                           : const SizedBox.shrink())
                   : CustomScrollView(
+                      cacheExtent: 1000,
                       slivers: [
                         SliverToBoxAdapter(
                           child: Column(

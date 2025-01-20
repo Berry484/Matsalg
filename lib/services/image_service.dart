@@ -52,10 +52,9 @@ class ApiMultiplePics {
       var response = await request.send();
 
       var responseString = await http.Response.fromStream(response);
-
+      logger.d('Uploaded images ${response.statusCode}');
       if (response.statusCode == 200) {
         List<dynamic> responseJson = jsonDecode(responseString.body);
-
         List<String> fileLinks = responseJson.map((file) {
           return file['fileLink'] as String;
         }).toList();

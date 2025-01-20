@@ -561,11 +561,11 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                 child: child,
               );
             },
-            child: SafeArea(
-              top: true,
-              child: _model.searching
-                  ? Column(
-                      key: ValueKey('searching'),
+            child: _model.searching
+                ? SafeArea(
+                    key: ValueKey('searching'),
+                    top: true,
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -984,9 +984,11 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                           ),
                         ),
                       ],
-                    )
-                  : Column(
-                      key: ValueKey('home'),
+                    ))
+                : SafeArea(
+                    key: ValueKey('home'),
+                    top: true,
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -1010,6 +1012,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                   child: CustomScrollView(
                                     physics: AlwaysScrollableScrollPhysics(),
                                     controller: _scrollController1,
+                                    cacheExtent: 1000,
                                     slivers: [
                                       SliverToBoxAdapter(
                                         child: Column(
@@ -1155,6 +1158,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                   child: CustomScrollView(
                                     physics: AlwaysScrollableScrollPhysics(),
                                     controller: _scrollController,
+                                    cacheExtent: 1000,
                                     slivers: [
                                       SliverToBoxAdapter(
                                         child: Column(
@@ -1417,7 +1421,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                         ),
                       ],
                     ),
-            ),
+                  ),
           ),
         ),
       ),
