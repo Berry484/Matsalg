@@ -143,6 +143,18 @@ class FirebaseAuthService {
       }
 
       return idToken;
+    } on FirebaseAuthException catch (e) {
+      // Handle token refresh failure gracefully.
+      if (e.code == 'network-request-failed') {
+        logger.d("No network connection to refresh the token.");
+        if (context != null) {
+          if (!context.mounted) return null;
+          Toasts.showErrorToast(context, 'Ingen internettforbindelse');
+        }
+        return null;
+      } else {
+        rethrow;
+      }
     } catch (e) {
       if (context != null) {
         if (!context.mounted) return null;
