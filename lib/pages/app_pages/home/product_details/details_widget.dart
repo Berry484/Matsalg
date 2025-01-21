@@ -282,7 +282,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                             )
                           : const SizedBox.shrink())
                   : CustomScrollView(
-                      cacheExtent: 1000,
+                      cacheExtent: 700,
                       slivers: [
                         SliverToBoxAdapter(
                           child: Column(
@@ -599,97 +599,40 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                 children: [
                                   Expanded(
                                     child: Builder(
-                                      builder: (context) => InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onDoubleTap: () async {
-                                          try {
-                                            HapticFeedback.selectionClick();
-                                            String? token =
-                                                await firebaseAuthService
-                                                    .getToken(context);
-                                            if (token == null) {
-                                              return;
-                                            }
-                                            safeSetState(() =>
-                                                _model.liker = !_model.liker!);
-                                            if (_model.liker!) {
-                                              FFAppState()
-                                                  .unlikedFoods
-                                                  .remove(matvare.matId);
-                                              if (!FFAppState()
-                                                  .likedFoods
-                                                  .contains(matvare.matId)) {
-                                                FFAppState()
-                                                    .likedFoods
-                                                    .add(matvare.matId ?? 0);
-                                              }
-
-                                              _triggerHeartAnimation();
-                                              ApiLike.sendLike(
-                                                  token, matvare.matId);
-                                            } else {
-                                              FFAppState()
-                                                  .likedFoods
-                                                  .remove(matvare.matId);
-                                              if (!FFAppState()
-                                                  .unlikedFoods
-                                                  .contains(matvare.matId)) {
-                                                FFAppState()
-                                                    .unlikedFoods
-                                                    .add(matvare.matId ?? 0);
-                                              }
-                                              ApiLike.deleteLike(
-                                                  token, matvare.matId);
-                                            }
-                                          } on SocketException {
-                                            if (!context.mounted) return;
-                                            Toasts.showErrorToast(context,
-                                                'Ingen internettforbindelse');
-                                          } catch (e) {
-                                            logger.d(e);
-                                            if (!context.mounted) return;
-                                            Toasts.showErrorToast(
-                                                context, 'En feil oppstod');
-                                          }
-                                        },
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.59,
-                                          child: Stack(
-                                            children: [
-                                              SizedBox(
-                                                width: double.infinity,
-                                                child: Stack(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(0.0,
-                                                              0.0, 0.0, 40.0),
-                                                      child: PageView(
-                                                        controller: _model
-                                                                .pageViewController ??=
-                                                            PageController(
-                                                                initialPage: 1),
-                                                        onPageChanged:
-                                                            (value) =>
-                                                                safeSetState(
-                                                                    () {}),
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        children: List.generate(
-                                                          matvare.imgUrls!
-                                                                  .length +
-                                                              1,
-                                                          (index) {
-                                                            if (index == 0) {
-                                                              return MapWithButton(
+                                      builder: (context) => SizedBox(
+                                        width: double.infinity,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.59,
+                                        child: Stack(
+                                          children: [
+                                            SizedBox(
+                                              width: double.infinity,
+                                              child: Stack(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                            0.0, 40.0),
+                                                    child: PageView(
+                                                      controller: _model
+                                                              .pageViewController ??=
+                                                          PageController(
+                                                              initialPage: 1),
+                                                      onPageChanged: (value) =>
+                                                          safeSetState(() {}),
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      children: List.generate(
+                                                        matvare.imgUrls!
+                                                                .length +
+                                                            1,
+                                                        (index) {
+                                                          if (index == 0) {
+                                                            return RepaintBoundary(
+                                                              child:
+                                                                  MapWithButton(
                                                                 latitude: matvare
                                                                         .lat ??
                                                                     59.9138688,
@@ -700,56 +643,168 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                     matvare
                                                                         .accuratePosition,
                                                                 onTapCallback:
-                                                                    () {},
-                                                              );
-                                                            } else {
-                                                              return ImageCard(
+                                                                    () {
+                                                                  double
+                                                                      startLat =
+                                                                      matvare.lat ??
+                                                                          59.9138688;
+                                                                  double
+                                                                      startLng =
+                                                                      matvare.lng ??
+                                                                          10.7522454;
+                                                                  context
+                                                                      .pushNamed(
+                                                                    'Kart',
+                                                                    queryParameters: {
+                                                                      'startLat':
+                                                                          startLat
+                                                                              .toString(),
+                                                                      'startLng':
+                                                                          startLng
+                                                                              .toString(),
+                                                                      'accuratePosition': matvare
+                                                                          .accuratePosition
+                                                                          .toString(),
+                                                                    },
+                                                                  );
+                                                                },
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            return InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onDoubleTap:
+                                                                  () async {
+                                                                try {
+                                                                  HapticFeedback
+                                                                      .selectionClick();
+                                                                  String?
+                                                                      token =
+                                                                      await firebaseAuthService
+                                                                          .getToken(
+                                                                              context);
+                                                                  if (token ==
+                                                                      null) {
+                                                                    return;
+                                                                  }
+                                                                  safeSetState(() =>
+                                                                      _model.liker =
+                                                                          !_model
+                                                                              .liker!);
+                                                                  if (_model
+                                                                      .liker!) {
+                                                                    FFAppState()
+                                                                        .unlikedFoods
+                                                                        .remove(
+                                                                            matvare.matId);
+                                                                    if (!FFAppState()
+                                                                        .likedFoods
+                                                                        .contains(
+                                                                            matvare.matId)) {
+                                                                      FFAppState()
+                                                                          .likedFoods
+                                                                          .add(matvare.matId ??
+                                                                              0);
+                                                                    }
+
+                                                                    _triggerHeartAnimation();
+                                                                    ApiLike.sendLike(
+                                                                        token,
+                                                                        matvare
+                                                                            .matId);
+                                                                  } else {
+                                                                    FFAppState()
+                                                                        .likedFoods
+                                                                        .remove(
+                                                                            matvare.matId);
+                                                                    if (!FFAppState()
+                                                                        .unlikedFoods
+                                                                        .contains(
+                                                                            matvare.matId)) {
+                                                                      FFAppState()
+                                                                          .unlikedFoods
+                                                                          .add(matvare.matId ??
+                                                                              0);
+                                                                    }
+                                                                    ApiLike.deleteLike(
+                                                                        token,
+                                                                        matvare
+                                                                            .matId);
+                                                                  }
+                                                                } on SocketException {
+                                                                  if (!context
+                                                                      .mounted) {
+                                                                    return;
+                                                                  }
+                                                                  Toasts.showErrorToast(
+                                                                      context,
+                                                                      'Ingen internettforbindelse');
+                                                                } catch (e) {
+                                                                  logger.d(e);
+                                                                  if (!context
+                                                                      .mounted) {
+                                                                    return;
+                                                                  }
+                                                                  Toasts.showErrorToast(
+                                                                      context,
+                                                                      'En feil oppstod');
+                                                                }
+                                                              },
+                                                              child: ImageCard(
                                                                 imageUrl:
                                                                     '${ApiConstants.baseUrl}${matvare.imgUrls![index - 1]}',
                                                                 isSoldOut: matvare
                                                                         .kjopt ==
                                                                     true,
-                                                              );
-                                                            }
-                                                          },
-                                                        ),
+                                                              ),
+                                                            );
+                                                          }
+                                                        },
                                                       ),
                                                     ),
-                                                    Align(
-                                                      alignment:
-                                                          const AlignmentDirectional(
-                                                              0.0, 1.0),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(16.0,
-                                                                0.0, 0.0, 16.0),
-                                                        child: CustomPageIndicator(
-                                                            itemCount: matvare
-                                                                    .imgUrls!
-                                                                    .length +
-                                                                1,
-                                                            currentIndex: _model
-                                                                .pageViewCurrentIndex),
-                                                      ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            0.0, 1.0),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(16.0,
+                                                              0.0, 0.0, 16.0),
+                                                      child: CustomPageIndicator(
+                                                          itemCount: matvare
+                                                                  .imgUrls!
+                                                                  .length +
+                                                              1,
+                                                          currentIndex: _model
+                                                              .pageViewCurrentIndex),
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-                                              if (_model.showHeart)
-                                                Align(
-                                                  alignment: Alignment.center,
-                                                  child: Icon(
-                                                    CupertinoIcons.heart_fill,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                    size: 130.0,
-                                                  ).animateOnPageLoad(animationsMap[
-                                                      'iconOnPageLoadAnimation']!),
-                                                ),
-                                            ],
-                                          ),
+                                            ),
+                                            if (_model.showHeart)
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: Icon(
+                                                  CupertinoIcons.heart_fill,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryBackground,
+                                                  size: 130.0,
+                                                ).animateOnPageLoad(animationsMap[
+                                                    'iconOnPageLoadAnimation']!),
+                                              ),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -1499,69 +1554,72 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                             ],
                           ),
                         ),
-                        SliverGrid(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: childAspectRatio,
-                          ),
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              if (_model.isloading) {
-                                return const ShimmerLoadingWidget();
-                              }
-                              final matvare = _model.nyematvarer![index];
-                              return ProductList(
-                                matvare: matvare,
-                                onTap: () async {
-                                  try {
-                                    if (widget.fromChat != true) {
-                                      context.pushNamed(
-                                        GoRouterState.of(context)
-                                                .uri
-                                                .toString()
-                                                .startsWith('/profil')
-                                            ? 'MatDetaljBondegard1'
-                                            : GoRouterState.of(context)
-                                                    .uri
-                                                    .toString()
-                                                    .startsWith(
-                                                        '/notifications')
-                                                ? 'ProductDetailNotification'
-                                                : 'ProductDetail',
-                                        queryParameters: {
-                                          'matvare': serializeParam(
-                                            matvare.toJson(),
-                                            ParamType.JSON,
-                                          ),
-                                        },
-                                      );
-                                    } else {
-                                      context.pushNamed(
-                                        'MatDetaljBondegard2',
-                                        queryParameters: {
-                                          'matvare': serializeParam(
-                                            matvare.toJson(),
-                                            ParamType.JSON,
-                                          ),
-                                          'fromChat': serializeParam(
-                                            true,
-                                            ParamType.bool,
-                                          ),
-                                        },
-                                      );
+                        SliverPadding(
+                          padding: const EdgeInsets.fromLTRB(2.5, 0, 2.5, 0),
+                          sliver: SliverGrid(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: childAspectRatio,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) {
+                                if (_model.isloading) {
+                                  return const ShimmerLoadingWidget();
+                                }
+                                final matvare = _model.nyematvarer![index];
+                                return ProductList(
+                                  matvare: matvare,
+                                  onTap: () async {
+                                    try {
+                                      if (widget.fromChat != true) {
+                                        context.pushNamed(
+                                          GoRouterState.of(context)
+                                                  .uri
+                                                  .toString()
+                                                  .startsWith('/profil')
+                                              ? 'MatDetaljBondegard1'
+                                              : GoRouterState.of(context)
+                                                      .uri
+                                                      .toString()
+                                                      .startsWith(
+                                                          '/notifications')
+                                                  ? 'ProductDetailNotification'
+                                                  : 'ProductDetail',
+                                          queryParameters: {
+                                            'matvare': serializeParam(
+                                              matvare.toJson(),
+                                              ParamType.JSON,
+                                            ),
+                                          },
+                                        );
+                                      } else {
+                                        context.pushNamed(
+                                          'MatDetaljBondegard2',
+                                          queryParameters: {
+                                            'matvare': serializeParam(
+                                              matvare.toJson(),
+                                              ParamType.JSON,
+                                            ),
+                                            'fromChat': serializeParam(
+                                              true,
+                                              ParamType.bool,
+                                            ),
+                                          },
+                                        );
+                                      }
+                                    } catch (e) {
+                                      Toasts.showErrorToast(context,
+                                          'En uforventet feil oppstod');
+                                      logger.d('Error navigating page');
                                     }
-                                  } catch (e) {
-                                    Toasts.showErrorToast(
-                                        context, 'En uforventet feil oppstod');
-                                    logger.d('Error navigating page');
-                                  }
-                                },
-                              );
-                            },
-                            childCount: _model.isloading
-                                ? 1
-                                : _model.nyematvarer?.length ?? 0,
+                                  },
+                                );
+                              },
+                              childCount: _model.isloading
+                                  ? 1
+                                  : _model.nyematvarer?.length ?? 0,
+                            ),
                           ),
                         ),
                       ],

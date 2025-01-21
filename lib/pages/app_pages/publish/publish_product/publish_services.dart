@@ -445,7 +445,6 @@ class PublishServices {
             filesData.add(null);
           }
         }
-
         final List<Uint8List> filteredFilesData = filesData
             .where((file) => file != null && file.isNotEmpty)
             .cast<Uint8List>()
@@ -459,7 +458,6 @@ class PublishServices {
 
         pris = model.produktPrisSTKTextController.text;
         kg = false;
-
         if (filelinks != null && filelinks.isNotEmpty) {
           final response = await apiFoodService.uploadfood(
             token: token,

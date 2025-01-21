@@ -1012,7 +1012,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                   child: CustomScrollView(
                                     physics: AlwaysScrollableScrollPhysics(),
                                     controller: _scrollController1,
-                                    cacheExtent: 1000,
+                                    cacheExtent: 700,
                                     slivers: [
                                       SliverToBoxAdapter(
                                         child: Column(
@@ -1086,60 +1086,68 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                           ],
                                         ),
                                       ),
-                                      SliverGrid(
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          childAspectRatio: childAspectRatio,
-                                        ),
-                                        delegate: SliverChildBuilderDelegate(
-                                          (context, index) {
-                                            if (_model.isloading) {
-                                              return const ShimmerLoadingWidget();
-                                            }
-                                            if (index <
-                                                (_model.matvarer?.length ??
-                                                    0)) {
-                                              final matvare =
-                                                  _model.matvarer![index];
-                                              return ProductList(
-                                                matvare: matvare,
-                                                onTap: () async {
-                                                  FocusScope.of(context)
-                                                      .requestFocus(
-                                                          FocusNode());
-                                                  context.pushNamed(
-                                                    'ProductDetail',
-                                                    queryParameters: {
-                                                      'matvare': serializeParam(
-                                                          matvare.toJson(),
-                                                          ParamType.JSON),
-                                                    },
-                                                  );
-                                                },
-                                              );
-                                            } else {
-                                              if (_model.matvarer == null ||
-                                                  _model.matvarer!.length <
-                                                      44) {
-                                                return Container();
-                                              } else {
+                                      SliverPadding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            2.5, 0, 2.5, 0),
+                                        sliver: SliverGrid(
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: childAspectRatio,
+                                          ),
+                                          delegate: SliverChildBuilderDelegate(
+                                            (context, index) {
+                                              if (_model.isloading) {
                                                 return const ShimmerLoadingWidget();
                                               }
-                                            }
-                                          },
-                                          childCount: _model.isloading
-                                              ? 1
-                                              : _model.end ||
-                                                      (_model.matvarer ==
-                                                              null ||
-                                                          _model.matvarer!
-                                                                  .length <
-                                                              44)
-                                                  ? _model.matvarer?.length ?? 0
-                                                  : (_model.matvarer?.length ??
-                                                          0) +
-                                                      1,
+                                              if (index <
+                                                  (_model.matvarer?.length ??
+                                                      0)) {
+                                                final matvare =
+                                                    _model.matvarer![index];
+                                                return ProductList(
+                                                  matvare: matvare,
+                                                  onTap: () async {
+                                                    FocusScope.of(context)
+                                                        .requestFocus(
+                                                            FocusNode());
+                                                    context.pushNamed(
+                                                      'ProductDetail',
+                                                      queryParameters: {
+                                                        'matvare':
+                                                            serializeParam(
+                                                                matvare
+                                                                    .toJson(),
+                                                                ParamType.JSON),
+                                                      },
+                                                    );
+                                                  },
+                                                );
+                                              } else {
+                                                if (_model.matvarer == null ||
+                                                    _model.matvarer!.length <
+                                                        44) {
+                                                  return Container();
+                                                } else {
+                                                  return const ShimmerLoadingWidget();
+                                                }
+                                              }
+                                            },
+                                            childCount: _model.isloading
+                                                ? 1
+                                                : _model.end ||
+                                                        (_model.matvarer ==
+                                                                null ||
+                                                            _model.matvarer!
+                                                                    .length <
+                                                                44)
+                                                    ? _model.matvarer?.length ??
+                                                        0
+                                                    : (_model.matvarer
+                                                                ?.length ??
+                                                            0) +
+                                                        1,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -1158,7 +1166,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                   child: CustomScrollView(
                                     physics: AlwaysScrollableScrollPhysics(),
                                     controller: _scrollController,
-                                    cacheExtent: 1000,
+                                    cacheExtent: 700,
                                     slivers: [
                                       SliverToBoxAdapter(
                                         child: Column(

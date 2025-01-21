@@ -525,7 +525,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                       getUserFood(true);
                     },
                     child: CustomScrollView(
-                      cacheExtent: 1000,
+                      cacheExtent: 700,
                       physics: AlwaysScrollableScrollPhysics(),
                       controller: _scrollController1,
                       slivers: [

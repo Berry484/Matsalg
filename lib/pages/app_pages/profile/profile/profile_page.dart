@@ -312,7 +312,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: CustomScrollView(
-                        cacheExtent: 1000,
+                        cacheExtent: 700,
                         physics: AlwaysScrollableScrollPhysics(),
                         controller: _scrollController1,
                         slivers: [

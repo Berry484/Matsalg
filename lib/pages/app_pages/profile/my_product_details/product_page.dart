@@ -514,7 +514,32 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                     matvare
                                                                         .accuratePosition,
                                                                 onTapCallback:
-                                                                    () {},
+                                                                    () {
+                                                                  double
+                                                                      startLat =
+                                                                      matvare.lat ??
+                                                                          59.9138688;
+                                                                  double
+                                                                      startLng =
+                                                                      matvare.lng ??
+                                                                          10.7522454;
+
+                                                                  context
+                                                                      .pushNamed(
+                                                                    'Kart',
+                                                                    queryParameters: {
+                                                                      'startLat':
+                                                                          startLat
+                                                                              .toString(),
+                                                                      'startLng':
+                                                                          startLng
+                                                                              .toString(),
+                                                                      'accuratePosition': matvare
+                                                                          .accuratePosition
+                                                                          .toString(),
+                                                                    },
+                                                                  );
+                                                                },
                                                               );
                                                             } else {
                                                               return ImageCard(

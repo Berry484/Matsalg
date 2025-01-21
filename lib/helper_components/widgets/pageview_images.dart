@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_theme.dart';
 import 'package:mat_salg/helper_components/flutter_flow/lat_lng.dart';
 import '../../helper_components/widgets/maps/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
@@ -92,21 +94,45 @@ class MapWithButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Stack(
-        children: [
-          custom_widgets.MyOsmKart(
+    return Stack(
+      children: [
+        RepaintBoundary(
+          child: custom_widgets.MyOsmKartNoGesture(
             center: LatLng(latitude ?? 0, longitude ?? 0),
             accuratePosition: accuratePosition ?? false,
           ),
-          Positioned.fill(
-            child: Container(
-              color: Colors.transparent,
+        ),
+        Positioned.fill(
+          child: Container(
+            color: Colors.transparent,
+          ),
+        ),
+        Positioned(
+          bottom: 16,
+          right: 16,
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTapDown: (details) => onTapCallback(),
+            child: Transform.rotate(
+              angle: -1.7,
+              child: Container(
+                height: 43,
+                width: 43,
+                decoration: BoxDecoration(
+                  color:
+                      FlutterFlowTheme.of(context).alternate.withOpacity(0.93),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  CupertinoIcons.arrow_up_left_arrow_down_right,
+                  color: FlutterFlowTheme.of(context).primary,
+                  size: 22,
+                ),
+              ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

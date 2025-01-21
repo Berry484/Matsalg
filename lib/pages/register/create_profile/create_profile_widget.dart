@@ -325,8 +325,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 15,
+                                                          fontSize: 16,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                 textAlign: TextAlign.start,
                                                 validator: _model
@@ -496,8 +498,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 15,
+                                                          fontSize: 16,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                 textAlign: TextAlign.start,
                                                 validator: _model
@@ -625,8 +629,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 15,
+                                                          fontSize: 16,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                 textAlign: TextAlign.start,
                                                 validator: _model
@@ -758,8 +764,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 15,
+                                                          fontSize: 16,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                 textAlign: TextAlign.start,
                                                 validator: _model
@@ -935,8 +943,10 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 15,
+                                                          fontSize: 16,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                 textAlign: TextAlign.start,
                                                 validator: _model

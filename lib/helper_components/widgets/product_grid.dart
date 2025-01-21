@@ -38,98 +38,99 @@ class ProductList extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: onTap,
-          child: Container(
-            width: 235,
-            height: 290,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(16)),
-              border: Border.all(
-                color: Colors.transparent,
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
+                border: Border.all(
+                  color: Colors.transparent,
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ProductImage(imageUrl: imageUrl),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Align(
-                          alignment: const AlignmentDirectional(-1, 0),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                7, 0, 0, 0),
-                            child: Text(
-                              matvare.name ?? '',
-                              textAlign: TextAlign.start,
-                              style: theme.bodyLarge.override(
-                                fontFamily: 'Nunito',
-                                fontSize: 14,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Flexible(
-                          child: Align(
-                            alignment: const AlignmentDirectional(0, 0),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ProductImage(imageUrl: imageUrl),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Align(
+                            alignment: const AlignmentDirectional(-1, 0),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  11, 0, 11, 0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    '${matvare.price} Kr',
-                                    textAlign: TextAlign.end,
-                                    style: theme.titleLarge.override(
-                                      fontFamily: 'Nunito',
-                                      color: theme.secondaryText,
-                                      fontSize: 14,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    getFormattedDistance(),
-                                    textAlign: TextAlign.start,
-                                    style: theme.bodyMedium.override(
-                                      fontFamily: 'Nunito',
-                                      color: theme.secondaryText,
-                                      fontSize: 14,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
+                                  7, 0, 0, 0),
+                              child: Text(
+                                matvare.name ?? '',
+                                textAlign: TextAlign.start,
+                                style: theme.bodyLarge.override(
+                                  fontFamily: 'Nunito',
+                                  fontSize: 14,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Flexible(
+                            child: Align(
+                              alignment: const AlignmentDirectional(0, 0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    11, 0, 11, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      '${matvare.price} Kr',
+                                      textAlign: TextAlign.end,
+                                      style: theme.titleLarge.override(
+                                        fontFamily: 'Nunito',
+                                        color: theme.secondaryText,
+                                        fontSize: 14,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      getFormattedDistance(),
+                                      textAlign: TextAlign.start,
+                                      style: theme.bodyMedium.override(
+                                        fontFamily: 'Nunito',
+                                        color: theme.secondaryText,
+                                        fontSize: 14,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -174,7 +175,6 @@ class ProductImage extends StatelessWidget {
       imageUrl: imageUrl,
       imageBuilder: (context, imageProvider) {
         return Container(
-          width: 200,
           height: 229,
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -188,7 +188,6 @@ class ProductImage extends StatelessWidget {
       fadeInDuration: const Duration(milliseconds: 100),
       fadeOutDuration: Duration.zero,
       placeholder: (context, url) => const SizedBox(
-        width: 200,
         height: 229,
         child: DecoratedBox(
           decoration: BoxDecoration(
@@ -198,7 +197,6 @@ class ProductImage extends StatelessWidget {
         ),
       ),
       errorWidget: (context, url, error) => Container(
-        width: 200,
         height: 229,
         color: Colors.grey,
         child: const Center(

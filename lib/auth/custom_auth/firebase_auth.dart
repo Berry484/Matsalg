@@ -153,7 +153,12 @@ class FirebaseAuthService {
         }
         return null;
       } else {
-        rethrow;
+        if (context != null) {
+          if (!context.mounted) return null;
+          context.go('/registrer');
+        }
+        FFAppState().login = false;
+        return null;
       }
     } catch (e) {
       if (context != null) {
