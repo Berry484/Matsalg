@@ -29,6 +29,7 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
+    checkPosition();
     webSocketService = WebSocketService();
     _model = createModel(context, () => SettingsModel());
   }
