@@ -175,7 +175,7 @@ class _ReAuthenticateWidgetState extends State<ForgotPasswordWidget> {
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(16, 30, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                           child: Text(
                             _model.changPassword
                                 ? 'Endre passord'
@@ -186,15 +186,15 @@ class _ReAuthenticateWidgetState extends State<ForgotPasswordWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Nunito',
-                                  fontSize: 20,
+                                  fontSize: 22,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w800,
                                 ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16, 3, 20, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 3, 0, 0),
                           child: Text(
                             _model.changPassword
                                 ? 'Fyll inn det nye passordet ditt. Minst 7 tegn'
@@ -205,11 +205,10 @@ class _ReAuthenticateWidgetState extends State<ForgotPasswordWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Nunito',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 15.0,
+                                  color: Colors.grey[700],
+                                  fontSize: 16.0,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                           ),
                         ),

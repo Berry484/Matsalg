@@ -609,6 +609,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
                         : (_model.isloading)
                             ? const LoadingAnimationWidget()
                             : GridView.builder(
+                                physics: AlwaysScrollableScrollPhysics(),
                                 controller: _scrollController1,
                                 padding: const EdgeInsets.fromLTRB(
                                   5,

@@ -116,7 +116,7 @@ class _KontaktWidgetState extends State<ContactPage> {
                                     .bodyMedium
                                     .override(
                                       fontFamily: 'Nunito',
-                                      fontSize: 20,
+                                      fontSize: 21,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w800,
                                     ),
@@ -131,11 +131,10 @@ class _KontaktWidgetState extends State<ContactPage> {
                                     .bodyMedium
                                     .override(
                                       fontFamily: 'Nunito',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 15.0,
+                                      color: Colors.grey[700],
+                                      fontSize: 16.0,
                                       letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                     ),
                               ),
                             ),

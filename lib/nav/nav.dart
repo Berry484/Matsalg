@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:mat_salg/pages/app_pages/profile/contact/contact_page.dart';
 import 'package:mat_salg/pages/app_pages/profile/product_stats/product_stats_page.dart';
+import 'package:mat_salg/pages/app_pages/profile/settings/privacy_security/list_blocked/blocked_widget.dart';
 
 import '/index.dart';
 import 'package:flutter/material.dart';
@@ -330,7 +331,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                         final folger =
                             params.getParam<String>('folger', ParamType.String);
 
-                        // Return the FollowersWidget with the retrieved parameters
                         return FollowersWidget(
                             username: username, folger: folger);
                       },
@@ -354,7 +354,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                       path: 'innstillinger',
                       name: 'innstillinger',
                       builder: (context, state) {
-                        // Return the widget for the settings page
                         return const SettingsPage();
                       },
                     ),
@@ -362,8 +361,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                       path: 'konto',
                       name: 'Konto',
                       builder: (context, state) {
-                        // Return the widget for the settings page
                         return const AccountPage();
+                      },
+                    ),
+                    GoRoute(
+                      path: 'privacy',
+                      name: 'Privacy',
+                      builder: (context, state) {
+                        return const PrivacyWidget();
+                      },
+                    ),
+                    GoRoute(
+                      path: 'blockedUsers',
+                      name: 'BlockedUsers',
+                      builder: (context, state) {
+                        return const BlockedWidget();
                       },
                     ),
                   ]),

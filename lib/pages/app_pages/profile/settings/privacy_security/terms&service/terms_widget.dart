@@ -86,7 +86,7 @@ class _RequestLocationWidgetState extends State<TermsWidget> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              15, 0, 35, 50),
+                                              15, 16, 35, 50),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,

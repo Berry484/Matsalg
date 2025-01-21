@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/models/user.dart';
+import 'package:mat_salg/models/user_info.dart';
 import 'package:mat_salg/models/user_info_search.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
@@ -311,14 +312,12 @@ class UserInfoService {
         'Authorization': 'Bearer $token',
       };
 
-      // Using the timeout method and sending the username (uid) as a query parameter
       final response = await http
           .get(
-            Uri.parse(
-                '$baseUrl/rrh/brukere/seLastActiveTime?username=$uid'), // Update the URL to use the correct endpoint
+            Uri.parse('$baseUrl/rrh/brukere/seLastActiveTime?username=$uid'),
             headers: headers,
           )
-          .timeout(const Duration(seconds: 21)); // Set timeout to 5 seconds
+          .timeout(const Duration(seconds: 21));
 
       if (response.statusCode == 200) {
         return response;
@@ -502,6 +501,51 @@ class UserInfoService {
       Toasts.showErrorToast(context, 'En feil oppstod');
     }
     return null;
+  }
+
+//---------------------------------------------------------------------------------------------------------------
+//--------------------Lists blocked users------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------
+  static Future<List<UserInfo>?> listBlocked(String? token) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+
+      // Make the API request with a timeout of 5 seconds
+      final response = await http
+          .get(
+            Uri.parse('$baseUrl/block/user'),
+            headers: headers,
+          )
+          .timeout(const Duration(seconds: 21)); // Timeout after 5 seconds
+
+      if (response.statusCode == 200) {
+        // Parse the response body
+        List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        // Map the dynamic data to UserInfo instances
+        List<UserInfo> folgere = data.map((userData) {
+          return UserInfo(
+            uid: userData['uid'],
+            username: userData['username'],
+            firstname: userData['firstname'],
+            lastname: userData['lastname'],
+            profilepic: userData['profilepic'],
+            following: userData['following'],
+          );
+        }).toList();
+
+        return folgere;
+      } else {
+        return null;
+      }
+    } on SocketException {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
   }
 
 //---------------------------------------------------------------------------------------------------------------

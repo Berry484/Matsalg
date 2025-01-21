@@ -254,6 +254,8 @@ class WebSocketService {
         String profilePic = data['profile_picture'] ?? '';
         String time = data['time'] ?? DateTime.now().toIso8601String();
         bool me = data['me'] ?? false;
+        bool? iblocked = data['iblocked'] ?? false;
+        bool? otherblocked = data['otherblocked'] ?? false;
         int? matId = data['matId'] != null
             ? int.tryParse(data['matId'].toString())
             : null;
@@ -297,6 +299,8 @@ class WebSocketService {
               deleted: false,
               lastactive: lastactive,
               matId: matId,
+              iblocked: iblocked,
+              otherblocked: otherblocked,
               messages: [newMessage],
               productImage: productImage,
               slettet: slettet,

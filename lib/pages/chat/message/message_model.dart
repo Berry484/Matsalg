@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class MessageModel extends FlutterFlowModel<MessageWidget> {
   ///  State fields for stateful widgets in this page.
-
+  bool blocked = false;
   // Model for messageBubbles component.
   late MessageBubblesModel messageBubblesModel;
   // State field(s) for TextField widget.

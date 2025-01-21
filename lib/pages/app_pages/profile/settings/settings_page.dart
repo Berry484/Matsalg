@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:mat_salg/pages/app_pages/profile/settings/terms&service/terms_widget.dart';
 import 'package:mat_salg/services/web_socket.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/pages/app_pages/profile/settings/choose_location/location_page.dart';
@@ -226,21 +225,15 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                             ),
                           ),
                           FutureBuilder<bool>(
-                            future:
-                                checkPosition(), // Call your async function here
+                            future: checkPosition(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                // While the Future is loading
-                                return Center(
-                                    child: CircularProgressIndicator());
+                                return const SizedBox();
                               } else if (snapshot.hasError) {
-                                // If an error occurred
-                                return Center(
-                                    child: Text('Error checking location'));
+                                return const SizedBox();
                               } else if (snapshot.hasData &&
                                   snapshot.data == true) {
-                                // If the location is available
                                 return Column(children: [
                                   const Divider(
                                     thickness: 1.2,
@@ -380,7 +373,7 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                                   )
                                 ]);
                               }
-                              return Container();
+                              return const SizedBox();
                             },
                           ),
                           const Divider(
@@ -393,25 +386,7 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                             splashFactory: InkRipple.splashFactory,
                             splashColor: Colors.grey[100],
                             onTap: () async {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                barrierColor:
-                                    const Color.fromARGB(60, 17, 0, 0),
-                                useRootNavigator: true,
-                                context: context,
-                                builder: (context) {
-                                  return GestureDetector(
-                                    onTap: () =>
-                                        FocusScope.of(context).unfocus(),
-                                    child: Padding(
-                                      padding: MediaQuery.viewInsetsOf(context),
-                                      child: const TermsWidget(),
-                                    ),
-                                  );
-                                },
-                              ).then((value) => setState(() {}));
-                              return;
+                              context.pushNamed('Privacy');
                             },
                             child: Container(
                               width: double.infinity,
@@ -616,103 +591,115 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 40, 0, 0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  try {
-                                    showCupertinoDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return CupertinoAlertDialog(
-                                          title: const Text('Logg ut?'),
-                                          actions: <Widget>[
-                                            CupertinoDialogAction(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Text(
-                                                'Avbryt',
-                                                style: TextStyle(
-                                                    color: CupertinoColors
-                                                        .activeBlue),
-                                              ),
-                                            ),
-                                            CupertinoDialogAction(
-                                              onPressed: () async {
-                                                try {
-                                                  final appState = FFAppState();
-                                                  FFAppState().login = false;
-                                                  FFAppState().startet = false;
-                                                  appState.conversations
-                                                      .clear();
-                                                  webSocketService.close();
-                                                  await FirebaseAuth.instance
-                                                      .signOut();
-                                                  if (!context.mounted) return;
+                              child: Column(
+                                children: [
+                                  FFButtonWidget(
+                                    onPressed: () async {
+                                      try {
+                                        showCupertinoDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return CupertinoAlertDialog(
+                                              title: const Text('Logg ut?'),
+                                              actions: <Widget>[
+                                                CupertinoDialogAction(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text(
+                                                    'Avbryt',
+                                                    style: TextStyle(
+                                                        color: CupertinoColors
+                                                            .activeBlue),
+                                                  ),
+                                                ),
+                                                CupertinoDialogAction(
+                                                  onPressed: () async {
+                                                    try {
+                                                      final appState =
+                                                          FFAppState();
+                                                      FFAppState().login =
+                                                          false;
+                                                      FFAppState().startet =
+                                                          false;
+                                                      appState.conversations
+                                                          .clear();
+                                                      webSocketService.close();
+                                                      await FirebaseAuth
+                                                          .instance
+                                                          .signOut();
+                                                      if (!context.mounted) {
+                                                        return;
+                                                      }
+                                                      Toasts.showAccepted(
+                                                          context, 'Logget ut');
 
-                                                  Toasts.showAccepted(
-                                                      context, 'Logget ut');
-
-                                                  context.go('/registrer');
-                                                } on SocketException {
-                                                  if (mounted) {
-                                                    Toasts.showErrorToast(
-                                                        context,
-                                                        'Ingen internettforbindelse');
-                                                  }
-                                                } catch (e) {
-                                                  if (mounted) {
-                                                    Toasts.showErrorToast(
-                                                        context,
-                                                        'En feil oppstod');
-                                                  }
-                                                }
-                                              },
-                                              child: const Text(
-                                                'Ja',
-                                                style: TextStyle(
-                                                    color: CupertinoColors
-                                                        .activeBlue),
-                                              ),
-                                            ),
-                                          ],
+                                                      context.go('/registrer');
+                                                    } on SocketException {
+                                                      if (mounted) {
+                                                        Toasts.showErrorToast(
+                                                            context,
+                                                            'Ingen internettforbindelse');
+                                                      }
+                                                    } catch (e) {
+                                                      if (mounted) {
+                                                        Toasts.showErrorToast(
+                                                            context,
+                                                            'En feil oppstod');
+                                                      }
+                                                    }
+                                                  },
+                                                  child: const Text(
+                                                    'Ja',
+                                                    style: TextStyle(
+                                                        color: CupertinoColors
+                                                            .activeBlue),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
                                         );
-                                      },
-                                    );
-                                  } on SocketException {
-                                    Toasts.showErrorToast(
-                                        context, 'Ingen internettforbindelse');
-                                  } catch (e) {
-                                    Toasts.showErrorToast(
-                                        context, 'En feil oppstod');
-                                  }
-                                },
-                                text: 'Logg ut',
-                                options: FFButtonOptions(
-                                  width: 151,
-                                  height: 45,
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 0),
-                                  iconPadding:
-                                      const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 16,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
+                                      } on SocketException {
+                                        Toasts.showErrorToast(context,
+                                            'Ingen internettforbindelse');
+                                      } catch (e) {
+                                        Toasts.showErrorToast(
+                                            context, 'En feil oppstod');
+                                      }
+                                    },
+                                    text: 'Logg ut',
+                                    options: FFButtonOptions(
+                                      width: 151,
+                                      height: 45,
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 0),
+                                      iconPadding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 0),
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontSize: 16,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                      elevation: 0,
+                                      borderSide: const BorderSide(
+                                        color: Color(0x5957636C),
+                                        width: 1.5,
                                       ),
-                                  elevation: 0,
-                                  borderSide: const BorderSide(
-                                    color: Color(0x5957636C),
-                                    width: 1.5,
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
+                                  const SizedBox(height: 5),
+                                ],
                               ),
                             ),
                           ),

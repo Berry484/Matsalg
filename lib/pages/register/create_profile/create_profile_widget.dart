@@ -192,20 +192,20 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                               const AlignmentDirectional(-1, 0),
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 0, 0, 0),
+                                                .fromSTEB(0, 3, 0, 0),
                                             child: Text(
                                               'Tusen takk for at du bidrar til å skape en grønnere og mer bærekraftig fremtid.',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Nunito',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        color: Colors.grey[700],
+                                                        fontSize: 16.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
                                             ),
                                           ),
                                         ),

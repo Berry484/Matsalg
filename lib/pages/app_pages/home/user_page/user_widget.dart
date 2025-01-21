@@ -298,6 +298,10 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                             token, _model.bruker?.uid, true);
                                         setState(() {
                                           _model.blocked = false;
+                                          FFAppState appState = FFAppState();
+                                          appState.updateIblock(
+                                              _model.bruker?.uid ?? '',
+                                              _model.blocked);
                                         });
                                       }
                                     } else {
@@ -347,6 +351,13 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                         unFolg();
                                                         _model.blocked =
                                                             newBlockedStatus;
+                                                        FFAppState appState =
+                                                            FFAppState();
+                                                        appState.updateIblock(
+                                                            _model.bruker
+                                                                    ?.uid ??
+                                                                '',
+                                                            _model.blocked);
                                                       });
                                                     }
                                                   },
@@ -561,7 +572,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                               width: double.infinity,
                                               color: Colors.grey[200],
                                               padding: EdgeInsets.all(
-                                                  16.0), // Padding for the content
+                                                  13.0), // Padding for the content
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsetsDirectional
@@ -602,7 +613,15 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                   true);
                                                           setState(() {
                                                             _model.blocked =
-                                                                false; // Update state to unblock
+                                                                false;
+                                                            FFAppState
+                                                                appState =
+                                                                FFAppState();
+                                                            appState.updateIblock(
+                                                                _model.bruker
+                                                                        ?.uid ??
+                                                                    '',
+                                                                _model.blocked);
                                                           });
                                                         }
                                                       },

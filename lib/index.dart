@@ -34,6 +34,8 @@ export 'pages/app_pages/home/user_ratings/ratings_widget.dart'
 export 'pages/register/create_profile/create_profile_widget.dart'
     show OpprettProfilWidget;
 export 'pages/app_pages/profile/settings/settings_page.dart' show SettingsPage;
+export 'pages/app_pages/profile/settings/privacy_security/privacy_widget.dart'
+    show PrivacyWidget;
 
 export 'pages/chat/message/message_widget.dart' show MessageWidget;
 export 'pages/map/kart_pop_up_widget.dart' show KartPopUpWidget;

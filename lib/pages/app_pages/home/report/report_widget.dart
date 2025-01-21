@@ -245,12 +245,10 @@ class _RapporterWidgetState extends State<ReportWidget> {
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Nunito',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                fontSize: 15.0,
+                                                color: Colors.grey[700],
+                                                fontSize: 16.0,
                                                 letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w600,
                                               ),
                                         ),
                                       ),
@@ -639,9 +637,9 @@ class _RapporterWidgetState extends State<ReportWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 15.0,
+                                                          fontSize: 15.5,
                                                           fontWeight:
-                                                              FontWeight.w700,
+                                                              FontWeight.w600,
                                                         ),
                                                   ),
                                                 ],
@@ -775,9 +773,9 @@ class _RapporterWidgetState extends State<ReportWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 15.0,
+                                                          fontSize: 15.5,
                                                           fontWeight:
-                                                              FontWeight.w700,
+                                                              FontWeight.w600,
                                                         ),
                                                   ),
                                                 ],
@@ -843,9 +841,9 @@ class _RapporterWidgetState extends State<ReportWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 15.0,
+                                                          fontSize: 15.5,
                                                           fontWeight:
-                                                              FontWeight.w700,
+                                                              FontWeight.w600,
                                                         ),
                                                   ),
                                                 ],
@@ -911,9 +909,9 @@ class _RapporterWidgetState extends State<ReportWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 15.0,
+                                                          fontSize: 15.5,
                                                           fontWeight:
-                                                              FontWeight.w700,
+                                                              FontWeight.w600,
                                                         ),
                                                   ),
                                                 ],

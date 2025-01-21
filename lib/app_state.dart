@@ -104,6 +104,23 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateIblock(String user, bool iblock) {
+    bool updated = false; // Flag to check if any conversation was updated
+
+    // Iterate through all conversations
+    for (var conversation in _conversations) {
+      // Check if the current conversation is between the user and the current conversation user
+      if (conversation.user == user) {
+        conversation.iblocked = iblock;
+        updated = true;
+      }
+    }
+
+    if (updated) {
+      _saveConversationsToPrefs();
+    }
+  }
+
   void addConversation(Conversation conversation) {
     _conversations = [..._conversations, conversation];
     _saveConversationsToPrefs();
@@ -298,20 +315,23 @@ class Conversation {
   String? productImage;
   bool? slettet = false;
   bool? kjopt = false;
+  bool? iblocked;
+  bool? otherblocked;
 
-  Conversation({
-    required this.user,
-    required this.username,
-    required this.profilePic,
-    required this.lastactive,
-    required this.deleted,
-    required this.messages,
-    this.matId,
-    this.isOwner = false,
-    this.productImage,
-    this.slettet = false,
-    this.kjopt = false,
-  });
+  Conversation(
+      {required this.user,
+      required this.username,
+      required this.profilePic,
+      required this.lastactive,
+      required this.deleted,
+      required this.messages,
+      this.matId,
+      this.isOwner = false,
+      this.productImage,
+      this.slettet = false,
+      this.kjopt = false,
+      this.iblocked = false,
+      this.otherblocked = false});
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
     // Checking if matId is present, and if not, it won't be included
@@ -330,6 +350,8 @@ class Conversation {
       productImage: json['productImage'],
       slettet: json['slettet'] ?? false,
       kjopt: json['kjopt'] ?? false,
+      iblocked: json['iblocked'] as bool? ?? false,
+      otherblocked: json['otherblocked'] as bool? ?? false,
     );
   }
 
@@ -346,6 +368,8 @@ class Conversation {
       'productImage': productImage,
       'slettet': slettet,
       'kjopt': kjopt,
+      'iblocked': iblocked,
+      'otherblocked': otherblocked,
     };
   }
 
