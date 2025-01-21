@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:mat_salg/pages/app_pages/profile/contact/contact_page.dart';
 import 'package:mat_salg/pages/app_pages/profile/product_stats/product_stats_page.dart';
 
 import '/index.dart';
@@ -579,6 +580,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         path: '/requestTerms',
         name: 'RequestTerms',
         builder: (context, state) => const RequestTermsWidget(),
+        parentNavigatorKey: _parentKey,
+      ),
+      GoRoute(
+        path: '/support',
+        name: 'Support',
+        builder: (context, state) => const ContactPage(),
         parentNavigatorKey: _parentKey,
       ),
     ],

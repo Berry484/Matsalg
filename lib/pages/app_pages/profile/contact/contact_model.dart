@@ -12,16 +12,13 @@ class ContactModel extends FlutterFlowModel<ContactPage> {
 //--------------------FocusNodes, Controllers and validators for the text fields---------------------------------
 //---------------------------------------------------------------------------------------------------------------
   FocusNode? bioFocusNode;
-  FocusNode? emailFocusNode;
 
   TextEditingController? bioTextController;
-  TextEditingController? emailTextController;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes and controller for the text fields----------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
   String? Function(BuildContext, String?)? bioTextControllerValidator;
-  String? Function(BuildContext, String?)? emailTextControllerValidator;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------Initstate and dispose----------------------------------------------------------------------
@@ -31,8 +28,6 @@ class ContactModel extends FlutterFlowModel<ContactPage> {
 
   @override
   void dispose() {
-    emailFocusNode?.dispose();
-    emailTextController?.dispose();
     bioFocusNode?.dispose();
     bioTextController?.dispose();
   }
