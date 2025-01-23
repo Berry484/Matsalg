@@ -1308,7 +1308,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                             ),
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 16.0, 16.0, 5.0),
+                                                .fromSTEB(0, 16.0, 16.0, 5.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:

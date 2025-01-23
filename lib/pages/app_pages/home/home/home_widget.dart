@@ -479,10 +479,10 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                             placeholderStyle:
                                 FlutterFlowTheme.of(context).bodyLarge.override(
                                       fontFamily: 'Nunito',
-                                      color: Colors.black45,
+                                      color: Colors.grey[500],
                                       fontSize: 16.0,
                                       letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w700,
                                     ),
                             prefixIcon: Icon(
                               CupertinoIcons.search,
@@ -1060,7 +1060,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                           .fromSTEB(
                                                           13, 19, 0, 20),
                                                   child: Text(
-                                                    'Lokalmat',
+                                                    'Anbefalt',
                                                     textAlign: TextAlign.start,
                                                     style: FlutterFlowTheme.of(
                                                             context)
