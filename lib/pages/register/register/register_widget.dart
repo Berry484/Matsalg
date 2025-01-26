@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/services/user_service.dart';
 import 'package:mat_salg/services/web_socket.dart';
 import 'package:mat_salg/pages/register/choose_create_or_login/velg_ny_widget.dart';
@@ -37,72 +37,6 @@ class _RegistrerWidgetState extends State<RegisterWidget>
     _model = createModel(context, () => RegisterModel());
   }
 
-  void feilInnlogging(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 56.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    CupertinoIcons.xmark_circle_fill,
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    size: 35.0,
-                  ),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    // Auto-remove the toast after 3 seconds if not dismissed
-    Future.delayed(const Duration(seconds: 3), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
-  }
-
   @override
   void dispose() {
     _model.dispose();
@@ -129,17 +63,28 @@ class _RegistrerWidgetState extends State<RegisterWidget>
             children: [
               Center(
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 110, 0, 43),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.asset(
                       'assets/images/MatSalgLogo.png',
-                      width: 160,
-                      height: 160,
+                      width: 107,
+                      height: 107,
                       fit: BoxFit.contain,
                     ),
                   ),
                 ),
+              ),
+              Text(
+                'Rett fra kilden.',
+                textAlign: TextAlign.start,
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Nunito',
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      fontSize: 22.2,
+                      letterSpacing: 0.0,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
               Expanded(
                 child: Align(
@@ -150,51 +95,6 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              20, 0, 20, 12),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                useSafeArea: true,
-                                context: context,
-                                builder: (context) {
-                                  return GestureDetector(
-                                    onTap: () =>
-                                        FocusScope.of(context).unfocus(),
-                                    child: Padding(
-                                      padding: MediaQuery.viewInsetsOf(context),
-                                      child: const VelgNyWidget(),
-                                    ),
-                                  );
-                                },
-                              ).then((value) => safeSetState(() {}));
-                            },
-                            text: 'Fortsett med telefonnummer',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 50,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16, 0, 16, 0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 0),
-                              color: FlutterFlowTheme.of(context).alternate,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 17,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                              elevation: 0,
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                          ),
-                        ),
                         if (Platform.isIOS)
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
@@ -265,135 +165,221 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                   HapticFeedback.lightImpact();
                                   _isloading = false;
                                   if (!context.mounted) return;
-                                  feilInnlogging(
+                                  Toasts.showErrorToast(
                                       context, 'Ingen internettforbindelse');
                                 } catch (e) {
                                   HapticFeedback.lightImpact();
                                   _isloading = false;
                                   if (!context.mounted) return;
-                                  feilInnlogging(
+                                  Toasts.showErrorToast(
                                       context, 'Verifisering mislyktes');
                                 }
                               },
-                              text: 'Fortsett med apple',
+                              text: 'Fortsett med Apple',
                               icon: const FaIcon(
                                 FontAwesomeIcons.apple,
                                 size: 19,
                               ),
                               options: FFButtonOptions(
                                 width: double.infinity,
-                                height: 50,
+                                height: 48,
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     16, 0, 16, 0),
                                 iconPadding:
                                     const EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 0),
-                                color: Colors.white,
+                                color: Colors.black,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
                                       fontFamily: 'Nunito',
-                                      fontSize: 17,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                                      fontSize: 16,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                       letterSpacing: 0.0,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                 elevation: 0,
-                                borderSide: const BorderSide(
-                                  color: Color(0x5957636C),
-                                  width: 1.5,
-                                ),
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(15),
                               ),
                             ),
                           ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               20, 0, 20, 12),
+                          child: Material(
+                            color: Colors
+                                .transparent, // Makes the Material widget background transparent
+                            borderRadius: BorderRadius.circular(
+                                15), // Sets the border radius for splash
+                            child: InkWell(
+                              onTap: () async {
+                                try {
+                                  if (_isloading) return;
+                                  setState(() {
+                                    _isloading = true;
+                                  });
+
+                                  await firebaseAuthService.loginWithGoogle();
+                                  if (!context.mounted) return;
+
+                                  String? token = await firebaseAuthService
+                                      .getToken(context);
+
+                                  if (token != null) {
+                                    final response =
+                                        await UserInfoService.checkUserInfo(
+                                            token);
+
+                                    if (response.statusCode == 200) {
+                                      final decodedResponse =
+                                          jsonDecode(response.body);
+                                      FFAppState().brukernavn =
+                                          decodedResponse['brukernavn'] ?? '';
+                                      FFAppState().firstname =
+                                          decodedResponse['firstname'] ?? '';
+                                      FFAppState().lastname =
+                                          decodedResponse['lastname'] ?? '';
+                                      FFAppState().bio =
+                                          decodedResponse['bio'] ?? '';
+                                      FFAppState().profilepic =
+                                          decodedResponse['profile_picture'] ??
+                                              '';
+                                      try {
+                                        _webSocketService.connect();
+                                        setState(() {});
+                                      } catch (e) {
+                                        logger.d("errror $e");
+                                      }
+                                      _webSocketService = WebSocketService();
+                                      _webSocketService.connect(retrying: true);
+
+                                      setState(() {
+                                        _isloading = false;
+                                      });
+
+                                      if (!context.mounted) return;
+                                      FFAppState().login = true;
+                                      context.go('/home');
+                                      return;
+                                    }
+                                    if (response.statusCode == 404) {
+                                      setState(() {
+                                        _isloading = false;
+                                      });
+
+                                      if (!context.mounted) return;
+                                      context.goNamed(
+                                        'opprettProfil',
+                                        queryParameters: {
+                                          'phone': serializeParam(
+                                            '0',
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    }
+                                  } else {
+                                    setState(() {
+                                      _isloading = false;
+                                    });
+                                    throw Exception();
+                                  }
+                                } on SocketException {
+                                  HapticFeedback.lightImpact();
+                                  setState(() {
+                                    _isloading = false;
+                                  });
+                                  if (!context.mounted) return;
+                                  Toasts.showErrorToast(
+                                      context, 'Ingen internettforbindelse');
+                                } catch (e) {
+                                  HapticFeedback.lightImpact();
+                                  setState(() {
+                                    _isloading = false;
+                                  });
+                                  if (!context.mounted) return;
+                                  Toasts.showErrorToast(
+                                      context, 'Verifisering mislyktes');
+                                }
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(0x5957636C),
+                                    width: 1.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                padding: EdgeInsets.symmetric(vertical: 12),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    if (!_isloading) ...[
+                                      Image.asset(
+                                        "assets/images/g-logo.png",
+                                        height: 20,
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        "Fortsett med Google",
+                                        style: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    ] else ...[
+                                      SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.black,
+                                          strokeWidth: 2.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              20, 0, 20, 12),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              try {
-                                if (_isloading) return;
-                                _isloading = true;
-                                await firebaseAuthService.loginWithGoogle();
-                                if (!context.mounted) return;
-                                String? token =
-                                    await firebaseAuthService.getToken(context);
-
-                                if (token != null) {
-                                  final response =
-                                      await UserInfoService.checkUserInfo(
-                                          token);
-
-                                  if (response.statusCode == 200) {
-                                    final decodedResponse =
-                                        jsonDecode(response.body);
-                                    FFAppState().brukernavn =
-                                        decodedResponse['brukernavn'] ?? '';
-                                    FFAppState().firstname =
-                                        decodedResponse['firstname'] ?? '';
-                                    FFAppState().lastname =
-                                        decodedResponse['lastname'] ?? '';
-                                    FFAppState().bio =
-                                        decodedResponse['bio'] ?? '';
-                                    FFAppState().profilepic =
-                                        decodedResponse['profile_picture'] ??
-                                            '';
-                                    try {
-                                      _webSocketService.connect();
-                                      setState(() {});
-                                    } catch (e) {
-                                      logger.d("errror $e");
-                                    }
-                                    _isloading = false;
-                                    _webSocketService = WebSocketService();
-                                    _webSocketService.connect(retrying: true);
-                                    _isloading = false;
-                                    if (!context.mounted) return;
-                                    FFAppState().login = true;
-                                    context.go('/home');
-                                    return;
-                                  }
-                                  if (response.statusCode == 404) {
-                                    _isloading = false;
-                                    if (!context.mounted) return;
-                                    context.goNamed(
-                                      'opprettProfil',
-                                      queryParameters: {
-                                        'phone': serializeParam(
-                                          '0',
-                                          ParamType.String,
-                                        ),
-                                      }.withoutNulls,
-                                    );
-                                  }
-                                } else {
-                                  _isloading = false;
-                                  throw (Exception);
-                                }
-                              } on SocketException {
-                                HapticFeedback.lightImpact();
-                                _isloading = false;
-                                if (!context.mounted) return;
-                                feilInnlogging(
-                                    context, 'Ingen internettforbindelse');
-                              } catch (e) {
-                                HapticFeedback.lightImpact();
-                                _isloading = false;
-                                if (!context.mounted) return;
-                                feilInnlogging(
-                                    context, 'Verifisering mislyktes');
-                              }
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                useSafeArea: true,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () =>
+                                        FocusScope.of(context).unfocus(),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: const VelgNyWidget(),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => safeSetState(() {}));
                             },
-                            text: 'Fortsett med google',
+                            text: 'Fortsett med telefon',
                             icon: const FaIcon(
-                              FontAwesomeIcons.google,
+                              FontAwesomeIcons.phone,
                               size: 19,
                             ),
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 50,
+                              height: 48,
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16, 0, 16, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -404,16 +390,16 @@ class _RegistrerWidgetState extends State<RegisterWidget>
                                   .override(
                                     fontFamily: 'Nunito',
                                     color: Colors.black,
-                                    fontSize: 17,
+                                    fontSize: 16,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w600,
                                   ),
                               elevation: 0,
                               borderSide: const BorderSide(
                                 color: Color(0x5957636C),
                                 width: 1.5,
                               ),
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                           ),
                         ),

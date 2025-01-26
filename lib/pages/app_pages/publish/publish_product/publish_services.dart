@@ -85,9 +85,7 @@ class PublishServices {
       if (!context.mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      logger.e('Exception error in GetKommune');
-      if (!context.mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod, $e');
     }
   }
 

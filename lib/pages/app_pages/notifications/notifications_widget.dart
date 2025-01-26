@@ -86,9 +86,7 @@ class _HjemWidgetState extends State<NotificationsWidget>
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      logger.d(e);
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod, $e');
     }
   }
 
@@ -111,9 +109,7 @@ class _HjemWidgetState extends State<NotificationsWidget>
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      logger.d(e);
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod, $e');
     }
   }
 

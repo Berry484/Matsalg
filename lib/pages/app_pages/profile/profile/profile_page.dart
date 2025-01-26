@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_icon_button.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
@@ -129,8 +130,7 @@ class _ProfilWidgetState extends State<ProfilePage>
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod, $e');
     }
   }
 
@@ -159,8 +159,7 @@ class _ProfilWidgetState extends State<ProfilePage>
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _model.isloading = false;
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod, $e');
     }
   }
 
@@ -254,8 +253,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                       Toasts.showErrorToast(context,
                                           'Ingen internettforbindelse');
                                     } catch (e) {
-                                      Toasts.showErrorToast(
-                                          context, 'En feil oppstod');
+                                      logger.d('En feil oppstod, $e');
                                     }
                                   },
                                   icon: Icon(
@@ -590,7 +588,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                                             } on SocketException {
                                                                               Toasts.showErrorToast(context, 'Ingen internettforbindelse');
                                                                             } catch (e) {
-                                                                              Toasts.showErrorToast(context, 'En feil oppstod');
+                                                                              logger.d('En feil oppstod, $e');
                                                                             }
                                                                           },
                                                                           child:
@@ -673,7 +671,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                                             } on SocketException {
                                                                               Toasts.showErrorToast(context, 'Ingen internettforbindelse');
                                                                             } catch (e) {
-                                                                              Toasts.showErrorToast(context, 'En feil oppstod');
+                                                                              logger.d('En feil oppstod, $e');
                                                                             }
                                                                           },
                                                                           child:
@@ -793,9 +791,8 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                                             .mounted) {
                                                                           return;
                                                                         }
-                                                                        Toasts.showErrorToast(
-                                                                            context,
-                                                                            'En feil oppstod');
+                                                                        logger.d(
+                                                                            'En feil oppstod, $e');
                                                                       }
                                                                     },
                                                                     child:
@@ -1342,23 +1339,15 @@ class _ProfilWidgetState extends State<ProfilePage>
                                       return ProductList(
                                         matvare: matvare,
                                         onTap: () async {
-                                          try {
-                                            context.pushNamed(
-                                              'MinMatvareDetalj',
-                                              queryParameters: {
-                                                'matvare': serializeParam(
-                                                  matvare.toJson(),
-                                                  ParamType.JSON,
-                                                ),
-                                              },
-                                            );
-                                          } on SocketException {
-                                            Toasts.showErrorToast(context,
-                                                'Ingen internettforbindelse');
-                                          } catch (e) {
-                                            Toasts.showErrorToast(
-                                                context, 'En feil oppstod');
-                                          }
+                                          context.pushNamed(
+                                            'MinMatvareDetalj',
+                                            queryParameters: {
+                                              'matvare': serializeParam(
+                                                matvare.toJson(),
+                                                ParamType.JSON,
+                                              ),
+                                            },
+                                          );
                                         },
                                       );
                                     } else {
@@ -1410,25 +1399,38 @@ class _ProfilWidgetState extends State<ProfilePage>
                                         matvare: likesmatvare,
                                         onTap: () async {
                                           try {
-                                            context.pushNamed(
-                                              'MatDetaljBondegard1',
-                                              queryParameters: {
-                                                'matvare': serializeParam(
-                                                  likesmatvare.toJson(),
-                                                  ParamType.JSON,
-                                                ),
-                                                'liked': serializeParam(
-                                                  true,
-                                                  ParamType.bool,
-                                                ),
-                                              },
-                                            );
+                                            if (likesmatvare.uid ==
+                                                FirebaseAuth.instance
+                                                    .currentUser?.uid) {
+                                              context.pushNamed(
+                                                'MinMatvareDetalj',
+                                                queryParameters: {
+                                                  'matvare': serializeParam(
+                                                    likesmatvare.toJson(),
+                                                    ParamType.JSON,
+                                                  ),
+                                                },
+                                              );
+                                            } else {
+                                              context.pushNamed(
+                                                'MatDetaljBondegard1',
+                                                queryParameters: {
+                                                  'matvare': serializeParam(
+                                                    likesmatvare.toJson(),
+                                                    ParamType.JSON,
+                                                  ),
+                                                  'liked': serializeParam(
+                                                    true,
+                                                    ParamType.bool,
+                                                  ),
+                                                },
+                                              );
+                                            }
                                           } on SocketException {
                                             Toasts.showErrorToast(context,
                                                 'Ingen internettforbindelse');
                                           } catch (e) {
-                                            Toasts.showErrorToast(
-                                                context, 'En feil oppstod');
+                                            logger.d('En feil oppstod, $e');
                                           }
                                         },
                                       );

@@ -92,8 +92,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductStatsPage> {
         if (!mounted) return;
         Toasts.showErrorToast(context, 'Annonsen er slettet');
       } else {
-        if (!mounted) return;
-        Toasts.showErrorToast(context, 'En feil oppstod');
+        logger.d('En feil oppstod, $e');
       }
     }
   }

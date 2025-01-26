@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/services/push_notification_service.dart';
 
 import '../../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
@@ -74,8 +75,7 @@ class _FolgBrukerWidgetState extends State<FollowUserWidget> {
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _model.isLoading = false;
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -226,6 +226,8 @@ class _FolgBrukerWidgetState extends State<FollowUserWidget> {
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Nunito',
+                                                        color: Colors.grey[700],
+                                                        fontSize: 15,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,

@@ -122,15 +122,7 @@ class _InnstillingerWidgetState extends State<SettingsPage> {
                             splashFactory: InkRipple.splashFactory,
                             splashColor: Colors.grey[100],
                             onTap: () async {
-                              try {
-                                context.pushNamed('Konto');
-                              } on SocketException {
-                                Toasts.showErrorToast(
-                                    context, 'Ingen internettforbindelse');
-                              } catch (e) {
-                                Toasts.showErrorToast(
-                                    context, 'En feil oppstod');
-                              }
+                              context.pushNamed('Konto');
                             },
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(

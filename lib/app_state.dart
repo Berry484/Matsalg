@@ -296,10 +296,10 @@ class FFAppState extends ChangeNotifier {
   Future<bool> canRequestCode() async {
     final prefs = await SharedPreferences.getInstance();
     final lastRequestTime = prefs.getInt('lastRequestTime');
-    if (lastRequestTime == null) return true; // No previous request, allow
+    if (lastRequestTime == null) return true;
 
     final timePassed = DateTime.now().millisecondsSinceEpoch - lastRequestTime;
-    return timePassed > 120 * 1000; // 2 minutes in milliseconds
+    return timePassed > 60000; // 1 minute
   }
 }
 

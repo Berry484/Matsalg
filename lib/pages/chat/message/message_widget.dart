@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/user_service.dart';
@@ -186,8 +187,7 @@ class _MessageWidgetState extends State<MessageWidget> {
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod, $e');
     }
   }
 
@@ -367,7 +367,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                               Toasts.showErrorToast(
                                   context, 'Ingen internettforbindelse');
                             } catch (e) {
-                              Toasts.showErrorToast(context, 'En feil oppstod');
+                              logger.d('En feil oppstod, $e');
                             }
                           },
                           child: Row(

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/models/user.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
@@ -89,8 +90,7 @@ class _BrukerRatingWidgetState extends State<RatingsWidget>
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _model.ratingisLoading = true;
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -132,8 +132,7 @@ class _BrukerRatingWidgetState extends State<RatingsWidget>
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _model.ratingisLoading = true;
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -333,8 +332,7 @@ class _BrukerRatingWidgetState extends State<RatingsWidget>
                                             Toasts.showErrorToast(context,
                                                 'Ingen internettforbindelse');
                                           } catch (e) {
-                                            Toasts.showErrorToast(
-                                                context, 'En feil oppstod');
+                                            logger.d('En feil oppstod');
                                           }
                                         },
                                         child: Padding(

@@ -3,6 +3,10 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_animations.dart';
+import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_toggle_icon.dart';
 import 'package:mat_salg/helper_components/widgets/custom_page_indicator.dart';
 import 'package:mat_salg/helper_components/widgets/pageview_images.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
@@ -11,6 +15,7 @@ import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/services/food_service.dart';
+import 'package:mat_salg/services/like_service.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +40,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final ApiFoodService apiFoodService = ApiFoodService();
+  final animationsMap = <String, AnimationInfo>{};
   late ProductModel _model;
   late Matvarer matvare;
   bool _fetchingProductLoading = true;
@@ -54,6 +60,47 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
     if (widget.matvare == null) {
       _fetchMatvare();
     }
+    if (FFAppState().likedFoods.contains(matvare.matId)) {
+      _model.liker = true;
+    } else {
+      if (FFAppState().unlikedFoods.contains(matvare.matId)) {
+        _model.liker = false;
+      } else {
+        _model.liker = matvare.liked;
+      }
+    }
+    animationsMap.addAll({
+      'iconOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ScaleEffect(
+            curve: Curves.bounceOut,
+            delay: 0.0.ms,
+            duration: 400.0.ms,
+            begin: const Offset(1.2, 1.2),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+    });
+  }
+
+  void _triggerHeartAnimation() {
+    if (_model.isAnimating) return;
+
+    safeSetState(() {
+      _model.isAnimating = true;
+      _model.showHeart = true;
+    });
+
+    Timer(const Duration(seconds: 1, milliseconds: 500), () {
+      if (mounted) {
+        safeSetState(() {
+          _model.showHeart = false;
+          _model.isAnimating = false;
+        });
+      }
+    });
   }
 
   Future<void> _fetchMatvare() async {
@@ -68,6 +115,15 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
         if (product != null) {
           matvare = product;
           setState(() {
+            if (FFAppState().likedFoods.contains(matvare.matId)) {
+              _model.liker = true;
+            } else {
+              if (FFAppState().unlikedFoods.contains(matvare.matId)) {
+                _model.liker = false;
+              } else {
+                _model.liker = matvare.liked;
+              }
+            }
             fromChat = true;
             _fetchingProductLoading = false;
           });
@@ -88,8 +144,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
         if (!mounted) return;
         Toasts.showErrorToast(context, 'Annonsen er slettet');
       } else {
-        if (!mounted) return;
-        Toasts.showErrorToast(context, 'En feil oppstod');
+        logger.d('En feil oppstod, $e');
       }
     }
   }
@@ -404,9 +459,8 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                         } catch (e) {
                                                                           _model.slettIsLoading =
                                                                               false;
-                                                                          Toasts.showErrorToast(
-                                                                              context,
-                                                                              'En feil oppstod');
+                                                                          logger
+                                                                              .d('En feil oppstod, $e');
                                                                         }
                                                                       },
                                                                       child:
@@ -542,12 +596,99 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                 },
                                                               );
                                                             } else {
-                                                              return ImageCard(
-                                                                imageUrl:
-                                                                    '${ApiConstants.baseUrl}${matvare.imgUrls![index - 1]}',
-                                                                isSoldOut: matvare
-                                                                        .kjopt ==
-                                                                    true,
+                                                              return InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                onDoubleTap:
+                                                                    () async {
+                                                                  try {
+                                                                    HapticFeedback
+                                                                        .selectionClick();
+                                                                    String?
+                                                                        token =
+                                                                        await firebaseAuthService
+                                                                            .getToken(context);
+                                                                    if (token ==
+                                                                        null) {
+                                                                      return;
+                                                                    }
+                                                                    safeSetState(() => _model
+                                                                            .liker =
+                                                                        !_model
+                                                                            .liker!);
+                                                                    if (_model
+                                                                        .liker!) {
+                                                                      FFAppState()
+                                                                          .unlikedFoods
+                                                                          .remove(
+                                                                              matvare.matId);
+                                                                      if (!FFAppState()
+                                                                          .likedFoods
+                                                                          .contains(
+                                                                              matvare.matId)) {
+                                                                        FFAppState()
+                                                                            .likedFoods
+                                                                            .add(matvare.matId ??
+                                                                                0);
+                                                                      }
+
+                                                                      _triggerHeartAnimation();
+                                                                      ApiLike.sendLike(
+                                                                          token,
+                                                                          matvare
+                                                                              .matId);
+                                                                    } else {
+                                                                      FFAppState()
+                                                                          .likedFoods
+                                                                          .remove(
+                                                                              matvare.matId);
+                                                                      if (!FFAppState()
+                                                                          .unlikedFoods
+                                                                          .contains(
+                                                                              matvare.matId)) {
+                                                                        FFAppState()
+                                                                            .unlikedFoods
+                                                                            .add(matvare.matId ??
+                                                                                0);
+                                                                      }
+                                                                      ApiLike.deleteLike(
+                                                                          token,
+                                                                          matvare
+                                                                              .matId);
+                                                                    }
+                                                                  } on SocketException {
+                                                                    if (!context
+                                                                        .mounted) {
+                                                                      return;
+                                                                    }
+                                                                    Toasts.showErrorToast(
+                                                                        context,
+                                                                        'Ingen internettforbindelse');
+                                                                  } catch (e) {
+                                                                    logger.d(e);
+                                                                    if (!context
+                                                                        .mounted) {
+                                                                      return;
+                                                                    }
+                                                                    logger.d(
+                                                                        'En feil oppstod, $e');
+                                                                  }
+                                                                },
+                                                                child:
+                                                                    ImageCard(
+                                                                  imageUrl:
+                                                                      '${ApiConstants.baseUrl}${matvare.imgUrls![index - 1]}',
+                                                                  isSoldOut:
+                                                                      matvare.kjopt ==
+                                                                          true,
+                                                                ),
                                                               );
                                                             }
                                                           },
@@ -575,6 +716,18 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                   ],
                                                 ),
                                               ),
+                                              if (_model.showHeart)
+                                                Align(
+                                                  alignment: Alignment.center,
+                                                  child: Icon(
+                                                    CupertinoIcons.heart_fill,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    size: 130.0,
+                                                  ).animateOnPageLoad(animationsMap[
+                                                      'iconOnPageLoadAnimation']!),
+                                                ),
                                             ],
                                           ),
                                         ),
@@ -585,7 +738,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5.0, 00.0, 15.0, .0),
+                                    5, 0, 15, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -593,7 +746,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              5.0, 0.0, 0.0, 8.0),
+                                              0, 0, 0, 6),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -604,34 +757,72 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        0.0, 0.0, 0.0, 0.0),
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {},
-                                                  child: const Icon(
-                                                    CupertinoIcons.heart_fill,
-                                                    color: Color.fromARGB(
-                                                        1000, 1000, 0, 0),
-                                                    size: 34.0,
-                                                  ),
+                                              ToggleIcon(
+                                                onPressed: () async {
+                                                  HapticFeedback
+                                                      .selectionClick();
+                                                  String? token =
+                                                      await firebaseAuthService
+                                                          .getToken(context);
+                                                  if (token == null) {
+                                                    return;
+                                                  }
+                                                  safeSetState(() => _model
+                                                      .liker = !_model.liker!);
+                                                  if (_model.liker!) {
+                                                    FFAppState()
+                                                        .unlikedFoods
+                                                        .remove(matvare.matId);
+                                                    if (!FFAppState()
+                                                        .likedFoods
+                                                        .contains(
+                                                            matvare.matId)) {
+                                                      FFAppState()
+                                                          .likedFoods
+                                                          .add(matvare.matId ??
+                                                              0);
+                                                    }
+
+                                                    _triggerHeartAnimation();
+                                                    ApiLike.sendLike(
+                                                        token, matvare.matId);
+                                                  } else {
+                                                    FFAppState()
+                                                        .likedFoods
+                                                        .remove(matvare.matId);
+                                                    if (!FFAppState()
+                                                        .unlikedFoods
+                                                        .contains(
+                                                            matvare.matId)) {
+                                                      FFAppState()
+                                                          .unlikedFoods
+                                                          .add(matvare.matId ??
+                                                              0);
+                                                    }
+                                                    ApiLike.deleteLike(
+                                                        token, matvare.matId);
+                                                  }
+                                                },
+                                                value: _model.liker!,
+                                                onIcon: const Icon(
+                                                  CupertinoIcons.heart_fill,
+                                                  color: Color.fromARGB(
+                                                      255, 255, 42, 56),
+                                                  size: 32.0,
+                                                ),
+                                                offIcon: Icon(
+                                                  CupertinoIcons.heart,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: 32,
                                                 ),
                                               ),
                                               Padding(
                                                 padding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                        10.0, 0.0, 0.0, 0.0),
+                                                        2, 0.0, 0.0, 0.0),
                                                 child: InkWell(
                                                   splashColor:
                                                       Colors.transparent,
@@ -807,7 +998,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                                                 return;
                                                                               }
                                                                               _model.slettIsLoading = false;
-                                                                              Toasts.showErrorToast(context, 'En feil oppstod');
+                                                                              logger.d('En feil oppstod, $e');
                                                                             }
                                                                           },
                                                                           child:

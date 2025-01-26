@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/services/contact_us.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -280,14 +282,10 @@ class _KontaktWidgetState extends State<ContactPage> {
                                       context, 'Ingen internettforbindelse');
                                 } on Error {
                                   _model.loading = false;
-                                  if (!context.mounted) return;
-                                  Toasts.showErrorToast(
-                                      context, 'En feil oppstod');
+                                  logger.d('En feil oppstod, $e');
                                 } catch (e) {
                                   _model.loading = false;
-                                  if (!context.mounted) return;
-                                  Toasts.showErrorToast(
-                                      context, 'En feil oppstod');
+                                  logger.d('En feil oppstod, $e');
                                 }
                               },
                               text: 'Send',

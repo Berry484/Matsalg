@@ -67,7 +67,7 @@ class _MessagePreviewWidgetState extends State<NotificationPreviewWidget> {
       return ' har gjort en utsolgt vare tilgjengelig';
     }
     if (widget.notificationInfo.type == 'rating-given') {
-      return ' du kan legge igjen en rating på kjøpet ditt';
+      return ' Har gitt deg en rating, du kan gi en rating tilbake';
     }
     if (widget.notificationInfo.type == 'new-follower') {
       return ' har begynt å \nfølge deg';

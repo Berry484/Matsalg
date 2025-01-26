@@ -135,8 +135,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
         if (!mounted) return;
         Toasts.showErrorToast(context, 'Annonsen er slettet');
       } else {
-        if (!mounted) return;
-        Toasts.showErrorToast(context, 'En feil oppstod');
+        logger.d('En feil oppstod');
       }
     }
   }
@@ -154,9 +153,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      logger.e('Unexpected exception: $e');
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -187,9 +184,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      logger.e('Unexpected exception: $e');
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -753,8 +748,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                       .mounted) {
                                                                     return;
                                                                   }
-                                                                  Toasts.showErrorToast(
-                                                                      context,
+                                                                  logger.d(
                                                                       'En feil oppstod');
                                                                 }
                                                               },
@@ -813,7 +807,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    5.0, 0.0, 15.0, 0.0),
+                                    5, 0, 15, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,

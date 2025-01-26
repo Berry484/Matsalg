@@ -114,9 +114,9 @@ class _VelgNyWidgetState extends State<VelgNyWidget> {
                                       fontFamily: 'Nunito',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
-                                      fontSize: 19,
+                                      fontSize: 19.0,
                                       letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w800,
+                                      fontWeight: FontWeight.w700,
                                     ),
                               ),
                             ),

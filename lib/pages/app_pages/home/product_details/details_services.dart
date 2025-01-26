@@ -99,8 +99,27 @@ class DetailsServices {
 
       model.messageIsLoading = false;
       if (matvare.uid == FirebaseAuth.instance.currentUser?.uid) {
-        Toasts.showErrorToast(
-            context, 'Du kan ikke starte en samtale med deg selv');
+        showCupertinoDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: const Text('Dette er din annonse'),
+              content: const Text(
+                  'Du kan ikke starte en samtale med deg selv igjennom matsalg.no'),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Ok',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
         return;
       }
       if (serializedConversation != null) {

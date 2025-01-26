@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mat_salg/helper_components/widgets/loading_indicators/category_list_loading.dart';
 import 'package:mat_salg/helper_components/widgets/empty_list/no_results_widget.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/product_grid.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
@@ -183,8 +184,7 @@ class _BondeGardPageWidgetState extends State<CategoryWidget> {
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
       _model.isloading = false;
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 

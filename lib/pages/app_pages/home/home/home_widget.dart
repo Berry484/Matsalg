@@ -142,8 +142,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -206,8 +205,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
         _model.retryCount += 1;
         getAllFoods(true);
       }
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -252,8 +250,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -294,8 +291,7 @@ class _HjemWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 

@@ -8,6 +8,9 @@ class ProductModel extends FlutterFlowModel<ProductPage> {
 //---------------------------------------------------------------------------------------------------------------
   bool slettIsLoading = false;
   bool isExpanded = false;
+  bool? liker = false;
+  bool isAnimating = false;
+  bool showHeart = false;
 
 //---------------------------------------------------------------------------------------------------------------
 //--------------------FocusNodes, Controllers and validators-----------------------------------------------------

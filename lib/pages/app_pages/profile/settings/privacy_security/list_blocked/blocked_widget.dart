@@ -6,6 +6,7 @@ import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_util.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_profiles.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:flutter/material.dart';
 import 'package:mat_salg/services/user_service.dart';
@@ -53,8 +54,7 @@ class _BlockedWidgetState extends State<BlockedWidget> {
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod, $e');
     }
   }
 

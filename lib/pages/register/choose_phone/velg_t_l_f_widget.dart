@@ -196,9 +196,9 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                     fontFamily: 'Nunito',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 19,
+                                    fontSize: 19.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.w700,
                                   ),
                             ),
                           ),
@@ -527,6 +527,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                                 backgroundColor:
                                                     Colors.transparent,
                                                 enableDrag: false,
+                                                isDismissible: false,
                                                 context: context,
                                                 builder: (context) {
                                                   return Padding(
@@ -559,7 +560,7 @@ class _VelgTLFWidgetState extends State<VelgTLFWidget> {
                                           _isloading = false;
                                           HapticFeedback.selectionClick();
                                           errorToast(context,
-                                              'Vent minst 2 minutter før \ndu ber om ny kode');
+                                              'Vent minst 1 minutter før \ndu ber om ny kode');
                                         });
                                       }
                                     } catch (e) {

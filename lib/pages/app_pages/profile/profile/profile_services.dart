@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mat_salg/app_state.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/pages/app_pages/profile/profile/profile_page.dart';
 import 'package:mat_salg/services/like_service.dart';
@@ -37,8 +38,7 @@ class ProfileServices {
       if (context.mounted != true) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      if (context.mounted != true) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod, $e');
     }
   }
 

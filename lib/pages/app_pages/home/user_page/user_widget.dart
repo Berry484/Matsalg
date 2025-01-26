@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mat_salg/helper_components/widgets/product_grid.dart';
@@ -113,8 +114,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
         Toasts.showErrorToast(context, 'Brukeren er slettet');
         return;
       }
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
       return;
     }
   }
@@ -133,8 +133,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -152,8 +151,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -192,8 +190,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
       if (!mounted) return;
       Toasts.showErrorToast(context, 'Ingen internettforbindelse');
     } catch (e) {
-      if (!mounted) return;
-      Toasts.showErrorToast(context, 'En feil oppstod');
+      logger.d('En feil oppstod');
     }
   }
 
@@ -268,7 +265,8 @@ class _BrukerPageWidgetState extends State<UserWidget>
                   ),
             ),
             actions: [
-              if (_model.isLoading != true)
+              if (_model.isLoading != true &&
+                  _model.bruker?.uid != FirebaseAuth.instance.currentUser?.uid)
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 2, 0),
                   child: IconButton(
@@ -374,9 +372,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
                                     _model.messageIsLoading = false;
-                                    if (!context.mounted) return;
-                                    Toasts.showErrorToast(
-                                        context, 'En feil oppstod');
+                                    logger.d('En feil oppstod');
                                   }
                                 },
                                 child: Text(
@@ -449,9 +445,7 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                         context, 'Ingen internettforbindelse');
                                   } catch (e) {
                                     _model.messageIsLoading = false;
-
-                                    Toasts.showErrorToast(
-                                        context, 'En feil oppstod');
+                                    logger.d('En feil oppstod');
                                   }
                                 },
                                 child: const Text(
@@ -1110,6 +1104,40 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                 FFButtonWidget(
                                                                   onPressed:
                                                                       () async {
+                                                                    if (_model
+                                                                            .bruker
+                                                                            ?.uid ==
+                                                                        FirebaseAuth
+                                                                            .instance
+                                                                            .currentUser
+                                                                            ?.uid) {
+                                                                      showCupertinoDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (BuildContext
+                                                                                context) {
+                                                                          return CupertinoAlertDialog(
+                                                                            title:
+                                                                                const Text('Dette er din bruker'),
+                                                                            content:
+                                                                                const Text('Du kan ikke følge deg selv igjennom matsalg.no'),
+                                                                            actions: <Widget>[
+                                                                              CupertinoDialogAction(
+                                                                                onPressed: () async {
+                                                                                  Navigator.pop(context);
+                                                                                },
+                                                                                child: const Text(
+                                                                                  'Ok',
+                                                                                  style: TextStyle(color: Colors.blue),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          );
+                                                                        },
+                                                                      );
+                                                                      return;
+                                                                    }
                                                                     if (_model
                                                                         .blocked) {
                                                                       return;

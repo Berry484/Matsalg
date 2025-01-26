@@ -199,7 +199,6 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                             context, 'Ingen internettforbindelse');
                       } catch (e) {
                         logger.e('En feil oppstod: $e');
-                        Toasts.showErrorToast(context, 'En feil oppstod');
                       }
                     },
                     child: Text(
