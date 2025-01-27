@@ -931,7 +931,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                 width: 15),
                                                             Text(
                                                               _model.kategori ??
-                                                                  'kategori',
+                                                                  'Kategori',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
@@ -985,7 +985,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                                 horizontal:
                                                                     4.0),
                                                         child: Text(
-                                                          'kategori',
+                                                          'Kategori',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodySmall
