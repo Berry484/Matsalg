@@ -342,27 +342,49 @@ class _MinMatvareDetaljWidgetState extends State<ProductStatsPage> {
                                                                             ),
                                                                       ),
                                                                     ),
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                          0,
-                                                                          3,
-                                                                          0,
-                                                                          0),
-                                                                      child:
-                                                                          Text(
-                                                                        '${matvare.price}Kr',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .headlineSmall
-                                                                            .override(
-                                                                              fontFamily: 'Nunito',
-                                                                              fontSize: 14,
-                                                                              color: FlutterFlowTheme.of(context).secondaryText,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.bold,
+                                                                    Row(
+                                                                        children: [
+                                                                          Padding(
+                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                3,
+                                                                                0,
+                                                                                0),
+                                                                            child:
+                                                                                Text(
+                                                                              '${matvare.price}Kr',
+                                                                              style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                    fontFamily: 'Nunito',
+                                                                                    fontSize: 14,
+                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
                                                                             ),
-                                                                      ),
-                                                                    ),
+                                                                          ),
+                                                                          if (_model.hasRated ==
+                                                                              true)
+                                                                            Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                                                                              child: Container(
+                                                                                height: 20.0,
+                                                                                width: 50.0,
+                                                                                decoration: BoxDecoration(
+                                                                                  color: Colors.grey[300],
+                                                                                  borderRadius: BorderRadius.circular(5.0),
+                                                                                ),
+                                                                                alignment: Alignment.center,
+                                                                                child: Text(
+                                                                                  'Solgt',
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 12.0,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                    color: Colors.black,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                        ]),
                                                                   ],
                                                                 ),
                                                                 Icon(

@@ -339,6 +339,7 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 slettet:
                                                                     conversation
                                                                         .slettet,
+
                                                                 messageImage:
                                                                     conversation
                                                                         .profilePic,
@@ -355,6 +356,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                               me: false), // Return a default Message if no other user's message is found
                                                                         )
                                                                         .read,
+                                                                purchased:
+                                                                    conversation
+                                                                            .purchased ??
+                                                                        false,
                                                                 messageTime:
                                                                     lastMessageTime, // Display last message time
                                                               ),
@@ -536,6 +541,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                               me: false), // Return a default Message if no other user's message is found
                                                                         )
                                                                         .read,
+                                                                purchased:
+                                                                    conversation
+                                                                            .purchased ??
+                                                                        false,
                                                                 messageTime:
                                                                     lastMessageTime, // Display last message time
                                                               ),
@@ -706,6 +715,10 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                               me: false), // Return a default Message if no other user's message is found
                                                                         )
                                                                         .read,
+                                                                purchased:
+                                                                    conversation
+                                                                            .purchased ??
+                                                                        false,
                                                                 messageTime:
                                                                     lastMessageTime,
                                                               ),

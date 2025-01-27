@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -480,31 +481,106 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                           ),
                                         ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 8, 0),
-                                        child: IconButton(
-                                          icon: Icon(
-                                            CupertinoIcons.ellipsis,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 28.0,
-                                          ),
-                                          onPressed: () {
-                                            showCupertinoModalPopup(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return CupertinoActionSheet(
-                                                  actions: <Widget>[
-                                                    CupertinoActionSheetAction(
-                                                      onPressed: () async {
+                                      if (matvare.uid !=
+                                          FirebaseAuth
+                                              .instance.currentUser?.uid)
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 0, 8, 0),
+                                          child: IconButton(
+                                            icon: Icon(
+                                              CupertinoIcons.ellipsis,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 28.0,
+                                            ),
+                                            onPressed: () {
+                                              showCupertinoModalPopup(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return CupertinoActionSheet(
+                                                    actions: <Widget>[
+                                                      CupertinoActionSheetAction(
+                                                        onPressed: () async {
+                                                          Navigator.pop(
+                                                              context);
+                                                          await detailsServices
+                                                              .enterConversation(
+                                                                  context);
+                                                        },
+                                                        child: const Text(
+                                                          'Send melding',
+                                                          style: TextStyle(
+                                                            fontSize: 18,
+                                                            color:
+                                                                CupertinoColors
+                                                                    .systemBlue,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      CupertinoActionSheetAction(
+                                                        onPressed: () async {
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            barrierColor:
+                                                                const Color
+                                                                    .fromARGB(
+                                                                    60,
+                                                                    17,
+                                                                    0,
+                                                                    0),
+                                                            useRootNavigator:
+                                                                true,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return GestureDetector(
+                                                                onTap: () =>
+                                                                    FocusScope.of(
+                                                                            context)
+                                                                        .unfocus(),
+                                                                child: Padding(
+                                                                  padding: MediaQuery
+                                                                      .viewInsetsOf(
+                                                                          context),
+                                                                  child:
+                                                                      ReportWidget(
+                                                                    username:
+                                                                        matvare
+                                                                            .uid,
+                                                                    matId: matvare
+                                                                        .matId,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ).then((value) =>
+                                                              safeSetState(
+                                                                  () {}));
+                                                          return;
+                                                        },
+                                                        child: const Text(
+                                                          'Rapporter',
+                                                          style: TextStyle(
+                                                            fontSize: 18,
+                                                            color: Colors.red,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                    cancelButton:
+                                                        CupertinoActionSheetAction(
+                                                      onPressed: () {
                                                         Navigator.pop(context);
-                                                        await detailsServices
-                                                            .enterConversation(
-                                                                context);
                                                       },
+                                                      isDefaultAction: true,
                                                       child: const Text(
-                                                        'Send melding',
+                                                        'Avbryt',
                                                         style: TextStyle(
                                                           fontSize: 18,
                                                           color: CupertinoColors
@@ -512,77 +588,12 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                         ),
                                                       ),
                                                     ),
-                                                    CupertinoActionSheetAction(
-                                                      onPressed: () async {
-                                                        await showModalBottomSheet(
-                                                          isScrollControlled:
-                                                              true,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          barrierColor:
-                                                              const Color
-                                                                  .fromARGB(
-                                                                  60, 17, 0, 0),
-                                                          useRootNavigator:
-                                                              true,
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return GestureDetector(
-                                                              onTap: () =>
-                                                                  FocusScope.of(
-                                                                          context)
-                                                                      .unfocus(),
-                                                              child: Padding(
-                                                                padding: MediaQuery
-                                                                    .viewInsetsOf(
-                                                                        context),
-                                                                child:
-                                                                    ReportWidget(
-                                                                  username:
-                                                                      matvare
-                                                                          .uid,
-                                                                  matId: matvare
-                                                                      .matId,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        ).then((value) =>
-                                                            safeSetState(
-                                                                () {}));
-                                                        return;
-                                                      },
-                                                      child: const Text(
-                                                        'Rapporter',
-                                                        style: TextStyle(
-                                                          fontSize: 18,
-                                                          color: Colors.red,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                  cancelButton:
-                                                      CupertinoActionSheetAction(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    isDefaultAction: true,
-                                                    child: const Text(
-                                                      'Avbryt',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                        color: CupertinoColors
-                                                            .systemBlue,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
                                         ),
-                                      ),
                                     ],
                                   ),
                                 ),

@@ -121,6 +121,16 @@ class FFAppState extends ChangeNotifier {
     }
   }
 
+  void updateConversation(int matId, String user) {
+    for (var conversation in _conversations) {
+      if (conversation.matId == matId && conversation.user == user) {
+        conversation.purchased = true;
+        _saveConversationsToPrefs();
+        break; // Exit after the first match is found
+      }
+    }
+  }
+
   void addConversation(Conversation conversation) {
     _conversations = [..._conversations, conversation];
     _saveConversationsToPrefs();
@@ -313,6 +323,9 @@ class Conversation {
   int? matId;
   bool isOwner = false;
   String? productImage;
+  String? productTitle;
+  String? productPrice;
+  bool? purchased = false;
   bool? slettet = false;
   bool? kjopt = false;
   bool? iblocked;
@@ -328,6 +341,9 @@ class Conversation {
       this.matId,
       this.isOwner = false,
       this.productImage,
+      this.productTitle,
+      this.productPrice,
+      this.purchased,
       this.slettet = false,
       this.kjopt = false,
       this.iblocked = false,
@@ -348,6 +364,9 @@ class Conversation {
       matId: json['matId'], // matId is nullable
       isOwner: json['isOwner'] ?? false,
       productImage: json['productImage'],
+      productTitle: json['productTitle'],
+      productPrice: json['productPrice'],
+      purchased: json['purchased'] ?? false,
       slettet: json['slettet'] ?? false,
       kjopt: json['kjopt'] ?? false,
       iblocked: json['iblocked'] as bool? ?? false,
@@ -366,7 +385,10 @@ class Conversation {
       'matId': matId,
       'isOwner': isOwner,
       'productImage': productImage,
+      'productTitle': productTitle,
+      'productPrice': productPrice,
       'slettet': slettet,
+      'purchased': purchased,
       'kjopt': kjopt,
       'iblocked': iblocked,
       'otherblocked': otherblocked,

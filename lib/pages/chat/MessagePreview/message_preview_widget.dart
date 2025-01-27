@@ -15,6 +15,7 @@ class MessagePreviewWidget extends StatefulWidget {
     this.messageContent,
     this.messageImage,
     this.isUnread,
+    required this.purchased,
     required this.messageTime,
     this.productImage,
     this.slettet,
@@ -24,6 +25,7 @@ class MessagePreviewWidget extends StatefulWidget {
   final String? messageContent;
   final String? messageImage;
   final bool? isUnread;
+  final bool purchased;
   final String messageTime;
   final String? productImage;
   final dynamic slettet;
@@ -208,45 +210,73 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                         ],
                                       ),
                                     ),
-                                    if (widget.productImage != null &&
-                                        widget.slettet != true)
-                                      CachedNetworkImage(
-                                        fadeInDuration: Duration.zero,
-                                        imageUrl:
-                                            '${ApiConstants.baseUrl}${widget.productImage}',
-                                        width: 47,
-                                        height: 47,
-                                        fit: BoxFit.cover,
-                                        imageBuilder: (context, imageProvider) {
-                                          return Container(
+                                    Row(
+                                      children: [
+                                        if (widget.purchased == true)
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 0, 8, 0),
+                                            child: Container(
+                                              height: 20.0,
+                                              width: 50.0,
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[300],
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                'Solgt',
+                                                style: TextStyle(
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        if (widget.productImage != null &&
+                                            widget.slettet != true)
+                                          CachedNetworkImage(
+                                            fadeInDuration: Duration.zero,
+                                            imageUrl:
+                                                '${ApiConstants.baseUrl}${widget.productImage}',
+                                            width: 47,
+                                            height: 47,
+                                            fit: BoxFit.cover,
+                                            imageBuilder:
+                                                (context, imageProvider) {
+                                              return Container(
+                                                width: 47,
+                                                height: 47,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                              );
+                                            },
+                                            placeholder: (context, url) =>
+                                                const SizedBox(),
+                                          ),
+                                        if (widget.productImage != null &&
+                                            widget.slettet == true)
+                                          Container(
                                             width: 47,
                                             height: 47,
                                             decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: imageProvider,
-                                                fit: BoxFit.cover,
-                                              ),
+                                              color: Colors.grey[200],
                                               borderRadius:
-                                                  BorderRadius.circular(6),
+                                                  BorderRadius.circular(8),
                                             ),
-                                          );
-                                        },
-                                        placeholder: (context, url) =>
-                                            const SizedBox(),
-                                      ),
-                                    if (widget.productImage != null &&
-                                        widget.slettet == true)
-                                      Container(
-                                        width: 47,
-                                        height: 47,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[200],
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
+                                          ),
+                                      ],
+                                    ),
                                   ],
-                                ),
+                                )
                               ],
                             ),
                           ),

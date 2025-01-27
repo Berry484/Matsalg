@@ -277,11 +277,16 @@ class WebSocketService {
 
         // Additional fields for the Conversation
         String? productImage = data['productImage'];
+        String? productTitle = data['productTitle'];
+        String? productPrice = data['productPrice'];
         if (productImage == null || productImage.isEmpty) {
           productImage = null;
+          productTitle = null;
+          productPrice = null;
         }
 
         // Ensure these fields are parsed correctly as bool?
+        bool? purchased = _parseBool(data['purchased']);
         bool? slettet = _parseBool(data['slettet']);
         bool? kjopt = _parseBool(data['kjopt']);
         bool isOwner = _parseBool(data['isOwner']) ?? false;
@@ -303,6 +308,9 @@ class WebSocketService {
               otherblocked: otherblocked,
               messages: [newMessage],
               productImage: productImage,
+              productTitle: productTitle,
+              productPrice: productPrice,
+              purchased: purchased,
               slettet: slettet,
               kjopt: kjopt,
               isOwner: isOwner,

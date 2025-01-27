@@ -209,6 +209,11 @@ class _GiveRatingWidgetState extends State<RatingPage> {
                           onPressed: () async {
                             await ratingServices.giveRating(context,
                                 widget.kjop, widget.user, widget.matId);
+                            if (widget.kjop == false) {
+                              final FFAppState appState = FFAppState();
+                              appState.updateConversation(
+                                  widget.matId, widget.user);
+                            }
                           },
                           text: 'Send',
                           options: FFButtonOptions(

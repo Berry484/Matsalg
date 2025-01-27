@@ -7,6 +7,7 @@ class NotificationInfo {
   final String? username;
   final String? profilepic;
   final String? productImage;
+
   final int? matId;
   final String type;
   final DateTime time;

@@ -85,6 +85,9 @@ class DetailsServices {
             messages: [],
             matId: matvare.matId,
             productImage: matvare.imgUrls?.first,
+            productTitle: matvare.name,
+            purchased: false,
+            productPrice: matvare.price.toString(),
           );
 
           FFAppState().conversations.insert(0, newConversation);

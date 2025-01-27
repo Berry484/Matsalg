@@ -226,7 +226,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                           params.getParam<String>('username', ParamType.String);
                       final folger =
                           params.getParam<String>('folger', ParamType.String);
-
                       return FollowersWidget(
                           username: username, folger: folger);
                     },
@@ -295,14 +294,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
                       path: 'minMatvareDetalj',
                       name: 'MinMatvareDetalj',
                       builder: (context, state) {
-                        // Use FFParameters to retrieve the parameters safely
                         final params = FFParameters(state);
-
-                        // Retrieve the 'matvare' parameter as JSON
                         final matvare = params.getParam<Map<String, dynamic>>(
                             'matvare', ParamType.JSON);
-
-                        // Return the ProductPage with the retrieved parameter
                         return ProductPage(matvare: matvare);
                       },
                     ),
