@@ -253,7 +253,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Nunito',
                             color: widget.rediger == true
-                                ? FlutterFlowTheme.of(context).alternate
+                                ? Colors.blue
                                 : Colors.transparent,
                             fontSize: 16,
                             letterSpacing: 0.0,
@@ -1195,7 +1195,7 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                   .asValidator(context),
                                               inputFormatters: [
                                                 LengthLimitingTextInputFormatter(
-                                                    200),
+                                                    700),
                                                 TextInputFormatter.withFunction(
                                                     (oldValue, newValue) {
                                                   final lineCount = '\n'
@@ -1884,196 +1884,6 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                               ),
                                             ],
                                           ),
-                                          // Align(
-                                          //   alignment:
-                                          //       const AlignmentDirectional(
-                                          //           0.0, 0.05),
-                                          //   child: Padding(
-                                          //     padding:
-                                          //         const EdgeInsetsDirectional
-                                          //             .fromSTEB(
-                                          //             25.0, 40.0, 25.0, 30.0),
-                                          //     child: FFButtonWidget(
-                                          //       onPressed: () async {
-                                          //         final token =
-                                          //             await firebaseAuthService
-                                          //                 .getToken(context);
-                                          //         if (token == null) {
-                                          //           return;
-                                          //         } else {
-                                          //           if (_isLoading) return;
-                                          //           _isLoading = true;
-                                          //           List<String>
-                                          //               availableFiles = [
-                                          //             '/files/69f57a53-e0b5-432c-b113-649cc1c6dda6',
-                                          //             '/files/69c6d907-e67a-4b22-b21a-621ff0d54dc9',
-                                          //             '/files/6eed2ccc-1c55-4cd1-843e-d3c2f0be5fc4',
-                                          //             '/files/4712594f-02ec-4515-8a1f-f6abcb9944a5',
-                                          //             '/files/f43e0e6f-eb74-474d-8510-71bb99b87bb4',
-                                          //             '/files/1b40e3a1-fb57-4880-acb6-dc5cdbbac44d',
-                                          //             '/files/306e14c6-2b54-4315-9433-a9cadbeb7fa2',
-                                          //             '/files/e10a7889-f945-4873-adda-42e610726c2e',
-                                          //             '/files/d0d9e844-4a07-46a1-a452-e95ccb0b58a5',
-                                          //             '/files/cb5c1d29-ef8a-46f6-8f15-8b7d34aae86d',
-                                          //             '/files/0af88305-48f3-49bf-89e6-6278bc1fb91b',
-                                          //             '/files/157c337b-3953-4486-aec2-85c77c78ffb2',
-                                          //             '/files/9f5f2b28-9008-4fbc-a7e2-054c5b27a410',
-                                          //             '/files/fc844923-d8a8-473d-9ec4-aba378905302',
-                                          //             '/files/7c00ab58-08cd-41fc-b1dd-c5d74b68e95c',
-                                          //             '/files/8c5e3097-22c8-4649-84b2-94093250af56',
-                                          //             '/files/943dd84f-7beb-4904-9027-2bf353261202',
-                                          //             '/files/b0b04b41-31e5-4711-af6d-42546b3ff9b0',
-                                          //             '/files/abf4796f-2878-4e09-b206-1b7261418979',
-                                          //             '/files/68941723-e377-4770-a634-386c6f08fc9b',
-                                          //             '/files/864b30e1-53c4-41d0-8dab-41fb2499a333',
-                                          //             '/files/244bdbc2-6d3e-4243-99ed-8af60a309655',
-                                          //             '/files/44290e2a-51b8-4d6b-b1c4-d3b3592c695a',
-                                          //             '/files/3990fadb-b882-4cec-ad64-5f0a2fc57f36',
-                                          //             '/files/6e57daeb-632b-4c84-ba79-65811a60ee59',
-                                          //             '/files/ed1e41e6-d11f-404e-98e8-183ea745eebb',
-                                          //             '/files/83f5e14c-d4d2-404f-9c68-502f3b0b36ee',
-                                          //           ];
-
-                                          //           // List of available categories
-                                          //           List<String>
-                                          //               availableCategories = [
-                                          //             "kjøtt",
-                                          //             "grønt",
-                                          //             "meieri",
-                                          //             "bakverk",
-                                          //             "sjømat",
-                                          //           ];
-
-                                          //           // Random instance
-                                          //           Random random = Random();
-
-                                          //           int listingCounter = 1709;
-                                          //           int uploadedListings = 0;
-
-                                          //           while (uploadedListings <
-                                          //               10000) {
-                                          //             // Generate random file links
-                                          //             List<String?> fileLinks =
-                                          //                 [
-                                          //               availableFiles[
-                                          //                   random.nextInt(
-                                          //                       availableFiles
-                                          //                           .length)],
-                                          //               availableFiles[
-                                          //                   random.nextInt(
-                                          //                       availableFiles
-                                          //                           .length)],
-                                          //             ];
-
-                                          //             int price = random
-                                          //                     .nextInt(491) +
-                                          //                 10; // Random price between 10 and 500
-                                          //             String category =
-                                          //                 availableCategories[
-                                          //                     random.nextInt(
-                                          //                         availableCategories
-                                          //                             .length)]; // Random category
-                                          //             String name =
-                                          //                 'TestVare$listingCounter'; // Listing name
-                                          //             String description =
-                                          //                 'Dette er $name'; // Listing description
-                                          //             bool accuratePosition = random
-                                          //                 .nextBool(); // Randomly true or false for accuratePosition
-
-                                          //             listingCounter++; // Increment the counter
-
-                                          //             final response =
-                                          //                 await apiFoodService
-                                          //                     .uploadfood(
-                                          //               token: token,
-                                          //               name: name,
-                                          //               imgUrl: fileLinks,
-                                          //               description:
-                                          //                   description,
-                                          //               price: price,
-                                          //               kategorier: category,
-                                          //               posisjon: LatLng(
-                                          //                   FFAppState()
-                                          //                       .brukerLat,
-                                          //                   FFAppState()
-                                          //                       .brukerLng),
-                                          //               betaling: null,
-                                          //               accuratePosition:
-                                          //                   accuratePosition, // Use the random accuratePosition
-                                          //               kg: false,
-                                          //             );
-
-                                          //             if (response.statusCode ==
-                                          //                 200) {
-                                          //               print(
-                                          //                   "Listing $name uploaded successfully!");
-                                          //               uploadedListings++;
-                                          //               if (uploadedListings >=
-                                          //                   10000) {
-                                          //                 print(
-                                          //                     "Uploaded $uploadedListings listings. Done!");
-                                          //                 break;
-                                          //               }
-                                          //             } else if (response
-                                          //                         .statusCode ==
-                                          //                     401 ||
-                                          //                 response.statusCode ==
-                                          //                     404 ||
-                                          //                 response.statusCode ==
-                                          //                     500) {
-                                          //               print(
-                                          //                   "Error uploading listing. Stopping process.");
-                                          //               break;
-                                          //             }
-                                          //           }
-
-                                          //           _isLoading =
-                                          //               false; // Reset loading state
-                                          //           safeSetState(
-                                          //               () {}); // Update UI if needed
-                                          //         }
-                                          //       },
-                                          //       text: 'TestUploads',
-                                          //       options: FFButtonOptions(
-                                          //         width: double.infinity,
-                                          //         height: 50.0,
-                                          //         padding:
-                                          //             const EdgeInsetsDirectional
-                                          //                 .fromSTEB(
-                                          //                 0.0, 0.0, 0.0, 0.0),
-                                          //         iconPadding:
-                                          //             const EdgeInsetsDirectional
-                                          //                 .fromSTEB(
-                                          //                 0.0, 0.0, 0.0, 0.0),
-                                          //         color: FlutterFlowTheme.of(
-                                          //                 context)
-                                          //             .alternate,
-                                          //         textStyle: FlutterFlowTheme
-                                          //                 .of(context)
-                                          //             .titleMedium
-                                          //             .override(
-                                          //               fontFamily: 'Nunito',
-                                          //               color:
-                                          //                   FlutterFlowTheme.of(
-                                          //                           context)
-                                          //                       .secondary,
-                                          //               fontSize: 17.0,
-                                          //               letterSpacing: 0.0,
-                                          //               fontWeight:
-                                          //                   FontWeight.w800,
-                                          //             ),
-                                          //         elevation: 0.0,
-                                          //         borderSide: const BorderSide(
-                                          //           color: Colors.transparent,
-                                          //           width: 1.0,
-                                          //         ),
-                                          //         borderRadius:
-                                          //             BorderRadius.circular(
-                                          //                 14.0),
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // ),
                                           if (widget.rediger == false)
                                             Align(
                                               alignment:

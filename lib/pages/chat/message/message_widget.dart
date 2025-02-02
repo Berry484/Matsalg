@@ -868,7 +868,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                       obscureText: false,
                                       maxLines: 8,
                                       minLines: 1, // Start with 1 line
-                                      maxLength: 200,
+                                      maxLength: 4000,
                                       textAlign: TextAlign.start,
                                       decoration: InputDecoration(
                                         isDense: true,
@@ -877,7 +877,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Inter',
-                                              fontSize: 14.0,
+                                              fontSize: 15.0,
                                               color: Colors.black26,
                                               fontWeight: FontWeight.w600,
                                               letterSpacing: 0.0,
@@ -918,7 +918,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                       validator: _model.textControllerValidator
                                           .asValidator(context),
                                       inputFormatters: [
-                                        LengthLimitingTextInputFormatter(400),
+                                        LengthLimitingTextInputFormatter(4000),
                                         TextInputFormatter.withFunction(
                                             (oldValue, newValue) {
                                           final lineCount = '\n'

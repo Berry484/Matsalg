@@ -144,14 +144,13 @@ class _ProfilWidgetState extends State<ProfilePage>
       } else {
         if (!mounted) return;
         getMyFoods(true);
-        profileServices.getAllLikes(context, token);
-
         userInfoService.fetchData(context);
         await userInfoService.updateUserStats(context, true);
+
+        if (!mounted) return;
+        await profileServices.getAllLikes(context, token);
         _model.isloading = false;
-        if (_model.matvarer != null && _model.matvarer!.isEmpty) {
-          safeSetState(() {});
-        }
+        safeSetState(() {});
       }
     } on SocketException {
       _model.isloading = false;

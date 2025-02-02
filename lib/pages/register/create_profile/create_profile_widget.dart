@@ -194,7 +194,7 @@ class _OpprettProfilWidgetState extends State<OpprettProfilWidget> {
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 3, 0, 0),
                                             child: Text(
-                                              'Tusen takk for at du bidrar til å skape en grønnere og mer bærekraftig fremtid.',
+                                              'Tusen takk for at du støtter lokale produsenter og handler rett fra kilden.',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium

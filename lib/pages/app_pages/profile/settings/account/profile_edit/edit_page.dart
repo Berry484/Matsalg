@@ -183,8 +183,7 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
                                               : (editServices.isTextFieldEmpty()
                                                   ? FlutterFlowTheme.of(context)
                                                       .secondaryText
-                                                  : FlutterFlowTheme.of(context)
-                                                      .alternate),
+                                                  : Colors.blue),
                                           fontSize: 17,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
@@ -281,6 +280,7 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
                                           'Ingen internettforbindelse');
                                     } catch (e) {
                                       if (!context.mounted) return;
+                                      logger.d('an error occured: $e');
                                       Toasts.showErrorToast(
                                           context, 'En feil oppstod');
                                     }
@@ -976,14 +976,14 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
                               letterSpacing: 0.0,
                             ),
                         textAlign: TextAlign.start,
-                        maxLength: 200,
+                        maxLength: 420,
                         maxLengthEnforcement: MaxLengthEnforcement.enforced,
                         minLines: 3,
                         maxLines: 7,
                         validator: _model.bioTextControllerValidator
                             .asValidator(context),
                         inputFormatters: [
-                          LengthLimitingTextInputFormatter(200),
+                          LengthLimitingTextInputFormatter(420),
                           TextInputFormatter.withFunction((oldValue, newValue) {
                             final lineCount =
                                 '\n'.allMatches(newValue.text).length + 1;

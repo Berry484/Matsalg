@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
@@ -1237,6 +1238,82 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                   FontWeight
                                                                       .bold,
                                                             ),
+                                                        recognizer:
+                                                            TapGestureRecognizer()
+                                                              ..onTap = () {
+                                                                if (widget.liked ==
+                                                                        true &&
+                                                                    widget.fromChat !=
+                                                                        true) {
+                                                                  context
+                                                                      .pushNamed(
+                                                                    'BrukerPage3',
+                                                                    queryParameters: {
+                                                                      'uid': serializeParam(
+                                                                          matvare
+                                                                              .uid,
+                                                                          ParamType
+                                                                              .String),
+                                                                      'username': serializeParam(
+                                                                          matvare
+                                                                              .username,
+                                                                          ParamType
+                                                                              .String),
+                                                                    },
+                                                                  );
+                                                                  return;
+                                                                }
+                                                                if (widget
+                                                                        .fromChat ==
+                                                                    true) {
+                                                                  context
+                                                                      .pushNamed(
+                                                                    'BrukerPage2',
+                                                                    queryParameters: {
+                                                                      'uid': serializeParam(
+                                                                          matvare
+                                                                              .uid,
+                                                                          ParamType
+                                                                              .String),
+                                                                      'username': serializeParam(
+                                                                          matvare
+                                                                              .username,
+                                                                          ParamType
+                                                                              .String),
+                                                                      'fromChat': serializeParam(
+                                                                          true,
+                                                                          ParamType
+                                                                              .bool),
+                                                                    },
+                                                                  );
+                                                                  return;
+                                                                } else {
+                                                                  context
+                                                                      .pushNamed(
+                                                                    GoRouterState.of(context)
+                                                                            .uri
+                                                                            .toString()
+                                                                            .startsWith('/profil')
+                                                                        ? 'BrukerPage3'
+                                                                        : GoRouterState.of(context).uri.toString().startsWith('/notifications')
+                                                                            ? 'BrukerPageNotification'
+                                                                            : 'BrukerPage',
+                                                                    queryParameters: {
+                                                                      'uid': serializeParam(
+                                                                          matvare
+                                                                              .uid,
+                                                                          ParamType
+                                                                              .String),
+                                                                      'username': serializeParam(
+                                                                          matvare
+                                                                              .username,
+                                                                          ParamType
+                                                                              .String),
+                                                                    },
+                                                                  );
+                                                                  return;
+                                                                }
+                                                              },
                                                       ),
                                                       TextSpan(
                                                         text: _model.isExpanded
@@ -1247,7 +1324,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                                         100 ||
                                                                     '\n'.allMatches(matvare.description!).length >=
                                                                         2
-                                                                ? "${matvare.description!.substring(0, matvare.description!.length > 100 ? 100 : matvare.description!.indexOf('\n', matvare.description!.indexOf('\n') + 1) + 1)}..." // Truncate based on condition
+                                                                ? "${matvare.description!.substring(0, matvare.description!.length > 100 ? 100 : matvare.description!.indexOf('\n', matvare.description!.indexOf('\n') + 1) + 1)}..."
                                                                 : matvare
                                                                     .description),
                                                         style: FlutterFlowTheme
@@ -1303,10 +1380,10 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                         fontFamily: 'Nunito',
                                                         fontSize: 13.0,
                                                         fontWeight:
-                                                            FontWeight.w700,
+                                                            FontWeight.w800,
                                                         color: const Color
-                                                            .fromRGBO(
-                                                            113, 113, 113, 1.0),
+                                                            .fromARGB(
+                                                            255, 76, 76, 76),
                                                       ),
                                                 ),
                                               ),

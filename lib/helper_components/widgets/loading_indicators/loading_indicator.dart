@@ -19,8 +19,8 @@ void showLoadingDialog(BuildContext context) {
         },
         child: Center(
           child: Container(
-            width: 80,
-            height: 80,
+            width: 73,
+            height: 73,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
@@ -29,8 +29,8 @@ void showLoadingDialog(BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 CupertinoActivityIndicator(
-                  radius: 12,
-                  color: Colors.blue, // Adjust color as needed
+                  radius: 12.5,
+                  color: Colors.blue,
                 ),
               ],
             ),

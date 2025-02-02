@@ -88,9 +88,26 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                   children: [
                     Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Align(
+                          alignment: const AlignmentDirectional(-1, -1),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(
+                              Icons.close,
+                              color: Colors.black,
+                              size: 27,
+                            ),
+                          ),
+                        ),
                         Align(
                           alignment: const AlignmentDirectional(0, 0),
                           child: Padding(
@@ -110,6 +127,14 @@ class _VelgOTPWidgetState extends State<VelgOTPWidget> {
                                     fontWeight: FontWeight.w700,
                                   ),
                             ),
+                          ),
+                        ),
+                        Align(
+                          alignment: const AlignmentDirectional(-1, -1),
+                          child: const Icon(
+                            Icons.close,
+                            color: Colors.transparent,
+                            size: 27,
                           ),
                         ),
                       ],

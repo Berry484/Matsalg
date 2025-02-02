@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:mat_salg/auth/custom_auth/firebase_auth.dart';
+import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/services/check_taken_service.dart';
 import 'package:mat_salg/services/image_service.dart';
 import 'package:mat_salg/services/user_service.dart';
@@ -158,6 +159,7 @@ class EditServices {
       model.isLoading = false;
       showToast('Ingen internettforbindelse', false);
     } catch (e) {
+      logger.d(e);
       model.isLoading = false;
       showToast('En feil oppstod', false);
     }
