@@ -345,9 +345,7 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
                                                         .labelLarge
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .alternate,
+                                                          color: Colors.blue,
                                                           fontSize: 17,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -400,9 +398,7 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
                                                         .labelLarge
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .alternate,
+                                                          color: Colors.blue,
                                                           fontSize: 17,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -979,19 +975,11 @@ class _ProfilRedigerWidgetState extends State<EditPage> {
                         maxLength: 420,
                         maxLengthEnforcement: MaxLengthEnforcement.enforced,
                         minLines: 3,
-                        maxLines: 7,
+                        maxLines: 9,
                         validator: _model.bioTextControllerValidator
                             .asValidator(context),
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(420),
-                          TextInputFormatter.withFunction((oldValue, newValue) {
-                            final lineCount =
-                                '\n'.allMatches(newValue.text).length + 1;
-                            if (lineCount > 7) {
-                              return oldValue;
-                            }
-                            return newValue;
-                          }),
                         ],
                       ),
                     ),

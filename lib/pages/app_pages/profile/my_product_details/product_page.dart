@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_animations.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_toggle_icon.dart';
+import 'package:mat_salg/helper_components/functions/custom_pageview_scroll_physics.dart';
 import 'package:mat_salg/helper_components/widgets/custom_page_indicator.dart';
 import 'package:mat_salg/helper_components/widgets/pageview_images.dart';
 import 'package:mat_salg/helper_components/widgets/toasts.dart';
@@ -147,6 +148,21 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
         logger.d('En feil oppstod, $e');
       }
     }
+  }
+
+  String truncateText(String text, int maxLength, int maxNewlines) {
+    List<String> lines = text.split('\n');
+    int newlineCount = lines.length - 1;
+
+    if (text.length > maxLength || newlineCount >= maxNewlines) {
+      if (newlineCount >= maxNewlines) {
+        return '${lines.take(maxNewlines).join('\n')}...';
+      } else {
+        return '${text.substring(0, maxLength)}...';
+      }
+    }
+
+    return text;
   }
 
   @override
@@ -541,6 +557,8 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                               .fromSTEB(0.0,
                                                               0.0, 0.0, 40.0),
                                                       child: PageView(
+                                                        physics:
+                                                            CustomPageViewScrollPhysics(),
                                                         controller: _model
                                                                 .pageViewController ??=
                                                             PageController(
@@ -1213,8 +1231,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 SizedBox(
-                                                  width:
-                                                      332.0, // Width constraint to enable wrapping
+                                                  width: 332.0,
                                                   child: Text.rich(
                                                     TextSpan(
                                                       children: [
@@ -1239,15 +1256,12 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                           text: _model
                                                                   .isExpanded
                                                               ? matvare
-                                                                  .description // Full text if expanded
-                                                              : (matvare.description!
-                                                                              .length >
-                                                                          100 ||
-                                                                      '\n'.allMatches(matvare.description!).length >=
-                                                                          2
-                                                                  ? "${matvare.description!.substring(0, matvare.description!.length > 100 ? 100 : matvare.description!.indexOf('\n', matvare.description!.indexOf('\n') + 1) + 1)}..." // Truncate based on condition
-                                                                  : matvare
-                                                                      .description), // Use full text if it doesn't meet truncation conditions
+                                                                  .description
+                                                              : truncateText(
+                                                                  matvare
+                                                                      .description!,
+                                                                  100,
+                                                                  3),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .titleSmall
@@ -1265,10 +1279,9 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                       ],
                                                     ),
                                                     textAlign: TextAlign.start,
-                                                    softWrap:
-                                                        true, // Enable text wrapping
-                                                    overflow: TextOverflow
-                                                        .visible, // Visible overflow when expanded
+                                                    softWrap: true,
+                                                    overflow:
+                                                        TextOverflow.visible,
                                                   ),
                                                 ),
                                               ],

@@ -18,7 +18,6 @@ class MainWrapperState extends State<MainWrapper> {
   int _selectedIndex = 0;
   int get currentIndex => _selectedIndex;
 
-  // Function to map route to the correct index
   int _getIndexForRoute(String location) {
     if (location.startsWith('/home')) {
       return 0;
@@ -32,8 +31,7 @@ class MainWrapperState extends State<MainWrapper> {
     return _selectedIndex;
   }
 
-  void _onItemTapped(int index) {
-    const kTransitionInfoKey = 'transitionInfo';
+  void _onItemTapped(int index) async {
     if (_selectedIndex == index) {
       switch (GoRouterState.of(context).uri.toString()) {
         case '/home':
@@ -49,10 +47,10 @@ class MainWrapperState extends State<MainWrapper> {
       GoRouter.of(context).pop();
       return;
     }
-    // Update the selected index for pages other than the special case
     setState(() {
       _selectedIndex = index;
     });
+    await Future.delayed(const Duration(milliseconds: 40));
     switch (index) {
       case 0:
         widget.child.goBranch(index);
@@ -67,16 +65,11 @@ class MainWrapperState extends State<MainWrapper> {
         widget.child.goBranch(index);
         break;
       case 4:
+        if (!mounted) return;
         context.pushNamed(
           'LeggUtMatvare',
-          extra: <String, dynamic>{
-            kTransitionInfoKey: const TransitionInfo(
-              hasTransition: true,
-              transitionType: PageTransitionType.bottomToTop,
-              duration: Duration(milliseconds: 300),
-            ),
-          },
         );
+
         break;
     }
   }
@@ -84,7 +77,6 @@ class MainWrapperState extends State<MainWrapper> {
   @override
   void initState() {
     super.initState();
-    // Update selected index based on the current route on initial load
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getIndexForRoute(GoRouterState.of(context).uri.toString());
     });
@@ -92,7 +84,6 @@ class MainWrapperState extends State<MainWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    // Update the selected index based on the current location
     final location = GoRouterState.of(context).uri.toString();
     final newIndex = _getIndexForRoute(location);
 
@@ -105,7 +96,6 @@ class MainWrapperState extends State<MainWrapper> {
       body: widget.child,
       bottomNavigationBar: Stack(
         children: [
-          // Bottom Navigation Bar
           Container(
             color: Colors.white,
             child: SafeArea(

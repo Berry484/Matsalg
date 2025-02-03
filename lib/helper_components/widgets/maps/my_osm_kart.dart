@@ -153,22 +153,17 @@ class _MyOsmKartState extends State<MyOsmKart> {
     );
   }
 
-  // Calculate the pixel size of the circle based on the zoom level
   double _calculateCircleSize() {
-    // Convert the radius in meters to a pixel size
     double scale = _metersToPixels(baseRadiusMeters, zoomLevel);
     return scale;
   }
 
-  // Calculate the radius for drawing the circle
   double _calculateCircleRadius() {
     double radiusInPixels = _calculateCircleSize() / 2;
     return radiusInPixels;
   }
 
-  // Convert meters to pixels based on zoom level
   double _metersToPixels(double meters, double zoom) {
-    // Conversion factor for meters to pixels at zoom level 0
     const double metersPerPixelAtZoomLevel0 = 156543.03392804097;
     double metersPerPixel = metersPerPixelAtZoomLevel0 / math.pow(2, zoom);
     return meters / metersPerPixel;
@@ -183,23 +178,20 @@ class CirclePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color =
-          Colors.redAccent.withOpacity(0.3) // Circle color with transparency
+      ..color = Colors.redAccent.withOpacity(0.3)
       ..style = PaintingStyle.fill;
 
-    // Draw the circle in the center of the CustomPaint widget
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
-      radius, // Radius in pixels
+      radius,
       paint,
     );
 
     final Paint borderPaint = Paint()
-      ..color = Colors.red // Border color
+      ..color = Colors.red
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2; // Border stroke width
+      ..strokeWidth = 2;
 
-    // Draw the circle border
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
       radius,

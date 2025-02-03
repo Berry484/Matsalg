@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:mat_salg/helper_components/widgets/profilepic_screen_image.dart';
 import 'package:mat_salg/helper_components/widgets/product_grid.dart';
 import 'package:mat_salg/helper_components/widgets/product_list.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_listview_product.dart';
@@ -646,31 +647,48 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
                                                 children: [
-                                                  Container(
-                                                    width: 90,
-                                                    height: 90,
-                                                    clipBehavior:
-                                                        Clip.antiAlias,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: CachedNetworkImage(
-                                                      fadeInDuration:
-                                                          Duration.zero,
-                                                      fadeOutDuration:
-                                                          const Duration(
-                                                              milliseconds: 0),
-                                                      imageUrl: _model.isLoading
-                                                          ? ''
-                                                          : '${ApiConstants.baseUrl}${_model.bruker?.profilepic}',
-                                                      fit: BoxFit.cover,
-                                                      errorWidget: (context,
-                                                              error,
-                                                              stackTrace) =>
-                                                          Image.asset(
-                                                        'assets/images/profile_pic.png',
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      HapticFeedback
+                                                          .selectionClick();
+                                                      showDialog(
+                                                        context: context,
+                                                        useSafeArea: false,
+                                                        builder: (context) =>
+                                                            ProfilepicScreenImage(
+                                                          imageUrl:
+                                                              '${ApiConstants.baseUrl}${_model.bruker?.profilepic}',
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      width: 90,
+                                                      height: 90,
+                                                      clipBehavior:
+                                                          Clip.antiAlias,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: CachedNetworkImage(
+                                                        fadeInDuration:
+                                                            Duration.zero,
+                                                        fadeOutDuration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    0),
+                                                        imageUrl: _model
+                                                                .isLoading
+                                                            ? ''
+                                                            : '${ApiConstants.baseUrl}${_model.bruker?.profilepic}',
                                                         fit: BoxFit.cover,
+                                                        errorWidget: (context,
+                                                                error,
+                                                                stackTrace) =>
+                                                            Image.asset(
+                                                          'assets/images/profile_pic.png',
+                                                          fit: BoxFit.cover,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),

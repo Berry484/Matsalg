@@ -101,8 +101,7 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Nunito',
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
+                                    color: Colors.blue,
                                     fontSize: 18,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
@@ -313,10 +312,7 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                                       .labelLarge
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
+                                                        color: Colors.blue,
                                                         fontSize: 17,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
@@ -371,10 +367,7 @@ class _AddProfilePicWidgetState extends State<AddProfilePicWidget> {
                                                       .labelLarge
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
+                                                        color: Colors.blue,
                                                         fontSize: 17,
                                                         letterSpacing: 0.0,
                                                         fontWeight:

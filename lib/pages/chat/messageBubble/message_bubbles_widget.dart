@@ -1,4 +1,6 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/logging.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -106,7 +108,11 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                 focusColor: Colors.transparent,
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
-                onTap: () => FFAppState().update(() {}),
+                onLongPress: () => FFAppState().update(() {
+                  Clipboard.setData(
+                      ClipboardData(text: widget.messageText ?? ''));
+                  Toasts.showAccepted(context, 'Kopiert');
+                }),
                 child: Stack(
                   alignment: isBlue
                       ? AlignmentDirectional(1, 1)

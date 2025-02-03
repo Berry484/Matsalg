@@ -69,11 +69,8 @@ class _MessageWidgetState extends State<MessageWidget> {
   }
 
   Future<void> isDeleted() async {
-    // Ensure conversation is not null and conversation.deleted is not null
     if (conversation.deleted == true) {
       HapticFeedback.selectionClick();
-
-      // Schedule the overlay insertion after the current frame
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final overlay = Overlay.of(context);
         late OverlayEntry overlayEntry;
@@ -87,9 +84,8 @@ class _MessageWidgetState extends State<MessageWidget> {
               color: Colors.transparent,
               child: Dismissible(
                 key: UniqueKey(),
-                direction: DismissDirection.up, // Allow dismissing upwards
-                onDismissed: (_) =>
-                    overlayEntry.remove(), // Remove overlay on dismiss
+                direction: DismissDirection.up,
+                onDismissed: (_) => overlayEntry.remove(),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                       vertical: 14.0, horizontal: 20.0),
@@ -115,7 +111,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                       const SizedBox(width: 15),
                       Expanded(
                         child: Text(
-                          'fant ikke brukeren', // "Could not find user"
+                          'fant ikke brukeren',
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16.0,
@@ -354,132 +350,6 @@ class _MessageWidgetState extends State<MessageWidget> {
         _messageListWithFlags = _computeMessageFlags(conversation.messages);
       });
     }
-  }
-
-  // Extracted empty state widget
-  Widget _buildEmptyState(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.all(16),
-        child: Container(
-          height: 140,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).primary,
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(
-              color: const Color.fromARGB(32, 87, 99, 108),
-              width: 1.3,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 35,
-                      height: 35,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.asset(
-                        'assets/images/MatSalg_logo.png',
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Er du klar for å handle? Send en melding til selgeren!',
-                        style: FlutterFlowTheme.of(context).titleSmall.copyWith(
-                              fontFamily: 'Nunito',
-                              color: Colors.black87,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                        softWrap: true,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                GestureDetector(
-                  onTap: () async {
-                    var url = Uri.https('matsalg.no', '/how-it-works');
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
-                    }
-                  },
-                  child: Container(
-                    height: 37,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).alternate,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: const Color.fromARGB(32, 87, 99, 108),
-                        width: 1.3,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Les mer',
-                          style:
-                              FlutterFlowTheme.of(context).titleSmall.copyWith(
-                                    fontFamily: 'Nunito',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-// Extracted message list widget
-  Widget _buildMessageList() {
-    return AnimatedList(
-      key: _listKey,
-      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-      reverse: true,
-      initialItemCount: _messageListWithFlags.length,
-      itemBuilder: (context, index, animation) {
-        final message = _messageListWithFlags[index];
-        return SlideTransition(
-          position: animation.drive(
-            Tween<Offset>(
-              begin: const Offset(0.0, 2.0),
-              end: Offset.zero,
-            ).chain(CurveTween(curve: Curves.easeInOut)),
-          ),
-          child: MessageBubblesWidget(
-            key: ValueKey(message.time),
-            messageText: message.content,
-            blueBubble: message.me,
-            showDelivered: message.showDelivered ?? false,
-            showTail: true,
-            showLest: message.showLest ?? false,
-            messageTime: message.showTime ?? false ? message.time : null,
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -831,8 +701,166 @@ class _MessageWidgetState extends State<MessageWidget> {
                             child: _messageListWithFlags.isEmpty &&
                                     (conversation.iblocked != true &&
                                         conversation.otherblocked != true)
-                                ? _buildEmptyState(context)
-                                : _buildMessageList(),
+                                ? SingleChildScrollView(
+                                    physics: AlwaysScrollableScrollPhysics(),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              16, 16, 16, 12),
+                                      child: Container(
+                                        height: 140,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                          border: Border.all(
+                                            color: const Color.fromARGB(
+                                                32, 87, 99, 108),
+                                            width: 1.3,
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16, 12, 16, 0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                      width: 35,
+                                                      height: 35,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Image.asset(
+                                                        'assets/images/MatSalg_logo.png',
+                                                        fit: BoxFit.fitHeight,
+                                                      )),
+                                                  SizedBox(width: 8),
+                                                  Expanded(
+                                                    // Added Expanded to make the Text wrap properly
+                                                    child: Text(
+                                                      'Er du klar for å handle? Send en melding til selgeren!', // Title text for the empty state
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .titleSmall
+                                                          .copyWith(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            color:
+                                                                Colors.black87,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                      softWrap:
+                                                          true, // Ensures wrapping happens automatically
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 12),
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  var url = Uri.https(
+                                                      'matsalg.no',
+                                                      '/how-it-works');
+                                                  if (await canLaunchUrl(url)) {
+                                                    await launchUrl(url);
+                                                  }
+                                                },
+                                                child: Container(
+                                                  height: 37,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16),
+                                                    border: Border.all(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              32, 87, 99, 108),
+                                                      width: 1.3,
+                                                    ),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        'Les mer',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmall
+                                                                .copyWith(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : AnimatedList(
+                                    key: _listKey,
+                                    padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                    reverse: true,
+                                    initialItemCount:
+                                        _messageListWithFlags.isEmpty
+                                            ? 0
+                                            : _messageListWithFlags.length,
+                                    itemBuilder: (context, index, animation) {
+                                      final message =
+                                          _messageListWithFlags[index];
+                                      return SlideTransition(
+                                        position: animation.drive(
+                                          Tween<Offset>(
+                                            begin: const Offset(0.0, 2.0),
+                                            end: Offset.zero,
+                                          ).chain(CurveTween(
+                                              curve: Curves.easeInOut)),
+                                        ),
+                                        child: MessageBubblesWidget(
+                                          key: ValueKey(message.time),
+                                          messageText: message.content,
+                                          blueBubble: message.me,
+                                          showDelivered:
+                                              message.showDelivered ?? false,
+                                          showTail: true,
+                                          showLest: message.showLest ?? false,
+                                          messageTime: message.showTime ?? false
+                                              ? message.time
+                                              : null,
+                                        ),
+                                      );
+                                    },
+                                  ),
                           ),
                         ),
                         Padding(
@@ -951,17 +979,6 @@ class _MessageWidgetState extends State<MessageWidget> {
                                           .asValidator(context),
                                       inputFormatters: [
                                         LengthLimitingTextInputFormatter(4000),
-                                        TextInputFormatter.withFunction(
-                                            (oldValue, newValue) {
-                                          final lineCount = '\n'
-                                                  .allMatches(newValue.text)
-                                                  .length +
-                                              1;
-                                          if (lineCount > 10) {
-                                            return oldValue;
-                                          }
-                                          return newValue;
-                                        }),
                                       ],
                                     ),
                                   ),
@@ -1091,194 +1108,218 @@ class _MessageWidgetState extends State<MessageWidget> {
                           );
                         }
                       },
-                      child: Material(
-                        color: Colors.white,
-                        elevation: 0.420,
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              8, 11, 8, 14),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              if (conversation.slettet != true)
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 1, 1, 0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(6),
-                                    child: Stack(
-                                      children: [
-                                        CachedNetworkImage(
-                                          fadeInDuration: Duration.zero,
-                                          imageUrl:
-                                              '${ApiConstants.baseUrl}${conversation.productImage}',
-                                          width: 54,
-                                          height: 54,
-                                          fit: BoxFit.cover,
-                                          imageBuilder:
-                                              (context, imageProvider) {
-                                            return Container(
-                                              width: 54,
-                                              height: 54,
-                                              decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          errorWidget: (context, url, error) =>
-                                              Image.asset(
-                                            'assets/images/error_image.jpg',
-                                            width: 64,
-                                            height: 64,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black45.withOpacity(0.069),
+                              blurRadius: 4,
+                              spreadRadius: 0,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Material(
+                          color: Colors.white,
+                          elevation: 0,
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8, 11, 8, 14),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                if (conversation.slettet != true)
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            10, 1, 1, 0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
+                                      child: Stack(
+                                        children: [
+                                          CachedNetworkImage(
+                                            fadeInDuration: Duration.zero,
+                                            imageUrl:
+                                                '${ApiConstants.baseUrl}${conversation.productImage}',
+                                            width: 54,
+                                            height: 54,
                                             fit: BoxFit.cover,
+                                            imageBuilder:
+                                                (context, imageProvider) {
+                                              return Container(
+                                                width: 54,
+                                                height: 54,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Image.asset(
+                                              'assets/images/error_image.jpg',
+                                              width: 64,
+                                              height: 64,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                                        if (conversation.kjopt == true)
-                                          Positioned(
-                                            top: 13,
-                                            left: -46,
-                                            child: Transform.rotate(
-                                              angle: -0.70,
-                                              child: Container(
-                                                width: 140,
-                                                height: 19,
-                                                color: Colors.redAccent,
-                                                alignment: Alignment.center,
-                                                child: const Text(
-                                                  'Utsolgt',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 11,
+                                          if (conversation.kjopt == true)
+                                            Positioned(
+                                              top: 13,
+                                              left: -46,
+                                              child: Transform.rotate(
+                                                angle: -0.70,
+                                                child: Container(
+                                                  width: 140,
+                                                  height: 19,
+                                                  color: Colors.redAccent,
+                                                  alignment: Alignment.center,
+                                                  child: const Text(
+                                                    'Utsolgt',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 11,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                if (conversation.slettet == true)
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            10, 1, 1, 0),
+                                    child: Container(
+                                      width: 54,
+                                      height: 54,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                    ),
+                                  ),
+                                Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 0, 4, 0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 0, 0),
+                                              child: Text(
+                                                conversation.slettet ?? false
+                                                    ? 'Slettet annonse'
+                                                    : (conversation
+                                                            .productTitle ??
+                                                        ''),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineSmall
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 16,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                if (conversation.slettet !=
+                                                    true)
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            0, 3, 0, 0),
+                                                    child: Text(
+                                                      '${conversation.productPrice ?? ''}Kr',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .headlineSmall
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: 14,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                if (conversation.purchased ==
+                                                    true)
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            8, 0, 0, 0),
+                                                    child: Container(
+                                                      height: 20.0,
+                                                      width: 50.0,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.grey[300],
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0),
+                                                      ),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                        'Solgt',
+                                                        style: TextStyle(
+                                                          fontSize: 12.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Color(0xA0262C2D),
+                                          size: 22,
+                                        ),
                                       ],
                                     ),
                                   ),
                                 ),
-                              if (conversation.slettet == true)
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 1, 1, 0),
-                                  child: Container(
-                                    width: 54,
-                                    height: 54,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                  ),
-                                ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 4, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 0, 0, 0),
-                                            child: Text(
-                                              conversation.slettet ?? false
-                                                  ? 'Slettet annonse'
-                                                  : (conversation
-                                                          .productTitle ??
-                                                      ''),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineSmall
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        fontSize: 16,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                            ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              if (conversation.slettet != true)
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(0, 3, 0, 0),
-                                                  child: Text(
-                                                    '${conversation.productPrice ?? ''}Kr',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .headlineSmall
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          fontSize: 14,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                  ),
-                                                ),
-                                              if (conversation.purchased ==
-                                                  true)
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(8, 0, 0, 0),
-                                                  child: Container(
-                                                    height: 20.0,
-                                                    width: 50.0,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.grey[300],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                    ),
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      'Solgt',
-                                                      style: TextStyle(
-                                                        fontSize: 12.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Color(0xA0262C2D),
-                                        size: 22,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),

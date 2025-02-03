@@ -69,6 +69,13 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
     super.dispose();
   }
 
+  String formatMessageContent(String text, int maxChars) {
+    String firstLine = text.split('\n').first.trim();
+    return firstLine.length > maxChars
+        ? '\n${firstLine.substring(0, maxChars)}…'
+        : '\n$firstLine';
+  }
+
   bool isEmojiOnly(String text) {
     if (text.isEmpty) return false;
     final chars = text.characters;
@@ -208,11 +215,9 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                                 ),
                                           ),
                                           TextSpan(
-                                            text: '\n${widget.messageContent!}'
-                                                .maybeHandleOverflow(
-                                              maxChars: 25,
-                                              replacement: '…',
-                                            ),
+                                            text: formatMessageContent(
+                                                widget.messageContent ?? '',
+                                                25),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall
                                                 .override(

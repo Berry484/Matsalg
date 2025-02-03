@@ -935,21 +935,19 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
-                                                                  .copyWith(
+                                                                  .override(
                                                                     fontFamily:
                                                                         'Nunito',
-                                                                    color: _model.kategori !=
-                                                                            null
-                                                                        ? FlutterFlowTheme.of(context)
-                                                                            .primaryText
-                                                                        : const Color
-                                                                            .fromRGBO(
-                                                                            113,
-                                                                            113,
-                                                                            113,
-                                                                            1.0),
+                                                                    color: const Color
+                                                                        .fromRGBO(
+                                                                        113,
+                                                                        113,
+                                                                        113,
+                                                                        1),
                                                                     fontSize:
-                                                                        16.0,
+                                                                        16,
+                                                                    letterSpacing:
+                                                                        0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w700,
@@ -1189,25 +1187,13 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
                                                       ),
                                               textAlign: TextAlign.start,
                                               minLines: 3,
-                                              maxLines: 7,
+                                              maxLines: null,
                                               validator: _model
                                                   .produktBeskrivelseTextControllerValidator
                                                   .asValidator(context),
                                               inputFormatters: [
                                                 LengthLimitingTextInputFormatter(
                                                     700),
-                                                TextInputFormatter.withFunction(
-                                                    (oldValue, newValue) {
-                                                  final lineCount = '\n'
-                                                          .allMatches(
-                                                              newValue.text)
-                                                          .length +
-                                                      1;
-                                                  if (lineCount > 7) {
-                                                    return oldValue;
-                                                  }
-                                                  return newValue;
-                                                }),
                                               ],
                                             ),
                                           ),

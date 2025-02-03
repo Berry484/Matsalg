@@ -48,7 +48,6 @@ class DetailsServices {
           String formattedResponse =
               response[0].toUpperCase() + response.substring(1).toLowerCase();
           model.poststed = formattedResponse;
-          appState.updateUI();
         }
       }
     } on SocketException {

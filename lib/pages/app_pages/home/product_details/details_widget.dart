@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
+import 'package:mat_salg/helper_components/functions/custom_pageview_scroll_physics.dart';
 import 'package:mat_salg/helper_components/widgets/custom_page_indicator.dart';
 import 'package:mat_salg/helper_components/widgets/pageview_images.dart';
 import 'package:mat_salg/helper_components/widgets/product_grid.dart';
@@ -62,6 +63,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
     super.initState();
     _model = createModel(context, () => DetailsModel());
     matvare = Matvarer(name: '');
+    _model.fetchingProductLoading = true;
     if (widget.matvare != null) {
       matvare = Matvarer.fromJson1(widget.matvare);
       _model.fetchingProductLoading = false;
@@ -208,6 +210,21 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
     });
   }
 
+  String truncateText(String text, int maxLength, int maxNewlines) {
+    List<String> lines = text.split('\n');
+    int newlineCount = lines.length - 1;
+
+    if (text.length > maxLength || newlineCount >= maxNewlines) {
+      if (newlineCount >= maxNewlines) {
+        return '${lines.take(maxNewlines).join('\n')}...';
+      } else {
+        return '${text.substring(0, maxLength)}...';
+      }
+    }
+
+    return text;
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -244,7 +261,7 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  Navigator.pop(context);
+                  context.safePop();
                 },
                 child: Icon(
                   Icons.arrow_back_ios,
@@ -623,6 +640,8 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                             .fromSTEB(0.0, 0.0,
                                                             0.0, 40.0),
                                                     child: PageView(
+                                                      physics:
+                                                          CustomPageViewScrollPhysics(),
                                                       controller: _model
                                                               .pageViewController ??=
                                                           PageController(
@@ -1319,14 +1338,11 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                         text: _model.isExpanded
                                                             ? matvare
                                                                 .description
-                                                            : (matvare.description!
-                                                                            .length >
-                                                                        100 ||
-                                                                    '\n'.allMatches(matvare.description!).length >=
-                                                                        2
-                                                                ? "${matvare.description!.substring(0, matvare.description!.length > 100 ? 100 : matvare.description!.indexOf('\n', matvare.description!.indexOf('\n') + 1) + 1)}..."
-                                                                : matvare
-                                                                    .description),
+                                                            : truncateText(
+                                                                matvare
+                                                                    .description!,
+                                                                100,
+                                                                3),
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .titleSmall

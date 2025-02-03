@@ -95,12 +95,11 @@ class Toasts {
           color: Colors.transparent,
           child: Dismissible(
             key: UniqueKey(),
-            direction: DismissDirection.up, // Allow dismissing upwards
-            onDismissed: (_) =>
-                overlayEntry.remove(), // Remove overlay on dismiss
+            direction: DismissDirection.up,
+            onDismissed: (_) => overlayEntry.remove(),
             child: Container(
               padding:
-                  const EdgeInsets.symmetric(vertical: 14.0, horizontal: 20.0),
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(14.0),
@@ -117,7 +116,7 @@ class Toasts {
                   const SizedBox(height: 30),
                   Icon(
                     CupertinoIcons.checkmark_alt_circle_fill,
-                    color: FlutterFlowTheme.of(context).alternate,
+                    color: Colors.blue,
                     size: 35.0,
                   ),
                   const SizedBox(width: 15),

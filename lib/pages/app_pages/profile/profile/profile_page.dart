@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mat_salg/helper_components/flutter_flow/flutter_flow_icon_button.dart';
+import 'package:mat_salg/helper_components/widgets/profilepic_screen_image.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:mat_salg/models/matvarer.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
@@ -354,22 +355,37 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                           builder: (BuildContext
                                                               context) {
                                                             return CupertinoActionSheet(
-                                                              title: const Text(
-                                                                'Velg en handling',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 13,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: CupertinoColors
-                                                                      .secondaryLabel,
-                                                                ),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                              ),
                                                               actions: <Widget>[
+                                                                CupertinoActionSheetAction(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      useSafeArea:
+                                                                          false,
+                                                                      builder:
+                                                                          (context) =>
+                                                                              ProfilepicScreenImage(
+                                                                        imageUrl:
+                                                                            '${ApiConstants.baseUrl}${FFAppState().profilepic}',
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                    'Se',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          19,
+                                                                      color: CupertinoColors
+                                                                          .systemBlue,
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                                 CupertinoActionSheetAction(
                                                                   onPressed:
                                                                       () {

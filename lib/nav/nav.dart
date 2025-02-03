@@ -270,23 +270,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
               GoRoute(
                   path: '/profil',
                   name: 'Profil',
+                  builder: (context, state) {
+                    return ProfilePage();
+                  },
                   pageBuilder: (context, state) {
-                    final transitionInfo = state.extra as Map<String, dynamic>?;
-                    final transition =
-                        transitionInfo?['transition'] as TransitionInfo?;
-                    if (transition != null) {
-                      return CustomTransitionPage(
-                        transitionDuration: const Duration(milliseconds: 0),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                        child: ProfilePage(),
-                      );
-                    }
                     return MaterialPage<void>(child: ProfilePage());
                   },
                   routes: [
@@ -452,12 +439,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         path: '/matDetaljBondegard2',
         name: 'MatDetaljBondegard2',
         builder: (context, state) {
-          // Retrieve parameters safely using FFParameters
           final params = FFParameters(state);
           final matvare =
               params.getParam<Map<String, dynamic>>('matvare', ParamType.JSON);
           final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
           final matId = params.getParam<int>('matId', ParamType.int);
+
           return DetailsWidget(
               matvare: matvare, fromChat: fromChat, matId: matId);
         },
@@ -482,9 +469,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         parentNavigatorKey: _parentKey,
       ),
       GoRoute(
-        path: '/legguTMatvare',
-        name:
-            'LeggUtMatvare', // Ensure this name matches the one used in `pushNamed`
+        path: '/leggUtMatvare',
+        name: 'LeggUtMatvare',
         pageBuilder: (context, state) {
           final params = FFParameters(state);
           final rediger = params.getParam<bool>('rediger', ParamType.bool);
@@ -492,14 +478,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
           final fromChat = params.getParam<bool>('fromChat', ParamType.bool);
 
           return CustomTransitionPage(
-            transitionDuration: const Duration(milliseconds: 200),
+            transitionDuration: const Duration(milliseconds: 350),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               return SlideTransition(
                 position: Tween<Offset>(
-                  begin: const Offset(0, 1), // Start from the bottom
-                  end: Offset.zero, // End at normal position
-                ).animate(animation),
+                  begin: const Offset(0, 1),
+                  end: Offset.zero,
+                ).animate(CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeOutCubic,
+                )),
                 child: child,
               );
             },

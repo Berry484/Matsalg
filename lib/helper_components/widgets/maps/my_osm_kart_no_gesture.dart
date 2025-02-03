@@ -116,23 +116,19 @@ class CirclePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color =
-          Colors.redAccent.withOpacity(0.3) // Circle color with transparency
+      ..color = Colors.redAccent.withOpacity(0.3)
       ..style = PaintingStyle.fill;
 
-    // Draw the circle in the center of the CustomPaint widget
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
-      radius, // Radius in pixels
+      radius,
       paint,
     );
 
     final Paint borderPaint = Paint()
-      ..color = Colors.red // Border color
+      ..color = Colors.red
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2; // Border stroke width
-
-    // Draw the circle border
+      ..strokeWidth = 2;
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
       radius,
