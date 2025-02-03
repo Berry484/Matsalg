@@ -1281,27 +1281,26 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                           .allMatches(matvare
                                                               .description!)
                                                           .length >=
-                                                      2))
+                                                      2) &&
+                                              !_model.isExpanded)
                                             GestureDetector(
                                               onTap: () {
                                                 setState(() {
-                                                  _model.isExpanded = !_model
-                                                      .isExpanded; // Toggle expand/collapse
+                                                  _model.isExpanded =
+                                                      !_model.isExpanded;
                                                 });
                                               },
                                               child: Padding(
                                                 padding: const EdgeInsets.only(
                                                     top: 4.0),
                                                 child: Text(
-                                                  _model.isExpanded
-                                                      ? 'Se mindre'
-                                                      : 'Se mer', // Dynamic toggle text
+                                                  'Se mer',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodySmall
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        fontSize: 13.0,
+                                                        fontSize: 13,
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         color: const Color

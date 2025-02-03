@@ -988,12 +988,13 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                                       backgroundColor:
                                                                           Colors
                                                                               .transparent,
-                                                                      barrierColor: const Color
-                                                                          .fromARGB(
-                                                                          60,
-                                                                          17,
-                                                                          0,
-                                                                          0),
+                                                                      barrierColor:
+                                                                          const Color
+                                                                              .fromARGB(
+                                                                              99,
+                                                                              0,
+                                                                              0,
+                                                                              0),
                                                                       useRootNavigator:
                                                                           true,
                                                                       context:

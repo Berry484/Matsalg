@@ -705,9 +705,9 @@ class _RapporterWidgetState extends State<ReportWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 15.0,
+                                                          fontSize: 15.5,
                                                           fontWeight:
-                                                              FontWeight.w700,
+                                                              FontWeight.w600,
                                                         ),
                                                   ),
                                                 ],

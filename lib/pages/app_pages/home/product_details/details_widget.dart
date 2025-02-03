@@ -1358,7 +1358,8 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                           .allMatches(matvare
                                                               .description!)
                                                           .length >=
-                                                      2))
+                                                      2) &&
+                                              !_model.isExpanded)
                                             GestureDetector(
                                               onTap: () {
                                                 safeSetState(() {
@@ -1370,20 +1371,18 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                 padding: const EdgeInsets.only(
                                                     top: 4.0),
                                                 child: Text(
-                                                  _model.isExpanded
-                                                      ? 'Se mindre'
-                                                      : 'Se mer',
+                                                  'Se mer',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodySmall
                                                       .override(
                                                         fontFamily: 'Nunito',
-                                                        fontSize: 13.0,
+                                                        fontSize: 13,
                                                         fontWeight:
-                                                            FontWeight.w800,
+                                                            FontWeight.w700,
                                                         color: const Color
-                                                            .fromARGB(
-                                                            255, 76, 76, 76),
+                                                            .fromRGBO(
+                                                            113, 113, 113, 1.0),
                                                       ),
                                                 ),
                                               ),

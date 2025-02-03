@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/logging.dart';
 
@@ -35,6 +36,7 @@ class MessagePreviewWidget extends StatefulWidget {
 }
 
 class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
+  final parser = EmojiParser();
   late MessagePreviewModel _model;
   late DateTime time; // Declare time as DateTime
 
@@ -65,6 +67,21 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
     _model.maybeDispose();
 
     super.dispose();
+  }
+
+  bool isEmojiOnly(String text) {
+    if (text.isEmpty) return false;
+    final chars = text.characters;
+    if (chars.length > 3) return false;
+    for (final rune in text.runes) {
+      if (!isEmoji(rune)) return false;
+    }
+    return true;
+  }
+
+  bool isEmoji(int codePoint) {
+    String char = String.fromCharCode(codePoint);
+    return parser.hasEmoji(char);
   }
 
   @override
@@ -202,7 +219,11 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                                   fontFamily: 'Inter',
                                                   fontSize: 15,
                                                   letterSpacing: 0.0,
-                                                  color: Colors.black54,
+                                                  color: isEmojiOnly(widget
+                                                              .messageContent ??
+                                                          '')
+                                                      ? Colors.black87
+                                                      : Colors.black54,
                                                   fontWeight: FontWeight.w500,
                                                   lineHeight: 1.3,
                                                 ),

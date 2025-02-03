@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/logging.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -36,6 +37,7 @@ class _MessageWidgetState extends State<MessageWidget> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final parser = EmojiParser();
   late MessageModel _model;
   late List<Message> _messageListWithFlags;
   late Conversation conversation;
@@ -235,61 +237,87 @@ class _MessageWidgetState extends State<MessageWidget> {
   }
 
   List<Message> _computeMessageFlags(List<Message> messages) {
+    if (messages.isEmpty) return messages;
+
+    DateTime? lastMessageTime;
     DateTime mostRecentTime = DateTime.fromMillisecondsSinceEpoch(0);
-    Map<String, DateTime> mostRecentMessages =
-        {}; // Track most recent messages per day
+    final mostRecentMessages = <String, DateTime>{};
 
-    // Find the most recent message for each day and the overall most recent message
-    for (var msg in messages) {
+    // Precompute the most recent message time and track the most recent messages per day
+    for (var i = 0; i < messages.length; i++) {
+      final msg = messages[i];
       if (msg.me) {
-        // Check if the message is sent by 'me'
-        DateTime msgDate = DateTime.parse(msg.time);
-        String dateKey = "${msgDate.year}-${msgDate.month}-${msgDate.day}";
+        final msgDate = DateTime.parse(msg.time);
+        final dateKey = "${msgDate.year}-${msgDate.month}-${msgDate.day}";
 
-        // Update the most recent message for this day
-        if (!mostRecentMessages.containsKey(dateKey) ||
-            msgDate.isAfter(mostRecentMessages[dateKey]!)) {
+        // Track the most recent message per day
+        final mostRecentMsgForDay = mostRecentMessages[dateKey];
+        if (mostRecentMsgForDay == null ||
+            msgDate.isAfter(mostRecentMsgForDay)) {
           mostRecentMessages[dateKey] = msgDate;
         }
 
-        // Track the overall most recent message sent by 'me'
+        // Track the overall most recent message
         if (msgDate.isAfter(mostRecentTime)) {
           mostRecentTime = msgDate;
         }
       }
     }
 
-    // Now iterate over the messages and apply the flags
-    return messages.map((message) {
+    // Apply flags to messages
+    for (var i = 0; i < messages.length; i++) {
+      final message = messages[i];
+      final msgDate = DateTime.parse(message.time);
+      final dateKey = "${msgDate.year}-${msgDate.month}-${msgDate.day}";
+
+      bool showTime = false;
       bool showDelivered = false;
       bool showLest = false;
-      bool showTime = false;
 
-      DateTime msgDate = DateTime.parse(message.time);
-      String dateKey = "${msgDate.year}-${msgDate.month}-${msgDate.day}";
+      // Show timestamp if there's a 90-second gap from the previous message
+      if (lastMessageTime != null) {
+        final difference = msgDate.difference(lastMessageTime);
+        if (difference.inSeconds.abs() > 90) {
+          showTime = true;
+        }
+      }
+      lastMessageTime = msgDate;
 
-      // Show time only for the most recent message of the day
       if (message.me && mostRecentMessages[dateKey] == msgDate) {
         showTime = true;
       }
 
-      // Check if this message is the most recent message sent by 'me'
       if (message.me && msgDate.isAtSameMomentAs(mostRecentTime)) {
-        showDelivered = message.read == false; // Show delivered if unread
-        showLest = message.read == true; // Show lest if read
+        showDelivered = !message.read;
+        showLest = message.read;
       }
 
-      // Flag for the most recent message
-      bool isMostRecent = msgDate.isAtSameMomentAs(mostRecentTime);
-
-      // Set the flags
+      message.showTime = showTime;
       message.showDelivered = showDelivered;
       message.showLest = showLest;
-      message.isMostRecent = isMostRecent;
-      message.showTime = showTime;
+      message.isMostRecent = msgDate.isAtSameMomentAs(mostRecentTime);
+    }
 
-      return message;
-    }).toList();
+    return messages;
+  }
+
+  bool isEmojiOnly(String text) {
+    if (text.isEmpty) return false;
+    final chars = text.characters;
+    if (chars.length > 3) return false;
+    for (final rune in text.runes) {
+      if (!isEmoji(rune)) return false;
+    }
+    return true;
+  }
+
+  bool isEmoji(int codePoint) {
+    String char = String.fromCharCode(codePoint);
+    return parser.hasEmoji(char);
+  }
+
+  double calculateFontSize(String text) {
+    return isEmojiOnly(text) ? 42 : 16;
   }
 
   @override
@@ -326,6 +354,132 @@ class _MessageWidgetState extends State<MessageWidget> {
         _messageListWithFlags = _computeMessageFlags(conversation.messages);
       });
     }
+  }
+
+  // Extracted empty state widget
+  Widget _buildEmptyState(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(16),
+        child: Container(
+          height: 140,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: FlutterFlowTheme.of(context).primary,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(
+              color: const Color.fromARGB(32, 87, 99, 108),
+              width: 1.3,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 35,
+                      height: 35,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        'assets/images/MatSalg_logo.png',
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Er du klar for å handle? Send en melding til selgeren!',
+                        style: FlutterFlowTheme.of(context).titleSmall.copyWith(
+                              fontFamily: 'Nunito',
+                              color: Colors.black87,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
+                        softWrap: true,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                GestureDetector(
+                  onTap: () async {
+                    var url = Uri.https('matsalg.no', '/how-it-works');
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    }
+                  },
+                  child: Container(
+                    height: 37,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).alternate,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: const Color.fromARGB(32, 87, 99, 108),
+                        width: 1.3,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Les mer',
+                          style:
+                              FlutterFlowTheme.of(context).titleSmall.copyWith(
+                                    fontFamily: 'Nunito',
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+// Extracted message list widget
+  Widget _buildMessageList() {
+    return AnimatedList(
+      key: _listKey,
+      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+      reverse: true,
+      initialItemCount: _messageListWithFlags.length,
+      itemBuilder: (context, index, animation) {
+        final message = _messageListWithFlags[index];
+        return SlideTransition(
+          position: animation.drive(
+            Tween<Offset>(
+              begin: const Offset(0.0, 2.0),
+              end: Offset.zero,
+            ).chain(CurveTween(curve: Curves.easeInOut)),
+          ),
+          child: MessageBubblesWidget(
+            key: ValueKey(message.time),
+            messageText: message.content,
+            blueBubble: message.me,
+            showDelivered: message.showDelivered ?? false,
+            showTail: true,
+            showLest: message.showLest ?? false,
+            messageTime: message.showTime ?? false ? message.time : null,
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -677,182 +831,59 @@ class _MessageWidgetState extends State<MessageWidget> {
                             child: _messageListWithFlags.isEmpty &&
                                     (conversation.iblocked != true &&
                                         conversation.otherblocked != true)
-                                ? SingleChildScrollView(
-                                    physics: AlwaysScrollableScrollPhysics(),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16, 0, 16, 12),
-                                      child: Container(
-                                        height: 140,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          borderRadius:
-                                              BorderRadius.circular(24),
-                                          border: Border.all(
-                                            color: const Color.fromARGB(
-                                                32, 87, 99, 108),
-                                            width: 1.3,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(16, 12, 16, 0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                      width: 35,
-                                                      height: 35,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      child: Image.asset(
-                                                        'assets/images/MatSalg_logo.png',
-                                                        fit: BoxFit.fitHeight,
-                                                      )),
-                                                  SizedBox(width: 8),
-                                                  Expanded(
-                                                    // Added Expanded to make the Text wrap properly
-                                                    child: Text(
-                                                      'Er du klar for å handle? Send en melding til selgeren!', // Title text for the empty state
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .titleSmall
-                                                          .copyWith(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            color:
-                                                                Colors.black87,
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                      softWrap:
-                                                          true, // Ensures wrapping happens automatically
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 12),
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  var url = Uri.https(
-                                                      'matsalg.no',
-                                                      '/how-it-works');
-                                                  if (await canLaunchUrl(url)) {
-                                                    await launchUrl(url);
-                                                  }
-                                                },
-                                                child: Container(
-                                                  height: 37,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                    border: Border.all(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              32, 87, 99, 108),
-                                                      width: 1.3,
-                                                    ),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        'Les mer',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .copyWith(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : AnimatedList(
-                                    key: _listKey,
-                                    padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                                    reverse: true,
-                                    initialItemCount:
-                                        _messageListWithFlags.isEmpty
-                                            ? 0
-                                            : _messageListWithFlags.length,
-                                    itemBuilder: (context, index, animation) {
-                                      final message =
-                                          _messageListWithFlags[index];
-                                      return SlideTransition(
-                                        position: animation.drive(
-                                          Tween<Offset>(
-                                            begin: const Offset(0.0, 2.0),
-                                            end: Offset.zero,
-                                          ).chain(CurveTween(
-                                              curve: Curves.easeInOut)),
-                                        ),
-                                        child: MessageBubblesWidget(
-                                          key: ValueKey(message.time),
-                                          mesageText: message.content,
-                                          blueBubble: message.me,
-                                          showDelivered:
-                                              message.showDelivered ?? false,
-                                          showTail: true,
-                                          showLest: message.showLest ?? false,
-                                          messageTime: message.showTime ?? false
-                                              ? message.time
-                                              : null,
-                                        ),
-                                      );
-                                    },
-                                  ),
+                                ? _buildEmptyState(context)
+                                : _buildMessageList(),
                           ),
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                          child: Container(
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+                          child: SizedBox(
                             width: double.infinity,
-                            decoration: const BoxDecoration(
-                              color: Color(0xB3FFFFFF),
-                            ),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16, 5, 16, 0),
+                                  6, 0, 0, 0),
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 0.0),
+                                    child: GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      onTap: () {
+                                        try {
+                                          print("hello world!");
+                                        } on SocketException {
+                                          Toasts.showErrorToast(context,
+                                              'Ingen internettforbindelse');
+                                        } catch (e) {
+                                          Toasts.showErrorToast(
+                                              context, 'En feil oppstod');
+                                        }
+                                      },
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: Center(
+                                          child: Container(
+                                            width: 34,
+                                            height: 34,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color(0xFFE5E6E8),
+                                            ),
+                                            child: Center(
+                                              child: Icon(
+                                                CupertinoIcons.plus,
+                                                color: Color(0xFF6F7177),
+                                                size: 22.5,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                   Expanded(
                                     child: TextFormField(
                                       controller: _model.textController,
@@ -867,12 +898,12 @@ class _MessageWidgetState extends State<MessageWidget> {
                                           TextCapitalization.sentences,
                                       obscureText: false,
                                       maxLines: 8,
-                                      minLines: 1, // Start with 1 line
+                                      minLines: 1,
                                       maxLength: 4000,
                                       textAlign: TextAlign.start,
                                       decoration: InputDecoration(
                                         isDense: true,
-                                        hintText: 'Skriv melding ...',
+                                        hintText: 'Send melding ...',
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -904,13 +935,14 @@ class _MessageWidgetState extends State<MessageWidget> {
                                         counterText: '',
                                         contentPadding:
                                             const EdgeInsetsDirectional
-                                                .fromSTEB(14, 16, 45, 16),
+                                                .fromSTEB(16, 13, 45, 13),
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Inter',
-                                            fontSize: 16.0,
+                                            fontSize: calculateFontSize(
+                                                _model.textController.text),
                                             fontWeight: FontWeight.w500,
                                             letterSpacing: 0.0,
                                             lineHeight: 1,
@@ -944,14 +976,13 @@ class _MessageWidgetState extends State<MessageWidget> {
                   if (_model.textController.text.isNotEmpty)
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(12, 0, 4, 0),
+                          const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
                       child: Align(
                         alignment: Alignment.bottomRight,
                         child: FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
                           borderRadius: 50.0,
                           borderWidth: 1.0,
-                          buttonSize: 68.0,
+                          buttonSize: 52.0,
                           onPressed: () {
                             try {
                               if (conversation.iblocked == true ||
@@ -1000,7 +1031,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                     Container(
                       width: double.infinity,
                       color: Colors.grey[300],
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
@@ -1016,7 +1047,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                                   .override(
                                     fontFamily: 'Nunito',
                                     color: Colors.black,
-                                    letterSpacing: 0.0,
+                                    letterSpacing: 0.5,
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -1026,64 +1057,58 @@ class _MessageWidgetState extends State<MessageWidget> {
                       ),
                     ),
                   if (conversation.productImage != null)
-                    Stack(
-                      children: [
-                        InkWell(
-                          splashFactory: InkRipple.splashFactory,
-                          splashColor: Colors.grey[100],
-                          onTap: () {
-                            if (conversation.isOwner != true) {
-                              context.pushNamed(
-                                'MatDetaljBondegard2',
-                                queryParameters: {
-                                  'fromChat': serializeParam(
-                                    true,
-                                    ParamType.bool,
-                                  ),
-                                  'matId': serializeParam(
-                                    conversation.matId,
-                                    ParamType.int,
-                                  ),
-                                },
-                              );
-                            } else {
-                              context.pushNamed(
-                                'ProductStatsChat',
-                                queryParameters: {
-                                  'matId': serializeParam(
-                                    conversation.matId,
-                                    ParamType.int,
-                                  ),
-                                  'otherUid': serializeParam(
-                                    conversation.user,
-                                    ParamType.String,
-                                  ),
-                                },
-                              );
-                            }
-                          },
-                          child: Material(
-                            color: Colors.white,
-                            elevation: 0.5,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(24),
-                                shape: BoxShape.rectangle,
+                    InkWell(
+                      splashFactory: InkRipple.splashFactory,
+                      splashColor: Colors.grey[100],
+                      onTap: () {
+                        if (conversation.isOwner != true) {
+                          context.pushNamed(
+                            'MatDetaljBondegard2',
+                            queryParameters: {
+                              'fromChat': serializeParam(
+                                true,
+                                ParamType.bool,
                               ),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8, 8, 8, 8),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              10, 1, 1, 1),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(6),
-                                        child: CachedNetworkImage(
+                              'matId': serializeParam(
+                                conversation.matId,
+                                ParamType.int,
+                              ),
+                            },
+                          );
+                        } else {
+                          context.pushNamed(
+                            'ProductStatsChat',
+                            queryParameters: {
+                              'matId': serializeParam(
+                                conversation.matId,
+                                ParamType.int,
+                              ),
+                              'otherUid': serializeParam(
+                                conversation.user,
+                                ParamType.String,
+                              ),
+                            },
+                          );
+                        }
+                      },
+                      child: Material(
+                        color: Colors.white,
+                        elevation: 0.420,
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              8, 11, 8, 14),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              if (conversation.slettet != true)
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10, 1, 1, 0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(6),
+                                    child: Stack(
+                                      children: [
+                                        CachedNetworkImage(
                                           fadeInDuration: Duration.zero,
                                           imageUrl:
                                               '${ApiConstants.baseUrl}${conversation.productImage}',
@@ -1111,150 +1136,152 @@ class _MessageWidgetState extends State<MessageWidget> {
                                             fit: BoxFit.cover,
                                           ),
                                         ),
-                                      ),
+                                        if (conversation.kjopt == true)
+                                          Positioned(
+                                            top: 13,
+                                            left: -46,
+                                            child: Transform.rotate(
+                                              angle: -0.70,
+                                              child: Container(
+                                                width: 140,
+                                                height: 19,
+                                                color: Colors.redAccent,
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  'Utsolgt',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 11,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
                                     ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 4, 0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
+                                  ),
+                                ),
+                              if (conversation.slettet == true)
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10, 1, 1, 0),
+                                  child: Container(
+                                    width: 54,
+                                    height: 54,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                  ),
+                                ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12, 0, 4, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 0, 0, 0),
+                                            child: Text(
+                                              conversation.slettet ?? false
+                                                  ? 'Slettet annonse'
+                                                  : (conversation
+                                                          .productTitle ??
+                                                      ''),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineSmall
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        fontSize: 16,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              if (conversation.slettet != true)
                                                 Padding(
                                                   padding:
                                                       const EdgeInsetsDirectional
-                                                          .fromSTEB(0, 0, 0, 0),
+                                                          .fromSTEB(0, 3, 0, 0),
                                                   child: Text(
-                                                    conversation.productTitle ??
-                                                        '',
+                                                    '${conversation.productPrice ?? ''}Kr',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .headlineSmall
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          fontSize: 16,
+                                                          fontSize: 14,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FontWeight.w700,
+                                                              FontWeight.bold,
                                                         ),
                                                   ),
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 3, 0, 0),
-                                                      child: Text(
-                                                        '${conversation.productPrice ?? ''}Kr',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .headlineSmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: 14,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
+                                              if (conversation.purchased ==
+                                                  true)
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(8, 0, 0, 0),
+                                                  child: Container(
+                                                    height: 20.0,
+                                                    width: 50.0,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.grey[300],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0),
+                                                    ),
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      'Solgt',
+                                                      style: TextStyle(
+                                                        fontSize: 12.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black,
                                                       ),
                                                     ),
-                                                    if (conversation
-                                                            .purchased ==
-                                                        true)
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                8, 0, 0, 0),
-                                                        child: Container(
-                                                          height: 20.0,
-                                                          width: 50.0,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors
-                                                                .grey[300],
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.0),
-                                                          ),
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Text(
-                                                            'Solgt',
-                                                            style: TextStyle(
-                                                              fontSize: 12.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.black,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                  ],
+                                                  ),
                                                 ),
-                                              ],
-                                            ),
-                                            Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: Color(0xA0262C2D),
-                                              size: 22,
-                                            ),
-                                          ],
-                                        ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (conversation.kjopt == true)
-                          Positioned(
-                            top: 15,
-                            left: -29,
-                            child: Transform.rotate(
-                              angle: -0.600,
-                              child: Container(
-                                width: 140,
-                                height: 19,
-                                color: Colors.redAccent,
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'Utsolgt',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Color(0xA0262C2D),
+                                        size: 22,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                      ],
+                        ),
+                      ),
                     ),
                 ],
               ),

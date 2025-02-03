@@ -1020,7 +1020,7 @@ class _ProfilWidgetState extends State<ProfilePage>
                                                             setState(() {
                                                               _model.isExpanded =
                                                                   !_model
-                                                                      .isExpanded; // Toggle expanded state
+                                                                      .isExpanded;
                                                             });
                                                           },
                                                           child: Padding(

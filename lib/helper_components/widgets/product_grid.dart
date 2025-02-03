@@ -34,12 +34,12 @@ class ProductList extends StatelessWidget {
     final theme = FlutterFlowTheme.of(context);
     final imageUrl = '${ApiConstants.baseUrl}${matvare.imgUrls![0]}';
 
-    return Stack(
-      children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+      child: Stack(
+        children: [
+          GestureDetector(
+            onTap: onTap,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -134,31 +134,32 @@ class ProductList extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        // Sale banner
-        if (matvare.kjopt == true)
-          Positioned(
-            top: 15,
-            right: -29,
-            child: Transform.rotate(
-              angle: 0.600,
-              child: Container(
-                width: 140,
-                height: 23,
-                color: Colors.redAccent,
-                alignment: Alignment.center,
-                child: const Text(
-                  'Utsolgt',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
+
+          // Sale banner
+          if (matvare.kjopt == true)
+            Positioned(
+              top: 15,
+              right: -29,
+              child: Transform.rotate(
+                angle: 0.600,
+                child: Container(
+                  width: 140,
+                  height: 23,
+                  color: Colors.redAccent,
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Utsolgt',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

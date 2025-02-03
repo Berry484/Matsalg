@@ -19,24 +19,24 @@ class CategoryItem extends StatelessWidget {
       'Kjøtt',
       'Grønt',
       'Meieri',
-      'Sjømat',
       'Produkter',
+      'Sjømat',
     ];
 
     final List<String> kategorier = [
       'kjøtt',
       'grønt',
       'meieri',
-      'sjømat',
       'produkter',
+      'sjømat',
     ];
 
     final List<String> images = [
       'meat',
       'green',
       'dairy',
-      'seafood',
       'selfmade',
+      'seafood',
     ];
 
     final text = texts[index];
