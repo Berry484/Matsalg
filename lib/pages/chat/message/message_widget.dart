@@ -1113,8 +1113,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black45.withOpacity(0.069),
-                              blurRadius: 4,
+                              color: Colors.black45.withOpacity(0.04),
+                              blurRadius: 3,
                               spreadRadius: 0,
                               offset: Offset(0, 3),
                             ),

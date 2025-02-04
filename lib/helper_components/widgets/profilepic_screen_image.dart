@@ -38,8 +38,9 @@ class ProfilepicScreenImageState extends State<ProfilepicScreenImage>
   void _onScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
       final newScale = _scale * details.scale;
-      _scale = newScale.clamp(0.95, 1.69);
+      _scale = lerpDouble(_scale, newScale, 0.1)!.clamp(0.95, 1.69);
       _offset += details.focalPointDelta;
+
       final screenWidth = MediaQuery.of(context).size.width;
       final screenHeight = MediaQuery.of(context).size.height;
       _offset = Offset(
