@@ -24,7 +24,7 @@ class ProfilepicScreenImageState extends State<ProfilepicScreenImage>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 250),
     );
 
     _controller.addListener(() {
@@ -37,13 +37,9 @@ class ProfilepicScreenImageState extends State<ProfilepicScreenImage>
 
   void _onScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
-      // Clamp the scale to avoid extreme zooming
-      _scale = (_scale * details.scale).clamp(0.95, 1.69);
-
-      // Update the offset based on focal point delta
+      final newScale = _scale * details.scale;
+      _scale = newScale.clamp(0.95, 1.69);
       _offset += details.focalPointDelta;
-
-      // Clamp the offset to prevent the image from moving too far
       final screenWidth = MediaQuery.of(context).size.width;
       final screenHeight = MediaQuery.of(context).size.height;
       _offset = Offset(
@@ -54,7 +50,7 @@ class ProfilepicScreenImageState extends State<ProfilepicScreenImage>
   }
 
   void _onScaleEnd(ScaleEndDetails details) {
-    if (_offset.distance > 169) {
+    if (_offset.distance > 100) {
       Navigator.pop(context);
     } else {
       _animateBack();
@@ -88,14 +84,15 @@ class ProfilepicScreenImageState extends State<ProfilepicScreenImage>
           children: [
             Positioned.fill(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
-                  color: Colors.white.withOpacity(0.69),
+                  color: Colors.white.withOpacity(0.8),
                 ),
               ),
             ),
             Positioned.fill(
               child: GestureDetector(
+                onTap: () {},
                 onScaleUpdate: _onScaleUpdate,
                 onScaleEnd: _onScaleEnd,
                 child: AnimatedBuilder(

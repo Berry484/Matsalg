@@ -649,8 +649,6 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                 children: [
                                                   GestureDetector(
                                                     onTap: () {
-                                                      HapticFeedback
-                                                          .selectionClick();
                                                       showDialog(
                                                         context: context,
                                                         useSafeArea: false,
