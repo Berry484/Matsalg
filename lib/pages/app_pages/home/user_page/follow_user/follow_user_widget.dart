@@ -159,56 +159,64 @@ class _FolgBrukerWidgetState extends State<FollowUserWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Icon(
-                                    CupertinoIcons.bell,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 33,
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            10, 0, 0, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Varsle meg',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Nunito',
-                                                fontSize: 17,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w800,
-                                              ),
-                                        ),
-                                        // Make text wrap automatically
-                                        Flexible(
-                                          child: Text(
-                                            'Få varsling når ${widget.username} legger \nut en ny annonse',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  color: Colors.grey[700],
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                            softWrap: true,
-                                            overflow: TextOverflow.visible,
-                                          ),
-                                        ),
-                                      ],
+                              Expanded(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Icon(
+                                      CupertinoIcons.bell,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 33,
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          RichText(
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            text: TextSpan(
+                                              text: 'Varsle meg',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        fontSize: 17,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w800,
+                                                      ),
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      '\nFå varsling når ${widget.username} legger ut en ny annonse',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        color: Colors.grey[700],
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                               Switch.adaptive(
                                 value: _model.switchValue!,

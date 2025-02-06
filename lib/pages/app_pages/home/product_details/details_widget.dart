@@ -9,6 +9,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mat_salg/helper_components/functions/calculate_distance.dart';
 import 'package:mat_salg/helper_components/functions/custom_pageview_scroll_physics.dart';
 import 'package:mat_salg/helper_components/widgets/custom_page_indicator.dart';
+import 'package:mat_salg/helper_components/widgets/image_fullscreen.dart';
 import 'package:mat_salg/helper_components/widgets/pageview_images.dart';
 import 'package:mat_salg/helper_components/widgets/product_grid.dart';
 import 'package:mat_salg/helper_components/widgets/shimmer_widgets/shimmer_product.dart';
@@ -707,81 +708,42 @@ class _MatDetaljBondegardWidgetState extends State<DetailsWidget> {
                                                               highlightColor:
                                                                   Colors
                                                                       .transparent,
-                                                              onDoubleTap:
-                                                                  () async {
-                                                                try {
-                                                                  HapticFeedback
-                                                                      .selectionClick();
-                                                                  String?
-                                                                      token =
-                                                                      await firebaseAuthService
-                                                                          .getToken(
-                                                                              context);
-                                                                  if (token ==
-                                                                      null) {
-                                                                    return;
-                                                                  }
-                                                                  safeSetState(() =>
-                                                                      _model.liker =
-                                                                          !_model
-                                                                              .liker!);
-                                                                  if (_model
-                                                                      .liker!) {
-                                                                    FFAppState()
-                                                                        .unlikedFoods
-                                                                        .remove(
-                                                                            matvare.matId);
-                                                                    if (!FFAppState()
-                                                                        .likedFoods
-                                                                        .contains(
-                                                                            matvare.matId)) {
-                                                                      FFAppState()
-                                                                          .likedFoods
-                                                                          .add(matvare.matId ??
-                                                                              0);
-                                                                    }
-
-                                                                    _triggerHeartAnimation();
-                                                                    ApiLike.sendLike(
-                                                                        token,
-                                                                        matvare
-                                                                            .matId);
-                                                                  } else {
-                                                                    FFAppState()
-                                                                        .likedFoods
-                                                                        .remove(
-                                                                            matvare.matId);
-                                                                    if (!FFAppState()
-                                                                        .unlikedFoods
-                                                                        .contains(
-                                                                            matvare.matId)) {
-                                                                      FFAppState()
-                                                                          .unlikedFoods
-                                                                          .add(matvare.matId ??
-                                                                              0);
-                                                                    }
-                                                                    ApiLike.deleteLike(
-                                                                        token,
-                                                                        matvare
-                                                                            .matId);
-                                                                  }
-                                                                } on SocketException {
-                                                                  if (!context
-                                                                      .mounted) {
-                                                                    return;
-                                                                  }
-                                                                  Toasts.showErrorToast(
+                                                              onTap: () {
+                                                                showGeneralDialog(
+                                                                  context:
                                                                       context,
-                                                                      'Ingen internettforbindelse');
-                                                                } catch (e) {
-                                                                  logger.d(e);
-                                                                  if (!context
-                                                                      .mounted) {
-                                                                    return;
-                                                                  }
-                                                                  logger.d(
-                                                                      'En feil oppstod');
-                                                                }
+                                                                  barrierDismissible:
+                                                                      true,
+                                                                  barrierLabel:
+                                                                      "Close",
+                                                                  transitionDuration:
+                                                                      Duration(
+                                                                          milliseconds:
+                                                                              200),
+                                                                  pageBuilder:
+                                                                      (_, __,
+                                                                          ___) {
+                                                                    return FullscreenImageGallery(
+                                                                      imageUrls:
+                                                                          matvare
+                                                                              .imgUrls!,
+                                                                      initialIndex:
+                                                                          index -
+                                                                              1,
+                                                                    );
+                                                                  },
+                                                                  transitionBuilder:
+                                                                      (_,
+                                                                          anim,
+                                                                          __,
+                                                                          child) {
+                                                                    return FadeTransition(
+                                                                        opacity:
+                                                                            anim,
+                                                                        child:
+                                                                            child);
+                                                                  },
+                                                                );
                                                               },
                                                               child: ImageCard(
                                                                 imageUrl:

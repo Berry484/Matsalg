@@ -16,6 +16,7 @@ class MessagePreviewWidget extends StatefulWidget {
     this.messageContent,
     this.messageImage,
     this.isUnread,
+    required this.kjopt,
     required this.purchased,
     required this.messageTime,
     this.productImage,
@@ -27,6 +28,7 @@ class MessagePreviewWidget extends StatefulWidget {
   final String? messageImage;
   final bool? isUnread;
   final bool purchased;
+  final bool? kjopt;
   final String messageTime;
   final String? productImage;
   final dynamic slettet;
@@ -263,30 +265,63 @@ class _MessagePreviewWidgetState extends State<MessagePreviewWidget> {
                                           ),
                                         if (widget.productImage != null &&
                                             widget.slettet != true)
-                                          CachedNetworkImage(
-                                            fadeInDuration: Duration.zero,
-                                            imageUrl:
-                                                '${ApiConstants.baseUrl}${widget.productImage}',
-                                            width: 47,
-                                            height: 47,
-                                            fit: BoxFit.cover,
-                                            imageBuilder:
-                                                (context, imageProvider) {
-                                              return Container(
-                                                width: 47,
-                                                height: 47,
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: imageProvider,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            child: Stack(
+                                              children: [
+                                                CachedNetworkImage(
+                                                  fadeInDuration: Duration.zero,
+                                                  imageUrl:
+                                                      '${ApiConstants.baseUrl}${widget.productImage}',
+                                                  width: 47,
+                                                  height: 47,
+                                                  fit: BoxFit.cover,
+                                                  imageBuilder:
+                                                      (context, imageProvider) {
+                                                    return Container(
+                                                      width: 47,
+                                                      height: 47,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(6),
+                                                      ),
+                                                    );
+                                                  },
+                                                  placeholder: (context, url) =>
+                                                      const SizedBox(),
                                                 ),
-                                              );
-                                            },
-                                            placeholder: (context, url) =>
-                                                const SizedBox(),
+                                                if (widget.kjopt == true)
+                                                  Positioned(
+                                                    top: 6,
+                                                    left: -42.5,
+                                                    child: Transform.rotate(
+                                                      angle: 0.53,
+                                                      child: Container(
+                                                        width: 140,
+                                                        height: 15,
+                                                        color: Colors.redAccent,
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: const Text(
+                                                          'Utsolgt',
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 9,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
                                           ),
                                         if (widget.productImage != null &&
                                             widget.slettet == true)

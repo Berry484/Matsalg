@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
+import 'package:mat_salg/helper_components/widgets/toasts.dart';
 import 'package:mat_salg/logging.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_theme.dart';
 import '../../../helper_components/flutter_flow/flutter_flow_util.dart';
@@ -57,75 +57,6 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
     }
   }
 
-  static void showAccepted(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry overlayEntry;
-
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 56.0,
-        left: 16.0,
-        right: 16.0,
-        child: Material(
-          color: Colors.transparent,
-          child: Dismissible(
-            key: UniqueKey(),
-            direction: DismissDirection.up,
-            onDismissed: (_) => overlayEntry.remove(),
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(14.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color.fromARGB(70, 0, 0, 0),
-                    blurRadius: 1.0,
-                    offset: Offset(0, 0.5),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const SizedBox(height: 30),
-                  Icon(
-                    CupertinoIcons.checkmark_alt_circle_fill,
-                    color: Colors.blue,
-                    size: 35.0,
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      message,
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Nunito',
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 17,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    overlay.insert(overlayEntry);
-
-    Future.delayed(const Duration(seconds: 2), () {
-      if (overlayEntry.mounted) {
-        overlayEntry.remove();
-      }
-    });
-  }
-
   @override
   void dispose() {
     _model.maybeDispose();
@@ -177,10 +108,11 @@ class _MessageBubblesWidgetState extends State<MessageBubblesWidget> {
                 focusColor: Colors.transparent,
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
+                onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
                 onLongPress: () => {
                   Clipboard.setData(
                       ClipboardData(text: widget.messageText ?? '')),
-                  showAccepted(context, 'Kopiert')
+                  Toasts.showAccepted(context, 'Kopiert')
                 },
                 child: Stack(
                   alignment: isBlue

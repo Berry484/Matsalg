@@ -50,7 +50,7 @@ class MainWrapperState extends State<MainWrapper> {
     setState(() {
       _selectedIndex = index;
     });
-    await Future.delayed(const Duration(milliseconds: 40));
+    await Future.delayed(const Duration(milliseconds: 25));
     switch (index) {
       case 0:
         widget.child.goBranch(index);

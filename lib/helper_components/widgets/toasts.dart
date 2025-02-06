@@ -116,7 +116,7 @@ class Toasts {
                   const SizedBox(height: 30),
                   Icon(
                     CupertinoIcons.checkmark_alt_circle_fill,
-                    color: Colors.blue,
+                    color: FlutterFlowTheme.of(context).alternate,
                     size: 35.0,
                   ),
                   const SizedBox(width: 15),

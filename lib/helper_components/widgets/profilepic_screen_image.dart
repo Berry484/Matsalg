@@ -24,7 +24,7 @@ class ProfilepicScreenImageState extends State<ProfilepicScreenImage>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 0),
     );
 
     _controller.addListener(() {
@@ -37,7 +37,8 @@ class ProfilepicScreenImageState extends State<ProfilepicScreenImage>
 
   void _onScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
-      final newScale = _scale * details.scale;
+      final dampingFactor = 0.3;
+      final newScale = _scale * (1 + (details.scale - 1) * dampingFactor);
       _scale = lerpDouble(_scale, newScale, 0.1)!.clamp(0.95, 1.69);
       _offset += details.focalPointDelta;
 
@@ -87,7 +88,7 @@ class ProfilepicScreenImageState extends State<ProfilepicScreenImage>
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
-                  color: Colors.white.withOpacity(0.8),
+                  color: Colors.white.withOpacity(0.85),
                 ),
               ),
             ),

@@ -333,6 +333,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                         .first
                                                                         .content // Last message content
                                                                     : 'Ingen meldinger enda',
+                                                                kjopt:
+                                                                    conversation
+                                                                        .kjopt,
                                                                 productImage:
                                                                     conversation
                                                                         .productImage,
@@ -522,6 +525,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 messageImage:
                                                                     conversation
                                                                         .profilePic,
+                                                                kjopt:
+                                                                    conversation
+                                                                        .kjopt,
                                                                 slettet:
                                                                     conversation
                                                                         .slettet,
@@ -699,6 +705,9 @@ class _ChatMainWidgetState extends State<ChatMainWidget>
                                                                 slettet:
                                                                     conversation
                                                                         .slettet,
+                                                                kjopt:
+                                                                    conversation
+                                                                        .kjopt,
                                                                 productImage:
                                                                     conversation
                                                                         .productImage,

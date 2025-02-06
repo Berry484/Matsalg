@@ -73,6 +73,7 @@ dependencies:
   video_player: ^2.9.2
   web_socket_channel: ^3.0.1
   xml: ^6.5.0
+  zoom_widget: ^2.0.1
 
 
 dev_dependencies:

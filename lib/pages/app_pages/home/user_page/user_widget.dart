@@ -649,14 +649,29 @@ class _BrukerPageWidgetState extends State<UserWidget>
                                                 children: [
                                                   GestureDetector(
                                                     onTap: () {
-                                                      showDialog(
+                                                      showGeneralDialog(
                                                         context: context,
-                                                        useSafeArea: false,
-                                                        builder: (context) =>
-                                                            ProfilepicScreenImage(
-                                                          imageUrl:
-                                                              '${ApiConstants.baseUrl}${_model.bruker?.profilepic}',
-                                                        ),
+                                                        barrierDismissible:
+                                                            true,
+                                                        barrierLabel: "Close",
+                                                        transitionDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    250),
+                                                        pageBuilder:
+                                                            (_, __, ___) {
+                                                          return ProfilepicScreenImage(
+                                                            imageUrl:
+                                                                '${ApiConstants.baseUrl}${_model.bruker?.profilepic}',
+                                                          );
+                                                        },
+                                                        transitionBuilder: (_,
+                                                            anim, __, child) {
+                                                          return Opacity(
+                                                            opacity: anim.value,
+                                                            child: child,
+                                                          );
+                                                        },
                                                       );
                                                     },
                                                     child: Container(

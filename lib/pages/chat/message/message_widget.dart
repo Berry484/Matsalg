@@ -864,8 +864,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              16, 0, 16, 12),
                           child: SizedBox(
                             width: double.infinity,
                             child: Padding(
@@ -874,44 +874,44 @@ class _MessageWidgetState extends State<MessageWidget> {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 0.0),
-                                    child: GestureDetector(
-                                      behavior: HitTestBehavior.translucent,
-                                      onTap: () {
-                                        try {
-                                          print("hello world!");
-                                        } on SocketException {
-                                          Toasts.showErrorToast(context,
-                                              'Ingen internettforbindelse');
-                                        } catch (e) {
-                                          Toasts.showErrorToast(
-                                              context, 'En feil oppstod');
-                                        }
-                                      },
-                                      child: SizedBox(
-                                        width: 50,
-                                        height: 50,
-                                        child: Center(
-                                          child: Container(
-                                            width: 34,
-                                            height: 34,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color(0xFFE5E6E8),
-                                            ),
-                                            child: Center(
-                                              child: Icon(
-                                                CupertinoIcons.plus,
-                                                color: Color(0xFF6F7177),
-                                                size: 22.5,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(right: 0.0),
+                                  //   child: GestureDetector(
+                                  //     behavior: HitTestBehavior.translucent,
+                                  //     onTap: () {
+                                  //       try {
+                                  //         print("hello world!");
+                                  //       } on SocketException {
+                                  //         Toasts.showErrorToast(context,
+                                  //             'Ingen internettforbindelse');
+                                  //       } catch (e) {
+                                  //         Toasts.showErrorToast(
+                                  //             context, 'En feil oppstod');
+                                  //       }
+                                  //     },
+                                  //     child: SizedBox(
+                                  //       width: 50,
+                                  //       height: 50,
+                                  //       child: Center(
+                                  //         child: Container(
+                                  //           width: 34,
+                                  //           height: 34,
+                                  //           decoration: BoxDecoration(
+                                  //             shape: BoxShape.circle,
+                                  //             color: Color(0xFFE5E6E8),
+                                  //           ),
+                                  //           child: Center(
+                                  //             child: Icon(
+                                  //               CupertinoIcons.plus,
+                                  //               color: Color(0xFF6F7177),
+                                  //               size: 22.5,
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   Expanded(
                                     child: TextFormField(
                                       controller: _model.textController,
@@ -1169,10 +1169,10 @@ class _MessageWidgetState extends State<MessageWidget> {
                                           ),
                                           if (conversation.kjopt == true)
                                             Positioned(
-                                              top: 13,
-                                              left: -46,
+                                              top: 8,
+                                              left: -40,
                                               child: Transform.rotate(
-                                                angle: -0.70,
+                                                angle: 0.55,
                                                 child: Container(
                                                   width: 140,
                                                   height: 19,

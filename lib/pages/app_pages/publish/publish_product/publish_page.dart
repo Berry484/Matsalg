@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mat_salg/helper_components/widgets/dialog_utils.dart';
 import 'package:mat_salg/helper_components/widgets/dividers.dart';
@@ -42,7 +41,6 @@ class PublishPage extends StatefulWidget {
 class _LeggUtMatvareWidgetState extends State<PublishPage>
     with TickerProviderStateMixin {
   final FocusNode _hiddenFocusNode = FocusNode();
-  late ScrollController _scrollController;
   late PublishModel _model;
   late PublishServices publishServices;
   Map<String, dynamic> keyMap = {
@@ -56,14 +54,6 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
 
   @override
   void initState() {
-    _scrollController = ScrollController();
-    _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection !=
-          ScrollDirection.idle) {
-        FocusScope.of(context).requestFocus(FocusNode());
-      }
-    });
-
     super.initState();
     _model = createModel(context, () => PublishModel());
     publishServices = PublishServices(model: _model);
@@ -123,7 +113,6 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
 
   @override
   void dispose() {
-    _scrollController.dispose();
     _model.dispose();
     _hiddenFocusNode.dispose();
     super.dispose();
@@ -277,7 +266,8 @@ class _LeggUtMatvareWidgetState extends State<PublishPage>
               children: [
                 Expanded(
                   child: SingleChildScrollView(
-                    controller: _scrollController,
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
                     primary: false,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
