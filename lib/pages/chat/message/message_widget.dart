@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mat_salg/logging.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:mat_salg/my_ip.dart';
 import 'package:mat_salg/services/user_service.dart';
 import 'package:mat_salg/services/web_socket.dart';
@@ -706,9 +705,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                                     child: Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              16, 16, 16, 12),
+                                              16, 18, 16, 18),
                                       child: Container(
-                                        height: 140,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
@@ -723,10 +721,10 @@ class _MessageWidgetState extends State<MessageWidget> {
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(16, 12, 16, 0),
+                                              .fromSTEB(16, 14, 16, 14),
                                           child: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                                MainAxisAlignment.start,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
@@ -747,9 +745,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                                                       )),
                                                   SizedBox(width: 8),
                                                   Expanded(
-                                                    // Added Expanded to make the Text wrap properly
                                                     child: Text(
-                                                      'Er du klar for å handle? Send en melding til selgeren!', // Title text for the empty state
+                                                      'Er du klar for å handle? Send en melding til selgeren!',
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .titleSmall
@@ -767,59 +764,6 @@ class _MessageWidgetState extends State<MessageWidget> {
                                                     ),
                                                   ),
                                                 ],
-                                              ),
-                                              SizedBox(height: 12),
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  var url = Uri.https(
-                                                      'matsalg.no',
-                                                      '/how-it-works');
-                                                  if (await canLaunchUrl(url)) {
-                                                    await launchUrl(url);
-                                                  }
-                                                },
-                                                child: Container(
-                                                  height: 37,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                    border: Border.all(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              32, 87, 99, 108),
-                                                      width: 1.3,
-                                                    ),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        'Les mer',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .copyWith(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
                                               ),
                                             ],
                                           ),

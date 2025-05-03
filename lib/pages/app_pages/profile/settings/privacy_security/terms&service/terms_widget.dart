@@ -204,7 +204,7 @@ class _RequestLocationWidgetState extends State<TermsWidget> {
                             child: TextButton(
                               onPressed: () async {
                                 var url = Uri.https(
-                                    'matsalg.no', '/terms-of-service');
+                                    'service.matsalg.no', '/terms-of-service');
                                 if (await canLaunchUrl(url)) {
                                   await launchUrl(url);
                                 }
@@ -229,8 +229,8 @@ class _RequestLocationWidgetState extends State<TermsWidget> {
                             width: 150,
                             child: TextButton(
                               onPressed: () async {
-                                var url =
-                                    Uri.https('matsalg.no', '/privacy-policy');
+                                var url = Uri.https(
+                                    'service.matsalg.no', '/privacy-policy');
                                 if (await canLaunchUrl(url)) {
                                   await launchUrl(url);
                                 }
