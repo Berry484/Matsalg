@@ -4,11 +4,11 @@
 <h1>Matsalg.no</h1>
 <p align="center">
   <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
-    <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="140">
+    <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="170">
   </a>
 
   <a href="https://play.google.com/store/apps/details?id=com.matsalg.no&hl=no">
-    <img alt="Get it on Google Play" title="Google Play" src="http://i.imgur.com/mtGRPuM.png" width="140">
+    <img alt="Get it on Google Play" title="Google Play" src="http://i.imgur.com/mtGRPuM.png" width="170">
   </a>
 </p>
 
