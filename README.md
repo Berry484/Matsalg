@@ -5,15 +5,6 @@
 ---
 
 ## 📱 Demo & Screenshots
-
-<!-- Demo GIF on top, centered -->
-<div align="left">
-  <img src="readme_assets/app_showcase.gif" alt="Demo GIF" height="360"/><br/>
-  <em>App demo animation</em>
-</div>
-
-<br/>
-
 <!-- Centered 1x4 grid -->
 <div align="center">
   <table>
@@ -38,11 +29,7 @@
   </table>
 </div>
 
-
-
-
-
-*(Note: More screenshots are stored in the `/readme_assets` directory)* 
+*(Note: Additional screenshots and assets are available in the `/readme_assets` directory)*
 
 --- 
 
