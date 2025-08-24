@@ -6,33 +6,42 @@
 
 ## 📱 Demo & Screenshots
 
-### App Demo
-<img src="readme_assets/app_showcase.gif" alt="Matsalg Demo" width="300"/>
-<p><em>Short animated demo showing the main app flow.</em></p>
-
-### Screenshots
 <table>
   <tr>
-    <td align="center">
-      <img src="readme_assets/home.png" alt="Home Screen" width="170"/><br/>
-      <em>Main feed displaying posts</em>
+    <!-- Left Column: 2x2 Grid -->
+    <td>
+      <table>
+        <tr>
+          <td align="center">
+            <img src="readme_assets/home.png" alt="Home Screen" width="120"/><br/>
+            <em>Main feed</em>
+          </td>
+          <td align="center">
+            <img src="readme_assets/chat.png" alt="Chat Screen" width="120"/><br/>
+            <em>Chat interface</em>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">
+            <img src="readme_assets/app_store.png" alt="App Store" width="120"/><br/>
+            <em>Apple App Store</em>
+          </td>
+          <td align="center">
+            <img src="readme_assets/google_play.png" alt="Google Play" width="120"/><br/>
+            <em>Google Play Store</em>
+          </td>
+        </tr>
+      </table>
     </td>
-    <td align="center">
-      <img src="readme_assets/chat.png" alt="Chat Screen" width="170"/><br/>
-      <em>Messaging/chat interface</em>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="readme_assets/app_store.png" alt="App Store" width="170"/><br/>
-      <em>Live on Apple App Store</em>
-    </td>
-    <td align="center">
-      <img src="readme_assets/google_play.png" alt="Google Play" width="170"/><br/>
-      <em>Live on Google Play Store</em>
+
+    <!-- Right Column: Demo GIF -->
+    <td align="center" valign="top">
+      <img src="readme_assets/app_showcase.gif" alt="Demo GIF" width="220"/><br/>
+      <em>App demo animation</em>
     </td>
   </tr>
 </table>
+
 
 
 *(Note: Screenshots are stored in the `/readme_assets/` directory)* 
