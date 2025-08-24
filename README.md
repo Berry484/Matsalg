@@ -20,7 +20,7 @@
     <!-- Column 3 -->
     <td align="center">
       <img src="readme_assets/details.png" alt="Details Screen" width="170"/><br/>
-      <em>App demo animation</em>
+      <em>Product details</em>
     </td>
   </tr>
   <tr>
