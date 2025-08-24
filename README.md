@@ -35,10 +35,10 @@
       <em>Google Play Store</em>
     </td>
     <!-- Column 3 -->
-    <td align="center">
-      <img src="readme_assets/app_showcase.gif" alt="Demo GIF" width="170"/><br/>
-      <em>App demo animation</em>
-    </td>
+  <td align="center">
+    <img src="readme_assets/app_showcase.gif" alt="Demo GIF" width="170" height="300"/><br/>
+    <em>App demo animation</em>
+  </td>
   </tr>
 </table>
 
