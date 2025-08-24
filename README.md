@@ -1,6 +1,6 @@
 <!-- Top leaf icon -->
 <div align="center">
-  <img src="readme_assets/matsalg_logo_transp.png" alt="Matsalg Logo" width="130"/><br/>
+  <img src="readme_assets/matsalg_logo_transp.png" alt="Matsalg Logo" width="400"/><br/>
 
 <p align="center">
   <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
