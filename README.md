@@ -31,8 +31,9 @@
 
 *(Note: Additional screenshots and assets are available in the `/readme_assets` directory)*
 
+<!-- App Store badge -->
 <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
-  <img alt="Available on the App Store" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="200"/>
+  <img alt="Available on the App Store" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="10"/>
 </a>
 
 <!-- Google Play badge -->
