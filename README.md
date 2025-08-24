@@ -5,41 +5,41 @@
 ---
 
 ## 📱 Demo & Screenshots
-<!-- Right Column: Demo GIF -->
-<td align="center" valign="top">
+
+<!-- Demo GIF on top, centered -->
+<div align="center">
   <img src="readme_assets/app_showcase.gif" alt="Demo GIF" height="360"/><br/>
   <em>App demo animation</em>
-</td>
+</div>
 
-<table>
-  <tr>
-    <!-- Left Column: 2x2 Grid -->
-    <td>
-      <table>
-        <tr>
-          <td align="center">
-            <img src="readme_assets/home.png" alt="Home Screen" width="170"/><br/>
-            <em>Main feed</em>
-          </td>
-          <td align="center">
-            <img src="readme_assets/details.png" alt="Details Screen" width="170"/><br/>
-            <em>Product details</em>
-          </td>
-        </tr>
-        <tr>
-          <td align="center">
-            <img src="readme_assets/app_store.png" alt="App Store" width="170"/><br/>
-            <em>Apple App Store</em>
-          </td>
-          <td align="center">
-            <img src="readme_assets/google_play.png" alt="Google Play" width="170"/><br/>
-            <em>Google Play Store</em>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
+<br/>
+
+<!-- Centered 2x2 grid -->
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="readme_assets/home.png" alt="Home Screen" width="170"/><br/>
+        <em>Main feed</em>
+      </td>
+      <td align="center">
+        <img src="readme_assets/details.png" alt="Details Screen" width="170"/><br/>
+        <em>Product details</em>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="readme_assets/app_store.png" alt="App Store" width="170"/><br/>
+        <em>Apple App Store</em>
+      </td>
+      <td align="center">
+        <img src="readme_assets/google_play.png" alt="Google Play" width="170"/><br/>
+        <em>Google Play Store</em>
+      </td>
+    </tr>
+  </table>
+</div>
+
 
 
 
