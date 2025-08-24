@@ -15,7 +15,7 @@
 <br/>
 
 <!-- Centered 2x2 grid -->
-<div align="center">
+<div align="left">
   <table>
     <tr>
       <td align="center">
