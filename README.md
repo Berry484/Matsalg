@@ -10,19 +10,29 @@
 <img src="readme_assets/app_showcase.gif" alt="Matsalg Demo" width="400"/>
 <p><em>Short animated demo showing the main app flow.</em></p>
 
-### Key App Screens
-<img src="readme_assets/home.png" alt="Home Screen" width="300"/>
-<p><em>Main feed displaying posts from followed users.</em></p>
-
-<img src="readme_assets/chat.png" alt="Chat Screen" width="300"/>
-<p><em>Messaging/chat interface.</em></p>
-
-### App Store Presence
-<img src="readme_assets/app_store.png" alt="App Store" width="200"/>
-<p><em>Live on the Apple App Store.</em></p>
-
-<img src="readme_assets/google_play.png" alt="Google Play" width="200"/>
-<p><em>Live on Google Play Store.</em></p>
+### Screenshots
+<table>
+  <tr>
+    <td align="center">
+      <img src="readme_assets/home.png" alt="Home Screen" width="200"/><br/>
+      <em>Main feed displaying posts</em>
+    </td>
+    <td align="center">
+      <img src="readme_assets/chat.png" alt="Chat Screen" width="200"/><br/>
+      <em>Messaging/chat interface</em>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="readme_assets/app_store.png" alt="App Store" width="150"/><br/>
+      <em>Live on Apple App Store</em>
+    </td>
+    <td align="center">
+      <img src="readme_assets/google_play.png" alt="Google Play" width="150"/><br/>
+      <em>Live on Google Play Store</em>
+    </td>
+  </tr>
+</table>
 
 
 *(Note: Screenshots are stored in the `/readme_assets/` directory)* 
