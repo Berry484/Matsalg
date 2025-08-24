@@ -6,6 +6,8 @@
 
 ## 📱 Demo & Screenshots
 
+## 📱 Demo & Screenshots
+
 <table>
   <tr>
     <!-- Left Column: 2x2 Grid -->
@@ -33,13 +35,16 @@
         </tr>
       </table>
     </td>
-    <!-- Right Column: Demo GIF -->
+    <!-- Right Column: Demo GIF + extra image -->
     <td align="center" valign="top">
-      <img src="readme_assets/app_showcase.gif" alt="Demo GIF" height="540"/><br/>
-      <em>App demo animation</em>
+      <img src="readme_assets/app_showcase.gif" alt="Demo GIF" height="360"/><br/>
+      <em>App demo animation</em><br/><br/>
+      <img src="readme_assets/matsalg_leaf_transp.png" alt="Decorative Leaf" height="180"/><br/>
+      <em>Brand graphic</em>
     </td>
   </tr>
 </table>
+
 
 
 
