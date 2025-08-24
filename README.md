@@ -14,8 +14,8 @@
 
 <br/>
 
-<!-- Centered 2x2 grid -->
-<div align="left">
+<!-- Centered 1x4 grid -->
+<div align="center">
   <table>
     <tr>
       <td align="center">
@@ -26,8 +26,6 @@
         <img src="readme_assets/details.png" alt="Details Screen" width="170"/><br/>
         <em>Product details</em>
       </td>
-    </tr>
-    <tr>
       <td align="center">
         <img src="readme_assets/app_store.png" alt="App Store" width="170"/><br/>
         <em>Apple App Store</em>
@@ -39,6 +37,7 @@
     </tr>
   </table>
 </div>
+
 
 
 
