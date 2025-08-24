@@ -35,7 +35,6 @@
         </tr>
       </table>
     </td>
-    <-- Right Column: Demo GIF -->
     <td align="center" valign="top">
       <img src="readme_assets/app_showcase.gif" alt="Demo GIF" width="220"/><br/>
       <em>App demo animation</em>
