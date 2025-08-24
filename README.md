@@ -13,21 +13,21 @@
       <table>
         <tr>
           <td align="center">
-            <img src="readme_assets/home.png" alt="Home Screen" width="120"/><br/>
+            <img src="readme_assets/home.png" alt="Home Screen" width="150"/><br/>
             <em>Main feed</em>
           </td>
           <td align="center">
-            <img src="readme_assets/chat.png" alt="Chat Screen" width="120"/><br/>
+            <img src="readme_assets/chat.png" alt="Chat Screen" width="150"/><br/>
             <em>Chat interface</em>
           </td>
         </tr>
         <tr>
           <td align="center">
-            <img src="readme_assets/app_store.png" alt="App Store" width="120"/><br/>
+            <img src="readme_assets/app_store.png" alt="App Store" width="150"/><br/>
             <em>Apple App Store</em>
           </td>
           <td align="center">
-            <img src="readme_assets/google_play.png" alt="Google Play" width="120"/><br/>
+            <img src="readme_assets/google_play.png" alt="Google Play" width="150"/><br/>
             <em>Google Play Store</em>
           </td>
         </tr>
