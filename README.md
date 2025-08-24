@@ -32,7 +32,7 @@
 *(Note: Additional screenshots and assets are available in the `/readme_assets` directory)*
 
 <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
-  <img alt="Available on the App Store" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="80"/>
+  <img alt="Available on the App Store" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="200"/>
 </a>
 
 <!-- Google Play badge -->
