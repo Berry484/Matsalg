@@ -1,4 +1,8 @@
-# 🌐 Matsalg: A Food marketplace app
+<!-- Top leaf icon -->
+<div align="center">
+  <img src="readme_assets/matsalg_leaf_transp.png" alt="Matsalg Logo" width="120"/><br/>
+  <h1>Matsalg.no</h1>
+</div>
 
 > **Note:** This README covers the overview of the project, for more technical details feel free to contact me.
 
