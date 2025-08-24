@@ -5,29 +5,38 @@
 ---
 
 ## 📱 Demo & Screenshots
+
 <table>
   <tr>
-    <!-- Column 1 -->
-    <td align="center">
-      <img src="readme_assets/home.png" alt="Home Screen" width="170"/><br/>
-      <em>Main feed</em>
+    <!-- Left Column: 2x2 Grid -->
+    <td>
+      <table>
+        <tr>
+          <td align="center">
+            <img src="readme_assets/home.png" alt="Home Screen" width="170"/><br/>
+            <em>Main feed</em>
+          </td>
+          <td align="center">
+            <img src="readme_assets/details.png" alt="Details Screen" width="170"/><br/>
+            <em>Product details</em>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">
+            <img src="readme_assets/app_store.png" alt="App Store" width="170"/><br/>
+            <em>Apple App Store</em>
+          </td>
+          <td align="center">
+            <img src="readme_assets/google_play.png" alt="Google Play" width="170"/><br/>
+            <em>Google Play Store</em>
+          </td>
+        </tr>
+      </table>
     </td>
-    <!-- Column 2 -->
-    <td align="center">
-      <img src="readme_assets/details.png" alt="Details Screen" width="170"/><br/>
-      <em>Product details</em>
-    </td>
-  </tr>
-  <tr>
-    <!-- Column 1 -->
-    <td align="center">
-      <img src="readme_assets/app_store.png" alt="App Store" width="170"/><br/>
-      <em>Apple App Store</em>
-    </td>
-    <!-- Column 2 -->
-    <td align="center">
-      <img src="readme_assets/google_play.png" alt="Google Play" width="170"/><br/>
-      <em>Google Play Store</em>
+    <!-- Right Column: Demo GIF -->
+    <td align="center" valign="top">
+      <img src="readme_assets/app_showcase.gif" alt="Demo GIF" height="360"/><br/>
+      <em>App demo animation</em>
     </td>
   </tr>
 </table>
