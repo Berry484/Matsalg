@@ -6,48 +6,42 @@
 
 ## 📱 Demo & Screenshots
 
-## 📱 Demo & Screenshots
-
 <table>
   <tr>
-    <!-- Left Column: 2x2 Grid -->
-    <td>
-      <table>
-        <tr>
-          <td align="center">
-            <img src="readme_assets/home.png" alt="Home Screen" width="190"/><br/>
-            <em>Main feed</em>
-          </td>
-          <td align="center">
-            <img src="readme_assets/chat.png" alt="Chat Screen" width="190"/><br/>
-            <em>Chat interface</em>
-          </td>
-        </tr>
-        <tr>
-          <td align="center">
-            <img src="readme_assets/app_store.png" alt="App Store" width="190"/><br/>
-            <em>Apple App Store</em>
-          </td>
-          <td align="center">
-            <img src="readme_assets/google_play.png" alt="Google Play" width="190"/><br/>
-            <em>Google Play Store</em>
-          </td>
-        </tr>
-      </table>
+    <!-- Column 1 -->
+    <td align="center">
+      <img src="readme_assets/home.png" alt="Home Screen" width="170"/><br/>
+      <em>Main feed</em>
     </td>
-    <!-- Right Column: Demo GIF + extra image -->
-    <td align="center" valign="top">
-      <img src="readme_assets/app_showcase.gif" alt="Demo GIF" height="360"/><br/>
-      <em>App demo animation</em><br/><br/>
-      <img src="readme_assets/matsalg_leaf_transp.png" alt="Decorative Leaf" height="180"/><br/>
+    <!-- Column 2 -->
+    <td align="center">
+      <img src="readme_assets/chat.png" alt="Chat Screen" width="170"/><br/>
+      <em>Chat interface</em>
+    </td>
+    <!-- Column 3 -->
+    <td align="center">
+      <img src="readme_assets/app_showcase.gif" alt="Demo GIF" width="170"/><br/>
+      <em>App demo animation</em>
+    </td>
+  </tr>
+  <tr>
+    <!-- Column 1 -->
+    <td align="center">
+      <img src="readme_assets/app_store.png" alt="App Store" width="170"/><br/>
+      <em>Apple App Store</em>
+    </td>
+    <!-- Column 2 -->
+    <td align="center">
+      <img src="readme_assets/google_play.png" alt="Google Play" width="170"/><br/>
+      <em>Google Play Store</em>
+    </td>
+    <!-- Column 3 -->
+    <td align="center">
+      <img src="readme_assets/matsalg_leaf_transp.png" alt="Decorative Leaf" width="170"/><br/>
       <em>Brand graphic</em>
     </td>
   </tr>
 </table>
-
-
-
-
 
 
 *(Note: Screenshots are stored in the `/readme_assets/` directory)* 
