@@ -29,22 +29,20 @@ This project demonstrates a comprehensive approach to mobile development, encomp
 
 Key technical focus was on implementing a robust user interface with responsive state management, ensuring smooth performance for both iOS and Android users.
 
- The frontend implementation showcases essential principles including proper state management, secure API communication handling (in principle), and deployment readiness.
+The frontend implementation showcases essential principles including proper state management, secure API communication handling (in principle), and deployment readiness.
+
+<br/>
 
 ### Technologies Used (Frontend)
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" height="45" alt="Flutter logo" />
-  <span style="display:inline-block; width:16px;"></span>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" height="45" alt="Firebase logo" />
-  <span style="display:inline-block; width:16px;"></span>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" height="45" alt="Google logo" />
-  <span style="display:inline-block; width:16px;"></span>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg" height="45" alt="Apple logo" />
+<div align="center" style="margin-bottom: 20px;">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" height="45" alt="Flutter logo" style="margin-right: 20px;"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" height="45" alt="Firebase logo" style="margin-right: 20px;"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" height="45" alt="Google logo" style="margin-right: 20px;"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg" height="45" alt="Apple logo"/>
 </div>
 
 ## 📱 Demo & Screenshots
-<!-- Centered 1x4 grid -->
 <div align="center">
   <table>
     <tr>
@@ -70,4 +68,4 @@ Key technical focus was on implementing a robust user interface with responsive 
 
 *(Note: Additional screenshots and assets are available in the `/readme_assets` directory)*
 
----
+
