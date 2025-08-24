@@ -6,41 +6,41 @@
 
 ## 📱 Demo & Screenshots
 
-<div style="display: flex; align-items: flex-start; gap: 20px;">
+<table>
+  <tr>
+    <!-- Left Column: 2x2 Grid -->
+    <td>
+      <table>
+        <tr>
+          <td align="center">
+            <img src="readme_assets/home.png" alt="Home Screen" width="170"/><br/>
+            <em>Main feed</em>
+          </td>
+          <td align="center">
+            <img src="readme_assets/details.png" alt="Details Screen" width="170"/><br/>
+            <em>Product details</em>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">
+            <img src="readme_assets/app_store.png" alt="App Store" width="170"/><br/>
+            <em>Apple App Store</em>
+          </td>
+          <td align="center">
+            <img src="readme_assets/google_play.png" alt="Google Play" width="170"/><br/>
+            <em>Google Play Store</em>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <!-- Right Column: Demo GIF -->
+    <td align="center" valign="top">
+      <img src="readme_assets/app_showcase.gif" alt="Demo GIF" height="360"/><br/>
+      <em>App demo animation</em>
+    </td>
+  </tr>
+</table>
 
-  <!-- Left: 2x2 grid -->
-  <div>
-    <table>
-      <tr>
-        <td align="center">
-          <img src="readme_assets/home.png" alt="Home Screen" width="170"/><br/>
-          <em>Main feed</em>
-        </td>
-        <td align="center">
-          <img src="readme_assets/details.png" alt="Details Screen" width="170"/><br/>
-          <em>Product details</em>
-        </td>
-      </tr>
-      <tr>
-        <td align="center">
-          <img src="readme_assets/app_store.png" alt="App Store" width="170"/><br/>
-          <em>Apple App Store</em>
-        </td>
-        <td align="center">
-          <img src="readme_assets/google_play.png" alt="Google Play" width="170"/><br/>
-          <em>Google Play Store</em>
-        </td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- Right: Free GIF -->
-  <div>
-    <img src="readme_assets/app_showcase.gif" alt="Demo GIF" height="360"/><br/>
-    <em>App demo animation</em>
-  </div>
-
-</div>
 
 
 *(Note: Screenshots are stored in the `/readme_assets/` directory)* 
