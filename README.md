@@ -5,7 +5,6 @@
 ---
 
 ## 📱 Demo & Screenshots
-
 <table>
   <tr>
     <!-- Column 1 -->
@@ -20,7 +19,7 @@
     </td>
     <!-- Column 3 -->
     <td align="center">
-      <img src="readme_assets/app_showcase.gif" alt="Demo GIF" width="170"/><br/>
+      <img src="readme_assets/details.png" alt="Details Screen" width="170"/><br/>
       <em>App demo animation</em>
     </td>
   </tr>
@@ -37,8 +36,8 @@
     </td>
     <!-- Column 3 -->
     <td align="center">
-      <img src="readme_assets/matsalg_leaf_transp.png" alt="Decorative Leaf" width="170"/><br/>
-      <em>Brand graphic</em>
+      <img src="readme_assets/app_showcase.gif" alt="Demo GIF" width="170"/><br/>
+      <em>App demo animation</em>
     </td>
   </tr>
 </table>
