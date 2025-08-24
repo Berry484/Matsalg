@@ -33,7 +33,7 @@
 
 <!-- App Store badge -->
 <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
-  <img alt="Available on the App Store" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="10"/>
+  <img alt="Available on the App Store" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="100"/>
 </a>
 
 <!-- Google Play badge -->
