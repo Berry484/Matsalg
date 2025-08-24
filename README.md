@@ -7,28 +7,28 @@
 ## 📱 Demo & Screenshots
 
 ### App Demo
-<img src="readme_assets/app_showcase.gif" alt="Matsalg Demo" width="400"/>
+<img src="readme_assets/app_showcase.gif" alt="Matsalg Demo" width="300"/>
 <p><em>Short animated demo showing the main app flow.</em></p>
 
 ### Screenshots
 <table>
   <tr>
     <td align="center">
-      <img src="readme_assets/home.png" alt="Home Screen" width="200"/><br/>
+      <img src="readme_assets/home.png" alt="Home Screen" width="'170"/><br/>
       <em>Main feed displaying posts</em>
     </td>
     <td align="center">
-      <img src="readme_assets/chat.png" alt="Chat Screen" width="200"/><br/>
+      <img src="readme_assets/chat.png" alt="Chat Screen" width="170"/><br/>
       <em>Messaging/chat interface</em>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="readme_assets/app_store.png" alt="App Store" width="150"/><br/>
+      <img src="readme_assets/app_store.png" alt="App Store" width="170"/><br/>
       <em>Live on Apple App Store</em>
     </td>
     <td align="center">
-      <img src="readme_assets/google_play.png" alt="Google Play" width="150"/><br/>
+      <img src="readme_assets/google_play.png" alt="Google Play" width="170"/><br/>
       <em>Live on Google Play Store</em>
     </td>
   </tr>
