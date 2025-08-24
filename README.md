@@ -31,15 +31,22 @@
 
 *(Note: Additional screenshots and assets are available in the `/readme_assets` directory)*
 
-<div align="center">
-  <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
-    <img alt="Available on the App Store" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="60"/>
-  </a>
-  
-  <a href="https://play.google.com/store/apps/details?id=com.matsalg.no&hl=no">
-    <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"/>
-  </a>
-</div>
+<table align="center">
+  <tr>
+    <td>
+      <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
+        <img alt="Available on the App Store" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="60"/>
+      </a>
+    </td>
+    <td width="10"></td> <!-- spacing -->
+    <td>
+      <a href="https://play.google.com/store/apps/details?id=com.matsalg.no&hl=no">
+        <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="60"/>
+      </a>
+    </td>
+  </tr>
+</table>
+
 
 
 
