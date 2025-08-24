@@ -7,22 +7,23 @@
 ## 📱 Demo & Screenshots
 
 ### App Demo
-![Matsalg Demo](readme_assets/app_showcase.gif)
-*Short animated demo showing the main app flow.*
+<img src="readme_assets/app_showcase.gif" alt="Matsalg Demo" width="400"/>
+<p><em>Short animated demo showing the main app flow.</em></p>
 
 ### Key App Screens
-![Home Screen](readme_assets/home.png)
-*Main feed displaying posts from followed users.*
+<img src="readme_assets/home.png" alt="Home Screen" width="300"/>
+<p><em>Main feed displaying posts from followed users.</em></p>
 
-![Chat Screen](readme_assets/chat.png)
-*Messaging/chat interface.*
+<img src="readme_assets/chat.png" alt="Chat Screen" width="300"/>
+<p><em>Messaging/chat interface.</em></p>
 
 ### App Store Presence
-![App Store](readme_assets/app_store.png)
-*Live on the Apple App Store.*
+<img src="readme_assets/app_store.png" alt="App Store" width="200"/>
+<p><em>Live on the Apple App Store.</em></p>
 
-![Google Play](readme_assets/google_play.png)
-*Live on Google Play Store.*
+<img src="readme_assets/google_play.png" alt="Google Play" width="200"/>
+<p><em>Live on Google Play Store.</em></p>
+
 
 *(Note: Screenshots are stored in the `/readme_assets/` directory)* 
 
