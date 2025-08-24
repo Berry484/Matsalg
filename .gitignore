@@ -153,3 +153,6 @@ ios/Flutter/flutter_export_environment.sh
 #Google service json used for firebase
 android/app/google-services.json
 
+
+# Keystore
+*.keystore
