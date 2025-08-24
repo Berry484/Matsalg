@@ -31,7 +31,7 @@
 				<string>matsalg.com</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>com.googleusercontent.apps.137485128885-ja3cebdbdukc3jv35r35lnaifgukchl5</string>
+					<string>YOUR_GOOGLE_CLIENT_ID_HERE</string>
 				</array>
 			</dict>
 		</array>

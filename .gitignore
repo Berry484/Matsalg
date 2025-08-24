@@ -82,6 +82,8 @@ ios/Flutter/App.framework/
 ios/Flutter/Generated.xcconfig
 ios/Flutter/Flutter-Structs.h
 ios/Flutter/flutter_export_environment.sh
+ios/GoogleService-Info.plist
+ios/Runner/real_info.plist
 
 # IDE files
 .idea/
