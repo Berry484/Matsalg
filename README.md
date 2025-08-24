@@ -1,8 +1,14 @@
 <div align="center">
   <img src="readme_assets/matsalg_leaf_transp.png" alt="Matsalg Logo" width="155" style="margin-bottom: 0;"/>
-
   <h1 style="margin: 0; padding: 0;">Matsalg.no</h1>
+  
+<!-- Tech Badges -->
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Google](https://img.shields.io/badge/Google-4285F4?style=for-the-badge&logo=google&logoColor=white)
+![Apple](https://img.shields.io/badge/Apple-000000?style=for-the-badge&logo=apple&logoColor=white)
 
+<!-- App store and google play. -->
   <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
     <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="155">
   </a>
@@ -11,7 +17,6 @@
     <img alt="Get it on Google Play" title="Google Play" src="http://i.imgur.com/mtGRPuM.png" width="155">
   </a>
 </div>
-
 
 
 
@@ -32,17 +37,6 @@ Key technical focus was on implementing a robust user interface with responsive 
 The frontend implementation showcases essential principles including proper state management, secure API communication handling (in principle), and deployment readiness.
 
 <br/>
-
-### Technologies Used (Frontend)
-
-![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
-![Google](https://img.shields.io/badge/Google-4285F4?style=for-the-badge&logo=google&logoColor=white)
-![Apple](https://img.shields.io/badge/Apple-000000?style=for-the-badge&logo=apple&logoColor=white)
-
-
-
-
 
 ## 📱 Demo & Screenshots
 <div align="center">
