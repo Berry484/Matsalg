@@ -1,4 +1,4 @@
-# MatSalg
+# Matsalg.no
 
 A new Flutter project.
 
