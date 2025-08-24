@@ -31,29 +31,18 @@ Key technical focus was on implementing a robust user interface with responsive 
 
  The frontend implementation showcases essential principles including proper state management, secure API communication handling (in principle), and deployment readiness.
 
----
-
-###
-
-<p align="left">Technologies used for front-end</p>
-
-###
-
-<br clear="both">
+### Technologies Used (Frontend)
 
 <div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" height="45" alt="flutter logo"  />
-  <img width="16" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" height="45" alt="firebase logo"  />
-  <img width="16" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" height="45" alt="google logo"  />
-  <img width="16" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg" height="45" alt="apple logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" height="45" alt="Flutter logo" />
+  <span style="display:inline-block; width:16px;"></span>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" height="45" alt="Firebase logo" />
+  <span style="display:inline-block; width:16px;"></span>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" height="45" alt="Google logo" />
+  <span style="display:inline-block; width:16px;"></span>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg" height="45" alt="Apple logo" />
 </div>
 
-###
-
----
 ## 📱 Demo & Screenshots
 <!-- Centered 1x4 grid -->
 <div align="center">
