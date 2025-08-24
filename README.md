@@ -19,22 +19,20 @@
 </div>
 
 
+## ✨ Overview
 
-**✨ Overview**
+I created **Matsalg.no** at **age 17** as part of a **high school entrepreneurship project**. This was my first larger software project, and since I was very new to programming, the codebase is quite shit.
 
-I created Matsalg.no at age 17 as part of a high school entrepreneurship project. This was my first larger software project, and since I was very new to programming, the codebase is a bit shitty.
+During the semester, the app attracted over **1,600 users**. I developed the entire application myself.
 
-During the semester, the app attracted over 1,600 users. I developed the entire application myself.
+**Matsalg.no** is a **food marketplace app** that enables farmers to sell products directly to their customers through the platform. Key features include:
 
-Matsalg.no is a food marketplace app that enables farmers to sell products directly to their customers through the platform. Key features include:
+- **Real-time chat** powered by WebSockets
+- **User authentication** via Firebase, supporting email, phone, Google Sign-In, and Apple Sign-In
+- A **scalable marketplace**, stress-tested with over 100,000 listings without performance issues
 
-Real-time chat powered by WebSockets
+This project demonstrates my ability to **design, implement, and deploy a full-stack mobile application independently**, even as a beginner.
 
-User authentication via Firebase, supporting email, phone, Google Sign-In, and Apple Sign-In
-
-A scalable marketplace, stress-tested with over 100,000 listings without performance issues
-
-This project shows my ability to design, implement, and deploy a full-stack mobile application independently, even as a beginner.
 
 <br/>
 
