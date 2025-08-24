@@ -5,8 +5,6 @@
 ---
 
 ## ✨ Overview
-> **Note:** This was the first larger project I ever made while I was new to programming. A lot of the source code is shit.
-
 Matsalg is a fully functional cross-platform social photo-sharing app inspired by Instagram and Tise. Born as a high school semester project, I developed both the frontend using **Flutter** and backend knowledge for implementation consideration. After its initial release, the app became live on both **App Store** and **Google Play**, accumulating ~1600 real users.
 
 This project demonstrates a comprehensive approach to mobile development, encompassing:
