@@ -14,7 +14,7 @@
 <table>
   <tr>
     <td align="center">
-      <img src="readme_assets/home.png" alt="Home Screen" width="'170"/><br/>
+      <img src="readme_assets/home.png" alt="Home Screen" width="170"/><br/>
       <em>Main feed displaying posts</em>
     </td>
     <td align="center">
