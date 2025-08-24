@@ -4,24 +4,6 @@
   <h1>Matsalg.no</h1>
 </div>
 
-**✨ Overview**
-
-Matsalg is a fully functional cross-platform social photo-sharing app inspired by Instagram and Tise. Born as a high school semester project, I developed both the frontend using **Flutter** and backend knowledge for implementation consideration. After its initial release, the app became live on both **App Store** and **Google Play**, accumulating ~1600 real users.
-
-This project demonstrates a comprehensive approach to mobile development, encompassing:
-
-- User profiles & authentication
-- Media upload with captioning functionality 
-- Real-time post feed from followed users
-- Engagement features: likes, comments, and posting to the 'Explore' section 
-- Cross-platform deployment
-
-Key technical focus was on implementing a robust user interface with responsive state management, ensuring smooth performance for both iOS and Android users.
-
- The frontend implementation showcases essential principles including proper state management, secure API communication handling (in principle), and deployment readiness.
-
----
-
 ## 📱 Demo & Screenshots
 <!-- Centered 1x4 grid -->
 <div align="center">
@@ -64,5 +46,23 @@ Key technical focus was on implementing a robust user interface with responsive 
     </td>
   </tr>
 </table>
+
+---
+
+## ✨ Overview
+
+Matsalg is a fully functional cross-platform social photo-sharing app inspired by Instagram and Tise. Born as a high school semester project, I developed both the frontend using **Flutter** and backend knowledge for implementation consideration. After its initial release, the app became live on both **App Store** and **Google Play**, accumulating ~1600 real users.
+
+This project demonstrates a comprehensive approach to mobile development, encompassing:
+
+- User profiles & authentication
+- Media upload with captioning functionality 
+- Real-time post feed from followed users
+- Engagement features: likes, comments, and posting to the 'Explore' section 
+- Cross-platform deployment
+
+Key technical focus was on implementing a robust user interface with responsive state management, ensuring smooth performance for both iOS and Android users.
+
+ The frontend implementation showcases essential principles including proper state management, secure API communication handling (in principle), and deployment readiness.
 
 ---
