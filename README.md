@@ -31,6 +31,9 @@
 
 *(Note: Additional screenshots and assets are available in the `/readme_assets` directory)*
 
+[![Available on the App Store](https://signal.org/external/images/app-store-download-badge.svg)]([https://apps.apple.com/app/id874139669](https://apps.apple.com/us/app/matsalg-no/id6739165687))
+<a href='https://play.google.com/store/apps/details?id=com.matsalg.no&hl=no'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height='80px'/></a>
+
 --- 
 
 ## ✨ Overview
