@@ -4,21 +4,27 @@
 
 ---
 
-## 📱 Demo
+## 📱 Demo & Screenshots
 
-### Screenshot Gallery
-*Matsalg.no is live on both appstore and google play*
+### App Demo
+![Matsalg Demo](readme_assets/app_showcase.gif)
+*Short animated demo showing the main app flow.*
 
-![Main Feed](screenshots/feed.png) 
-*Caption:* Main feed displaying posts from followed users
+### Key App Screens
+![Home Screen](readme_assets/home.png)
+*Main feed displaying posts from followed users.*
 
-![Profile Screen](screenshots/profile.png)
-*Caption:* User profile with followers/following counts
+![Chat Screen](readme_assets/chat.png)
+*Messaging/chat interface.*
 
-![Upload Modal](screenshots/upload.png)
-*Caption:* Photo upload interface with caption input
+### App Store Presence
+![App Store](readme_assets/app_store.png)
+*Live on the Apple App Store.*
 
-*(Note: Screenshots are stored in `./assets/screenshots/` directory)* 
+![Google Play](readme_assets/google_play.png)
+*Live on Google Play Store.*
+
+*(Note: Screenshots are stored in the `/readme_assets/` directory)* 
 
 --- 
 
