@@ -2,7 +2,20 @@
 <div align="center">
   <img src="readme_assets/matsalg_leaf_transp.png" alt="Matsalg Logo" width="130"/><br/>
   <h1>Matsalg.no</h1>
+
+<p align="center">
+  <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
+    <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="140">
+  </a>
+
+  <a href="https://play.google.com/store/apps/details?id=com.matsalg.no&hl=no">
+    <img alt="Get it on Google Play" title="Google Play" src="http://i.imgur.com/mtGRPuM.png" width="140">
+  </a>
+</p>
+
 </div>
+
+
 
 **✨ Overview**
 
@@ -48,15 +61,5 @@ Key technical focus was on implementing a robust user interface with responsive 
 </div>
 
 *(Note: Additional screenshots and assets are available in the `/readme_assets` directory)*
-
-<p align="center">
-  <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
-    <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="140">
-  </a>
-
-  <a href="https://play.google.com/store/apps/details?id=com.matsalg.no&hl=no">
-    <img alt="Get it on Google Play" title="Google Play" src="http://i.imgur.com/mtGRPuM.png" width="140">
-  </a>
-</p>
 
 ---
