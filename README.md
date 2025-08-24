@@ -31,7 +31,7 @@ During the semester, the app attracted over **1,600 users**. I developed the ent
 - **User authentication** via Firebase, supporting email, phone, Google Sign-In, and Apple Sign-In
 - A **scalable marketplace**, stress-tested with over 100,000 listings without performance issues
 
-This project demonstrates my ability to **design, implement, and deploy a full-stack mobile application independently**, even as a beginner.
+Through this project, I got a taste of what it takes to **design a larger application, quickly learn new technologies, and develop under tight deadlines**.
 
 
 <br/>
