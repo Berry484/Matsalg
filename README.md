@@ -1,4 +1,4 @@
-# 🌐 Matsalg: A Cross-Platform Social Photo-Sharing Application
+# 🌐 Matsalg: A Food marketplace app
 
 > **Note:** This README covers the overview of the project, for more technical details feel free to contact me.
 
