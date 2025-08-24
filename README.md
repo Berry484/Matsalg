@@ -7,7 +7,7 @@
 ## 📱 Demo & Screenshots
 
 <!-- Demo GIF on top, centered -->
-<div align="center">
+<div align="left">
   <img src="readme_assets/app_showcase.gif" alt="Demo GIF" height="360"/><br/>
   <em>App demo animation</em>
 </div>
