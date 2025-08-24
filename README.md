@@ -22,19 +22,19 @@
 
 **✨ Overview**
 
-Matsalg is a fully functional cross-platform social photo-sharing app inspired by Instagram and Tise. Born as a high school semester project, I developed both the frontend using **Flutter** and backend knowledge for implementation consideration. After its initial release, the app became live on both **App Store** and **Google Play**, accumulating ~1600 real users.
+I created Matsalg.no at age 17 as part of a high school entrepreneurship project. This was my first larger software project, and since I was very new to programming, the codebase is a bit shitty.
 
-This project demonstrates a comprehensive approach to mobile development, encompassing:
+During the semester, the app attracted over 1,600 users. I developed the entire application myself.
 
-- User profiles & authentication
-- Media upload with captioning functionality 
-- Real-time post feed from followed users
-- Engagement features: likes, comments, and posting to the 'Explore' section 
-- Cross-platform deployment
+Matsalg.no is a food marketplace app that enables farmers to sell products directly to their customers through the platform. Key features include:
 
-Key technical focus was on implementing a robust user interface with responsive state management, ensuring smooth performance for both iOS and Android users.
+Real-time chat powered by WebSockets
 
-The frontend implementation showcases essential principles including proper state management, secure API communication handling (in principle), and deployment readiness.
+User authentication via Firebase, supporting email, phone, Google Sign-In, and Apple Sign-In
+
+A scalable marketplace, stress-tested with over 100,000 listings without performance issues
+
+This project shows my ability to design, implement, and deploy a full-stack mobile application independently, even as a beginner.
 
 <br/>
 
