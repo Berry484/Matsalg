@@ -42,7 +42,7 @@
 
 
 
-*(Note: Screenshots are stored in the `/readme_assets/` directory)* 
+*(Note: More screenshots are stored in the `/readme_assets` directory)* 
 
 --- 
 
