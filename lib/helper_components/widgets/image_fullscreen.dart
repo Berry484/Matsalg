@@ -65,7 +65,7 @@ class FullscreenImageGalleryState extends State<FullscreenImageGallery> {
           Center(
             child: SizedBox(
               child: PageView.builder(
-                physics: CustomPageViewScrollPhysics(),
+                physics: const PageScrollPhysics(),
                 itemCount: widget.imageUrls.length,
                 controller: _pageController,
                 itemBuilder: (context, index) {

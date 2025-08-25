@@ -557,8 +557,7 @@ class _MinMatvareDetaljWidgetState extends State<ProductPage> {
                                                               .fromSTEB(0.0,
                                                               0.0, 0.0, 40.0),
                                                       child: PageView(
-                                                        physics:
-                                                            CustomPageViewScrollPhysics(),
+                                                        physics: const PageScrollPhysics(),
                                                         controller: _model
                                                                 .pageViewController ??=
                                                             PageController(
