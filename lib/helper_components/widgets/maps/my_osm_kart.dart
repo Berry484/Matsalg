@@ -98,7 +98,7 @@ class _MyOsmKartState extends State<MyOsmKart> {
       children: [
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          userAgentPackageName: 'com.example.app',
+          userAgentPackageName: 'com.matsalg.no',
         ),
         MarkerLayer(markers: [
           Marker(
