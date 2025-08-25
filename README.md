@@ -27,7 +27,7 @@ During the semester, the app attracted over **1,600 users**. I developed the ent
 
 **Matsalg.no** is a **food marketplace app** that enables farmers to sell products directly to their customers through the platform. Key features include:
 
-- **Real-time chat** powered by WebSockets
+- **Real-time chat** using WebSockets
 - **User authentication** via Firebase, supporting email, phone, Google Sign-In, and Apple Sign-In
 - A **scalable marketplace**, stress-tested with over 100,000 listings without performance issues
 
