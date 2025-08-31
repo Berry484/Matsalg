@@ -30,6 +30,7 @@ During the semester, the app attracted over **1,600 users**. I developed the ent
 - **Real-time chat** using WebSockets.
 - **Self hosted backend** made using spring boot and postgresql.
 - **User authentication** via Firebase, supporting Google Sign-In, Apple Sign-In and email/phone Sign-In.
+- **Clean and intuitive UI** — frontend built with Flutter, designed with usability and simplicity in mind.
 - A **scalable marketplace**, each endpoint made with scalability in mind.
 
 Through this project, I got a taste of what it takes to **design a larger application, quickly learn new technologies, and develop under tight deadlines**.
