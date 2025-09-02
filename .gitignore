@@ -52,6 +52,7 @@ app.*.map.json
 *.xcworkspace/
 xcuserdata/
 *.xccheckout
+ios/Runner.xcodeproj/project.pbxproj
 
 # Build artifacts
 build/
