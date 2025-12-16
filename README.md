@@ -8,14 +8,6 @@
 ![Google](https://img.shields.io/badge/Google-4285F4?style=for-the-badge&logo=google&logoColor=white)
 ![Apple](https://img.shields.io/badge/Apple-000000?style=for-the-badge&logo=apple&logoColor=white)
 
-<!-- App store and google play. -->
-  <a href="https://apps.apple.com/us/app/matsalg-no/id6739165687">
-    <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="155">
-  </a>
-
-  <a href="https://play.google.com/store/apps/details?id=com.matsalg.no&hl=no">
-    <img alt="Get it on Google Play" title="Google Play" src="http://i.imgur.com/mtGRPuM.png" width="155">
-  </a>
 </div>
 
 
