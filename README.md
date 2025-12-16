@@ -15,7 +15,7 @@
 
 I created **Matsalg.no** at **age 17** as part of a **high school entrepreneurship project**. This was my first larger software project, and since I was very new to programming, the codebase is quite shit.
 
-During the semester, the app attracted over **1,600 users**. I developed the entire application myself.
+During the semester, the app attracted over **2,100 users**. I developed the entire application myself.
 
 **Matsalg.no** is a **food marketplace app** that enables farmers to sell products directly to their customers through the platform. Key features include:
 
