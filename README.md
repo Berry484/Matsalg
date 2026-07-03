@@ -14,7 +14,7 @@
 ## Overview
 During it's short uptime, the app attracted over **2,100 users**. I developed the entire application myself.
 
-**Matsalg.no** is a **food marketplace app** that enables farmers to sell products directly to their customers through the platform. Key features include:
+**Matsalg.no** is a food marketplace app that enables farmers to sell products directly to their customers through the platform. Key features include:
 
 - **Real-time chat** using WebSockets.
 - **Self hosted backend** made using spring boot and postgresql.
