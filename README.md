@@ -11,10 +11,7 @@
 </div>
 
 
-## ✨ Overview
-
-This was my first larger software project, and since I was very new to programming, the codebase is quite shit.
-
+## Overview
 During it's short uptime, the app attracted over **2,100 users**. I developed the entire application myself.
 
 **Matsalg.no** is a **food marketplace app** that enables farmers to sell products directly to their customers through the platform. Key features include:
@@ -25,12 +22,9 @@ During it's short uptime, the app attracted over **2,100 users**. I developed th
 - **Clean and intuitive UI** — frontend built with Flutter, designed with usability and simplicity in mind.
 - A **scalable marketplace**, each endpoint made with scalability in mind.
 
-Through this project, I got a taste of what it takes to **design a larger application, quickly learn new technologies, and develop under tight deadlines**.
-
-
 <br/>
 
-## 📱 Demo & Screenshots
+## Demo & Screenshots
 <div align="center">
   <table>
     <tr>
